@@ -15,19 +15,31 @@ import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
+
+var routing=[]
 const switchRoutes = (
   <Switch>
     {dashboardRoutes.map((prop, key) => {
+      
       if (prop.redirect)
-        return <Redirect from={prop.path} to={prop.to} key={key} />;
-      return <Route path={prop.path} component={prop.component} key={key} />;
+         return <Redirect from={prop.path} to={prop.to} key={key} />;
+     
+      if(prop.childs)
+      { 
+        prop.childs.map((item,index)=>{
+            routing.push(<Route path={item.path} component={item.component} key={index}/>)
+          })
+        
+      } 
+    routing.push(<Route path={prop.path} component={prop.component} key={key} />)
+      return routing
     })}
   </Switch>
 );
-
 class App extends React.Component {
   state = {
-    mobileOpen: false
+    mobileOpen:false,
+    open:false
   };
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -44,18 +56,25 @@ class App extends React.Component {
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
+
+  handleClick = () => {
+    
+    this.setState({ open: !this.state.open });
+  };
   render() {
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
         <Sidebar
           routes={dashboardRoutes}
-          logoText={"Creative Tim"}
+          logoText={"Invoice"}
           logo={logo}
           image={image}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color="blue"
+          handleClick={this.handleClick}
+           state={this.state.open}
           {...rest}
         />
         <div className={classes.mainPanel} ref="mainPanel">
@@ -66,6 +85,7 @@ class App extends React.Component {
           />
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
           {this.getRoute() ? (
+          
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>
             </div>

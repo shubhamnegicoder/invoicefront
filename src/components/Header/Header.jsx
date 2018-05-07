@@ -22,6 +22,14 @@ function Header({ ...props }) {
       if (prop.path === props.location.pathname) {
         name = prop.navbarName;
       }
+      if(prop.childs)
+      {  prop.childs.map((prop,key)=>{
+            if (prop.path === props.location.pathname) {
+              name = prop.navbarName;
+            }
+          })
+
+      }
       return null;
     });
     return name;
