@@ -1,10 +1,3 @@
-/**
- * @file(connect.js) 
- * @author Shakshi Pandey <shakshi.kumari@limitlessmobile.com>
- * @version 1.0.0
- * @lastModifed 11-Jan-2018
- * @lastModifedBy Shakshi
- */
 import Mongoose from 'mongoose';
 import logger from '../core/logger/app.logger'
 import config from '../core/config/config.dev'
@@ -28,6 +21,7 @@ const connectToDb = async () => {
         logger.info('Connected to mongo!!!');
     }
     catch (err) {
+        console.log(err);
         logger.error('Could not connect to MongoDB');
     }
 }

@@ -1,10 +1,3 @@
-/**
- * @file(asset.router.js) All routing of asset
- * @author Shakshi Pandey <shakshi.kumari@limitlessmobile.com>
- * @version 1.0.0
- * @lastModifed 5-Feb-2018
- * @lastModifedBy Shakshi
- */
 
 import express from "express";
 import userService from "../service/user.service";
@@ -47,8 +40,6 @@ router.post('/changePassword',(req,res)=>{
  router.post('/updateUser',(req,res)=>{
      userService.update(req,res);
  })
- router.post('/updateAccount',(req,res)=>{
-     userService.updateAccount(req,res);
- })
+ 
 
 export default router;
