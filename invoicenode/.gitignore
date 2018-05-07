@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.zip
+npm-debug.*
+.idea
+src/.vscode/
+

@@ -1,0 +1,6 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-02T05:47:28.179Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-05-02T05:47:28.194Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-02T07:12:21.560Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-02T07:12:21.591Z"}
+{"level":"info","message":"Register superAdmin...","timestamp":"2018-05-02T07:12:24.608Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-02T12:39:43.887Z"}
