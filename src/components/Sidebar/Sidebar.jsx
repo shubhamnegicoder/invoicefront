@@ -27,12 +27,12 @@ import sidebarStyle from "assets/jss/material-dashboard-react/sidebarStyle.jsx";
 import dashboardRoutes from "../../routes/dashboard";
 
 const Sidebar = ({...props}) => {
+  console.log(props.state,"state")
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-  function collapsemenu(path,item,key,icon,sidebarName,listItemClasses,whiteFontClasses){
-
+  function collapsemenu(path,item,key,icon,sidebarName,listItemClasses,whiteFontClasses,parent){
    return( 
      <NavLink
        to={path}
@@ -54,12 +54,13 @@ const Sidebar = ({...props}) => {
   </Collapse>
   </NavLink>
   ) 
-  }
+}
   const { classes, color, logo, image, logoText, routes } = props;
+  var count;
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-       
+      
         if (prop.redirect) return null;
 
  
@@ -110,9 +111,11 @@ const Sidebar = ({...props}) => {
         );
       }
       else{
+     
          return (
+           
            <List>
-             <ListItem button  onClick={props.handleClick}>
+             <ListItem button  onClick={()=>{props.handleClick()}}>
                <ListItemIcon className={classes.itemIcon + whiteFontClasses}>
                  <prop.icon />
            </ListItemIcon>
@@ -123,12 +126,12 @@ const Sidebar = ({...props}) => {
          </ListItem>
            {prop.childs.map((item,index)=>{
              
-             return(collapsemenu(item.path,classes.item,index,item.icon,item.sidebarName,listItemClasses,whiteFontClasses))
+             return(collapsemenu(item.path,classes.item,index,item.icon,item.sidebarName,listItemClasses,whiteFontClasses,prop.path+item.path))
            })}
            </List>
            )
-
-      }
+          }
+      
       })}
     </List>
    

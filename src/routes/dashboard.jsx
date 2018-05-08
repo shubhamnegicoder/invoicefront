@@ -34,33 +34,32 @@ const dashboardRoutes = [
     icon: Person,
     component: UserProfile
   },
-  
   {
-    path: "/Location",
+    path: "Location",
     sidebarName: "Location",
     navbarName: "Location",
     icon: LocationOn,
-    childs:[
+    childs: [
       {
-        path:"/country",
-        sidebarName:"Country",
-        icon:LocationOn,
+        path: "/Location/country",
+        sidebarName: "Country",
+        icon: LocationOn,
         navbarName: "Country",
-        component:Country
-    },{
-        path: "/state",
+        component: Country
+      }, {
+        path: "/Location/state",
         sidebarName: "State",
         navbarName: "State",
         icon: LocationOn,
-        component:State
-    },
-    {
-      path: "/city",
-      sidebarName: "City",
-      navbarName:"City",
-      icon: LocationOn,
-      component:City
-    }
+        component: State
+      },
+      {
+        path: "/Location/city",
+        sidebarName: "City",
+        navbarName: "City",
+        icon: LocationOn,
+        component: City
+      }
     ]
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }

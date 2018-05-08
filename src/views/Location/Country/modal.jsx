@@ -46,13 +46,13 @@ export default class App extends React.Component {
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={15}>
                                                 <label>
-                                                    Country Code:
+                                                   <h5> Country Code:</h5>
                                                  <input type="number" name="counrtycode"ref="code"value={this.state.id} onChange={this.handleChange} />
                                                 </label>
                                             </ItemGrid>
                                             <ItemGrid xs={12} sm={12} md={15}>
                                             <label>
-                                                Country Name:
+                                              <h5>  Country Name:</h5>
                                            <input type="text" ref="name" name="countryname" value={this.state.countryname} onChange={this.handleChange} />
                                            </label>     
                                          </ItemGrid>
