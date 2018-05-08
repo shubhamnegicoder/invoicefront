@@ -3,9 +3,11 @@ import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
 import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
-import City from "../views/Location/City/City"
-import State from "../views/Location/State/State"
-import Country from "../views/Location/Country/Country"
+import City from "../views/Location/City/City";
+import State from "../views/Location/State/State";
+import Country from "../views/Location/Country/Country";
+import CreateInvoice from "../views/Invoice/CreateInvoice/CreateInvoice.jsx";
+import ListInvoice from "../views/Invoice/ListInvoice/ListInvoice.jsx";
 
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 
@@ -16,16 +18,38 @@ import {
   LibraryBooks,
   BubbleChart,
   LocationOn,
-  Notifications
+  Notifications,
+  Assignment
 } from "@material-ui/icons";
 
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    
     sidebarName: "Dashboard",
     icon: Dashboard,
     component: DashboardPage
+  },
+  {
+    path: "/invoice",
+    sidebarName: "Invoice",
+    navbarName: "Invoice",
+    icon: Assignment,
+    childs: [
+      {
+        path: "/createInvoice",
+        sidebarName: "Create Invoice",
+        icon: LocationOn,
+        navbarName: "Invoice Creation",
+        component: CreateInvoice
+      },
+      {
+        path: "/InvoiceList",
+        sidebarName: "Invoice List",
+        navbarName: "List of Invoices",
+        icon: LocationOn,
+        component: ListInvoice
+      }
+    ]
   },
   {
     path: "/user",
@@ -34,39 +58,35 @@ const dashboardRoutes = [
     icon: Person,
     component: UserProfile
   },
-  
   {
     path: "/Location",
     sidebarName: "Location",
     navbarName: "Location",
     icon: LocationOn,
-    childs:[
+    childs: [
       {
-        path:"/country",
-        sidebarName:"Country",
-        icon:LocationOn,
+        path: "/country",
+        sidebarName: "Country",
+        icon: LocationOn,
         navbarName: "Country",
-        component:Country
-    },{
+        component: Country
+      }, {
         path: "/state",
         sidebarName: "State",
         navbarName: "State",
         icon: LocationOn,
-        component:State
-    },
-    {
-      path: "/city",
-      sidebarName: "City",
-      navbarName:"City",
-      icon: LocationOn,
-      component:City
-    }
+        component: State
+      },
+      {
+        path: "/city",
+        sidebarName: "City",
+        navbarName: "City",
+        icon: LocationOn,
+        component: City
+      }
     ]
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
-
-
-
 
 export default dashboardRoutes;
