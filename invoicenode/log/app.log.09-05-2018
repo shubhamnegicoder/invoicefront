@@ -1,3 +1,5 @@
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-09T05:38:52.216Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-09T05:38:52.262Z"}
 {"level":"info","message":"Adding invoice...","timestamp":"2018-05-09T05:38:57.804Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-09T06:53:06.780Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-09T06:53:06.815Z"}

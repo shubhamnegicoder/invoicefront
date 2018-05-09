@@ -57,8 +57,8 @@ class App extends React.Component {
     this.refs.mainPanel.scrollTop = 0;
   }
 
-  handleClick = () => {
-    
+  handleClick = (ref) => {
+  
     this.setState({ open: !this.state.open });
   };
   render() {

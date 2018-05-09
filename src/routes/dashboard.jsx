@@ -59,26 +59,26 @@ const dashboardRoutes = [
     component: UserProfile
   },
   {
-    path: "/Location",
+    path: "Location",
     sidebarName: "Location",
     navbarName: "Location",
     icon: LocationOn,
     childs: [
       {
-        path: "/country",
+        path: "/Location/country",
         sidebarName: "Country",
         icon: LocationOn,
         navbarName: "Country",
         component: Country
       }, {
-        path: "/state",
+        path: "/Location/state",
         sidebarName: "State",
         navbarName: "State",
         icon: LocationOn,
         component: State
       },
       {
-        path: "/city",
+        path: "/Location/city",
         sidebarName: "City",
         navbarName: "City",
         icon: LocationOn,
