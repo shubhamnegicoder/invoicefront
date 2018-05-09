@@ -1,9 +1,5 @@
 {
-<<<<<<< Updated upstream
   "name": "myapp",
-=======
-  "name": "invoice",
->>>>>>> Stashed changes
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
