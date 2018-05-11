@@ -10,7 +10,7 @@ let config = {};
 
 config.logFileDir = path.join(__dirname, '../../log');
 config.logFileName = 'app.log';
-config.dbHost = process.env.dbHost || 'localhost';
+config.dbHost = process.env.dbHost || '127.0.0.1';
 config.dbPort = process.env.dbPort || '27017';
 config.dbName = process.env.dbName || 'invoice';
 config.serverPort = process.env.serverPort || 8080;
