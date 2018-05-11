@@ -4,124 +4,123 @@ import $ from 'jquery';
 import superagent from 'superagent';
 import swal from 'sweetalert';
 import './bootstrap.min.css';
+import parse from 'form-parse';
 
-import {
-    RegularCard,
-    Button,
-    CustomInput,
-    ItemGrid
-} from "components";
+import { RegularCard, Button, CustomInput, ItemGrid, Table } from "components";
 
-var invoiceArray = [];
+var invoiceArray = [], itemArray = [];
 
 class CreateInvoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            item: [],
-            qty: [],
-            price: [],
-            invoiceArray: []
-        }
-        this.fxns = {
-            handleInvoice: () => {
-                var item = $('#item').val();
-                var qty = $('#qty').val();
-                var price = $('#price').val();
-                var total = qty * price;
-                $('#total').val("\t ₹" + total);
-                this.setState({
-                    item: item,
-                    qty: qty,
-                    price: price,
-                    total: total
-                })
-            },
-            submitInvoice: (e) => {
-                e.preventDefault();
-                var invoiceData = {
-                    item: this.state.item,
-                    qty: this.state.qty,
-                    price: this.state.price,
-                    total: this.state.total
-                }
-                if (this.state.item == "" || this.state.qty == "" || this.state.price == "") {
-                    swal({
-                        text: "Please input all the fields",
-                        icon: "warning"
-                    })
-                }
-                else {
-                    console.log("Invoice Data", invoiceData);
-                    superagent
-                        .post("http://localhost:8080/addInvoice")
-                        .send(invoiceData)
-                        .then((res) => {
-                            console.log("Response from Service", res);
-                            if (res.body.success) {
-                                swal({
-                                    text: "Invoice Saved !",
-                                    icon: "success"
-                                })
-                                // .then((willDelete) => {
-                                //     if (willDelete) {
-                                //         swal("Poof! Your imaginary file has been deleted!", {
-                                //             icon: "success",
-                                //         });
-                                //     } else {
-                                //         swal("Your imaginary file is safe!");
-                                //     }
-                                // });
-                            }
-                        })
-                }
-            },
-            addRow: () => {
-                invoiceArray.push(
-                    <Grid container>
-                        <ItemGrid xs={12} sm={12} md={15} style={{ maxWidth: '235px', float: 'left' }} onChange={this.fxns.handleInvoice}>
-                            <CustomInput
-                                labelText="Item"
-                                id="item"
-                                formControlProps={{
-                                    fullWidth: false
-                                }}
-                            />
-                        </ItemGrid>
-                        <ItemGrid xs={12} sm={12} md={15} style={{ maxWidth: '235px', float: 'left' }} onChange={this.fxns.handleInvoice}>
-                            <CustomInput
-                                labelText="Quantity"
-                                id="qty"
-                                formControlProps={{
-                                    fullWidth: false
-                                }}
-                            />
-                        </ItemGrid>
-                        <ItemGrid xs={12} sm={12} md={15} style={{ maxWidth: '235px', float: 'left' }} onChange={this.fxns.handleInvoice}>
-                            <CustomInput
-                                labelText="Price per Qty."
-                                id="price"
-                                formControlProps={{
-                                    fullWidth: false
-                                }}
-                            />
-                        </ItemGrid>
-                        <ItemGrid xs={12} sm={12} md={15} style={{ maxWidth: '235px', float: 'left' }}>
-                            <CustomInput
-                                labelText="Total"
-                                id="total"
-                                formControlProps={{
-                                    fullWidth: false
-                                }}
-                            />
-                        </ItemGrid>
-                    </Grid>)
-                this.setState({ invoiceArray: invoiceArray })
-            }
+            code: '',
+            name: '',
+            qty: '',
+            rate: '',
+            total: '',
+            discount: '',
+            invoiceArray: [],
+            dataArray: []
         }
     }
+    handleInvoice = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+    pushIntoArray = () => {
+        itemArray.push({
+            code: this.state.code,
+            name: this.state.name,
+            qty: this.state.qty,
+            rate: this.state.rate,
+            total: this.state.total,
+            discount: this.state.discount
+        });
+    }
+    addRow = (params) => {
+        if (params == 2) {
+            this.pushIntoArray();
+            this.setState({
+                dataArray: itemArray
+            })
+        }
+        invoiceArray.push(
+            <div>
+                <hr />
+                <div class="row">
+                    <div class="col">
+                        {invoiceArray.length + 1}
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name={"itemCode " + invoiceArray.length} onChange={(e) => this.handleInvoice(e)} required />
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name={"itemName " + invoiceArray.length} onChange={(e) => this.handleInvoice(e)} required />
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name={"qty " + invoiceArray.length} onChange={(e) => this.handleInvoice(e)} required />
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name={"rate " + invoiceArray.length} onChange={(e) => this.handleInvoice(e)} required />
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name={"total " + invoiceArray.length} onChange={(e) => this.handleInvoice(e)} required />
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name={"discount " + invoiceArray.length} onChange={(e) => this.handleInvoice(e)} required />
+                    </div>
+                </div>
+            </div>
+        )
+        this.setState({ invoiceArray: invoiceArray })
+    }
+    submitInvoice = (e) => {
+        e.preventDefault();
+        var finalArray = [];
+        var temp = {};
+        var limit = 1;
+        var finalKey = '';
+        var data = parse(e.target);
+        for (var key in data) {
+            finalKey = key.split(" ")[0];
+            temp[finalKey] = data[key];
+            if (limit == 6) {
+                finalArray.push(temp);
+                temp = {};
+                limit = 0;
+            }
+            limit++;
+        }
+        let invoiceData = {
+            item: finalArray
+        }
+        console.log("Invoice Data", invoiceData);
+        superagent
+            .post("http://localhost:8080/addInvoice")
+            .send(invoiceData)
+            .then((res) => {
+                console.log("Response from Service", res);
+                if (res.body.success) {
+                    swal({
+                        text: "Invoice Saved !",
+                        icon: "success"
+                    })
+                    // .then((willDelete) => {
+                    //     if (willDelete) {
+                    //         swal("Poof! Your imaginary file has been deleted!", {
+                    //             icon: "success",
+                    //         });
+                    //     } else {
+                    //         swal("Your imaginary file is safe!");
+                    //     }
+                    // });
+                }
+            })
+    }
     componentWillMount() {
-        this.fxns.addRow();
+        this.addRow();
     }
     render() {
         return (
@@ -171,64 +170,47 @@ class CreateInvoice extends React.Component {
                         </div>
                     </div>
                 </div>
-                <hr />
-                <Grid container>
-                    <ItemGrid xs={12} sm={12} md={15}>
-                        <form id="invoice_form" onSubmit={this.fxns.submitInvoice}>
-                            <RegularCard
-                                cardTitle="Invoice Details"
-                                cardSubtitle="Please fill in the fields"
-                                content={
-                                    <div>
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Serial No.</th>
-                                                    <th scope="col">Item Code</th>
-                                                    <th scope="col">Item Name</th>
-                                                    <th scope="col">Quantity</th>
-                                                    <th scope="col">Rate</th>
-                                                    <th scope="col">Total</th>
-                                                    <th scope="col">Discount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td>@mdo</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <center>
-                                            <div>
-                                                <Button style={{ float: 'right' }} onClick={this.fxns.addRow}>Add Row</Button>
-                                                {invoiceArray.map((item, key) => {
-                                                    return item;
-                                                })}
-                                            </div>
-                                        </center>
-                                    </div>
-                                }
-                                footer={<Button type="submit" color="primary">Create Invoice</Button>}
-                            />
-                        </form>
-                    </ItemGrid>
-                </Grid>
-            </div>
+                <br />
+                <form onSubmit={this.submitInvoice}>
+                    <div class="row">
+                        <div class="col">
+                            <label color="black">Serial No.</label>
+                        </div>
+                        <div class="col">
+                            <label color="black">Item Code</label>
+                        </div>
+                        <div class="col">
+                            <label color="black">Item Name</label>
+                        </div>
+                        <div class="col">
+                            <label color="black">Quantity</label>
+                        </div>
+                        <div class="col">
+                            <label color="black">Rate</label>
+                        </div>
+                        <div class="col">
+                            <label color="black">Total</label>
+                        </div>
+                        <div class="col">
+                            <label color="black">Discount</label>
+                        </div>
+                    </div>
+                    {
+                        invoiceArray.map((item, key) => {
+                            return item
+                        })
+                    }
+                    <br />
+                    <div class="row">
+                        <div class="col-8">
+                            <input type="button" onClick={() => this.addRow(2)} value="Add Row" />
+                        </div>
+                        <div class="col-4">
+                            <input type="submit" value="Create Invoice" style={{ float: 'right' }} />
+                        </div>
+                    </div>
+                </form>
+            </div >
         );
     }
 }
