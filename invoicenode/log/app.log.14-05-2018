@@ -1,0 +1,11 @@
+<<<<<<< Updated upstream
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T05:33:06.172Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T05:33:06.242Z"}
+=======
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:19:36.169Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:19:36.233Z"}
+>>>>>>> Stashed changes
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T06:10:34.883Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T06:10:34.975Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T06:12:32.101Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T06:12:32.171Z"}
