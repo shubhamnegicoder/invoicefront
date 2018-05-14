@@ -10,6 +10,7 @@ import Customer from "../views/Customer/Customer.jsx";
 import Login from "../views/login/login";
 import CreateInvoice from "../views/Invoice/CreateInvoice/CreateInvoice.jsx";
 import ListInvoice from "../views/Invoice/ListInvoice/ListInvoice.jsx";
+import Tax from "../views/Tax/Tax.jsx";
 
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 
@@ -30,7 +31,15 @@ const dashboardRoutes = [
     sidebarName: "Dashboard",
     icon: Dashboard,
     component: DashboardPage
+  }, 
+  {
+    path: "/tax",
+    sidebarName: "Tax",
+    navbarName: "Tax",
+    icon: BubbleChart,
+    component: Tax
   },
+
   {
     path: "/customer",
     sidebarName: "Customer",

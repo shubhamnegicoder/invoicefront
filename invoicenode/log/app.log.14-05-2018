@@ -1,4 +1,17 @@
 <<<<<<< HEAD
+<<<<<<< Updated upstream
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T05:33:06.172Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T05:33:06.242Z"}
+=======
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:19:36.169Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:19:36.233Z"}
+>>>>>>> Stashed changes
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T06:10:34.883Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T06:10:34.975Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T06:12:32.101Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T06:12:32.171Z"}
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:12:52.746Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:12:52.812Z"}
@@ -168,6 +181,7 @@
 >>>>>>> 51bf7c195585ed5e939386063f3a2c62539365bd
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-14T05:42:55.426Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T05:42:55.447Z"}
+<<<<<<< HEAD
 {"level":"info","message":"sending all country...","timestamp":"2018-05-14T05:53:16.549Z"}
 {"level":"info","message":"sending all country...","timestamp":"2018-05-14T05:53:23.129Z"}
 {"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:18:06.884Z"}
@@ -182,3 +196,8 @@
 {"level":"info","message":"Adding Country...","timestamp":"2018-05-14T06:36:26.810Z"}
 {"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:36:29.384Z"}
 {"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:38:55.477Z"}
+=======
+>>>>>>> 74d6f8865f2fdfde58f58356f4e1171e8ffb7182
+>>>>>>> 9b091ccf9781b92889805adef2beaaf0d66af13a
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T06:45:26.583Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T06:45:26.608Z"}
