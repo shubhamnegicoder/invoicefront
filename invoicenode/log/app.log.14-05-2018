@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:12:52.746Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:12:52.812Z"}
 {"level":"info","message":"sending all country...","timestamp":"2018-05-14T04:16:06.182Z"}
@@ -142,3 +143,9 @@
 {"level":"info","message":"sending all city...","timestamp":"2018-05-14T05:11:28.338Z"}
 {"level":"info","message":"sending all city...","timestamp":"2018-05-14T05:11:32.720Z"}
 {"level":"info","message":"sending all country...","timestamp":"2018-05-14T05:11:32.847Z"}
+=======
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:09:29.802Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:09:29.895Z"}
+>>>>>>> 5b7d1366b46281237c06be16352c2407117111d4
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T05:16:32.594Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T05:16:32.615Z"}

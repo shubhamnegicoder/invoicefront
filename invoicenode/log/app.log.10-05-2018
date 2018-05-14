@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-10T04:32:53.639Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-10T04:32:53.664Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-10T04:44:15.704Z"}
@@ -417,3 +418,11 @@
 {"level":"info","message":"sending all country...","timestamp":"2018-05-10T13:32:33.363Z"}
 {"level":"info","message":"sending all country...","timestamp":"2018-05-10T13:32:51.456Z"}
 {"level":"info","message":"sending all state...","timestamp":"2018-05-10T13:32:51.475Z"}
+=======
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-10T04:30:03.440Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-05-10T04:30:04.481Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-10T04:30:26.105Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-10T04:30:26.159Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-10T07:08:30.152Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-10T07:08:30.189Z"}
+>>>>>>> 5b7d1366b46281237c06be16352c2407117111d4

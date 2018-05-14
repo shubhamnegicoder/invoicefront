@@ -11,8 +11,11 @@ import user from './routes/user.router.js';
 import country from "./routes/country.router";
 import state from "./routes/state.router";
 import city from "./routes/city.router"
+import invoice from './routes/invoice.router.js';
+import customer  from './routes/customer.router.js';
 import net from 'net';
 import cors from 'cors';
+
 const port = config.serverPort;
 logger.stream = {
     write: function(message, encoding){
@@ -21,12 +24,12 @@ logger.stream = {
 };
 
 connectToDb();
+
 var app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -51,6 +54,8 @@ app.use(user);
 app.use(country);
 app.use(state);
 app.use(city);
+app.use(invoice);
+app.use(customer);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -69,9 +74,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-
 
 app.listen(port, () => {
     logger.info('server started - ', port);
