@@ -9,7 +9,7 @@ import { withStyles } from "material-ui";
 import { Header, Footer, Sidebar } from "components";
 
 import dashboardRoutes from "routes/dashboard.jsx";
-
+import AddCustomer from "../../views/Customer/AddCustomer";
 import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
@@ -19,6 +19,7 @@ import logo from "assets/img/reactlogo.png";
 var routing=[]
 const switchRoutes = (
   <Switch>
+    <Route path="/addCustomer" component={AddCustomer} key={'123'}/>
     {dashboardRoutes.map((prop, key) => {
       
       if (prop.redirect)
@@ -34,6 +35,7 @@ const switchRoutes = (
     routing.push(<Route path={prop.path} component={prop.component} key={key} />)
       return routing
     })}
+    
   </Switch>
 );
 class App extends React.Component {

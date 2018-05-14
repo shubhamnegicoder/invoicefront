@@ -1,2 +1,14 @@
-{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:09:29.802Z"}
-{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:09:29.895Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:40:42.206Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-05-14T04:40:43.208Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:40:58.136Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:40:58.201Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:41:46.493Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:41:46.514Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:48:24.893Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:48:24.923Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:51:12.408Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:51:12.444Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:51:48.875Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:51:48.896Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:55:19.990Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:55:20.039Z"}

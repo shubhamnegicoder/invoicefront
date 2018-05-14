@@ -10,6 +10,7 @@ import connectToDb from './db/connection.js';
 import user from './routes/user.router.js';
 import invoice from './routes/invoice.router.js';
 import customer  from './routes/customer.router.js';
+import company  from './routes/company.router.js';
 import net from 'net';
 import cors from 'cors';
 
@@ -50,6 +51,7 @@ app.use(function(req, res, next) {
 app.use(user);
 app.use(invoice);
 app.use(customer);
+app.use(company);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
