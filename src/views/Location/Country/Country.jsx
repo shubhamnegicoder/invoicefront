@@ -6,21 +6,73 @@ import Modal from './modal'
 // import Modal from 'react-responsive-modal';
 
 import { RegularCard, Table, ItemGrid } from "components";
-
+ var data=[];
  class Country extends React.Component 
  {
      constructor(props){
          super(props);
          this.state={
-             load:false
+             load:false,
+             mydata:[],
+             countryName:"",
+             countryCode:"",
+             _id:""
          }
      };
 
 clickaction=()=>{
+    this.setState({ countryName: "", countryCode: "", _id:""})    
 this.setState({load:true})
+}
+
+handleEdit=(e,item)=>{
+        this.setState({ load: true })
+    this.setState({countryName:item.countryName})
+    this.setState({ countryCode: item.countryCode })
+    this.setState({ _id: item._id })
+    
+    }    
+
+
+     data = () => {
+         fetch("http://localhost:8080/allCountry?_id=5af170d60c06c02559273df1", {
+             method: "GET",
+             cache: 'no-cache',
+             mode: 'cors',
+             headers: new Headers({
+                 'Content-Type': 'application/json',
+                 'authorization': "Key@123"
+             })
+         }).then(res => res.json()).then(
+             (result) => {
+                 var maindata = [];
+                 var localdata = []
+                 console.log(result.data)
+
+                 result.data.map((item, key) => {
+                     localdata.push(item.SerialNo, item.countryCode, item.countryName)
+                     localdata.push(<button onClick={(e)=>this.handleEdit(e ,item) }>Edit</button>)
+                     maindata.push(localdata);
+                     localdata = [];
+                 })
+
+
+                 this.setState({ mydata: maindata })
+                 console.log(this.state.mydata, "arrsy")
+             },
+             (error) => {
+                 console.log("error", error)
+             }
+         )
+     }
+componentDidMount(){
+this.data()
+
 }
 onClose = () => {
  this.setState({load:false });
+ this.data();
+
 };
  
 render(){
@@ -39,37 +91,19 @@ render(){
                     content={
                         <Table
                             tableHeaderColor="primary"
-                            tableHead={["ID", "Name", "Country", "City", "Salary"]}
-                            tableData={[
-                                ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                                ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                                ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                                [
-                                    "4",
-                                    "Philip Chaney",
-                                    "$38,735",
-                                    "Korea, South",
-                                    "Overland Park"
-                                ],
-                                [
-                                    "5",
-                                    "Doris Greene",
-                                    "$63,542",
-                                    "Malawi",
-                                    "Feldkirchen in Kärnten"
-                                ],
-                                ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"]
-                            ]}
+                            tableHead={["Serial No", "CountryCode", "CountryName"]}
+                            tableData={this.state.mydata}
                         />
                         }
                 
                 />
 
             </ItemGrid>
-            <Modal open={this.state.load} onClose={this.onClose}/>
+            <Modal open={this.state.load} data={{"_id":this.state._id,"countryName":this.state.countryName,"countryCode":this.state.countryCode}} onClose={this.onClose}/>
         </Grid>
        
     );
+  
 }
  }
 

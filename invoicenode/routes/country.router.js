@@ -1,7 +1,5 @@
 /**
- * @file(asset.router.js) All routing of asset
- * @author Shakshi Pandey <shakshi.kumari@limitlessmobile.com>
- * @version 1.0.0
+ *
  * @lastModifed 14-Jan-2018
  * @lastModifedBy Shakshi
  */
@@ -11,7 +9,7 @@ import countryService from "../service/country.service";
 const router = express.Router()
 
 router.get('/allCountry', (req, res) => {
-    countryService.getAll(req, res);
+    countryService.getAllCountry(req, res);
 });
 
 

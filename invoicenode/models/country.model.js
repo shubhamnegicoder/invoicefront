@@ -17,7 +17,7 @@ AutoIncrement.initialize(mongoose);
 
 
 const CountrySchema = mongoose.Schema({
-    countryCode: { type: Number},
+    countryCode: { type: String, index:{ unique: true }  },
     countryName: { type: String },
     createdBy: { type: mongoose.Schema.ObjectId },
     createAt: { type: Date },
@@ -25,7 +25,7 @@ const CountrySchema = mongoose.Schema({
 }, { collection: 'country' });
 CountrySchema.plugin(AutoIncrement.plugin, {
     model: 'country',
-    field: 'countryId',
+    field: 'SerialNo',
     startAt:1,
     incrementBy: 1
 });
@@ -33,52 +33,9 @@ CountrySchema.plugin(AutoIncrement.plugin, {
 let CountryModal = mongoose.model('country',CountrySchema);
 
 
-
-/**
- *@description [is used for getting all data of asset from db]
- * @return {object}
- */
-
-// CountrySchema.getAll = (dataToFind) => {
-//     console.log(dataToFind, "dataToFind")
-//     return CountrySchema.aggregate([
-//         { $match: dataToFind.query },
-//         {
-//             $lookup: {
-//                 from: "assettype",
-//                 localField: "assetTypeId",
-//                 foreignField: "_id",
-//                 as: "assetType_docs"
-//             }
-
-//         },
-//         {
-//             $unwind: "$assetType_docs"
-//         },
-//         {
-//             $project: {
-//                 assetId: 1,
-//                 assetTypeId: 1,
-//                 assetTypeName: "$assetType_docs.assetTypeName",
-//                 assetName: 1,
-//                 serialNo: 1,
-//                 country: 1,
-//                 city: 1,
-//                 state: 1,
-//                 area: 1,
-//                 address: 1,
-//                 status: 1
-
-//             }
-//         }
-//     ]);
-//     return AssetModel.find(dataToFind.query, dataToFind.projection);
-
-
-
 CountryModal.allCountry = (dataToFind) => {
     console.log(dataToFind, " = dataToFind2222")
-    return Country.find(dataToFind.query);
+    return CountryModal.find(dataToFind.query);
 }
 
 /**
