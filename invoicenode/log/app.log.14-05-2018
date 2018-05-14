@@ -168,3 +168,17 @@
 >>>>>>> 51bf7c195585ed5e939386063f3a2c62539365bd
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-14T05:42:55.426Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T05:42:55.447Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T05:53:16.549Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T05:53:23.129Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:18:06.884Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:18:09.176Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-14T06:18:09.220Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:18:10.942Z"}
+{"level":"info","message":"sending all city...","timestamp":"2018-05-14T06:18:10.980Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:33:27.345Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:33:53.521Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:33:58.759Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:35:57.076Z"}
+{"level":"info","message":"Adding Country...","timestamp":"2018-05-14T06:36:26.810Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:36:29.384Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-14T06:38:55.477Z"}
