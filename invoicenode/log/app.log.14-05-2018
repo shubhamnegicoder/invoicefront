@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:12:52.746Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:12:52.812Z"}
 {"level":"info","message":"sending all country...","timestamp":"2018-05-14T04:16:06.182Z"}
@@ -149,3 +150,21 @@
 >>>>>>> 5b7d1366b46281237c06be16352c2407117111d4
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-14T05:16:32.594Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T05:16:32.615Z"}
+=======
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:40:42.206Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-05-14T04:40:43.208Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:40:58.136Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:40:58.201Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:41:46.493Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:41:46.514Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:48:24.893Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:48:24.923Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:51:12.408Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:51:12.444Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:51:48.875Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:51:48.896Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T04:55:19.990Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T04:55:20.039Z"}
+>>>>>>> 51bf7c195585ed5e939386063f3a2c62539365bd
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-14T05:42:55.426Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-14T05:42:55.447Z"}

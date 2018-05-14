@@ -13,6 +13,7 @@ import state from "./routes/state.router";
 import city from "./routes/city.router"
 import invoice from './routes/invoice.router.js';
 import customer  from './routes/customer.router.js';
+import company  from './routes/company.router.js';
 import net from 'net';
 import cors from 'cors';
 
@@ -56,6 +57,7 @@ app.use(state);
 app.use(city);
 app.use(invoice);
 app.use(customer);
+app.use(company);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
