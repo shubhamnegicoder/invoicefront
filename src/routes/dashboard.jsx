@@ -6,6 +6,8 @@ import Icons from "views/Icons/Icons.jsx";
 import City from "../views/Location/City/City";
 import State from "../views/Location/State/State";
 import Country from "../views/Location/Country/Country";
+import Customer from "../views/Customer/Customer.jsx";
+import Login from "../views/login/login";
 import CreateInvoice from "../views/Invoice/CreateInvoice/CreateInvoice.jsx";
 import ListInvoice from "../views/Invoice/ListInvoice/ListInvoice.jsx";
 import Tax from "../views/Tax/Tax.jsx";
@@ -39,6 +41,13 @@ const dashboardRoutes = [
   },
 
   {
+    path: "/customer",
+    sidebarName: "Customer",
+    icon: Person,
+    component: Customer
+  },
+  
+  {
     path: "/invoice",
     sidebarName: "Invoice",
     navbarName: "Invoice",
@@ -51,6 +60,7 @@ const dashboardRoutes = [
         navbarName: "Invoice Creation",
         component: CreateInvoice
       },
+      
       {
         path: "/InvoiceList",
         sidebarName: "Invoice List",
@@ -75,22 +85,22 @@ const dashboardRoutes = [
     childs: [
       {
         path: "/Location/country",
-        sidebarName: "Country",
+        sidebarName: "Country", 
         icon: LocationOn,
         navbarName: "Country",
-        component: Country
+        component: Country 
       }, {
         path: "/Location/state",
-        sidebarName: "State",
-        navbarName: "State",
+        sidebarName: "State", 
+        navbarName: "State",   
         icon: LocationOn,
         component: State
       },
       {
-        path: "/Location/city",
-        sidebarName: "City",
+        path: "/Location/city", 
+        sidebarName: "City",   
         navbarName: "City",
-        icon: LocationOn,
+        icon: LocationOn,  
         component: City
       }
     ]
@@ -98,4 +108,4 @@ const dashboardRoutes = [
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
 
-export default dashboardRoutes;
+export default dashboardRoutes;  

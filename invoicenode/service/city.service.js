@@ -1,6 +1,6 @@
 
 
-import Country from '../models/country.model'
+import City from '../models/city.model'
 import logger from '../core/logger/app.logger'
 import msg from '../core/message/error.msg.js'
 import successMsg from '../core/message/success.msg'
@@ -16,33 +16,6 @@ import ObjectID from "bson-objectid";
  */
 const service = {};
 
-/**
- * @description [with all the calculation before getAll function of model and after getAll]
- * @param  {[object]}
- * @param  {[object]}
- * @return {[object]}
- */
-service.getAll = async (req, res) => {
-    var location = {};
-    if (!req.query._id) {
-        return res.send({ "success": false, "code": "500", "msg": "countryId is missing" });
-    }
-    // if (req.query.location) {
-    //     location = req.query.location;
-    // }
-
-    //let clientId = utility.removeQuotationMarks(req.query.clientId);
-    try {
-         // console.log(dataToFind);
-        const country = await Country.getAll(dataToFind);
-        logger.info('sending all country...');
-        return res.send({ success: true, code: 200, msg: "succsess", data:country });
-    } catch (err) {
-        logger.error('Error in getting country- ' + err);
-        return res.send({ success: false, code: 500, msg: "error", err: err });
-
-    }
-}
 
 /**
  * @description get all asset that is not associated with device
@@ -50,39 +23,26 @@ service.getAll = async (req, res) => {
  * @param  {[object]}
  * @return {[object]}
  */
-service.getAllCountry = async (req, res) => {
-    var location = {};
+service.getAllCity = async (req, res) => {
+    console.log(req.query,"allllllllllllllllllllllllllllllllll")
     if (!req.query._id) {
         return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
     }
 
     try {
-        // const Alldevices = await Device.allDevice(dataToFind);
-        // var assetArray = [];
-
-        // for (var i = 0; i < Alldevices.length; i++) {
-        //     console.log(typeof Alldevices[i].assetId)
-
-        //     assetArray.push(Alldevices[i].assetId)
-        // }
-
-        // if (req.query.isAssetType) {
-        //     dataToFind.projection = {
-        //         assetType: 1, assetId: 1
-        //     }
-        // }
-        var queryToFindCountry = {}
-            queryToFindCountry = {
+       
+        var queryToFindCity = {}
+            queryToFindCity = {
                 query: {createdBy:ObjectID(req.query._id) }
             }
         
 
         // console.log(dataToFind);
-        const country = await Country.allCountry(queryToFindCountry);
-        logger.info('sending all country...');
-        return res.send({ success: true, code: 200, msg:"listed ok", data: country });
+        const city = await City.allCity(queryToFindCity);
+        logger.info('sending all city...');
+        return res.send({ success: true, code: 200, msg:"listed ok", data: city });
     } catch (err) {
-        logger.error('Error in getting country- ' + err);
+        logger.error('Error in getting city- ' + err);
         return res.send({ success: false, code: 500, msg: "listed false", err: err });
 
     }
@@ -93,28 +53,33 @@ service.getAllCountry = async (req, res) => {
  * @param  {[object]}
  * @return {[object]}
  */
-service.addCountry = async (req, res) => {
-    if (!req.body.countryCode || !req.body.countryName) {
-      return res.send({ "success": false, "code": "500", "msg": msg.param });
+service.addCity = async (req, res) => {
+    console.log(req.body,"add citydata back")
+   
+    if (!req.body.cityCode || !req.body.cityName) {
+       return res.send({ "success": false, "code": "500", "msg": msg.param });
     }
-    // console.log(req.body,"addddddddddddd conyrrrrrrrrrr")
+
     //let clientId = utility.removeQuotationMarks(req.body.clientId);
-    let countryToAdd = Country({
-        countryCode: req.body.countryCode,
-        countryName: req.body.countryName,
+    let cityToAdd = City({
+        countryCode:req.body.countryCode,
+        stateCode:req.body.stateCode,
+        cityCode: req.body.cityCode,
+        cityName: req.body.cityName,
         createdBy: req.body.id,
         createAt: new Date()
     });
 
     try {
-
-        const savedCountry = await Country.addCountry(countryToAdd);
-        logger.info('Adding Country...');
-        return res.send({ "success": true, "code": "200", "msg":"country added successfully" , "data": savedCountry });
+        // console.log(cityToAdd,"jayega")
+        const savedCity = await City.addCity(cityToAdd);
+        // console.log(savedCity,"save kyo nhi hua")
+        logger.info('Adding city...');
+        return res.send({ "success": true, "code": "200", "msg":"city added successfully" , "data": savedCity });
     }
     catch (err) {
         // logger.error('Error in getting Asset- ' + err);
-        return res.send({ "success": false, "code": "500", "msg": "unable to add country", "err": err });
+        return res.send({ "success": false, "code": "500", "msg": "unable to add city", "err": err });
     }
 }
 
@@ -125,20 +90,20 @@ service.addCountry = async (req, res) => {
  * @param  {[type]}
  * @return {[type]}
  */
-service.editCountry = async (req, res) => {
-    console.log(req.body,"editttttttttttt")
-    let countryToEdit = {
-        countryName:req.body.countryName
+service.editCity = async (req, res) => {
+    let cityToEdit = {
+        cityCode: req.body.cityCode,
+        cityName: req.body.cityName
     };
-    let countryEdit = {
+    let cityEdit = {
         query:{ "_id": req.body._id },
-        data: { "$set": countryToEdit }
+        data: { "$set": cityToEdit }
     };
     try {
-        const editedCountry = await Country.editCountry(countryEdit);
-        logger.info('edit country');
+        const editedCity = await City.editCity(cityEdit);
+        logger.info('Edit city...');
         // console.log('Adding asset...');
-        return res.send({ "success": true, "code": "200", "msg":"country edited", "data": editedCountry });
+        return res.send({ "success": true, "code": "200", "msg":"country edited", "data": editedCity });
     } catch (err) {
         logger.error('Error in getting Asset- ' + err);
         return res.send({ "success": false, "code": "500", "msg": "unable to edit country", "err": err });

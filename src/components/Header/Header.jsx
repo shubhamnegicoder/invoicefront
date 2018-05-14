@@ -51,14 +51,14 @@ function Header({ ...props }) {
           <HeaderLinks />
         </Hidden>
         <Hidden mdUp>
-          <IconButton
+          {/* <IconButton
             className={classes.appResponsive}
             color="inherit"
             aria-label="open drawer"
             onClick={props.handleDrawerToggle}
           >
             <Menu />
-          </IconButton>
+          </IconButton> */}
         </Hidden>
       </Toolbar>
     </AppBar>

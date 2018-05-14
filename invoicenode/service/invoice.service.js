@@ -13,20 +13,15 @@ const service = {};
 
 service.addInvoice = async (req, res) => {
     let invoiceToAdd = Invoice({
-        item: req.body.item,
-        qty: req.body.qty,
-        price: req.body.price,
-        total: req.body.total
+        itemData: req.body.item
     });
     try {
-        if (!req.body.item || !req.body.qty || !req.body.price || !req.body.total) {
-            return res.send({ "success": false, "code": "500", "msg": msg.param });
-        }
         const savedInvoice = await Invoice.addInvoice(invoiceToAdd);
         logger.info('Adding invoice...');
         res.send({ "success": true, "code": "200", "msg": successMsg.addInvoice, "data": savedInvoice });
     }
     catch (err) {
+        console.log("catch");
         logger.error('Error in getting Invoice- ' + err);
         res.send({ "success": false, "code": "500", "msg": msg.addInvoice, "err": err });
     }

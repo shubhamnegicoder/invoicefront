@@ -96,7 +96,7 @@ service.addCustomer = async (req,res)=>{
 	try{
 		console.log("this is add Customer");
 		var addCustomer = await CustomerModel.addCustomer(customerToAdd);
-		return res.send({success:true, code:200, msg:"Successfully found", data:addCustomer}); 
+		return res.send({success:true, code:200, msg:"Successfully added", data:addCustomer}); 
 	}catch(error){
 		return res.send({success:false, code:500, msg:"Error in adding Customer", err:error})
 	}

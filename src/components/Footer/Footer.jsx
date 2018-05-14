@@ -10,7 +10,7 @@ function Footer({ ...props }) {
     <footer className={classes.footer}>
       <div className={classes.container}>
         <div className={classes.left}>
-          <List className={classes.list}>
+          {/* <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
               <a href="#home" className={classes.block}>
                 Home
@@ -31,14 +31,14 @@ function Footer({ ...props }) {
                 Blog
               </a>
             </ListItem>
-          </List>
+          </List> */}
         </div>
         <p className={classes.right}>
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
-            <a href="http://www.creative-tim.com" className={classes.a}>
-              Creative Tim
-            </a>, made with love for a better web
+            <a href="https://www.limitlessmobil.com/" className={classes.a}>
+              Limitless Mobility Solutions Pvt. Ltd.
+            </a>
           </span>
         </p>
       </div>

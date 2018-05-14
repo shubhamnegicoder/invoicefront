@@ -3,11 +3,16 @@ import AutoIncrement from "mongoose-auto-increment";
 AutoIncrement.initialize(mongoose);
 
 const InvoiceSchema = mongoose.Schema({
-    invoiceId: { type: Number },
-    item: { type: String },
-    qty: { type: Number },
-    price: { type: Number },
-    total: { type: Number },
+    itemData: [
+        {
+            itemCode: { type: String },
+            itemName: { type: String },
+            qty: { type: Number },
+            rate: { type: Number },
+            total: { type: Number },
+            discount: { type: Number }
+        }
+    ]
 }, { collection: 'invoice' });
 
 InvoiceSchema.plugin(AutoIncrement.plugin, { model: 'invoice', field: 'invoiceId', startAt: 1, incrementBy: 1 });
