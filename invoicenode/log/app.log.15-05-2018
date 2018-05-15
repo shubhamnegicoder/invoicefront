@@ -1,0 +1,87 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T04:38:09.452Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T04:38:09.525Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T05:37:10.028Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T05:37:10.102Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T05:52:55.006Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T05:52:55.071Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:18:14.415Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:18:14.489Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:21:06.466Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:21:06.529Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:22:17.534Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:22:17.610Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:22:49.875Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:22:49.952Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:25:15.032Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:25:15.107Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:28:15.376Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:28:15.446Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:28:38.659Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:28:38.727Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:32:03.662Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:32:03.720Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T06:32:58.850Z"}
+{"level":"info","message":"Adding Country...","timestamp":"2018-05-15T06:33:08.135Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T06:33:11.506Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:41:30.598Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:41:30.654Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:47:51.785Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:47:51.849Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:50:40.296Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:50:40.363Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T06:51:46.460Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T06:51:46.523Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T06:57:55.397Z"}
+{"level":"info","message":"edit country","timestamp":"2018-05-15T06:58:00.371Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T06:58:02.842Z"}
+{"level":"info","message":"Adding Country...","timestamp":"2018-05-15T06:58:12.757Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T06:58:14.999Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T07:14:05.010Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T07:14:05.077Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T07:18:34.784Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T07:18:34.838Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T07:21:27.632Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T07:21:27.708Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T07:24:16.288Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T07:24:16.357Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T07:26:38.148Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T07:26:38.212Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T07:30:13.980Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T07:30:14.048Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T07:34:56.862Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T07:34:56.935Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T08:35:56.608Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T08:35:56.675Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T08:46:16.171Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T08:46:16.232Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T08:48:01.435Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T08:56:24.008Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T09:02:47.099Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T09:02:47.166Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T09:03:40.100Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T09:03:40.162Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T09:04:41.565Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T09:04:41.625Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T09:06:30.180Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T09:06:30.254Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:17:16.517Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:17:22.537Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:17:24.325Z"}
+{"level":"info","message":"sending all city...","timestamp":"2018-05-15T09:17:24.399Z"}
+{"level":"info","message":"sending all city...","timestamp":"2018-05-15T09:17:31.357Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:17:38.182Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:17:54.208Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:19:45.024Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T09:47:34.427Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T09:47:34.497Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:59:41.731Z"}
+{"level":"info","message":"sending all city...","timestamp":"2018-05-15T09:59:41.777Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:59:45.103Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-15T09:59:45.137Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:59:46.846Z"}
+{"level":"info","message":"edit country","timestamp":"2018-05-15T09:59:56.417Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T09:59:58.685Z"}
+{"level":"info","message":"edit country","timestamp":"2018-05-15T10:00:33.639Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T10:00:35.553Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T10:06:41.694Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-15T10:08:07.672Z"}

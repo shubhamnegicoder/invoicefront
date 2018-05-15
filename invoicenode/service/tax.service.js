@@ -29,19 +29,19 @@ import Tax from '../models/tax.model'
 
 const service = {};
 
-service.getAll = async (req,res) =>{
-	try{
-		// let dataToFind = {
-		// 	query:{parentId:ObjectID(req.query._id)}
-		// };
-		const tax = await Tax.getAll();
-        res.send({success:true, code:200, msg:"success", data:tax});
+service.getAll = async (req, res) => {
+    try {
+        // let dataToFind = {
+        // 	query:{parentId:ObjectID(req.query._id)}
+        // };
+        const tax = await Tax.getAll();
+        res.send({ success: true, code: 200, "msg": "success", data: tax });
         // console.log(tax,"data");
-	}catch(err){
+    } catch (err) {
         // logger.error('Error in getting user- ' + err);
         // console.log(err);
-		res.send({success:false, code:500, msg:"error", err:err});
-	}
+        res.send({ success: false, code: 500, "msg": "error", err: err });
+    }
 }
 
 
@@ -56,68 +56,76 @@ service.getAll = async (req,res) =>{
  * @return {[object]}
  */
 service.addTax = async (req, res) => {
-    console.log(req.body,"hi")
-  if(!req.body.taxCode|| !req.body.taxName || !req.body.igst || !req.body.sgst || !req.body.cgst ){
-          return res.send({"success":false, "code":"500","msg":"error"});
-    }
-
-    let taxToAdd = Tax({
+    // console.log(req.body, "hi")
+    // console.log(req.body.cgst.length)
      
-      taxCode: req.body.taxCode,
-      taxName: req.body.taxName,
-      cgst: req.body.cgst,
-      sgst:req.body.sgst,
-      igst:req.body.igst,
-      isActive:req.body.isActive , 
-    //   createdBy: req.body._id,
-    //   modifiedBy: {type:mongooseSchema.ObjectId },
-    //   modifiedOn:new Date()
+    if (!req.body.taxCode || !req.body.taxName || !req.body.igst || !req.body.sgst || !req.body.cgst) {
+        return res.send({ "success": false, "code": 500, "msg": "error" });
+    }
+    if (req.body.cgst.length> 2 || req.body.igst.length > 2 || req.body.sgst.length > 2) {
+       return res.send({ "success": false, "code": 500, "msg": "error"})
+    }
+   
+    let taxToAdd = Tax({
+
+        taxCode: req.body.taxCode,
+        taxName: req.body.taxName,
+        cgst: req.body.cgst,
+        sgst: req.body.sgst,
+        igst: req.body.igst,
+        isActive: req.body.isActive
+        //   createdBy: req.body._id,
+        //   modifiedBy: {type:mongooseSchema.ObjectId },
+        //   modifiedOn:new Date()
     });
-    
+
 
     try {
-        
+
         const savedTax = await Tax.addTax(taxToAdd);
         // console.log("isactive" + req)
         // logger.info('Adding tax...');
-       console.log("savedTax" +savedTax);
-        res.send({"success":true, "code":"200", "msg":"success","data":savedTax});
+        console.log("savedTax" + savedTax);
+        res.send({ "success": true, "code": "200", "msg": "success", "data": savedTax });
     }
-    catch(err) {
+    catch (err) {
         // logger.error('Error in getting User- ' + err);
         console.log(err)
-        res.send({"success":false, "code":"500", "msg":"errorr","err":err});
+        res.send({ "success": false, "code": "500", "msg": "errorr", "err": err });
     }
 }
 
-service.editTax = async(req,res)=>{
-    if(!req.body._id){
-        res.send({"success":false,"code":500,"msg":msg._id})
+service.editTax = async (req, res) => {
+    if (!req.body._id) {
+      return res.send({ "success": false, "code": 500, "msg": "error" })
     }
-    let TaxEdit={
+    if (req.body.cgst.length >2 || req.body.igst.length >2 || req.body.sgst.length > 2) {
+       return res.send({ "success": false, "code": 500, "msg": "error" })
+    }
+    let TaxEdit = {
         taxName: req.body.taxName,
         cgst: req.body.cgst,
-        sgst:req.body.sgst,
-        igst:req.body.igst,
-        isActive:req.body.isActive,   
-        createdBy:req.body.createdBy,
-        modifiedBy:req.body.modifiedBy,
-        modifiedOn:new Date()
+        sgst: req.body.sgst,
+        igst: req.body.igst,
+        isActive: req.body.isActive,
+        createdBy: req.body.createdBy,
+        modifiedBy: req.body.modifiedBy,
+        modifiedOn: new Date()
     }
-    let taxToEdit={
-        query:{"_id":req.body._id},
-        data:{"$set":TaxEdit}
-        
+    let taxToEdit = {
+        query: { "_id": req.body._id },
+        data: { "$set": TaxEdit }
+
     };
     // console.log(taxToEdit,"data")
-    try{
-        const editTax= await Tax.editTax(taxToEdit);
-        res.send({"success":true,"code":200,"msg":"success","data":editTax});
+    try {
+        const editTax = await Tax.editTax(taxToEdit);
+        res.send({ "success": true, "code": 200, "msg": "success", "data": editTax });
 
     }
-    catch(err){
-        console.log(err,"erreo")
-        res.send({"success":false, "code":"500", "msg":"failed","err":err});
+    catch (err) {
+        console.log(err, "erreo")
+        res.send({ "success": false, "code": "500", "msg": "failed", "err": err });
     }
 }
 export default service;
