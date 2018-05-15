@@ -121,7 +121,7 @@ export default class App extends React.Component {
                         icon: "success"
 
                     })
-                    // this.props.handleClose();
+                    this.props.onClose();
 
                 }
                 else {
@@ -197,8 +197,8 @@ export default class App extends React.Component {
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>
                                                         <h5> Select Country:</h5>
-                                                        <select placeholder="select country"   onChange={this.handleChange1}>
-                                                         <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option>
+                                                        <select placeholder="select country" readOnly={this.state._id ? "readOnly" : false}   onChange={this.handleChange1}>
+                                                            <option value="Select Country "style={{width:"150px"}}> Select Country Name</option>
                                                          {     
                                                               this.state.dropDownData && this.state.dropDownData.map((item, index) => {
                                                               
@@ -214,7 +214,7 @@ export default class App extends React.Component {
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>
                                                         <h5> State Code:</h5>
-                                                        <input required type="text" name="stateCode" ref="code" value={this.state.stateCode} onChange={this.handleChange} />
+                                                        <input required type="text" readOnly={this.state._id ? "readOnly" : false} name="stateCode" ref="code" value={this.state.stateCode} onChange={this.handleChange} />
                                                     </label>
                                                 </ItemGrid>
                                                 <ItemGrid xs={12} sm={12} md={15}>

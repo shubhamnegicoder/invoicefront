@@ -29,7 +29,6 @@ export default class App extends React.Component {
 
     }
     componentWillReceiveProps(newprops){
-       console.log(newprops,"jjj")
         this.setState({countryCode:newprops.data.countryCode })
        this.setState({countryName:newprops.data.countryName})
         this.setState({ _id: newprops.data._id })
@@ -112,8 +111,7 @@ export default class App extends React.Component {
                         icon: "success"
 
                     })
-                    // this.props.handleClose();
-
+                    this.props.onClose();
                 }
                 else{
                     swal({
@@ -146,7 +144,7 @@ export default class App extends React.Component {
                                             <ItemGrid xs={12} sm={12} md={15}>
                                                 <label>
                                                    <h5> Country Code:</h5>
-                                                    <input required type="text" name="countryCode"ref="code"value={this.state.countryCode} onChange={this.handleChange} />
+                                                    <input required readOnly={this.state._id ?"readOnly":false} type="text" name="countryCode"ref="code"value={this.state.countryCode} onChange={this.handleChange} />
                                                 </label>
                                             </ItemGrid>
                                             <ItemGrid xs={12} sm={12} md={15}>

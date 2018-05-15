@@ -3,6 +3,9 @@ import { Grid } from "material-ui";
 import Button from 'material-ui/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Modal from './modal'
+import Pagination from 'react-js-pagination'
+import axios from 'axios';
+// import  'bootstrap/less/bootstrap.less'
 // import Modal from 'react-responsive-modal';
 
 import { RegularCard, Table, ItemGrid } from "components";
@@ -11,45 +14,41 @@ import { RegularCard, Table, ItemGrid } from "components";
  {
      constructor(props){
          super(props);
+       
          this.state={
              load:false,
              mydata:[],
              countryName:"",
              countryCode:"",
-             _id:""
+             _id:"",
+             activePage:3,
+             options:""
          }
      };
 
 clickaction=()=>{
     this.setState({ countryName: "", countryCode: "", _id:""})    
-this.setState({load:true})
+this.setState({load:true,options:"add"})
 }
 
 handleEdit=(e,item)=>{
         this.setState({ load: true })
-    this.setState({countryName:item.countryName})
-    this.setState({ countryCode: item.countryCode })
-    this.setState({ _id: item._id })
+    this.setState({countryName: item.countryName ,countryCode: item.countryCode , _id: item._id
+    ,options:"edit"})
     
     }    
 
 
      data = () => {
-         fetch("http://localhost:8080/allCountry?_id=5af170d60c06c02559273df1", {
-             method: "GET",
-             cache: 'no-cache',
-             mode: 'cors',
-             headers: new Headers({
-                 'Content-Type': 'application/json',
-                 'authorization': "Key@123"
-             })
-         }).then(res => res.json()).then(
+         axios.get("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1")
+        .then(
              (result) => {
+
                  var maindata = [];
                  var localdata = []
                  console.log(result.data)
 
-                 result.data.map((item, key) => {
+                 result.data.data && result.data.data.map((item, key) => {
                      localdata.push(item.SerialNo, item.countryCode, item.countryName)
                      localdata.push(<button onClick={(e)=>this.handleEdit(e ,item) }>Edit</button>)
                      maindata.push(localdata);
@@ -74,7 +73,11 @@ onClose = () => {
  this.data();
 
 };
- 
+     handlePageChange=(pageNumber)=> 
+     {
+         console.log(pageNumber,)
+         this.setState({ activePage:pageNumber});
+     }
 render(){
     return (
         <Grid container>
@@ -91,7 +94,7 @@ render(){
                     content={
                         <Table
                             tableHeaderColor="primary"
-                            tableHead={["Serial No", "CountryCode", "CountryName"]}
+                            tableHead={["Serial No", "CountryCode", "CountryName","Operation"]}
                             tableData={this.state.mydata}
                         />
                         }
@@ -99,6 +102,13 @@ render(){
                 />
 
             </ItemGrid>
+            <Pagination
+                activePage={this.state.activePage}
+                itemsCountPerPage={5}
+                totalItemsCount={50}
+                pageRangeDisplayed={3}
+                onChange={this.handlePageChange}
+          />
             <Modal open={this.state.load} data={{"_id":this.state._id,"countryName":this.state.countryName,"countryCode":this.state.countryCode}} onClose={this.onClose}/>
         </Grid>
        

@@ -21,8 +21,7 @@ class State extends React.Component {
     };
 
     clickaction = () => {
-        this.setState({
-            stateCode: "",
+        this.setState({  stateCode: "",
             stateName: "",
             countryCode: "",
             _id: ""})
