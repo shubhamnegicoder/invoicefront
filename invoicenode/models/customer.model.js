@@ -14,7 +14,7 @@ import mongoose from 'mongoose';
  */
 const CustomerSchema = mongoose.Schema({
     customerName:{type:String},
-    customerCode:{type:String},
+    customerCode:{type:String,index:{unique:true,dropDups: true}},
     customerGSTNo:{type:String},
     addressLine1:{type:String},
     addressLine2:{type:String},
@@ -34,6 +34,11 @@ let CustomerModel = mongoose.model('customer', CustomerSchema);
 CustomerModel.allCustomer = () =>{
     return CustomerModel.find();
 }
+
+CustomerModel.oneCustomer = (dataToFind) =>{
+    return CustomerModel.findOne(dataToFind.query);
+}
+
 
 CustomerModel.addCustomer = (addToCustomer) =>{
     return addToCustomer.save();

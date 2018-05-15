@@ -14,6 +14,11 @@ router.get('/allCustomer', (req, res) => {
     customerService.getAll(req, res);
 });
 
+router.get('/oneCustomer', (req, res) => {
+    customerService.getOne(req, res);
+});
+
+
 router.post('/addCustomer', (req, res) => {
     customerService.addCustomer(req, res);
 });

@@ -31,6 +31,26 @@ service.getAll = async (req,res)=>{
 }
 
 /**
+ * @description [with all the calculation before getOne function of model and after getOne]
+ * @param  {[object]}
+ * @param  {[object]}
+ * @return {[object]}
+ */
+service.getOne = async (req,res)=>{
+
+	try{
+		let dataToFind={
+			query:{"_id":req.query._id}
+	
+		};
+		var oneCustomer = await CustomerModel.oneCustomer(dataToFind);
+		return res.send({success:true, code:200, msg:"Successfully found", data:oneCustomer}); 
+	}catch(error){
+		return res.send({success:false, code:500, msg:"Error in getting Customer", err:error})
+	}
+}
+
+/**
  * @description [with all the calculation before add function of model and after add]
  * @param  {[object]}
  * @param  {[object]}
@@ -127,9 +147,9 @@ service.editCustomer = async (req,res)=>{
 		//console.log("_id",req.body._id);
 		var editCustomer = await CustomerModel.editCustomer(customerEdit);
 
-		return res.send({success:true, code:200, msg:"Successfully found", data:editCustomer}); 
+		return res.send({success:true, code:200, msg:"Successfully edited", data:editCustomer}); 
 	}catch(error){
-		return res.send({success:false, code:500, msg:"Error in getting Customer", err:error})
+		return res.send({success:false, code:500, msg:"Error in editing Customer", err:error})
 	}
 }
 
