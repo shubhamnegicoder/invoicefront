@@ -228,3 +228,5 @@
 >>>>>>> ea1dd22617ae10b9f42a68b113a77bec84f87b85
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-15T11:50:09.086Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T11:50:09.130Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-15T19:09:45.458Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-15T19:09:45.529Z"}
