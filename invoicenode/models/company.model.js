@@ -13,7 +13,7 @@ import mongoose from 'mongoose';
  */
 const CompanySchema = mongoose.Schema({
     companyName:{type:String},
-    companyCode:{type:String},
+    companyCode:{type:String, index: {unique:true,dropDups: true}},
     companyGSTNo:{type:String},
     addressLine1:{type:String},
     addressLine2:{type:String},
@@ -34,8 +34,16 @@ CompanyModel.allCompany = () =>{
     return CompanyModel.find();
 }
 
+CompanyModel.oneCompany = (dataToFind) =>{
+    return CompanyModel.findOne(dataToFind.query);
+}
+
 CompanyModel.addCompany = (addToCompany) =>{
     return addToCompany.save();
+}
+
+CompanyModel.editCompany = (editToCompany) =>{
+return CompanyModel.update(editToCompany.query,editToCompany.data);
 }
 
 export default CompanyModel;

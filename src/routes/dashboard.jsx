@@ -7,6 +7,7 @@ import City from "../views/Location/City/City";
 import State from "../views/Location/State/State";
 import Country from "../views/Location/Country/Country";
 import Customer from "../views/Customer/Customer.jsx";
+import Company from "../views/Company/Company.jsx";
 import Login from "../views/login/login";
 import CreateInvoice from "../views/Invoice/CreateInvoice/CreateInvoice.jsx";
 import ListInvoice from "../views/Invoice/ListInvoice/ListInvoice.jsx";
@@ -39,7 +40,6 @@ const dashboardRoutes = [
     icon: BubbleChart,
     component: Tax
   },
-
   {
     path: "/customer",
     sidebarName: "Customer",
@@ -47,6 +47,14 @@ const dashboardRoutes = [
     component: Customer
   },
   
+  {
+    path: "/company",
+    sidebarName: "Company",
+   // navbarName: "Company",
+    icon: BubbleChart,
+    component: Company
+  },
+
   {
     path: "/invoice",
     sidebarName: "Invoice",

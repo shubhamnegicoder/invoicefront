@@ -14,8 +14,16 @@ router.get('/allCompany', (req, res) => {
     companyService.getAll(req, res); 
 });
 
+router.get('/oneCompany', (req, res) => {
+    companyService.getOne(req, res); 
+});
+
 router.post('/addCompany', (req, res) => {
     companyService.addCompany(req, res);
+});
+
+router.post('/editCompany', (req, res) => {
+    companyService.editCompany(req, res);
 });
 
 export default router;

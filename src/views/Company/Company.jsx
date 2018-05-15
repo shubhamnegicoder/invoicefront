@@ -2,13 +2,13 @@ import React from "react";
 import { Grid ,Button} from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
 
-class CustomerList extends React.Component{
+class CompanyList extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            customerCode:"",
-            customerName:"",
-            customerGSTNo:"",
+            companyCode:"",
+            companyName:"",
+            companyGSTNo:"",
             addressLine1:"",
             addressLine2:"",
             city:"",
@@ -25,32 +25,32 @@ class CustomerList extends React.Component{
     }
 
     handleClick=(e)=>{
-        console.log('button cliked');
+       // console.log('button cliked');
         e.preventDefault();
-        window.location.href="/addCustomer";
+        window.location.href="/addCompany";
 
     }
 
     handleEdit=(e,response)=>{
         e.preventDefault();
-        this.setState({customerCode:response.customerCode})      
-        this.setState({customerName:response.customerName})
-        this.setState({customerGSTNo:response.customerGSTNo})
+        this.setState({companyCode:response.companyCode})      
+        this.setState({companyName:response.companyName})
+        this.setState({companyGSTNo:response.companyGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({city:response.city})
+        this.setState({city:response.city}) 
         this.setState({state:response.state})
         this.setState({country:response.country})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
-       window.location.href="/editCustomer?id="+response._id;
+       window.location.href="/editCompany?id="+response._id;
     }
 
     handleView=(e,response)=>{
         e.preventDefault();
-        this.setState({customerCode:response.customerCode})      
-        this.setState({customerName:response.customerName})
-        this.setState({customerGSTNo:response.customerGSTNo})
+        this.setState({companyCode:response.companyCode})      
+        this.setState({companyName:response.companyName})
+        this.setState({companyGSTNo:response.companyGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
         this.setState({city:response.city})
@@ -58,11 +58,11 @@ class CustomerList extends React.Component{
         this.setState({country:response.country})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
-       window.location.href="/viewCustomer?id="+response._id;
+       window.location.href="/viewCompany?id="+response._id;
     }
 
     list=()=>{
-        fetch("http://localhost:8080/allCustomer",{  
+        fetch("http://localhost:8080/allCompany",{  
           method: "GET",
           cache: 'no-cache', 
           mode: 'cors',
@@ -78,30 +78,29 @@ class CustomerList extends React.Component{
           result.data.forEach((responseData)=>{
               var dataArray = [];
               
-              dataArray.push(responseData.customerCode)
-              dataArray.push(responseData.customerName)
-              dataArray.push(responseData.customerGSTNo)
-              //dataArray.push(responseData.addressLine1)
-              //dataArray.push(responseData.addressLine2)
+              dataArray.push(responseData.companyCode)
+              dataArray.push(responseData.companyName)
+              dataArray.push(responseData.companyGSTNo)
+            //   var a1 = responseData.addressLine1;
+            //   var a2 = responseData.addressLine2;
+            //   var address = a1+" "+a2;
+            //   dataArray.push(address)
               dataArray.push(responseData.city)
               dataArray.push(responseData.state)
               dataArray.push(responseData.country)
-              //dataArray.push(responseData.postalCode)
+            //  dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)
               dataArray.push(<Button  class="RegularCard-purpleCardHeader-287" onClick={(e)=>this.handleEdit(e,responseData)} style={{backgroundColor:"purple",color:"white"}}>Edit Details</Button>)
              dataArray.push(<Button  class="RegularCard-purpleCardHeader-287" style={{backgroundColor:"purple",color:"white"}} onClick={(e)=>this.handleView(e,responseData)}>View Details</Button>)
               //dataArray.push(new Date(responseData.createdAt).toDateString());
-              mainArray.push(dataArray)
-      
+              mainArray.push(dataArray)     
             })
-           // console.log("main Array is",mainArray);
             this.setState({
                 data:mainArray
             })
             },
-            (error) => {
-               // alert("error",error)
+            (error) => {             
               console.log("error",error)
         }
       )
@@ -113,8 +112,8 @@ class CustomerList extends React.Component{
         <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-         cardTitle="Customer List"
-            cardSubtitle={<button onClick={this.handleClick} style={{float:"right", backgroundColor:"purple",color:"white"}}>Add Customer</button>}
+         cardTitle="Company List"
+            cardSubtitle={<button onClick={this.handleClick} style={{float:"right", backgroundColor:"purple",color:"white"}}>Add Company</button>}
             content={
                 <Table
                 tableHeaderColor="primary"
@@ -131,4 +130,4 @@ class CustomerList extends React.Component{
     }
 
 
-export default CustomerList; 
+export default CompanyList; 
