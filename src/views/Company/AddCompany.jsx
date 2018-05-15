@@ -2,13 +2,13 @@ import React from "react";
 import { Button} from "material-ui";
 import swal from "sweetalert";
 
-class AddCustomer extends React.Component{
+class AddCompany extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            customerCode:"",
-            customerName:"",
-            CustomerGSTNo:"",
+            companyCode:"",
+            companyName:"",
+            companyGSTNo:"",
             addressLine1:"",
             addressLine:"",
             city:"",
@@ -20,9 +20,9 @@ class AddCustomer extends React.Component{
     }
 
     handleChange=()=>{
-        this.setState({customerCode:this.refs.customerCode.value});
-        this.setState({customerName:this.refs.customerName.value});
-        this.setState({customerGSTNo:this.refs.customerGSTNo.value});
+        this.setState({companyCode:this.refs.companyCode.value});
+        this.setState({companyName:this.refs.companyName.value});
+        this.setState({companyGSTNo:this.refs.companyGSTNo.value});
         this.setState({addressLine1:this.refs.addressLine1.value});
         this.setState({addressLine2:this.refs.addressLine2.value});
         this.setState({city:this.refs.city.value});
@@ -33,21 +33,20 @@ class AddCustomer extends React.Component{
     }
 
     handleClose=(e)=>{
-       // alert('button cliked');
         e.preventDefault();
-        window.location.href="/customer";
+        window.location.href="/company";
 
     }
 
     save=()=>{
-        if(this.state.customerCode==""){
-            return alert("Customer code is required");       
+        if(this.state.companyCode==""){
+            return alert("Company code is required");       
         }
-        if(this.state.customerName==""){
-            return alert("Customer name is required");       
+        if(this.state.companyName==""){
+            return alert("Company name is required");       
         }
-        if(this.state.customerGSTNo==""){
-            return alert("Customer gst no is required");       
+        if(this.state.companyGSTNo==""){
+            return alert("Company gst no is required");       
         }
         if(this.state.addressLine1==""){
             return alert("Address 1 is required");       
@@ -73,7 +72,10 @@ class AddCustomer extends React.Component{
         if(this.state.contactNo==""){
             return alert("Contact no is required");       
         }
-        fetch("http://localhost:8080/addCustomer",{
+        // if(this.state.companyCode==""){
+        //     return alert("Contact no is required");       
+        // }
+        fetch("http://localhost:8080/addCompany",{
             body:JSON.stringify(this.state),
             method: "POST",
             cache: 'no-cache',
@@ -87,12 +89,10 @@ class AddCustomer extends React.Component{
         .then(
             (result) => 
             {
-               // console.log("this is save function....",result);
-                // console.log("this is save function....");
                 if(result.success==true)
                 {
                     swal({
-                        title: "Customer Added Successfully !",
+                        title: "Company Added Successfully !",
                         icon: "success",
                     });
                 }      
@@ -106,7 +106,6 @@ class AddCustomer extends React.Component{
             },
             (error) => 
             {
-                //alert("error",error)
                 console.log("error",error)
             }
         )
@@ -115,19 +114,19 @@ class AddCustomer extends React.Component{
         return (<div>
             <table style={{width:"600px",height:"450px"}} align="center">
                 <tr>            
-                    <td><span style={{color:"red"}}>*</span>Customer Code </td>
+                    <td><span style={{color:"red"}}>*</span>Company Code </td>
                     <td></td>
-                    <td><input type="text" placeholder="Customer Code" ref="customerCode" onChange={this.handleChange}/></td>
+                    <td><input type="text" placeholder="Company Code" ref="companyCode" onChange={this.handleChange}/></td>
                 </tr>
                 <tr>
-                    <td><span style={{color:"red"}}>*</span>Customer Name </td>
+                    <td><span style={{color:"red"}}>*</span>Company Name </td>
                     <td></td>
-                    <td><input type="text" placeholder="Customer Name" ref="customerName" onChange={this.handleChange}/></td>
+                    <td><input type="text" placeholder="Company Name" ref="companyName" onChange={this.handleChange}/></td>
                 </tr>
                 <tr>
-                    <td><span style={{color:"red"}}>*</span>Customer GST No</td>
+                    <td><span style={{color:"red"}}>*</span>Company GST No</td>
                     <td></td>
-                    <td><input type="text" placeholder="Customer GST No" ref="customerGSTNo" onChange={this.handleChange}/></td>
+                    <td><input type="text" placeholder="Company GST No" ref="companyGSTNo" onChange={this.handleChange}/></td>
                 </tr>
                 <tr>
                     <td><span style={{color:"red"}}>*</span>Address Line 1</td>
@@ -174,4 +173,4 @@ class AddCustomer extends React.Component{
     }
 }
 
-export default AddCustomer;
+export default AddCompany; 

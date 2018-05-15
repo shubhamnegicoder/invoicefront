@@ -74,7 +74,7 @@ class SimpleModal extends React.Component {
   };
   onCancel = () => {
     this.props.handleClose();
-    this.setState({ taxCode: "", taxName: "", cgst: "", sgst: "", igst: "" })
+    this.setState({ taxCode: "", taxName: "", cgst: "", sgst: "", igst: "" ,isActive:"",_id:""})
   };
 
   componentWillReceiveProps(newprops) {
@@ -86,21 +86,38 @@ class SimpleModal extends React.Component {
       cgst: newprops.cgst,
       igst: newprops.igst,
       sgst: newprops.sgst,
-      _id: newprops._id
+      _id: newprops._id,
+      isActive:newprops.isActive
     })
 
 
   }
   
-  onSubmit = () => 
-  { 
+  onSubmit = (e) => 
+  { e.preventDefault()
+    if(this.state.taxCode==""){
+     return alert("Please enter taxcode!!")
+    }
+    if(this.state.taxName==""){
+      return alert("Please enter taxname!!")
+     }
+     if(this.state.cgst==""){
+      return alert("Please enter cgst!!")
+     }
+     if(this.state.igst==""){
+      return alert("Please enter igst!!")
+     }
+     if(this.state.sgst==""){
+      return alert("Please enter sgst!!")
+     }
+     if(this.state.cgst.length>2 || this.state.sgst.length>2 || this.state.igst.length>2 ){
+       return alert("Number should not be more than 99")
+     }
     var url = "";
   var  data ={}
-  console.log(this.state.igst)
-
-    
+  
        if (this.state._id != "")
-        {
+        { 
          
            url = "http://localhost:8080/editTax";
            data = 
@@ -110,7 +127,8 @@ class SimpleModal extends React.Component {
               cgst: this.state.cgst,
               igst: this.state.igst,
               sgst: this.state.sgst,
-              _id:this.state._id
+              _id:this.state._id,
+              isActive:this.state.isActive
             };
           }
       else
@@ -122,26 +140,15 @@ class SimpleModal extends React.Component {
           taxName: this.state.taxName,
           cgst: this.state.cgst,
           igst: this.state.igst,
-          sgst: this.state.sgst
-        }
+          sgst: this.state.sgst,
+          isActive:this.state.isActive
+        };
       }
-    // console.log(data)
    
-    // fetch(url,{
-    //   method: "Post",
-    //   body: data,
-    //   cache: 'no-cache',
-    //   mode: 'no-cors',
-
-    //   headers: new Headers({
-    //     'Content-Type': 'application/json',
-    //     'authorization': "Key@123"
-    //   })
-    // })
     axios.post(url, data)
     .then((result) => {
       //access the results here....
-      console.log("result = ", result)
+      console.log("result data= ", result)
           if (result.data.success == true) {
             sweetalert({
               text: "Tax Added",
@@ -154,31 +161,15 @@ class SimpleModal extends React.Component {
           }
           if(result.data.success== false){
             sweetalert({
-              text:"Error!!",
+              text:"Error!!,Already Exists!!",
               icon:"warning"
             })
           }
           this.props.List()
+         
           
         })
-    // });
-      // .then(res => res.json())
-      // .then(
-      //   (result) => {
-      //     console.log("result = ", result)
-      //     if (result.success == true) {
-      //       sweetalert({
-      //         text: "Tax Added",
-      //         icon: "success"
-
-      //       })
-      //       this.props.handleClose();
-
-      //     }
-      //     this.props.List()
-          
-      //   })
-    this.setState({ taxCode: "", taxName: "", cgst: "", sgst: "", igst: "" })
+  
 
     
   }
@@ -211,30 +202,32 @@ render()
                     
                     <Grid container>
                       <ItemGrid xs={12} sm={12} md={15}>
-                        <label>Tax Code </label><br></br>
+                        <label><b>Tax Code*</b> </label><br></br>
                         <input
                           name="taxCode"
                           type="text"
                           value={this.state.taxCode}
                           onChange={this.handleChange}
-                          // readOnly {...this.state._id!="" ? true : false}
-                          required
+                          style={{border: "2px solid black"}}
+                         readOnly= {this.state._id ? "readOnly" : ""}
+                          
                         /><br />
                       </ItemGrid>
                       <ItemGrid xs={12} sm={12} md={15}>
-                        <label>Tax Name </label><br></br>
+                        <label><b>Tax Name*</b> </label><br></br>
                         <input
                           name="taxName"
                           type="text"
                           value={this.state.taxName}
                           onChange={this.handleChange}
-                          required
+                        
+                          style={{border: "2px solid black"}}
                         /><br />
                       </ItemGrid>
                     </Grid>
                     <Grid container>
                       <ItemGrid xs={12} sm={12} md={15}>
-                        <label>CGST(%)</label><br></br>
+                        <label><b>CGST(%)*</b></label><br></br>
                         <input
                           name="cgst"
                           type="number"
@@ -242,11 +235,14 @@ render()
                           onChange={this.handleChange}
                           max="99"
                           min="0"
+                          style={{border: "2px solid black"}}
+                          
                         />
+                         <label >Please select a value which is no more than 99</label>
 
                       </ItemGrid>
                       <ItemGrid xs={12} sm={12} md={15}>
-                        <label>IGST(%) </label><br></br>
+                        <label><b>IGST(%)*</b> </label><br></br>
                         <input
                           name="igst"
                           type="number"
@@ -254,12 +250,15 @@ render()
                           onChange={this.handleChange}
                           max="99"
                           min="0"
+                          style={{border: "2px solid black"}}
+                          
                         />
+                         <label >Please select a value which is no more than 99</label>
                       </ItemGrid>
                     </Grid>
                     <Grid container>
                       <ItemGrid xs={12} sm={12} md={15}>
-                        <label>SGST(%) </label><br></br>
+                        <label><b>SGST(%)*</b> </label><br></br>
                         <input
                           name="sgst"
                           type="number"
@@ -267,10 +266,13 @@ render()
                           onChange={this.handleChange}
                           max="99"
                           min="0"
+                          style={{border: "2px solid black"}}
+                          
                         />
+                         <label>Please select a value which is no more than 99</label>
                       </ItemGrid>
                       <ItemGrid xs={12} sm={12} md={15}>
-                        <label>IS ACTIVE</label>&nbsp;&nbsp;&nbsp;
+                        <label><b>IS ACTIVE</b></label>&nbsp;&nbsp;&nbsp;
                   <Checkbox
                           checked={this.state.isActive}
                           onChange={this.handleCheckbox('isActive')}

@@ -10,17 +10,27 @@ import { Header, Footer, Sidebar } from "components";
 
 import dashboardRoutes from "routes/dashboard.jsx";
 import AddCustomer from "../../views/Customer/AddCustomer";
+import EditCustomer from "../../views/Customer/EditCustomer";
+import ViewCustomer from "../../views/Customer/ViewCustomer";
+import AddCompany from "../../views/Company/AddCompany";
+import EditCompany from "../../views/Company/EditCompany";
+import ViewCompany from "../../views/Company/ViewCompany";
 import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
 
-var routing=[]
-const switchRoutes = (
+var routing=[] 
+const switchRoutes = ( 
   <Switch>
     <Route path="/addCustomer" component={AddCustomer} key={'123'}/>
-    {dashboardRoutes.map((prop, key) => {
+    <Route path="/editCustomer" component={EditCustomer} key={'432'} />
+    <Route path="/viewCustomer" component={ViewCustomer} key={'532'} />
+    <Route path="/addCompany" component={AddCompany} key={'632'} />
+    <Route path="/editCompany" component={EditCompany} key={'732'} />
+    <Route path="/viewCompany" component={ViewCompany} key={'232'} />
+    {dashboardRoutes.map((prop, key) => { 
       
       if (prop.redirect)
          return <Redirect from={prop.path} to={prop.to} key={key} />;
@@ -36,13 +46,13 @@ const switchRoutes = (
       return routing
     })}
     
-  </Switch>
+  </Switch> 
 );
 class App extends React.Component {
   state = {
-    mobileOpen:false,
+    mobileOpen:false, 
     open:false
-  };
+  }; 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };

@@ -34,7 +34,7 @@ class Tax extends React.Component {
   }
   handleOpen=()=>{
     this.setState({load : true});
-    this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:""});
+    this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:"",_id:"",isActive:""});
       
   }
   handleClose = () => {

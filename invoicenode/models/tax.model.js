@@ -82,7 +82,7 @@ TaxModel.editTax = (taxToEdit) =>{
 //     return UserModel.find(userToCount.query).count();
 // }
 
-// /**
+// /**qwe
 //  * [Service is responsible for getting selected detail of user or client or admin]
 //  * @param  {[type]} user [user object contains username and password]
 //  * @return {[type]}      [object]

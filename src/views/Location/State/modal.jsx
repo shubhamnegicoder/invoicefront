@@ -144,7 +144,7 @@ export default class App extends React.Component {
    
 
     // handleSubmit(event) {
-    //     event.preventDefault();
+    //     event.preventDefault();read
     //     console.log(this.state,"state")
     //     const formdata = { "_id": "5af170d60c06c02559273df1", "countryCode": this.state.countryCode,"stateCode":this.state.stateCode, "stateName": this.state.stateName }
     //     fetch("http://localhost:8080/addState", {

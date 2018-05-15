@@ -31,11 +31,29 @@ service.getAll = async (req,res)=>{
 }
 
 /**
- * @description [with all the calculation before add function of model and after add]
+ * @description [with all the calculation before getOne function of model and after getOne]
  * @param  {[object]}
  * @param  {[object]}
  * @return {[object]}
  */
+service.getOne = async (req,res)=>{
+	try{
+		let dataToFind={
+			query:{'_id':req.query._id}
+		};
+		var oneCompany = await CompanyModel.oneCompany(dataToFind);
+		return res.send({success:true, code:200, msg:"Successfully found", data:oneCompany}); 
+	}catch(error){
+		return res.send({success:false, code:500, msg:"Error in getting Company", err:error})
+	}
+}
+
+/**
+ * @description [with all the calculation before add function of model and after add]
+ * @param  {[object]}
+ * @param  {[object]}
+ * @return {[object]}
+ */ 
 service.addCompany = async (req,res)=>{
 	if(req.body.companyCode == ""){
 		return res.send({success:false,code:500,msg:"Company code is required"});
@@ -94,6 +112,36 @@ service.addCompany = async (req,res)=>{
 		return res.send({success:true, code:200, msg:"Successfully added", data:addCompany}); 
 	}catch(error){
 		return res.send({success:false, code:500, msg:"Error in adding Company", err:error})
+	}
+}
+
+service.editCompany = async (req,res)=>{
+	//console.log("this is edit company");
+	
+	let companyToEdit={		
+		companyCode:req.body.companyCode,
+		companyName:req.body.companyName,
+		companyGSTNo:req.body.companyGSTNo,
+		addressLine1:req.body.addressLine1,
+		addressLine2:req.body.addressLine2,
+		city:req.body.city,
+		state:req.body.state,
+		country:req.body.country,
+		postalCode:req.body.postalCode,
+		contactNo:req.body.contactNo
+	};
+	try{
+		let companyEdit = {
+			query:{"_id":req.body._id},
+			data:{"$set":companyToEdit}
+	
+		};
+		//console.log("_id",req.body._id);
+		var editCompany = await CompanyModel.editCompany(companyEdit);
+
+		return res.send({success:true, code:200, msg:"Successfully edited", data:editCompany}); 
+	}catch(error){
+		return res.send({success:false, code:500, msg:"Error in editing Company", err:error})
 	}
 }
 
