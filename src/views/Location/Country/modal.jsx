@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
 import { Grid, InputLabel } from "material-ui";
-import { serialize} from "form-serialize"
 import swal from "sweetalert";
 import Country from "../Country/Country"
 import axios from "axios"
@@ -14,6 +13,7 @@ import {
     ItemGrid
 } from "components";
 import avatar from "assets/img/faces/marc.jpg";
+var cardoption;
 export default class App extends React.Component {
 
     constructor(props) {
@@ -23,6 +23,7 @@ export default class App extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    
     handleChange(event) {
             this.setState({ [event.target.name]: event.target.value });
         // this.setState({countryname: this.refs.name.value });
@@ -137,7 +138,8 @@ export default class App extends React.Component {
                         <form onSubmit={this.handleSubmit}>
                         <ItemGrid xs={18} sm={20} md={20}>
                             <RegularCard
-                                cardTitle="Add Country"
+                                {...this.state._id?cardoption="Edit Country":cardoption="Add Country"}
+                                cardTitle={cardoption}
                                 content={
                                     <div>
                                         <Grid container>

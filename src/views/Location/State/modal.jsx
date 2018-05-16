@@ -17,8 +17,7 @@ import {
 import avatar from "assets/img/faces/marc.jpg";
 
 var maindata = [];
-var dropDownData=[];
-var dd;
+var dd,cardoption;
 export default class App extends React.Component {
 
     constructor(props) {
@@ -33,6 +32,9 @@ export default class App extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
         // this.setState({countryname: this.refs.name.value });
 
+    }
+    componentDidMount(){
+        this.data();
     }
     handleChange1 = (event) => {
         console.log(event.target.value)
@@ -70,7 +72,7 @@ export default class App extends React.Component {
 
 
                 this.setState({ dropDownData: maindata })
-                // console.log(this.state.dropDownData, "arrsy")
+                console.log(this.state.dropDownData, "arrsy")
             },
             (error) => {
                 console.log("error", error)
@@ -185,12 +187,14 @@ export default class App extends React.Component {
        
         return (
             <div>
+                {console.log(this.state.dropDownData,"drop")}
                 <Modal styles={{ width: '379px' }} open={this.props.open} onClose={this.props.onClose} center>
                     <Grid container >
                         <form onSubmit={this.handleSubmit}>
                             <ItemGrid xs={18} sm={20} md={20}>
                                 <RegularCard
-                                    cardTitle="Add State"
+                                    {...this.state._id ? cardoption = "Edit State" : cardoption = "Add State"}
+                                    cardTitle={cardoption}
                                     content={
                                         <div>
                                             <Grid container>

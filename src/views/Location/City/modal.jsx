@@ -120,8 +120,10 @@ export default class App extends React.Component {
             }
         )
     }
- 
-    dd = this.data()
+   componentDidMount(){
+       this.data()
+   }
+    
     
    
     

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect ,Router} from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -19,34 +19,32 @@ import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
-
-
+import { createBrowserHistory } from "history";
+const hist = createBrowserHistory();
 var routing=[] 
 const switchRoutes = ( 
-  <Switch>
-    <Route path="/addCustomer" component={AddCustomer} key={'123'}/>
-    <Route path="/editCustomer" component={EditCustomer} key={'432'} />
-    <Route path="/viewCustomer" component={ViewCustomer} key={'532'} />
-    <Route path="/addCompany" component={AddCompany} key={'632'} />
-    <Route path="/editCompany" component={EditCompany} key={'732'} />
-    <Route path="/viewCompany" component={ViewCompany} key={'232'} />
+  <Router history={hist}> 
+  <Switch >
+   <div>
     {dashboardRoutes.map((prop, key) => { 
-      
+       console.log(prop.path,"path",prop.component)
       if (prop.redirect)
          return <Redirect from={prop.path} to={prop.to} key={key} />;
      
       if(prop.childs)
       { 
         prop.childs.map((item,index)=>{
-            routing.push(<Route path={item.path} component={item.component} key={index}/>)
+           console.log("childs",item.path,item.component)
+            routing.push(<Route exact path={item.path} component={item.component} key={index}/>)
           })
         
       } 
-    routing.push(<Route path={prop.path} component={prop.component} key={key} />)
+    routing.push(<Route exact path={prop.path} component={prop.component} key={key} />)
       return routing
     })}
-    
+   </div> 
   </Switch> 
+  </Router>
 );
 class App extends React.Component {
   state = {

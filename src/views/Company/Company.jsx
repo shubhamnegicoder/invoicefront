@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid ,Button} from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
+import AddIcon from '@material-ui/icons/Add';
 
 class CompanyList extends React.Component{
     constructor(props){
@@ -113,7 +114,10 @@ class CompanyList extends React.Component{
         <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
          cardTitle="Company List"
-            cardSubtitle={<button onClick={this.handleClick} style={{float:"right", backgroundColor:"purple",color:"white"}}>Add Company</button>}
+            cardSubtitle={
+                <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
+                    <AddIcon />
+                </Button>}
             content={
                 <Table
                 tableHeaderColor="primary"
