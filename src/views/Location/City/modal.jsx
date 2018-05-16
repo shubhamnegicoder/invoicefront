@@ -209,7 +209,7 @@ export default class App extends React.Component {
                         icon: "success"
 
                     })
-                    // this.props.handleClose();
+                    this.props.onClose();
 
                 }
                 else {
@@ -277,7 +277,7 @@ export default class App extends React.Component {
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>
                                                         <h5> City Code:</h5>
-                                                        <input required type="text" name="cityCode" ref="code" value={this.state.cityCode} onChange={this.handleChange} />
+                                                        <input required type="text" readOnly={this.state._id ? "readOnly" : false}  name="cityCode" ref="code" value={this.state.cityCode} onChange={this.handleChange} />
                                                     </label>
                                                 </ItemGrid>
                                                 <ItemGrid xs={12} sm={12} md={15}>

@@ -22,27 +22,27 @@ const service = {};
  * @param  {[object]}
  * @return {[object]}
  */
-service.getAll = async (req, res) => {
-    var location = {};
-    if (!req.query._id) {
-        return res.send({ "success": false, "code": "500", "msg": "countryId is missing" });
-    }
-    // if (req.query.location) {
-    //     location = req.query.location;
-    // }
+// service.getAll = async (req, res) => {
+//     var location = {};
+//     if (!req.query.id) {
+//         return res.send({ "success": false, "code": "500", "msg": "countryId is missing" });
+//     }
+//     // if (req.query.location) {
+//     //     location = req.query.location;
+//     // }
 
-    //let clientId = utility.removeQuotationMarks(req.query.clientId);
-    try {
-         // console.log(dataToFind);
-        const country = await Country.getAll(dataToFind);
-        logger.info('sending all country...');
-        return res.send({ success: true, code: 200, msg: "succsess", data:country });
-    } catch (err) {
-        logger.error('Error in getting country- ' + err);
-        return res.send({ success: false, code: 500, msg: "error", err: err });
+//     //let clientId = utility.removeQuotationMarks(req.query.clientId);
+//     try {
+//          // console.log(dataToFind);
+//         const country = await Country.getAll(dataToFind);
+//         logger.info('sending all country...');
+//         return res.send({ success: true, code: 200, msg: "succsess", data:country });
+//     } catch (err) {
+//         logger.error('Error in getting country- ' + err);
+//         return res.send({ success: false, code: 500, msg: "error", err: err });
 
-    }
-}
+//     }
+// }
 
 /**
  * @description get all asset that is not associated with device
@@ -51,8 +51,9 @@ service.getAll = async (req, res) => {
  * @return {[object]}
  */
 service.getAllCountry = async (req, res) => {
+    console.log("req",req.query)
     var location = {};
-    if (!req.query._id) {
+    if (!req.query.id) {
         return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
     }
 
@@ -73,7 +74,7 @@ service.getAllCountry = async (req, res) => {
         // }
         var queryToFindCountry = {}
             queryToFindCountry = {
-                query: {createdBy:ObjectID(req.query._id) }
+                query: {createdBy:ObjectID(req.query.id) }
             }
         
 
