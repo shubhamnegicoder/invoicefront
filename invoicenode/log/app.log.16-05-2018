@@ -1,0 +1,27 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-16T04:35:10.541Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-05-16T04:35:10.562Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-16T04:37:03.264Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-16T04:37:03.297Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-16T04:49:32.670Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-16T04:49:32.695Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:08.828Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:09.019Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:09.279Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:09.526Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:09.567Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T05:27:09.652Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:09.775Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T05:27:09.793Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:09.835Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T05:27:09.857Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:10.046Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T05:27:10.062Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:10.222Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T05:27:10.241Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:10.546Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T05:27:10.559Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:11.201Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T05:27:11.223Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:11.404Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:11.573Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:11.715Z"}

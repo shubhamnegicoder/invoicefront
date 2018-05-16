@@ -50,7 +50,7 @@ class State extends React.Component {
                 var maindata = [];
                 var localdata = []
            result.data && result.data.map((item, key) => {
-                    localdata.push(item.SerialNo, item.countryName,item.stateCode, item.stateName)
+                    localdata.push(item.countryName,item.stateCode, item.stateName)
                     localdata.push(<button onClick={(e) => this.handleEdit(e, item)}>Edit</button>)
                     maindata.push(localdata);
                     localdata = [];
@@ -91,7 +91,7 @@ class State extends React.Component {
                         content={
                             <Table
                                 tableHeaderColor="primary"
-                                tableHead={["Serial No", "CountryName", "StateCode", "StateName"]}
+                                tableHead={["Country", "StateCode","State"]}
                                 tableData={this.state.mydata}
                             />
                         }

@@ -115,6 +115,7 @@ service.addUser = async (req, res) => {
           return res.send({"success":false, "code":"500","msg":msg.param});
         }
         const savedUser = await User.addUser(userToAdd);
+        console.log("usertoadd",userToAdd)
         logger.info('Adding user...');
         res.send({"success":true, "code":"200", "msg":successMsg.addUser,"data":savedUser});
     }

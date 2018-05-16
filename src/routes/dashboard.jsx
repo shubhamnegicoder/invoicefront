@@ -86,7 +86,7 @@ const dashboardRoutes = [
     component: UserProfile
   },
   {
-    path: "Location",
+    path: "/Location",
     sidebarName: "Location",
     navbarName: "Location",
     icon: LocationOn,

@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography';
 import Modal from './Modal.jsx';
 import Button from 'material-ui/Button';
 import  {Grid} from "material-ui";
+import AddIcon from '@material-ui/icons/Add';
 
 import { RegularCard, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
@@ -101,7 +102,9 @@ class Tax extends React.Component {
             <RegularCard
               cardTitle="Tax"
               cardSubtitle={
-                <button onClick={this.handleOpen} style={{float:"right"}}>Add</button> 
+                <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleOpen} >
+                  <AddIcon />
+                </Button>
               } 
               
                
