@@ -70,13 +70,13 @@ service.addCompany = async (req,res)=>{
 	if(req.body.addressLine2 == ""){
 		return res.send({success:false,code:500,msg:"Address is required"});
 	}
-	if(req.body.city == ""){
+	if(req.body.cityCode == ""){
 		return res.send({success:false,code:500,msg:"City is required"});
 	}
-	if(req.body.state == ""){
+	if(req.body.stateCode == ""){
 		return res.send({success:false,code:500,msg:"State is required"});
 	}
-	if(req.body.country == ""){
+	if(req.body.countryCode == ""){
 		return res.send({success:false,code:500,msg:"Country is required"});
 	}
 	if(req.body.postalCode == ""){
@@ -98,9 +98,9 @@ service.addCompany = async (req,res)=>{
         companyGSTNo: req.body.companyGSTNo,
         addressLine1: req.body.addressLine1,
         addressLine2:req.body.addressLine2,
-        city:req.body.city,
-        state:req.body.state,
-        country:req.body.country,
+        cityCode:req.body.cityCode,
+        stateCode:req.body.stateCode,
+        countryCode:req.body.countryCode,
         postalCode:req.body.postalCode,
         contactNo:req.body.contactNo,
         status: req.body.status

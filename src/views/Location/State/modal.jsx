@@ -50,7 +50,7 @@ export default class App extends React.Component {
     }
     
     data = () => {
-        fetch("http://localhost:8080/allCountry?_id=5af170d60c06c02559273df1", {
+        fetch("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1", {
             method: "GET",
             cache: 'no-cache',
             mode: 'cors',
@@ -63,7 +63,7 @@ export default class App extends React.Component {
                 var maindata = [];
                 var localdata = []
                 console.log(result.data,"kkk")
-                result.data.map((item, key) => {
+                result.data && result.data.map((item, key) => {
                     maindata.push(item);
                   
                 })
