@@ -69,6 +69,10 @@ CityModal.allCity = (dataToFind) => {
     return CityModal.find(dataToFind.query, dataToFind.projection);
 }
 
+CityModal.allSelectedCity=(dataToFind)=>{
+    return CityModal.find(dataToFind.query);
+}
+
 CityModal.addCity = (cityToAdd) => {
     // console.log(cityToAdd,"in city model")
     return cityToAdd.save();

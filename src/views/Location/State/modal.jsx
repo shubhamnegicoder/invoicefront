@@ -65,7 +65,7 @@ export default class App extends React.Component {
                 var maindata = [];
                 var localdata = []
                 console.log(result.data,"kkk")
-                result.data.map((item, key) => {
+                result.data && result.data.map((item, key) => {
                     maindata.push(item);
                   
                 })

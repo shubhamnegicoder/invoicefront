@@ -37,8 +37,8 @@ export default class App extends React.Component {
     }
     handleChange1 = (event) => {
         console.log(event.target.value)
-        this.setState({ countryCode:event.target.value })
-        temp = event.target.value
+        this.setState({countryCode:event.target.value })
+        temp=event.target.value
         this.data2(temp)
 
        
@@ -77,7 +77,7 @@ export default class App extends React.Component {
                 var maindata = [];
                 var localdata = []
                 console.log(result.data,"kkk")
-                result.data.map((item, key) => {
+                result.data && result.data.map((item, key) => {
                     maindata.push(item);
                   
                 })

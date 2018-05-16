@@ -1,6 +1,12 @@
 import React from "react";
 import { Button} from "material-ui";
 import swal from "sweetalert";
+import axios from "axios"
+var maindata = [];
+var dropDownData=[];
+var dd;
+var temp;
+var temp2;
 
 class AddCompany extends React.Component{
     constructor(props){
@@ -11,11 +17,15 @@ class AddCompany extends React.Component{
             companyGSTNo:"",
             addressLine1:"",
             addressLine:"",
-            city:"",
-            state:"",
-            country:"",
+            cityCode:"",
+            stateCode:"",
+            countryCode:"",
             postalCode:"",
-            contactNo:""
+            contactNo:"",
+            dropDownData:[],
+            dropDownData2:[],
+            dropDownData3:[]
+
         };
     }
 
@@ -25,18 +35,132 @@ class AddCompany extends React.Component{
         this.setState({companyGSTNo:this.refs.companyGSTNo.value});
         this.setState({addressLine1:this.refs.addressLine1.value});
         this.setState({addressLine2:this.refs.addressLine2.value});
-        this.setState({city:this.refs.city.value});
-        this.setState({state:this.refs.state.value});
-        this.setState({country:this.refs.country.value});
         this.setState({postalCode:this.refs.postalCode.value});
         this.setState({contactNo:this.refs.contactNo.value});
     }
+    handleChange1 = (event) => {
+        console.log(event.target.value,"selected country")
+        this.setState({ countryCode:event.target.value })
+        temp = event.target.value
+        this.data2(temp)
 
+       
+      
+    }
+
+    handleChange2 = (event) => {
+        console.log(event.target.value)
+        this.setState({ stateCode: event.target.value })
+        console.log(this.state.stateCode, "set hui h state")
+        temp2 = event.target.value
+        this.data3(temp2)
+
+    }
+
+    handleChange3 = (event) => {
+        console.log(event.target.value)
+        this.setState({ cityCode: event.target.value })
+        console.log(this.state.cityCode, "set hui h state")
+    }
+
+
+    data = () => {
+      
+        fetch("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1", {
+            method: "GET",
+            cache: 'no-cache',
+            mode: 'cors',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'authorization': "Key@123"
+            })
+        }).then(res => res.json()).then(
+            (result) => {
+                var maindata = [];
+                var localdata = []
+                console.log(result.data,"kkk")
+                result.data.map((item, key) => {
+                    maindata.push(item);
+                  
+                })
+
+
+                this.setState({ dropDownData: maindata })
+                console.log(this.state.dropDownData, "arrsy")
+            },
+            (error) => {
+                console.log("error", error)
+            }
+        )
+    }
+    data2 = (temp) => {
+        console.log(temp, "set hui in url")
+        fetch("http://localhost:8080/allSelectedState?countryCode="+temp, {
+            method: "GET",
+            cache: 'no-cache',
+            mode: 'cors',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'authorization': "Key@123"
+            })
+        }).then(res => res.json()).then(
+            (result) => {
+                var maindata = [];
+                var localdata = []
+                console.log(result.data, "kkkloololo")
+                result.data && result.data.map((item, key) => {
+                    maindata.push(item);
+
+                })
+
+
+                this.setState({ dropDownData2: maindata })
+                // console.log(this.state.dropDownData, "arrsy")
+            },
+            (error) => {
+                console.log("error", error)
+            }
+        )
+    }
+    data3 = (temp2) => {
+        console.log(temp2, "set hui in url")
+        fetch("http://localhost:8080/allSelectedCity?stateCode="+temp2, {
+            method: "GET",
+            cache: 'no-cache',
+            mode: 'cors',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'authorization': "Key@123"
+            })
+        }).then(res => res.json()).then(
+            (result) => {
+                var maindata = [];
+                var localdata = []
+                console.log(result.data, "kkkloololo in city data")
+                result.data && result.data.map((item, key) => {
+                    maindata.push(item);
+
+                })
+
+
+                this.setState({ dropDownData3: maindata })
+                // console.log(this.state.dropDownData, "arrsy")
+            },
+            (error) => {
+                console.log("error", error)
+            }
+        )
+    }
+
+    componentWillMount(){
+        this.data();
+    }
     handleClose=(e)=>{
         e.preventDefault();
         window.location.href="/company";
 
     }
+
 
     save=()=>{
         if(this.state.companyCode==""){
@@ -54,13 +178,13 @@ class AddCompany extends React.Component{
         if(this.state.addressLine2==""){
             return alert("Address 2 is required");       
         }
-        if(this.state.city==""){
+        if(this.state.cityCode==""){
             return alert("City is required");       
         }
-        if(this.state.state==""){
+        if(this.state.stateCode==""){
             return alert("State is required");       
         }
-        if(this.state.country==""){
+        if(this.state.countryCode==""){
             return alert("Country is required");       
         }
         if(this.state.postalCode==""){
@@ -139,19 +263,54 @@ class AddCompany extends React.Component{
                     <td><input type="text" placeholder="Address Line 2" ref="addressLine2" onChange={this.handleChange}/></td>
                 </tr>
                 <tr>
-                    <td><span style={{color:"red"}}>*</span>City</td> 
+                    <td><span style={{color:"red"}}>*</span>Country</td>
                     <td></td>
-                    <td><input type="text" placeholder="City" ref="city" onChange={this.handleChange}/></td>
+                <   td><select placeholder="select country"   onChange={this.handleChange1}>
+                                                         <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option>
+                                                         {     
+                                                              this.state.dropDownData && this.state.dropDownData.map((item, index) => {
+
+
+
+                                                                    return <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
+                                                                })
+                                                         }
+
+                                                         </select></td>
                 </tr>
                 <tr>
                     <td><span style={{color:"red"}}>*</span>State</td><td></td>
-                    <td><input type="text" placeholder="State" ref="state" onChange={this.handleChange}/></td>
+                    <td> <select placeholder="select State" onChange={this.handleChange2}>
+
+                  <option value="Select  " style={{ width: "150px" }}> Select State Name</option>
+                {
+                      this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
+
+                  return <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
+                         })
+                }
+
+                </select></td>
                 </tr>
                 <tr>
-                    <td><span style={{color:"red"}}>*</span>Country</td>
+                    <td><span style={{color:"red"}}>*</span>City</td> 
                     <td></td>
-                <   td><input type="text" placeholder="Country" ref="country" onChange={this.handleChange}/></td>
+                    <td><select placeholder="select State" onChange={this.handleChange3}>
+
+                     <option value="Select  " style={{ width: "150px" }}> Select city Name</option>
+                            {
+                                this.state.dropDownData3 && this.state.dropDownData3.map((item, index) => {
+
+
+
+                                    return <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
+                                })
+                            }
+
+                          </select></td>
                 </tr>
+               
+              
                 <tr>
                     <td><span style={{color:"red"}}>*</span>Postal Code</td>
                     <td></td>
