@@ -1,5 +1,4 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
 import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
@@ -12,7 +11,7 @@ import Login from "../views/login/login";
 import CreateInvoice from "../views/Invoice/CreateInvoice/CreateInvoice.jsx";
 import ListInvoice from "../views/Invoice/ListInvoice/ListInvoice.jsx";
 import Tax from "../views/Tax/Tax.jsx";
-
+import Product from "../views/Product/Product.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 
 import {
@@ -33,13 +32,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage
   }, 
-  {
-    path: "/tax",
-    sidebarName: "Tax",
-    navbarName: "Tax",
-    icon: BubbleChart,
-    component: Tax
-  },
+  
   {
     path: "/customer",
     sidebarName: "Customer",
@@ -78,12 +71,28 @@ const dashboardRoutes = [
       }
     ]
   },
+  
   {
-    path: "/user",
-    sidebarName: "User Profile",
-    navbarName: "Profile",
-    icon: Person,
-    component: UserProfile
+    path: "Product",
+    sidebarName: "Product",
+    navbarName: "Product",
+    icon: BubbleChart,
+    childs: [
+      {
+        path: "/Product/product",
+        sidebarName: "Product", 
+        icon: BubbleChart,
+        navbarName: "Product",
+        component: Product
+      }, {
+        path: "/Product/tax",
+        sidebarName: "Tax", 
+        navbarName: "Tax",   
+        icon: BubbleChart,
+        component: Tax
+      }
+      
+    ]
   },
   {
     path: "Location",
