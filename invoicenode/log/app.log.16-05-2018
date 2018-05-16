@@ -28,3 +28,7 @@
 {"level":"info","message":"sending all country...","timestamp":"2018-05-16T05:27:11.715Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-16T05:33:30.611Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-16T05:33:30.638Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T06:04:00.679Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T06:04:53.477Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T06:04:53.580Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T06:04:53.612Z"}

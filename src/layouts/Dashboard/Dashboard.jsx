@@ -23,10 +23,9 @@ import { createBrowserHistory } from "history";
 const hist = createBrowserHistory();
 var routing=[] 
 const switchRoutes = ( 
-  <Router history={hist}> 
   <Switch >
-   <div>
     {dashboardRoutes.map((prop, key) => { 
+      routing=[];
        console.log(prop.path,"path",prop.component)
       if (prop.redirect)
          return <Redirect from={prop.path} to={prop.to} key={key} />;
@@ -35,17 +34,18 @@ const switchRoutes = (
       { 
         prop.childs.map((item,index)=>{
            console.log("childs",item.path,item.component)
-            routing.push(<Route exact path={item.path} component={item.component} key={index}/>)
+            routing.push(<Route  path={item.path} component={item.component} key={index}/>)
           })
         
       } 
-    routing.push(<Route exact path={prop.path} component={prop.component} key={key} />)
+    routing.push(<Route  path={prop.path} component={prop.component} key={key} />)
       return routing
     })}
-   </div> 
+   
   </Switch> 
-  </Router>
+  
 );
+console.log(switchRoutes,"switch")
 class App extends React.Component {
   state = {
     mobileOpen:false, 
