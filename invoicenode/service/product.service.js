@@ -56,7 +56,7 @@ service.getAll = async (req, res) => {
  * @return {[object]}
  */
 service.addProduct = async (req, res) => {
-    // console.log(req.body, "hi")
+    console.log(req.body.productName, "hi")
     // console.log(req.body.cgst.length)
      
     // if (!req.body.productCode || !req.body.productName || !req.body.date || !req.body.tax || !req.body.rate) {
@@ -77,12 +77,13 @@ service.addProduct = async (req, res) => {
     });
 
 
+
     try {
 
         const savedProduct = await Product.addProduct(productToAdd);
         // console.log("isactive" + req)
         // logger.info('Adding tax...');
-        // console.log("savedTax" + savedTax);
+         console.log("savedproduct" + savedProduct);
         res.send({ "success": true, "code": "200", "msg": "success", "data": savedProduct });
     }
     catch (err) {
