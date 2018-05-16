@@ -12,6 +12,10 @@ router.get('/allCity', (req, res) => {
     cityService.getAllCity(req, res);
 });
 
+router.get('/allSelectedCity', (req, res) => {
+    cityService.getAllSelectedCity(req, res);
+});
+
 
 router.post('/addCity', (req, res) => {
     cityService.addCity(req, res);

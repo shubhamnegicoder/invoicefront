@@ -21,8 +21,8 @@ import { RegularCard, Table, ItemGrid } from "components";
              countryName:"",
              countryCode:"",
              _id:"",
-             activePage:3,
-             options:""
+             
+             
          }
      };
 
@@ -49,7 +49,7 @@ handleEdit=(e,item)=>{
                  console.log(result.data)
 
                  result.data.data && result.data.data.map((item, key) => {
-                     localdata.push(item.SerialNo, item.countryCode, item.countryName)
+                     localdata.push(item.countryCode, item.countryName)
                      localdata.push(<button onClick={(e)=>this.handleEdit(e ,item) }>Edit</button>)
                      maindata.push(localdata);
                      localdata = [];
@@ -94,7 +94,7 @@ render(){
                     content={
                         <Table
                             tableHeaderColor="primary"
-                            tableHead={["Serial No", "CountryCode", "CountryName","Operation"]}
+                            tableHead={["CountryCode", "Country","Operation"]}
                             tableData={this.state.mydata}
                         />
                         }

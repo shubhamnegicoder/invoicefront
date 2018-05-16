@@ -47,6 +47,33 @@ service.getAllCity = async (req, res) => {
 
     }
 }
+
+
+
+service.getAllSelectedCity = async (req, res) => {
+  
+    if (!req.query.stateCode) {
+        return res.send({ "success": false, "code": "500", "msg": "stateCode is missing" });
+    }
+
+    try {
+
+        var queryToFindState = {}
+        queryToFindState = {
+            query: {stateCode:req.query.stateCode}
+        }
+
+
+        // console.log(dataToFind);
+        const city = await City.allSelectedCity(queryToFindState);
+        logger.info('sending all selecteds city...');
+        return res.send({ success: true, code: 200, msg: "listed ok", data: city });
+    } catch (err) {
+        logger.error('Error in getting state- ' + err);
+        return res.send({ success: false, code: 500, msg: "listed false", err: err });
+
+    }
+}
 /**
  * @description [calculation before add Device to db and after adding asset ]
  * @param  {[object]}

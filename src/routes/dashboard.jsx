@@ -79,12 +79,6 @@ const dashboardRoutes = [
     icon: BubbleChart,
     childs: [
       {
-        path: "/Product/product",
-        sidebarName: "Product", 
-        icon: BubbleChart,
-        navbarName: "Product",
-        component: Product
-      }, {
         path: "/Product/tax",
         sidebarName: "Tax", 
         navbarName: "Tax",   
@@ -95,7 +89,7 @@ const dashboardRoutes = [
     ]
   },
   {
-    path: "Location",
+    path: "/Location",
     sidebarName: "Location",
     navbarName: "Location",
     icon: LocationOn,
