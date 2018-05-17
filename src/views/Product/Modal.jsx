@@ -52,8 +52,7 @@ class SimpleModal extends React.Component {
     open: false,
     productCode: "",
     productName: "",
-    date: "",
-    tax: "",
+    taxCode: "",
     rate: "",
     dropDownData:[],
     isActive: false,
@@ -67,14 +66,16 @@ class SimpleModal extends React.Component {
   }
 
   handleCheckbox = name => event => {
+      alert();
     this.setState({ [name]: event.target.checked });
   };
-  handleDropDown=name=>event=>{
-     this.setState({tax:event.target.value});
+  handleDropDown=(event)=>{
+     this.setState({taxCode:event.target.value});
+     //console.log(this.state.tax, "state tax")
   };
   onCancel = () => {
     this.props.handleClose();
-    this.setState({ productCode: "", productName: "", date: "", tax: "", rate: "" ,isActive:"",_id:""})
+    this.setState({ productCode: "", productName: "", taxCode: "", rate: "" ,isActive:"",_id:""})
   };
 
   componentWillReceiveProps(newprops) {
@@ -83,8 +84,7 @@ class SimpleModal extends React.Component {
     this.setState({
       productCode: newprops.productCode,
       productName: newprops.productName,
-      date: newprops.date,
-      tax: newprops.tax,
+      taxCode: newprops.taxCode,
       rate: newprops.rate,
       _id: newprops._id,
       isActive:newprops.isActive
@@ -93,7 +93,7 @@ class SimpleModal extends React.Component {
 
   }
   data = () => {
-    fetch("http://localhost:8080/allProduct", {
+    fetch("http://localhost:8080/allTax", {
         method: "GET",
         cache: 'no-cache',
         mode: 'cors',
@@ -104,16 +104,13 @@ class SimpleModal extends React.Component {
     }).then(res => res.json()).then(
         (result) => {
             var maindata = [];
-            var localdata = []
-            console.log(result.data,"dropdown")
-            result.data.map((item, key) => {
+            // console.log(result.data,"dropdown")
+            result.data && result.data.map((item, key) => {
                 maindata.push(item);
               
             })
-
-
             this.setState({ dropDownData: maindata })
-            // console.log(this.state.dropDownData, "arrsy")
+             console.log(this.state.dropDownData, "array")
         },
         (error) => {
             console.log("error", error)
@@ -133,10 +130,7 @@ componentDidMount() {
     if(this.state.productName==""){
       return alert("Please enter productname!!")
      }
-     if(this.state.date==""){
-      return alert("Please enter date!!")
-     }
-     if(this.state.tax==""){
+     if(this.state.taxCode==""){
       return alert("Please enter tax!!")
      }
      if(this.state.rate==""){
@@ -154,8 +148,7 @@ componentDidMount() {
            {
               productCode: this.state.productCode,
               productName: this.state.productName,
-              date: this.state.date,
-              tax: this.state.tax,
+              taxCode: this.state.taxCode,
               rate: this.state.rate,
               _id:this.state._id,
               isActive:this.state.isActive
@@ -168,8 +161,7 @@ componentDidMount() {
         data = {
             productCode: this.state.productCode,
             productName: this.state.productName,
-            date: this.state.date,
-            tax: this.state.tax,
+            taxCode: this.state.taxCode,
             rate: this.state.rate,
             isActive:this.state.isActive
           };
@@ -179,7 +171,7 @@ componentDidMount() {
     axios.post(url, data)
     .then((result) => {
       //access the results here....
-      console.log("result data= ", result)
+      console.log("result data medha= ", result)
           if (result.data.success == true) {
             sweetalert({
               text: "Product Added",
@@ -222,7 +214,7 @@ render()
           <Grid container>
             <ItemGrid xs={30} sm={30} md={30}>
               <RegularCard
-                cardTitle="Add Tax"
+                cardTitle="Add Product"
                 content={
                   <div>
                      
@@ -254,18 +246,6 @@ render()
                     </Grid>
                     <Grid container>
                       <ItemGrid xs={12} sm={12} md={15}>
-                        <label><b>Date*</b></label><br></br>
-                        <input
-                          name="date"
-                          type="date"
-                          value={this.state.date}
-                          onChange={this.handleChange}
-                          style={{border: "2px solid black"}}
-                          
-                        />
-
-                      </ItemGrid>
-                      <ItemGrid xs={12} sm={12} md={15}>
                         <label><b>Tax*</b> </label><br></br>
                         {/* <input
                           name="tax"
@@ -275,13 +255,13 @@ render()
                           style={{border: "2px solid black"}}
                           
                         /> */}
-                        <select  style={{border: "2px solid black"}}>
-                        <option value="Select Tax" style={{border: "2px solid black"}} onChange={this.handleDropDown}> Select Tax</option>
+                        <select  style={{border: "2px solid black"}} onChange={this.handleDropDown}>
+                        <option value="Select Tax" style={{border: "2px solid black"}} > Select Tax</option>
                         {     
                             this.state.dropDownData && this.state.dropDownData.map((item, index) => {
                             
 
-
+                            // console.log(item.taxName,"tax")
                                 return <option styles={{ width: '350px' }} name={item.taxName} value={item.taxCode} key={index}>{item.taxName}</option>
                             })
                         }

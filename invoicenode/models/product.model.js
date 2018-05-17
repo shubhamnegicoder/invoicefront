@@ -7,8 +7,7 @@ const ProductSchema = mongoose.Schema({
     
     productCode: {type: String ,index:{unique:true}},
     productName: {type: String }, 
-    date:{type:Date},
-    tax:{type:String},
+    taxCode:{type:String},
     rate:{type:Number},
     isActive: {type:Boolean},
     createdBy:{type:mongoose.Schema.ObjectId },
@@ -21,39 +20,37 @@ const ProductSchema = mongoose.Schema({
 //   UserSchema.plugin(AutoIncrement.plugin,{model:'user',field:'userId',startAt:1,incrementBy:1});
 
 let ProductModel = mongoose.model('product',ProductSchema);
+ProductModel.allProduct = (dataToFind) => {
+    console.log(dataToFind, " = dataToFind44")
+    return ProductModel.aggregate([
+        { $match: {} },
+        {
+            $lookup: {
+                from: "tax",
+                localField: "taxCode",
+                foreignField: "taxCode",
+                as: "tax_docs"
+            }
 
-//   console.log(dataToFind,"dataToFinddataToFind111")
-//    UserModel.getAll = (dataToFind) => {
-//   return UserModel.aggregate([
-//     { $match: dataToFind.query},
-//     {
-//       $lookup:{
-//         from:"role",
-//         localField:"roleId",
-//         foreignField:"_id",
-//         as:"role_docs"
-//       }
+        },
+        {
+            $unwind: "$tax_docs"
+        },
+        {
+            $project: {
+                productCode:1,
+                productName:1 ,
+                taxCode: "$tax_docs.taxName",
+                rate:1,
+                isActive:1
 
-//     },
-//     {
-//       $unwind:"$role_docs"
-//     },
-//     {
-//         $project:{
-//             parentId:1,
-//             userId:1,
-//             emailId: 1,
-//             name:1,
-//             userTypeId:1 ,
-//             customerIds:1,
-//             locations:1,
-//             role:"$role_docs.role",
-//             status:1
+            }
+        }
+    ]);
 
-//         }
-//     }
-//    ]);
-// }
+}
+
+
 ProductModel.getAll= () => {
     // console.log(userToFind," = userToFind")
     return ProductModel.find();
@@ -74,7 +71,7 @@ ProductModel.editProduct = (productToEdit) =>{
 
 
 // UserModel.removeUser = (userId) => {
-//     return UserModel.remove({userId: userId});
+//     return UserModel.rve({userId: userId});
 // }
 
 // UserModel.getCount = (userToCount)=>{

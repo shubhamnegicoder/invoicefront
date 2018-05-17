@@ -56,7 +56,7 @@ service.getAll = async (req, res) => {
  * @return {[object]}
  */
 service.addProduct = async (req, res) => {
-    console.log(req.body.productName, "hi")
+    console.log(req.body, "hi")
     // console.log(req.body.cgst.length)
      
     // if (!req.body.productCode || !req.body.productName || !req.body.date || !req.body.tax || !req.body.rate) {
@@ -67,8 +67,7 @@ service.addProduct = async (req, res) => {
 
         productCode: req.body.productCode,
         productName: req.body.productName,
-        date: req.body.date,
-        tax: req.body.tax,
+        taxCode: req.body.taxCode,
         rate: req.body.rate,
         isActive: req.body.isActive
         //   createdBy: req.body._id,
@@ -83,7 +82,7 @@ service.addProduct = async (req, res) => {
         const savedProduct = await Product.addProduct(productToAdd);
         // console.log("isactive" + req)
         // logger.info('Adding tax...');
-         console.log("savedproduct" + savedProduct);
+        //  console.log("savedproduct" + savedProduct);
         res.send({ "success": true, "code": "200", "msg": "success", "data": savedProduct });
     }
     catch (err) {
@@ -99,8 +98,7 @@ service.editProduct = async (req, res) => {
     // }
     let ProductEdit = {
         productName: req.body.productName,
-        date: req.body.date,
-        tax: req.body.tax,
+        taxCode: req.body.taxCode,
         rate: req.body.rate,
         isActive: req.body.isActive,
         createdBy: req.body.createdBy,

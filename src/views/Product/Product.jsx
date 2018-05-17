@@ -10,6 +10,7 @@ import  {Grid} from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
+import AddIcon from '@material-ui/icons/Add';
 
 // import iconsStyle from "assets/jss/material-dashboard-react/iconsStyle";
 
@@ -24,8 +25,7 @@ class Product extends React.Component {
     List:[],
     productCode:"",
     productName:"",
-    date:"",
-    tax:"",
+    taxCode:"",
     rate:"",
     isActive:false,
     _id:""
@@ -34,7 +34,7 @@ class Product extends React.Component {
   }
   handleOpen=()=>{
     this.setState({load : true});
-    this.setState({productCode:"",productName:"",date:"",tax:"",rate:"",_id:"",isActive:""});
+    this.setState({productCode:"",productName:"",taxCode:"",rate:"",_id:"",isActive:""});
       
   }
   handleClose = () => {
@@ -42,7 +42,7 @@ class Product extends React.Component {
     this.setState({load: false });
   };
   handleEdit = (e,product) => {
-    this.setState({load: true ,productCode :product.productCode,productName : product.productName,date : product.date,tax : product.tax,rate :product.rate,isActive:product.isActive,_id:product._id});
+    this.setState({load: true ,productCode :product.productCode,productName : product.productName,taxCode : product.taxCode,rate :product.rate,isActive:product.isActive,_id:product._id});
     
   };
   componentDidMount(){
@@ -69,8 +69,7 @@ class Product extends React.Component {
                 //  dataArray.push(tax._id)
                  dataArray.push(product.productCode)
                  dataArray.push(product.productName)
-                 dataArray.push(product.date)
-                 dataArray.push(product.tax)
+                 dataArray.push(product.taxCode)
                  dataArray.push(product.rate)
                  dataArray.push(product.isActive ? "Active" : "Inactive")
                  dataArray.push(<button onClick={(e)=>{this.handleEdit(e,product)}}>Edit</button>)
@@ -101,14 +100,16 @@ class Product extends React.Component {
             <RegularCard
               cardTitle="Product"
               cardSubtitle={
-                <button onClick={this.handleOpen} style={{float:"right"}}>Add</button> 
+                <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleOpen} >
+                  <AddIcon />
+                </Button>
               } 
               
                
               content={
                 <Table
                   tableHeaderColor="primary"
-                  tableHead={["Code","Name", "Date", "Tax", "Rate","IsActive","Action"]}
+                  tableHead={["Code","Name","Tax", "Rate","IsActive","Action"]}
                   tableData={
                    this.state.List    
                   }

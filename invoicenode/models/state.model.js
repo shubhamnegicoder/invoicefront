@@ -49,7 +49,7 @@ StateModal.allState = (dataToFind) => {
         }
     ]);
 
-    return StateModal.find(dataToFind.query, dataToFind.projection);
+    // return StateModal.find(dataToFind.query, dataToFind.projection);
 }
 StateModal.allSelectedState = (dataToFind) => {
     return StateModal.find(dataToFind.query);

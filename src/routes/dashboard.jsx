@@ -84,8 +84,14 @@ const dashboardRoutes = [
         navbarName: "Tax",   
         icon: BubbleChart,
         component: Tax
-      }
-      
+      },
+      {
+        path: "/Product/product",
+        sidebarName: "Product", 
+        navbarName: "Product",   
+        icon: BubbleChart,
+        component: Product
+      },
     ]
   },
   {
