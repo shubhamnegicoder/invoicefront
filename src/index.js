@@ -11,11 +11,12 @@ const hist = createBrowserHistory();
 
   ReactDOM.render(
     <Router history={hist}>
-      <Switch>
+    <div> 
         {indexRoutes.map((prop, key) => {
           return <Route  path={prop.path} component={prop.component} key={key} />;
         })}
-      </Switch>
+      
+      </div>
     </Router>,
     document.getElementById("root")
   );

@@ -7,7 +7,6 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { withStyles } from "material-ui";
 
 import { Header, Footer, Sidebar } from "components";
-
 import dashboardRoutes from "routes/dashboard.jsx";
 import AddCustomer from "../../views/Customer/AddCustomer";
 import EditCustomer from "../../views/Customer/EditCustomer";
@@ -24,8 +23,9 @@ const hist = createBrowserHistory();
 var routing=[] 
 const switchRoutes = ( 
   <Switch >
+  
     {dashboardRoutes.map((prop, key) => { 
-      routing=[];
+      routing=[]
        console.log(prop.path,"path",prop.component)
       if (prop.redirect)
          return <Redirect from={prop.path} to={prop.to} key={key} />;
@@ -34,22 +34,22 @@ const switchRoutes = (
       { 
         prop.childs.map((item,index)=>{
            console.log("childs",item.path,item.component)
-            routing.push(<Route  path={item.path} component={item.component} key={index}/>)
+            routing.push(<Route exact path={item.path} component={item.component} key={index}/>)
           })
         
       } 
-    routing.push(<Route  path={prop.path} component={prop.component} key={key} />)
-      return routing
+       routing.push(<Route exact path={prop.path} component={prop.component} key={key} />)
+        return routing
     })}
-   
+
   </Switch> 
-  
 );
-console.log(switchRoutes,"switch")
 class App extends React.Component {
   state = {
     mobileOpen:false, 
-    open:false
+    open:false,
+    collapse:false,
+    sidebar:[]
   }; 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -62,16 +62,34 @@ class App extends React.Component {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
+    dashboardRoutes.map((item,key)=>{
+        var name=item.sidebarName
+        this.state.sidebar.push({[item.sidebarName]:false})
+    })
+    this.setState({sidebar:this.state.sidebar})
   }
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
+  collapse=()=>{
+    alert("collapse")
+    this.setState({collapse: !this.state.collapse });
+
+  }
 
   handleClick = (ref) => {
-  
-    this.setState({ open: !this.state.open });
+    this.state.sidebar.map((item,key)=>{
+    
+       if(ref==Object.keys(item))
+       { 
+         item[Object.keys(item)] = !item[Object.keys(item)]
+       }
+    })
+   this.setState({sidebar:this.state.sidebar });
+   console.log("sidebar state",this.state.sidebar)
   };
   render() {
+    console.log(this.state.sidebar,"sidebar")
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
@@ -84,7 +102,10 @@ class App extends React.Component {
           open={this.state.mobileOpen}
           color="blue"
           handleClick={this.handleClick}
+          handleCollapse={this.collapse}
            state={this.state.open}
+           collapse={this.state.collapse}
+           sidebar={this.state.sidebar}
           {...rest}
         />
         <div className={classes.mainPanel} ref="mainPanel">

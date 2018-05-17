@@ -43,7 +43,7 @@ const dashboardRoutes = [
   {
     path: "/company",
     sidebarName: "Company",
-   // navbarName: "Company",
+    navbarName: "Company",
     icon: BubbleChart,
     component: Company
   },
@@ -73,7 +73,7 @@ const dashboardRoutes = [
   },
   
   {
-    path: "Product",
+    path: "/Product",
     sidebarName: "Product",
     navbarName: "Product",
     icon: BubbleChart,
