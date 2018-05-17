@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 const ProductSchema = mongoose.Schema({
     
     productCode: {type: String ,index:{unique:true}},
-    poductName: {type: String }, 
+    productName: {type: String }, 
     date:{type:Date},
     tax:{type:String},
     rate:{type:Number},

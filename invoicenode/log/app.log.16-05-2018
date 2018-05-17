@@ -167,3 +167,23 @@
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-16T05:56:16.935Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-16T06:12:51.054Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-16T06:12:51.081Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-16T12:10:30.690Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-16T12:10:30.848Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-16T12:41:04.138Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-16T12:41:04.163Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:24:39.289Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:24:39.458Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:24:39.514Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T14:24:39.649Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:25:03.422Z"}
+{"level":"info","message":"Adding Country...","timestamp":"2018-05-16T14:25:57.686Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:25:57.795Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:26:07.184Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T14:26:07.191Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:26:07.199Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:26:13.256Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:26:25.723Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T14:26:25.728Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-16T14:26:25.734Z"}
+{"level":"info","message":"Adding state...","timestamp":"2018-05-16T14:26:45.236Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-05-16T14:26:45.439Z"}
