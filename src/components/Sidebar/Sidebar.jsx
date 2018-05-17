@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import cx from "classnames";
-
 import ListSubheader from 'material-ui/List/ListSubheader';
 import Collapse from 'material-ui/transitions/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
@@ -27,39 +26,16 @@ import sidebarStyle from "assets/jss/material-dashboard-react/sidebarStyle.jsx";
 import dashboardRoutes from "../../routes/dashboard";
 
 const Sidebar = ({...props}) => {
-  console.log(props.state,"state")
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-  function collapsemenu(path,item,key,icon,sidebarName,listItemClasses,whiteFontClasses,parent){
-   return( 
-     <NavLink
-       to={path}
-       className={item}
-       activeClassName="active"
-       key={key}
-     >
-   
-   <Collapse in={props.state} timeout="auto" unmountOnExit>
-      <List component="div" disablePadding>
-           <ListItem button className={classes.itemLink + listItemClasses}>
-             <ListItemIcon className={classes.itemIcon + whiteFontClasses}>
-            <StarBorder />
-          </ListItemIcon>
-             <ListItemText primary={sidebarName}
-               disableTypography={true} />
-        </ListItem>
-      </List>
-  </Collapse>
-  </NavLink>
-  ) 
-}
-  const { classes, color, logo, image, logoText, routes } = props;
+  const { classes, color, logo, image, logoText, routes,sidebar} = props;
   var count;
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
+      
       
         if (prop.redirect) return null;
 
@@ -89,23 +65,7 @@ const Sidebar = ({...props}) => {
                 disableTypography={true} initiallyOpen={true} 
               />
             </ListItem>
-            {/* <ListItem button onClick={props.handleClick}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Inbox" />
-              {props.state ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={props.state} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem button className={classes.nested}>
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Starred" />
-                </ListItem>
-              </List>
-            </Collapse> */}
+           
           </NavLink>
         
         );
@@ -113,26 +73,45 @@ const Sidebar = ({...props}) => {
       else{
      
          return (
+           sidebar.map((element,key)=>{
+           if(prop.sidebarName==Object.keys(element))
+          { 
            
+          return(
            <List>
-             <ListItem button  onClick={()=>{props.handleClick()}}>
+             <ListItem button onClick={() => { props.handleClick(prop.sidebarName) }} nestedItems={[<ListItem key={1} primaryText="Drafts" leftIcon={<SendIcon/>} />]}>
                <ListItemIcon className={classes.itemIcon + whiteFontClasses}>
                  <prop.icon />
            </ListItemIcon>
                <ListItemText primary={prop.sidebarName}
                  className={classes.itemText + whiteFontClasses}
                  disableTypography={true}  />
-           {props.state ? <ExpandLess /> : <ExpandMore />}
+           {props.state ? <ExpandLess color={"error"} /> : <ExpandMore color={"error"} />}
          </ListItem>
-           {prop.childs.map((item,index)=>{
+            {prop.childs.map((item,index)=>{
+                return (<NavLink to={item.path} className={item} activeClassName="active" key={key}>
+                  <Collapse in={element[prop.sidebarName]}  timeout="auto" unmountOnExit >
+                    <List component="div" disablePadding>
+                      <ListItem button className={classes.itemLink + listItemClasses}>
+                        <ListItemIcon className={classes.itemIcon + whiteFontClasses}>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText primary={item.sidebarName}
+                          disableTypography={true} />
+                      </ListItem>
+                    </List>
+                  </Collapse>
+                </NavLink>)
              
-             return(collapsemenu(item.path,classes.item,index,item.icon,item.sidebarName,listItemClasses,whiteFontClasses,prop.path+item.path))
            })}
-           </List>
+           </List>)
+          }
+           })
            )
           }
       
-      })}
+      }
+    )}
     </List>
    
   );
