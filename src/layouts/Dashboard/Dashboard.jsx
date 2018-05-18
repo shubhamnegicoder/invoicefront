@@ -23,14 +23,19 @@ const hist = createBrowserHistory();
 var routing=[] 
 const switchRoutes = ( 
   <Switch >
-  
+    <Route path="/addCustomer" component={AddCustomer}></Route>
+    <Route path="/addCompany" component={AddCompany}></Route>
+    <Route path="/editCompany" component={EditCompany}></Route>
+    <Route path="/viewCompany" component={ViewCompany}></Route>
+    <Route path="/viewCustomer" component={ViewCustomer}></Route>
+    <Route path="/editCustomer" component={EditCustomer}></Route>
+
     {dashboardRoutes.map((prop, key) => { 
       routing=[]
        console.log(prop.path,"path",prop.component)
       if (prop.redirect)
          return <Redirect from={prop.path} to={prop.to} key={key} />;
-     
-      if(prop.childs)
+         if(prop.childs)
       { 
         prop.childs.map((item,index)=>{
            console.log("childs",item.path,item.component)
