@@ -1,7 +1,6 @@
 import React from "react";
 // import PropTypes from "prop-types";
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Modal from './Modal.jsx';
 import Button from 'material-ui/Button';
@@ -11,6 +10,8 @@ import { RegularCard, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
 import AddIcon from '@material-ui/icons/Add';
+import MUIDataTable from "mui-datatables";
+import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 // import iconsStyle from "assets/jss/material-dashboard-react/iconsStyle";
 
@@ -32,6 +33,20 @@ class Product extends React.Component {
     
     };
   }
+  getMuiTheme = () => createMuiTheme({
+    overrides: {
+      MUIDataTable: {
+        root: {
+          backgroundColor: "#F08080",
+        }
+      },
+      MUIDataTableBodyCell: {
+        root: {
+          backgroundColor: "#FFB6C1"
+        }
+      }
+    }
+  })
   handleOpen=()=>{
     this.setState({load : true});
     this.setState({productCode:"",productName:"",taxCode:"",rate:"",_id:"",isActive:""});
@@ -76,7 +91,7 @@ class Product extends React.Component {
                 // dataArray.push(new Date(tax.createAt).toDateString());
                 mainArray.push(dataArray)
                 
-                
+                console.log(product.taxCode,"tax hai")
 
              })
              this.setState({
@@ -90,6 +105,63 @@ class Product extends React.Component {
     )
   }
       render(){
+        const columns = [
+          {
+            name: "Code",
+            options: {
+              filter: true,
+              sort:true
+            }
+          },      
+          {
+            name: "Name",
+            options: {
+              filter: true,
+              sort:true
+            }
+          },
+          {
+            name: "Tax",
+            options: {
+              filter: false,
+            }
+          },
+          {
+            name: "Rate",
+            options: {
+              filter: true,
+            }
+          },
+          {
+            name: "IsActive",
+            options: {
+              filter: true
+            }
+          },
+            {
+              name: "Action"
+          }        
+    ];
+    var tableData= this.state.List;
+    console.log(tableData,"medha")
+    const options = {
+      filter: true,
+      selectableRows:false,
+      filterType: 'dropdown',
+      responsive: 'stacked',
+      rowsPerPage: 10,
+      page: 1,
+      viewColumns:false,
+      print:false,
+      filter:false,
+      download:false,
+      textLabels: {
+        body: {
+          noMatch: "Sorry, no matching records found",
+          toolTip: "Sort",
+        }
+      }
+}
         
         return(
           <div>
@@ -104,22 +176,14 @@ class Product extends React.Component {
                   <AddIcon />
                 </Button>
               } 
-              
-               
-              content={
-                <Table
-                  tableHeaderColor="primary"
-                  tableHead={["Code","Name","Tax", "Rate","IsActive","Action"]}
-                  tableData={
-                   this.state.List    
-                  }
-                
-                />}
             />
+             <MuiThemeProvider theme={this.getMuiTheme()}>
+              <MUIDataTable title={"Product list"} data={tableData} columns={columns} options={options} />
+              </MuiThemeProvider>  
             
             </ItemGrid>
-            <Modal {...this.state} handleClose={this.handleClose} List={this.List}/>
             </Grid>
+            <Modal {...this.state} handleClose={this.handleClose} List={this.List}/>
       
         </div>
     
