@@ -7,7 +7,12 @@ const ProductSchema = mongoose.Schema({
     
     productCode: {type: String ,index:{unique:true}},
     productName: {type: String }, 
+<<<<<<< HEAD
+    date:{type:Date},
+    tax:{type:String},
+=======
     taxCode:{type:String},
+>>>>>>> 8e2b1320d5492f4d14f4032a48384ba483ea3c37
     rate:{type:Number},
     isActive: {type:Boolean},
     createdBy:{type:mongoose.Schema.ObjectId },
