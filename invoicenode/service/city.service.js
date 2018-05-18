@@ -24,20 +24,15 @@ const service = {};
  * @return {[object]}
  */
 service.getAllCity = async (req, res) => {
-    console.log(req.query,"allllllllllllllllllllllllllllllllll")
     if (!req.query._id) {
         return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
     }
 
     try {
-       
         var queryToFindCity = {}
             queryToFindCity = {
-                query: {createdBy:ObjectID(req.query._id) }
+                query: {createdBy:ObjectID(req.query.id) }
             }
-        
-
-        // console.log(dataToFind);
         const city = await City.allCity(queryToFindCity);
         logger.info('sending all city...');
         return res.send({ success: true, code: 200, msg:"listed ok", data: city });
