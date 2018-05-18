@@ -1,7 +1,6 @@
 import React from "react";
 // import PropTypes from "prop-types";
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Modal from './Modal.jsx';
 import Button from 'material-ui/Button';
@@ -11,6 +10,8 @@ import AddIcon from '@material-ui/icons/Add';
 import { RegularCard, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
+import MUIDataTable from "mui-datatables";
+import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 // import iconsStyle from "assets/jss/material-dashboard-react/iconsStyle";
 
@@ -33,6 +34,20 @@ class Tax extends React.Component {
     
     };
   }
+  getMuiTheme = () => createMuiTheme({
+    overrides: {
+      MUIDataTable: {
+        root: {
+          backgroundColor: "#F08080",
+        }
+      },
+      MUIDataTableBodyCell: {
+        root: {
+          backgroundColor: "#FFB6C1"
+        }
+      }
+    }
+  })
   handleOpen=()=>{
     this.setState({load : true});
     this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:"",_id:"",isActive:""});
@@ -73,7 +88,7 @@ class Tax extends React.Component {
                  dataArray.push(tax.cgst)
                  dataArray.push(tax.igst)
                  dataArray.push(tax.sgst)
-                 dataArray.push(tax.isActive ? "Active" : "Inactive")
+                 dataArray.push(tax.isActive ?"True" : "False")
                  dataArray.push(<button onClick={(e)=>{this.handleEdit(e,tax)}}>Edit</button>)
                 // dataArray.push(new Date(tax.createAt).toDateString());
                 mainArray.push(dataArray)
@@ -92,36 +107,100 @@ class Tax extends React.Component {
     )
   }
       render(){
+        const columns = [
+          {
+            name: "Code",
+            options: {
+              filter: true,
+              sort:true
+            }
+          },      
+          {
+            name: "Name",
+            options: {
+              filter: true,
+              sort:true
+            }
+          },
+          {
+            name: "CGST(%)",
+            options: {
+              filter: false,
+              sort:true
+            }
+          },
+          {
+            name: "SGST(%)",
+            options: {
+              filter: true,
+              sort:true
+            }
+          },
+          {
+            name: "IGST(%)",
+            options: {
+              filter: true
+            },sort:true
+            
+          },
+          {
+            name: "IsActive",
+            options: {
+              filter: true,
+              sort:true
+            }
+          },
+            {
+              name: "Action"
+          }        
+    ];
+  var tableData= this.state.List;
+  
+
+     const options = {
+      filter: true,
+      selectableRows:false,
+      filterType: 'dropdown',
+      responsive: 'stacked',
+      rowsPerPage: 10,
+      page: 1,
+      viewColumns:false,
+      print:false,
+      filter:false,
+      download:false,
+      textLabels: {
+        body: {
+          noMatch: "Sorry, no matching records found",
+          toolTip: "Sort",
+        }
+      }
+}
+   
         
         return(
           <div>
             
-          <Grid container>
+            <Grid container>
          
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-              cardTitle="Tax"
-              cardSubtitle={
-                <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleOpen} >
-                  <AddIcon />
-                </Button>
+              cardTitle={<h2><b>Tax</b></h2>}
+              cardSubtitle={<Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleOpen} >
+              <AddIcon />
+            </Button>
+
               } 
-              
-               
-              content={
-                <Table
-                  tableHeaderColor="primary"
-                  tableHead={["Code","Name", "CGST %", "IGST %", "SGST %","IsActive","Action"]}
-                  tableData={
-                   this.state.List    
-                  }
-                
-                />}
-            />
-            
+             
+  
+              />
+              <MuiThemeProvider theme={this.getMuiTheme()}>
+              <MUIDataTable title={"Tax list"} data={tableData} columns={columns} options={options} />
+              </MuiThemeProvider>  
             </ItemGrid>
+            </Grid> 
+         
             <Modal {...this.state} handleClose={this.handleClose} List={this.List}/>
-            </Grid>
+            
       
         </div>
     

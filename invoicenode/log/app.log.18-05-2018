@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-18T04:38:13.829Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-18T04:38:13.866Z"}
+=======
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-18T04:59:52.105Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-18T04:59:52.133Z"}
+<<<<<<< HEAD
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-18T05:24:02.897Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-18T05:24:02.945Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-18T05:24:09.952Z"}
@@ -29,3 +34,6 @@
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-18T06:22:36.719Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-18T06:22:36.786Z"}
 {"level":"info","message":"Adding invoice...","timestamp":"2018-05-18T06:29:47.592Z"}
+=======
+>>>>>>> f80d56d41e1eb6891d3071df1f3ede38f1913419
+>>>>>>> 278dbbf588d61c70f463264d0dba85ebdf6cb6af
