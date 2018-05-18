@@ -122,8 +122,7 @@ class CreateInvoice extends React.Component {
     addRow = (params) => {
         let tempLength = invoiceRow.length + 1;
         invoiceRow.push(
-            <div>
-                <br />
+            <div style={{ marginTop: '5px' }}>
                 <div className={"row row " + tempLength} id={"btn" + invoiceRow.length}>
                     {/* <div className="col">
                         {tempLength}
@@ -144,14 +143,28 @@ class CreateInvoice extends React.Component {
                             className={"form-control name" + invoiceRow.length}
                             name={"itemName " + invoiceRow.length}
                             onChange={(e) => this.handleInvoice(e)}
-                            required
+                            readOnly
                         />
                     </div>
                     <div className="col">
-                        <input type="text" className={"form-control qty" + invoiceRow.length} name={"qty " + invoiceRow.length} onChange={(e) => this.handleInvoice(e)} required />
+                        <input
+                            type="text"
+                            className={"form-control qty" + invoiceRow.length}
+                            name={"qty " + invoiceRow.length}
+                            onChange={(e) => this.handleInvoice(e)}
+                            required
+                            pattern="[0-9]"
+                            title="Number only"
+                        />
                     </div>
                     <div className="col">
-                        <input type="text" className={"form-control rate" + invoiceRow.length} name={"rate " + invoiceRow.length} onChange={(e) => this.handleInvoice(e)} required />
+                        <input
+                            type="text"
+                            className={"form-control rate" + invoiceRow.length}
+                            name={"rate " + invoiceRow.length}
+                            onChange={(e) => this.handleInvoice(e)}
+                            readOnly
+                        />
                     </div>
                     <div className="col">
                         <input type="text" className={"form-control total" + invoiceRow.length} name={"total " + invoiceRow.length} onChange={(e) => this.handleInvoice(e)} required />
@@ -160,7 +173,31 @@ class CreateInvoice extends React.Component {
                         <input type="text" className="form-control" name={"discount " + invoiceRow.length} onChange={(e) => this.handleInvoice(e)} required />
                     </div>
                     <div className="col">
-                        <button className="btn" id={"btn" + invoiceRow.length} value={"btn" + invoiceRow.length} onClick={this.removeRow} >Remove</button>
+                        <input type="text" className="form-control" />
+                    </div>
+                    <div className="col">
+                        <input type="text" className="form-control" />
+                    </div>
+                    <div className="col">
+                        <input type="text" className="form-control" />
+                    </div>
+                    <div className="col">
+                        <input type="text" className="form-control" />
+                    </div>
+                    <div className="col">
+                        <input type="text" className="form-control" />
+                    </div>
+                    <div className="col">
+                        <input type="text" className="form-control" />
+                    </div>
+                    <div className="col">
+                        <button
+                            className="btn btn-danger"
+                            id={"btn" + invoiceRow.length}
+                            value={"btn" + invoiceRow.length}
+                            onClick={this.removeRow}
+                        >Remove
+                        </button>
                     </div>
                 </div>
             </div>
@@ -239,6 +276,7 @@ class CreateInvoice extends React.Component {
     render() {
         return (
             <form onSubmit={this.submitInvoice}>
+                {this.state.check ? this.addRow() : ""}
                 <div className="container" style={{ textAlign: 'center' }}>
                     {/* Company & Customer Headings */}
                     <div className="row">
@@ -249,7 +287,9 @@ class CreateInvoice extends React.Component {
                             <label>Customer</label>
                         </div>
                     </div>
+                    {/* Company & Customer Dropdowns */}
                     <div className="row">
+                        {/* Company Dropdown */}
                         <div className="col-sm">
                             <select
                                 style={{ minWidth: '200px' }}
@@ -264,6 +304,7 @@ class CreateInvoice extends React.Component {
                                 }
                             </select>
                         </div>
+                        {/* Customer Dropdown */}
                         <div className="col-sm">
                             <select
                                 style={{ minWidth: '200px' }}
@@ -280,6 +321,7 @@ class CreateInvoice extends React.Component {
                         </div>
                     </div>
                     <br />
+                    {/* Address Labels */}
                     <div className="row">
                         <div className="col-sm">
                             <label>Address</label>
@@ -288,6 +330,7 @@ class CreateInvoice extends React.Component {
                             <label>Address</label>
                         </div>
                     </div>
+                    {/* Address Fields */}
                     <div className="row">
                         <div className="col-sm">
                             <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine1" value={this.state.companyAddressLine1} /><br />
@@ -299,6 +342,7 @@ class CreateInvoice extends React.Component {
                         </div>
                     </div>
                     <br />
+                    {/* Invoice Date and Number Labels */}
                     <div className="row">
                         <div className="col-sm">
                             <label>Invoice Date</label>
@@ -307,6 +351,7 @@ class CreateInvoice extends React.Component {
                             <label>Invoice No.</label>
                         </div>
                     </div>
+                    {/* Invoice Date and Number Fields */}
                     <div className="row">
                         <div className="col-sm">
                             <input type="date" style={{ minWidth: '200px' }} name="invoiceDate" />
@@ -318,8 +363,8 @@ class CreateInvoice extends React.Component {
                 </div>
                 <br />
                 <hr />
-                {/* Invoice Headings */}
-                <div className="row">
+                {/* Invoice Row Headings */}
+                <div className="row" style={{ textAlign: 'center' }}>
                     {/* <div className="col">
                         <label color="black">Serial No.</label>
                     </div> */}
@@ -341,24 +386,42 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <label color="black">Discount</label>
                     </div>
+                    <div className="col">
+                        <label color="black">CGST</label>
+                    </div>
+                    <div className="col">
+                        <label color="black">SGST</label>
+                    </div>
+                    <div className="col">
+                        <label color="black">IGST</label>
+                    </div>
                     <div className="col"></div>
                 </div>
-                {/* Invoice Fields */}
+                <hr />
+                {/* Invoice Row Fields */}
                 {
                     invoiceRow.map((item, key) => {
                         return item
                     })
                 }
                 <br />
-
-                {this.state.check ? this.addRow() : ""}
                 {/* Invoice Buttons */}
                 <div className="row">
                     <div className="col-8">
-                        <input type="button" onClick={this.addRow} value="Add Row" />
+                        <input
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={this.addRow}
+                            value="+ Add Row"
+                        />
                     </div>
                     <div className="col-4">
-                        <input type="submit" value="Create Invoice" style={{ float: 'right' }} />
+                        <input
+                            type="submit"
+                            className="btn btn-success"
+                            value="Create Invoice"
+                            style={{ float: 'right' }}
+                        />
                     </div>
                 </div>
             </form >
