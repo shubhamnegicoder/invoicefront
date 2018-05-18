@@ -8,4 +8,9 @@ router.post('/addInvoice', (req, res) => {
     invoiceService.addInvoice(req, res);
 });
 
+router.get('/allInvoice', (req, res) => {
+    invoiceService.getAllInvoice(req, res);
+});
+
+
 export default router;
