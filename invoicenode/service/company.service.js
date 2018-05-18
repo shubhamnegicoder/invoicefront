@@ -9,6 +9,10 @@
 
 import CompanyModel from '../models/company.model';
 
+
+
+
+
 /**
  * [service is a object ]
  * @type {Object}
@@ -55,6 +59,7 @@ service.getOne = async (req,res)=>{
  * @return {[object]}
  */ 
 service.addCompany = async (req,res)=>{
+	console.log(req.body,"add company krne")
 	if(req.body.companyCode == ""){
 		return res.send({success:false,code:500,msg:"Company code is required"});
 	}
@@ -103,7 +108,8 @@ service.addCompany = async (req,res)=>{
         countryCode:req.body.countryCode,
         postalCode:req.body.postalCode,
         contactNo:req.body.contactNo,
-        status: req.body.status
+		status: req.body.status,
+		selectedFile:req.body.selectedFile
 		//createdBy: req.body.createdBy		
     });
 	try{

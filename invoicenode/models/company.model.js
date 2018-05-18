@@ -23,6 +23,7 @@ const CompanySchema = mongoose.Schema({
     postalCode:{type:Number},
     contactNo:{type:String},
     status:{type: String },
+    selectedFile:{type:String},
     createdBy:{type:mongoose.Schema.ObjectId},
     modifiedBy:{type: mongoose.Schema.ObjectId},
     modifiedOn:{type: Date}
@@ -31,7 +32,68 @@ const CompanySchema = mongoose.Schema({
 let CompanyModel = mongoose.model('company', CompanySchema);
  
 CompanyModel.allCompany = () =>{
-    return CompanyModel.find();
+    return CompanyModel.aggregate([
+        { $match: {} },
+        {
+            $lookup: {
+                from: "country",
+                localField: "countryCode",
+                foreignField: "countryCode",
+                as: "country_docs"
+            }
+
+        },
+        {
+            $unwind: "$country_docs"
+        },
+        {
+            $lookup: {
+                from: "state",
+                localField: "stateCode",
+                foreignField: "stateCode",
+                as: "state_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$state_docs"
+        }, 
+        {
+            $lookup: {
+                from: "city",
+                localField: "cityCode",
+                foreignField: "cityCode",
+                as: "city_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$city_docs"
+        }, 
+        
+        {
+            $project: {
+                companyName:1,
+                companyCode:1,
+                companyGSTNo:1,
+                addressLine1:1,
+                addressLine2:1,
+                cityCode:1,
+                cityName:"$city_docs.cityName",
+                stateCode:1,
+                stateName:"$state_docs.stateName",
+                countryCode:1,
+                countryName:"$country_docs.countryName",
+                postalCode:1,
+                contactNo:1,
+
+            }
+        }
+    ]);
+
+    // return CompanyModel.find();
 }
 
 CompanyModel.oneCompany = (dataToFind) =>{
