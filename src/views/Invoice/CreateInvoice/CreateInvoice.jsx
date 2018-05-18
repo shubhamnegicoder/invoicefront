@@ -18,6 +18,7 @@ class CreateInvoice extends React.Component {
             companyCode: "",
             customerCode: "",
             productCode: "",
+            taxCode: "",
             companyAddressLine1: "",
             companyAddressLine2: "",
             customerAddressLine1: "",
@@ -28,14 +29,17 @@ class CreateInvoice extends React.Component {
             rate: "",
             total: "",
             discount: "",
+            cgst: "",
             invoiceRow: [],
             companyDropdownData: [],
             customerDropdownData: [],
             itemsDropdownData: [],
+            taxData: [],
             setAddressOfCompany: false,
             setAddressOfCustomer: false,
             check: false,
-            check2: false
+            check2: false,
+            check3: false
         }
     }
     handleDropdown = (e, param) => {
@@ -57,13 +61,22 @@ class CreateInvoice extends React.Component {
         let i = eo.slice(6);
         this.state.itemsDropdownData.map((item, key) => {
             if (e.target.value == item.productCode) {
+                console.log("item.taxCode", item.taxCode);
                 $('.name' + i).val(item.productName);
                 $('.rate' + i).val(item.rate);
+                this.setState({
+                    taxCode: item.taxCode
+                })
             }
         })
         this.setState({
             productCode: e.target.value,
-            check2: true,
+            check2: true
+        })
+        this.state.taxData.map((item, key) => {
+            if (item.taxCode == this.state.taxCode) {
+                $('.cgstrate' + i).val("xxx");
+            }
         })
     }
     getCompanyDropdownData = () => {
@@ -96,6 +109,7 @@ class CreateInvoice extends React.Component {
         axios
             .get("http://localhost:8080/allProduct")
             .then((res) => {
+                console.log("response from /allProduct", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -103,6 +117,19 @@ class CreateInvoice extends React.Component {
                 this.setState({
                     itemsDropdownData: tempData,
                     check: true
+                });
+            })
+    }
+    getTaxData = () => {
+        axios
+            .get("http://localhost:8080/allTax")
+            .then((res) => {
+                let tempData = [];
+                res.data.data.map((item, key) => {
+                    tempData.push(item);
+                });
+                this.setState({
+                    taxData: tempData
                 });
             })
     }
@@ -128,7 +155,7 @@ class CreateInvoice extends React.Component {
                         {tempLength}
                     </div> */}
                     <div className="col">
-                        <select id={"select" + invoiceRow.length} className="form-control" style={{ minWidth: '100px' }} onChange={(e) => this.handleDropdown3(e)}>
+                        <select id={"select" + invoiceRow.length} className="form-control" onChange={(e) => this.handleDropdown3(e)}>
                             <option>---</option>
                             {
                                 this.state.itemsDropdownData.map((item, index) => {
@@ -173,7 +200,9 @@ class CreateInvoice extends React.Component {
                         <input type="text" className="form-control" name={"discount " + invoiceRow.length} onChange={(e) => this.handleInvoice(e)} required />
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control" />
+                        <input
+                            type="text"
+                            className={"form-control cgstrate" + invoiceRow.length} />
                     </div>
                     <div className="col">
                         <input type="text" className="form-control" />
@@ -196,8 +225,8 @@ class CreateInvoice extends React.Component {
                             id={"btn" + invoiceRow.length}
                             value={"btn" + invoiceRow.length}
                             onClick={this.removeRow}
-                        >Remove
-                        </button>
+                        >x
+                    </button>
                     </div>
                 </div>
             </div>
@@ -213,7 +242,6 @@ class CreateInvoice extends React.Component {
         //     companyName: this.state.
         // }
         var data = parse(e.target);
-        console.log("Parsed Data", data);
         var finalArray = [];
         var temp = {};
         var limit = 1;
@@ -248,6 +276,7 @@ class CreateInvoice extends React.Component {
         this.getCompanyDropdownData();
         this.getCustomerDropdownData();
         this.getItemDropdownData();
+        this.getTaxData();
     }
     componentDidUpdate(nextState) {
         this.state.companyDropdownData.map((item, key) => {
@@ -277,7 +306,7 @@ class CreateInvoice extends React.Component {
         return (
             <form onSubmit={this.submitInvoice}>
                 {this.state.check ? this.addRow() : ""}
-                <div className="container" style={{ textAlign: 'center' }}>
+                <div style={{ textAlign: 'center' }}>
                     {/* Company & Customer Headings */}
                     <div className="row">
                         <div className="col-sm">
@@ -387,13 +416,22 @@ class CreateInvoice extends React.Component {
                         <label color="black">Discount</label>
                     </div>
                     <div className="col">
-                        <label color="black">CGST</label>
+                        <label color="black">CGST Rate</label>
                     </div>
                     <div className="col">
-                        <label color="black">SGST</label>
+                        <label color="black">CGST Amount</label>
                     </div>
                     <div className="col">
-                        <label color="black">IGST</label>
+                        <label color="black">SGST Rate</label>
+                    </div>
+                    <div className="col">
+                        <label color="black">SGST Amount</label>
+                    </div>
+                    <div className="col">
+                        <label color="black">IGST Rate</label>
+                    </div>
+                    <div className="col">
+                        <label color="black">IGST Amount</label>
                     </div>
                     <div className="col"></div>
                 </div>
