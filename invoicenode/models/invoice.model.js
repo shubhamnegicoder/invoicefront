@@ -4,7 +4,14 @@ AutoIncrement.initialize(mongoose);
 
 const InvoiceSchema = mongoose.Schema({
     itemData: [
-        {
+        {   companyName:{type:String},
+            companyAddressLine1:{type:String},
+            companyAddressLine2:{type:String},
+            customerName:{type:String},
+            customerAddressLine1:{type:String},
+            customerAddressLine2:{type:String},
+            invoiceNo:{type:Number},
+            Date:{type:Date},
             itemCode: { type: String },
             itemName: { type: String },
             qty: { type: Number },
