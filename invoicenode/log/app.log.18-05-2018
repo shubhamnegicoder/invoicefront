@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-18T04:38:13.829Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-18T04:38:13.866Z"}
+=======
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-18T04:59:52.105Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-18T04:59:52.133Z"}
+>>>>>>> f80d56d41e1eb6891d3071df1f3ede38f1913419
