@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route, Redirect ,Router} from "react-router-dom";
-// creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { withStyles } from "material-ui";
