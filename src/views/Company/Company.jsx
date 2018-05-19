@@ -75,6 +75,7 @@ class CompanyList extends React.Component{
       .then(res => res.json())
       .then(
         (result) => {
+            console.log(result.data,"jjjjjjjjjjjooooooooooooo")
           var mainArray = [];
           result.data.forEach((responseData)=>{
               var dataArray = [];
@@ -86,9 +87,9 @@ class CompanyList extends React.Component{
             //   var a2 = responseData.addressLine2;
             //   var address = a1+" "+a2;
             //   dataArray.push(address)
-              dataArray.push(responseData.city)
-              dataArray.push(responseData.state)
-              dataArray.push(responseData.country)
+              dataArray.push(responseData.cityName)
+              dataArray.push(responseData.stateName)
+              dataArray.push(responseData.countryName)
             //  dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)
