@@ -76,7 +76,7 @@ service.getAllState = async (req, res) => {
 }
 
 service.getAllSelectedState = async (req, res) => {
-  
+   
     if (!req.query.countryCode) {
         return res.send({ "success": false, "code": "500", "msg": "countryCode is missing" });
     }

@@ -15,6 +15,20 @@ import CompanyModel from '../models/company.model';
  */
 const service = {};
 
+
+// imageUpload=()=>{
+// 	if(req.url=="/addCompany"){
+// 		var form = new formidable.IncomingForm();
+// 		form.parse(req,function(err,fields,files){
+// 			var oldPath = files.fileToUpload.path;
+// 			var fileName = "uploaded_image/img_"+files.fileToUpload.name;
+// 			fs.rename(oldPath,fileName,function(err){
+// 				if(err) throw err;
+// 				console.log("File Uploaded Successfully!");
+// 			})
+// 		})
+// 	}
+// }
 /**
  * @description [with all the calculation before getAll function of model and after getAll]
  * @param  {[object]}
@@ -55,6 +69,7 @@ service.getOne = async (req,res)=>{
  * @return {[object]}
  */ 
 service.addCompany = async (req,res)=>{
+	console.log("callinggggg ");
 	if(req.body.companyCode == ""){
 		return res.send({success:false,code:500,msg:"Company code is required"});
 	}
@@ -85,16 +100,20 @@ service.addCompany = async (req,res)=>{
 	if(req.body.contactNo == ""){
 		return res.send({success:false,code:500,msg:"Contact no is required"});
 	}
-	if(req.body.status == ""){
-		return res.send({success:false,code:500,msg:"Status is required"});
-	}
-	if(req.body.createdBy == ""){
-		return res.send({success:false,code:500,msg:"Created by is required"});
+	// if(req.body.isActive == ""){
+	// 	return res.send({success:false,code:500,msg:"Status is required"});
+	// }
+	// if(req.body.createdBy == ""){
+	// 	return res.send({success:false,code:500,msg:"Created by is required"});
+	// }
+	if(req.body.logo == ""){
+		return res.send({success:false,code:500,msg:"Logo is required"});
 	}
 	
 	let companyToAdd = CompanyModel({
 		companyName: req.body.companyName,
-        companyCode : req.body.companyCode,   
+		companyCode : req.body.companyCode, 
+		logo:req.body.logo,  
         companyGSTNo: req.body.companyGSTNo,
         addressLine1: req.body.addressLine1,
         addressLine2:req.body.addressLine2,
@@ -103,12 +122,15 @@ service.addCompany = async (req,res)=>{
         countryCode:req.body.countryCode,
         postalCode:req.body.postalCode,
         contactNo:req.body.contactNo,
-        status: req.body.status
-		//createdBy: req.body.createdBy		
+      isActive: req.body.isActive,
+	//	createdBy: req.body.createdBy,
+		createAt:req.body.createAt	
     });
 	try{
-		console.log("this is add Company");
+		 console.log("this is add Company");
+		// console.log("treq.file",req.file);
 		var addCompany = await CompanyModel.addCompany(companyToAdd);
+		console("returning "+addCompany);
 		return res.send({success:true, code:200, msg:"Successfully added", data:addCompany}); 
 	}catch(error){
 		return res.send({success:false, code:500, msg:"Error in adding Company", err:error})
@@ -128,7 +150,9 @@ service.editCompany = async (req,res)=>{
 		state:req.body.state,
 		country:req.body.country,
 		postalCode:req.body.postalCode,
-		contactNo:req.body.contactNo
+		contactNo:req.body.contactNo,
+		modifiedBy:req.body.modifiedBy,
+		updatedAt:req.body.updatedAt
 	};
 	try{
 		let companyEdit = {

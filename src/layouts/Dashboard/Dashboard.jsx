@@ -16,14 +16,21 @@ import AddCompany from "../../views/Company/AddCompany";
 import EditCompany from "../../views/Company/EditCompany";
 import ViewCompany from "../../views/Company/ViewCompany";
 import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
-
+//import Dashboard from "../../routes/dashboard";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import { createBrowserHistory } from "history";
 const hist = createBrowserHistory();
 var routing=[] 
 const switchRoutes = ( 
-  <Switch >
+  <Switch >  
+     {/* <Route path="/dashboard" component={Dashboard} key={'103'}/>    */}
+    <Route path="/addCustomer" component={AddCustomer} key={'123'}/>
+    <Route path="/editCustomer" component={EditCustomer} key={'432'} />
+    <Route path="/viewCustomer" component={ViewCustomer} key={'532'} />
+    <Route path="/addCompany" component={AddCompany} key={'632'} />
+    <Route path="/editCompany" component={EditCompany} key={'732'} />
+    <Route path="/viewCompany" component={ViewCompany} key={'232'} />
     {dashboardRoutes.map((prop, key) => { 
       routing=[];
        console.log(prop.path,"path",prop.component)

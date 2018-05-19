@@ -4,7 +4,7 @@ import './style.scss'
 import axios from 'axios'
 import $ from 'jquery'
 import swal from 'sweetalert'
-// import Dashboard from '../../layouts/Dashboard/Dashboard'
+ //import Dashboard from '../../layouts/Dashboard/Dashboard'
 
 class Login extends React.Component {
 

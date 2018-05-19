@@ -1,0 +1,166 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T04:21:43.266Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T04:21:44.119Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:36:01.208Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:36:37.173Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:36:39.270Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:37:57.503Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:38:12.772Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:38:14.780Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:39:34.480Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:39:44.768Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:40:02.526Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:40:04.028Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:41:43.890Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:41:54.498Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:41:56.404Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:44:28.209Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:44:38.626Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:44:40.466Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:45:55.643Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:46:05.389Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:46:06.977Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:46:41.004Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:47:03.044Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:47:04.258Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:48:42.920Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:48:54.422Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:48:55.831Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:49:00.086Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:49:18.108Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:49:21.227Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:50:44.986Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T04:50:59.077Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T04:51:00.689Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:51:35.117Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:52:05.058Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:52:25.720Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:53:24.702Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:53:51.656Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:54:13.320Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T04:55:08.836Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:26:31.458Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:27:11.288Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:29:24.873Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:29:32.613Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:33:39.813Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:34:44.143Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:35:11.687Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T05:35:28.096Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T05:35:32.134Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:37:58.395Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:39:29.307Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:40:07.377Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:40:57.747Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:42:03.139Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:44:16.890Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T05:45:49.485Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T05:46:41.191Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T05:46:42.899Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T05:46:44.344Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T06:09:21.295Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T06:09:21.325Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T06:12:26.433Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T06:13:14.029Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T06:13:16.009Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T06:14:57.234Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T06:14:57.257Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T06:18:19.907Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T06:18:19.931Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T06:18:35.831Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T06:18:51.048Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T06:18:52.494Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T06:20:14.778Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T06:20:14.803Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T06:22:21.220Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T06:22:21.266Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T06:36:18.181Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T06:36:18.306Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T06:40:42.859Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T06:40:42.970Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T06:43:26.572Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T06:43:26.600Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T07:15:01.997Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T07:15:02.090Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:20:21.866Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T07:20:44.391Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T07:20:45.962Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:21:17.883Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T07:21:40.473Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T07:21:43.986Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:21:58.575Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T07:22:16.124Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T07:22:17.567Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:22:40.482Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:28:33.464Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T07:30:47.456Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T07:30:51.861Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:31:11.847Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:32:33.424Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:34:06.135Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T07:34:27.818Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T07:34:28.774Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:34:48.167Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:35:10.847Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T07:35:24.348Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T07:35:37.658Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T07:35:39.120Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T08:43:13.749Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T08:43:13.995Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T08:44:19.360Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T08:44:44.255Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T08:44:46.292Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T08:56:15.977Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T08:56:56.517Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T08:56:59.861Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T08:57:29.327Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:05:20.692Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T09:05:55.645Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T09:05:58.394Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:06:57.548Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:13:41.926Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:14:19.655Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:15:31.010Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:15:36.690Z"}
+{"level":"info","message":"Adding user...","timestamp":"2018-05-17T09:30:41.561Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:31:04.770Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:53:33.539Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T09:54:39.597Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T09:54:41.434Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:55:40.992Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T09:56:29.873Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T09:56:44.193Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T09:56:45.335Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T10:14:49.192Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T10:14:49.415Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T10:16:10.709Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T10:16:10.732Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T10:17:19.784Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T10:17:19.809Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T10:17:54.035Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T10:17:54.060Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T10:25:15.293Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T10:25:15.398Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T10:52:06.102Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T10:52:06.463Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T11:10:04.075Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T11:13:36.014Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T11:13:39.349Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T11:38:39.365Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T11:38:39.768Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T11:45:36.798Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T11:45:36.820Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-05-17T11:46:32.888Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-17T11:47:00.588Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-17T11:47:04.088Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T12:05:20.371Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T12:05:21.507Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T15:14:31.475Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-05-17T15:14:32.486Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T15:15:07.535Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T15:15:07.798Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T15:49:49.171Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T15:49:49.234Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T17:40:29.636Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-05-17T17:40:30.644Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-17T17:41:04.857Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-17T17:41:05.122Z"}
