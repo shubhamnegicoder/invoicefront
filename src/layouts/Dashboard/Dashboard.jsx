@@ -5,7 +5,7 @@ import { Switch, Route, Redirect ,Router} from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { withStyles } from "material-ui";
-
+import ViewInvoice from "../../views/Invoice/ViewInvoice/ViewInvoice"
 import { Header, Footer, Sidebar } from "components";
 import dashboardRoutes from "routes/dashboard.jsx";
 import AddCustomer from "../../views/Customer/AddCustomer";
@@ -29,6 +29,7 @@ const switchRoutes = (
     <Route path="/viewCompany" component={ViewCompany}></Route>
     <Route path="/viewCustomer" component={ViewCustomer}></Route>
     <Route path="/editCustomer" component={EditCustomer}></Route>
+    <Route path="/viewInvoice" component={ViewInvoice}></Route>
 
     {dashboardRoutes.map((prop, key) => { 
       routing=[]
