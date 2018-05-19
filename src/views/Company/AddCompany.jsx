@@ -3,7 +3,6 @@ import { Button } from "material-ui";
 import swal from "sweetalert";
 import axios from "axios";
 import Checkbox from 'material-ui/Checkbox';
-import ImageUploader from 'react-images-upload';
 
 var maindata = [];
 var dropDownData = [];

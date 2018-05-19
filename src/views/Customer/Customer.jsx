@@ -24,24 +24,7 @@ class CustomerList extends React.Component{
                 data:[]        
         };
     }
-<<<<<<< HEAD
-    getMuiTheme = () => createMuiTheme({
-        overrides: {
-          MUIDataTable: {
-            root: {
-              backgroundColor: "#F08080",
-            }
-          },
-          MUIDataTableBodyCell: {
-            root: {
-              backgroundColor: "#d5f5e3"
-            }
-          }
-        }
-      })
-=======
   
->>>>>>> d07d7b4113db05b65a032f8673df0f51265e6353
 
     componentDidMount(){ 
         this.list();
