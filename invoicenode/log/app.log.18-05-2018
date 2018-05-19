@@ -39,3 +39,5 @@
 >>>>>>> 278dbbf588d61c70f463264d0dba85ebdf6cb6af
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-18T15:47:34.756Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-18T15:47:34.778Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-18T16:10:37.144Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-18T16:10:37.174Z"}
