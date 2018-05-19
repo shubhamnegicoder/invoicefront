@@ -32,20 +32,22 @@ router.get('/oneCompany', (req, res) => {
 router.post('/addCompany',upload.single('file'), (req, res) => {
     if (!req.file) {
         console.log("No file received");
-        
+        // companyService.addCompany(req, res);
         return res.send({
           success: false
         });
     
-      } else {
+      } 
+      else
+       {
         console.log('file received');
         companyService.addCompany(req, res);
         return res.send({
           success: true
         })
-      }
+       }
     })
-    
+
 router.post('/editCompany', (req, res) => {
     companyService.editCompany(req, res);
 });

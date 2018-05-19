@@ -4,7 +4,7 @@ import { Switch, Route, Redirect ,Router} from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { withStyles } from "material-ui";
-
+import ViewInvoice from "../../views/Invoice/ViewInvoice/ViewInvoice"
 import { Header, Footer, Sidebar } from "components";
 import dashboardRoutes from "routes/dashboard.jsx";
 import AddCustomer from "../../views/Customer/AddCustomer";
@@ -21,13 +21,15 @@ import { createBrowserHistory } from "history";
 const hist = createBrowserHistory();
 var routing=[] 
 const switchRoutes = ( 
-  <Switch >  
-    <Route path="/addCustomer" component={AddCustomer} key={'123'}/>
-    <Route path="/editCustomer" component={EditCustomer} key={'432'} />
-    <Route path="/viewCustomer" component={ViewCustomer} key={'532'} />
-    <Route path="/addCompany" component={AddCompany} key={'632'} />
-    <Route path="/editCompany" component={EditCompany} key={'732'} />
-    <Route path="/viewCompany" component={ViewCompany} key={'232'} /> 
+  <Switch >
+    <Route path="/addCustomer" component={AddCustomer}></Route>
+    <Route path="/addCompany" component={AddCompany}></Route>
+    <Route path="/editCompany" component={EditCompany}></Route>
+    <Route path="/viewCompany" component={ViewCompany}></Route>
+    <Route path="/viewCustomer" component={ViewCustomer}></Route>
+    <Route path="/editCustomer" component={EditCustomer}></Route>
+    <Route path="/viewInvoice" component={ViewInvoice}></Route>
+
     {dashboardRoutes.map((prop, key) => { 
       routing=[]
        console.log(prop.path,"path",prop.component)

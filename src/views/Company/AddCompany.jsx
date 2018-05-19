@@ -3,6 +3,7 @@ import { Button } from "material-ui";
 import swal from "sweetalert";
 import axios from "axios";
 import Checkbox from 'material-ui/Checkbox';
+// import ImageUploader from 'react-images-upload';
 
 var maindata = [];
 var dropDownData = [];
@@ -332,13 +333,6 @@ class AddCompany extends React.Component {
                     <td><span style={{ color: "red" }}>*</span>Contact No</td>
                     <td></td>
                     <td><input type="text" placeholder="Contact No" ref="contactNo" onChange={this.handleChange} /></td>
-                </tr>
-                <tr>
-                    <td><span style={{ color: "red" }}>*</span>Image upload</td>
-                    <td></td>
-                    <td>
-                        <input type="file" onChange={this.fileChangedHandler} /></td>
-                        {/* <button onClick={this.uploadHandler}>Upload!</button></td> */}
                 </tr>
                 <tr>
                     <td><span style={{color:"red"}}>*</span>Upload A Image</td>

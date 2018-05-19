@@ -22,6 +22,7 @@ const service = {};
  * @return {[object]}
  */
 service.getAll = async (req,res)=>{
+	console.log(req.query,"kkkklist")
 	try{
 		var allCompany = await CompanyModel.allCompany();
 		return res.send({success:true, code:200, msg:"Successfully found", data:allCompany}); 

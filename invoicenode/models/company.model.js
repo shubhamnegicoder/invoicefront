@@ -24,8 +24,6 @@ const CompanySchema = mongoose.Schema({
     countryCode:{type:String},
     postalCode:{type:Number},
     contactNo:{type:String},
-    status:{type: String },
-    selectedFile:{type:String},
     createdBy:{type:mongoose.Schema.ObjectId},
     modifiedBy:{type: mongoose.Schema.ObjectId},
     createAt:{type:Date},
@@ -79,6 +77,7 @@ CompanyModel.allCompany = () =>{
         
         {
             $project: {
+                file:1,
                 companyName:1,
                 companyCode:1,
                 companyGSTNo:1,

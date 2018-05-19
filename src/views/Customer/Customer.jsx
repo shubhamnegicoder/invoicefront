@@ -24,6 +24,20 @@ class CustomerList extends React.Component{
                 data:[]        
         };
     }
+    getMuiTheme = () => createMuiTheme({
+      overrides: {
+        MUIDataTable: {
+          root: {
+            backgroundColor: "#F08080",
+          }
+        },
+        MUIDataTableBodyCell: {
+          root: {
+            backgroundColor: "#FFB6C1"
+          }
+        }
+      }
+    })
   
 
     componentDidMount(){ 
@@ -185,9 +199,9 @@ class CustomerList extends React.Component{
         responsive: 'stacked',
         rowsPerPage: 10,
         page: 1,
-        viewColumns:false,
+        viewColumns:true,
         print:false,
-        filter:false,
+        filter:true,
         download:false,
         textLabels: {
           body: {

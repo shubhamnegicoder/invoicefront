@@ -1,198 +1,172 @@
 import React from "react";
-import { Grid } from "material-ui";
-import './style.css';
-import logo from './logo.png'
-// import dimension from './dimension'
+// import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import  {Grid} from "material-ui";
 
+import { RegularCard, Table, ItemGrid } from "components";
+// import Form from "./Form.jsx";
+import AddIcon from '@material-ui/icons/Add';
+import MUIDataTable from "mui-datatables";
+import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
-// import { RegularCard, Table, ItemGrid } from "components";
-
-export default class InvoiceList extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-          companyName:"",
-          companyAddressLine1:"",
-          companyAddressLine2:"",
-          customerName:"",
-
-        };
-
-    }
-
+class ListInvoice extends React.Component {
+    getMuiTheme = () => createMuiTheme({
+        overrides: {
+          MUIDataTable: {
+            root: {
+              backgroundColor: "#F08080",
+            }
+          },
+          MUIDataTableBodyCell: {
+            root: {
+              backgroundColor: "#FFB6C1"
+            }
+          }
+        }
+      })
+      componentDidMount(){
+        this.List();
+       }
+       List = () => {
+    
+        fetch("http://localhost:8080/allProduct",{
+            method: "GET",
+            cache: 'no-cache', 
+            mode: 'cors', 
+            headers:  new Headers({
+            'Content-Type': 'application/json',
+            'authorization':"Key@123"
+            })
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                // console.log("listabc = ",result)
+                 var mainArray = [];
+                 result.data.forEach((product)=>{
+                     var dataArray = [];
+                    //  dataArray.push(tax._id)
+                     dataArray.push(product.productCode)
+                     dataArray.push(product.productName)
+                     dataArray.push(product.taxCode)
+                     dataArray.push(product.rate)
+                     dataArray.push(product.isActive ? "Active" : "Inactive")
+                     dataArray.push(<button onClick={(e)=>{this.handleEdit(e,product)}}>Edit</button>)
+                    // dataArray.push(new Date(tax.createAt).toDateString());
+                    mainArray.push(dataArray)
+                    
+                    console.log(product.taxCode,"tax hai")
+    
+                 })
+                 this.setState({
+                     List:mainArray
+                 })
+                
+                },
+                (error) => {
+                  console.log("error",error)
+            }
+        )
+      }
 
   render(){
+    const columns = [
+        {
+          name: "Company",
+          options: {
+            filter: true,
+            sort:true
+          }
+        },      
+        {
+          name: "Customer",
+          options: {
+            filter: true,
+            sort:true
+          }
+        },
+        {
+          name: "Invoice Number",
+          options: {
+            filter: false,
+            sort:true
+          }
+        },
+        {
+          name: "Date",
+          options: {
+            filter: true,
+            sort:true
+          }
+        },
+        {
+            name: "Amount",
+            options: {
+              filter: true,
+              sort:true
+            }
+          },
+        {
+          name: "IsActive",
+          options: {
+            filter: true,
+            sort:true
+          }
+        },
+          {
+            name: "Action"
+        }        
+  ];
+//   var tableData= this.state.List;
+ // console.log(tableData,"medha")
+  const options = {
+    filter: true,
+    selectableRows:false,
+    filterType: 'dropdown',
+    responsive: 'stacked',
+    rowsPerPage: 10,
+    page: 1,
+    viewColumns:true,
+    print:false,
+    filter:true,
+    download:false,
+    textLabels: {
+      body: {
+        noMatch: "Sorry, no matching records found",
+        toolTip: "Sort",
+      }
+    }
+}
+      
       return(
-    <div>
-   <header class="clearfix">
-      <div id="logo">
-        <img src={logo}/>
-      </div>
-     <center>
-       <div><b>Company Name</b><br/>
-       <h4>Limitless Mobilty Solution</h4>
-       </div>
-      </center>
-      <h1> TAX-INVOICE</h1>
-      <div id="company" class="clearfix">
-        <div><b>shipped To</b></div>
-        <div>455 Foggy Heights,<br/> AZ 85004, US</div>
-        <div>(602) 519-0450</div>
-        <div><a href="mailto:company@example.com">company@example.com</a></div>
-      </div>
-      <div id="project">
-        <div><b>Billed To</b></div>
-        <div><span>PROJECT</span> Website development</div>
-        <div><span>CLIENT</span> John Doe</div>
-        <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>
-        <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
-        <div><span>DATE</span> August 17, 2015</div>
-        <div><span>DUE DATE</span> September 17, 2015</div>
-      </div>
-    </header>
-    <main>
-      <table style={{fontSize:'11px'}}>
-        <thead>
-          <tr>
-            <th class="service">SERVICE</th>
-            <th class="desc">Accounting Code</th>
-            <th>QTY</th>
-            <th>PRICE</th>
-            <th>TOTAL</th>
-            <th>DISCOUNT</th>
-            <th>TAXABLE VALUE</th>
-            <th>CGST</th>
-            <th>SGST</th>
-            <th>IGST</th>
-          </tr>
-          <tr>
-          <th class="service"></th>
-            <th class="desc"></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th style={{Position:"fixed"}}> 
-              <th style={{position:'relative',left:"12px",borderBottom:"none"}}>Rate</th>
-              <th style={{position:'relative',left:"15px",borderBottom:"none"}}>Amount</th>
-              </th>
-              <th style={{Position:"fixed"}}> 
-              <th style={{position:'relative',left:"20px",borderBottom:"none"}}>Rate</th>
-              <th style={{position:'relative',left:"30px",borderBottom:"none"}}>Amount</th>
-              </th>
-              <th style={{Position:"fixed"}}> 
-              <th style={{position:'relative',left:"12px",borderBottom:"none"}}>Rate</th>
-              <th style={{position:'relative',left:"15px",borderBottom:"none"}}>Amount</th>
-              </th>
-            {/* <th><th>Rate</th>
-            <th>Amount</th></th>
-           <th><th>Rate</th>
-            <th>Amount</th></th> */}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="service">Design</td>
-            <td class="code">67545</td>
-            <td class="code">$40.00</td>
-            <td class="code">26</td>
-            <td class="code">$1,040.00</td>
-            <td class="code">Design</td>
-            <td class="code">56</td>
-            <td><td class="rate">$40.00</td>
-            <td class="amount">26</td></td>
-           <td><td class="rate">$1,040.00</td>
-            <td class="amount">$40.00</td></td>
-            <td>  <td class="rate">26</td>
-            <td class="amount">$1,040.00</td></td>
+        <div>
           
-          </tr>
-          <tr>
-            <td class="service">Design</td>
-            <td class="code">67545</td>
-            <td class="code">$40.00</td>
-            <td class="code">26</td>
-            <td class="code">$1,040.00</td>
-            <td class="code">Design</td>
-            <td class="code">56</td>
-            <td><td class="rate">$40.00</td>
-            <td class="amount">26</td></td>
-           <td><td class="rate">$1,040.00</td>
-            <td class="amount">$40.00</td></td>
-            <td>  <td class="rate">26</td>
-            <td class="amount">$1,040.00</td></td>
+        <Grid container>
+       
+        <ItemGrid xs={12} sm={12} md={12}>
+          <RegularCard
+            cardTitle={<h2><b>Invoice</b></h2>}
+            
+          />
+           <MuiThemeProvider theme={this.getMuiTheme()}>
+            <MUIDataTable title={"Invoice list"}  columns={columns} options={options} />
+            </MuiThemeProvider>  
           
-          </tr>
-          <tr>
-            <td class="service">Design</td>
-            <td class="code">67545</td>
-            <td class="code">$40.00</td>
-            <td class="code">26</td>
-            <td class="code">$1,040.00</td>
-            <td class="code">Design</td>
-            <td class="code">56</td>
-            <td><td class="rate">$40.00</td>
-            <td class="amount">26</td></td>
-           <td><td class="rate">$1,040.00</td>
-            <td class="amount">$40.00</td></td>
-            <td>  <td class="rate">26</td>
-            <td class="amount">$1,040.00</td></td>
-          
-          </tr>
-          <tr>
-
-          </tr>
-          <tr>
-            <td colspan="4"><b>Total</b></td>
-            <td class="code">-</td>
-            <td class="code">-</td>
-            <td class="code">-</td>
-            <td class="code">-</td>
-            <td class="code">-</td>
-            <td class="code">-</td>
-
-          </tr>
-
-          <tr>
-            <td colspan="9">TAXABLE VALUE BEFORE TAX</td>
-            <td class="total">$5,200.00</td>
-          </tr>
-          <tr>
-            <td colspan="9">CGST</td>
-            <td class="total">$1,300.00</td>
-          </tr>
-          <tr>
-            <td colspan="9">SGST</td>
-            <td class="total">$1,300.00</td>
-          </tr>
-          <tr>
-            <td colspan="9">IGST</td>
-            <td class="total">$1,300.00</td>
-          </tr>
-          <tr>
-            <td colspan="9" class="grand total">GRAND TOTAL</td>
-            <td class="grand total">$6,500.00</td>
-          </tr>
-        </tbody>
-      </table>
-      <div id="notices">
-        <div>NOTICE:</div>
-        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+          </ItemGrid>
+          </Grid>
+         
+    
       </div>
-    </main>
-
-    </div>
-
-
-
-      )
-  }
-
-
-
+  
+      
+      );
+    }
 }
 
 
+// We need an intermediary variable for handling the recursive nesting.
 
+
+export default ListInvoice;

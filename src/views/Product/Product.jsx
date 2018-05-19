@@ -47,19 +47,7 @@ class Product extends React.Component {
       }
     }
   })
-  handleOpen=()=>{
-    this.setState({load : true});
-    this.setState({productCode:"",productName:"",taxCode:"",rate:"",_id:"",isActive:""});
-      
-  }
-  handleClose = () => {
-    
-    this.setState({load: false });
-  };
-  handleEdit = (e,product) => {
-    this.setState({load: true ,productCode :product.productCode,productName : product.productName,taxCode : product.taxCode,rate :product.rate,isActive:product.isActive,_id:product._id});
-    
-  };
+ 
   componentDidMount(){
     this.List();
    }
