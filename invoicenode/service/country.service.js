@@ -10,7 +10,6 @@ import ObjectID from "bson-objectid";
 
 
 
-
 /**
  * [service is a object ]
  * @type {Object}
@@ -52,7 +51,7 @@ const service = {};
  * @return {[object]}
  */
 service.getAllCountry = async (req, res) => {
-    console.log("req",req.query)
+    console.log("req", req.query)
     var location = {};
     if (!req.query.id) {
         return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
@@ -74,15 +73,15 @@ service.getAllCountry = async (req, res) => {
         //     }
         // }
         var queryToFindCountry = {}
-            queryToFindCountry = {
-                query: {createdBy:ObjectID(req.query.id) }
-            }
-        
+        queryToFindCountry = {
+            query: { createdBy: ObjectID(req.query.id) }
+        }
+
 
         // console.log(dataToFind);
         const country = await Country.allCountry(queryToFindCountry);
         logger.info('sending all country...');
-        return res.send({ success: true, code: 200, msg:"listed ok", data: country });
+        return res.send({ success: true, code: 200, msg: "listed ok", data: country });
     } catch (err) {
         logger.error('Error in getting country- ' + err);
         return res.send({ success: false, code: 500, msg: "listed false", err: err });
@@ -97,7 +96,7 @@ service.getAllCountry = async (req, res) => {
  */
 service.addCountry = async (req, res) => {
     if (!req.body.countryCode || !req.body.countryName) {
-      return res.send({ "success": false, "code": "500", "msg": msg.param });
+        return res.send({ "success": false, "code": "500", "msg": msg.param });
     }
     // console.log(req.body,"addddddddddddd conyrrrrrrrrrr")
     //let clientId = utility.removeQuotationMarks(req.body.clientId);
@@ -105,14 +104,15 @@ service.addCountry = async (req, res) => {
         countryCode: req.body.countryCode,
         countryName: req.body.countryName,
         createdBy: req.body.id,
+        isActive: req.body.isActive,
         createAt: new Date()
     });
 
     try {
-
+        console.log(countryToAdd, "country")
         const savedCountry = await Country.addCountry(countryToAdd);
         logger.info('Adding Country...');
-        return res.send({ "success": true, "code": "200", "msg":"country added successfully" , "data": savedCountry });
+        return res.send({ "success": true, "code": "200", "msg": "country added successfully", "data": savedCountry });
     }
     catch (err) {
         // logger.error('Error in getting Asset- ' + err);
@@ -128,21 +128,24 @@ service.addCountry = async (req, res) => {
  * @return {[type]}
  */
 service.editCountry = async (req, res) => {
-    console.log(req.body,"editttttttttttt")
+    console.log(req.body, "editttttttttttt")
     let countryToEdit = {
-        countryName:req.body.countryName
+        countryName: req.body.countryName,
+        modifiedBy: req.body.userId,
+        isActive: req.body.isActive,
+        updatedAt: new Date()
     };
     let countryEdit = {
-        query:{ "_id": req.body._id },
+        query: { "_id": req.body.id },
         data: { "$set": countryToEdit }
     };
     try {
         const editedCountry = await Country.editCountry(countryEdit);
         logger.info('edit country');
         // console.log('Adding asset...');
-        return res.send({ "success": true, "code": "200", "msg":"country edited", "data": editedCountry });
+        return res.send({ "success": true, "code": "200", "msg": "country edited", "data": editedCountry });
     } catch (err) {
-        logger.error('Error in getting Asset- ' + err);
+        logger.error('Error in getting Country- ' + err);
         return res.send({ "success": false, "code": "500", "msg": "unable to edit country", "err": err });
     }
 }
