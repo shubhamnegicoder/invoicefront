@@ -15,14 +15,16 @@ class CustomerList extends React.Component{
             customerGSTNo:"",
             addressLine1:"",
             addressLine2:"",
-            city:"",
-            state:"",
-            country:"",
+            cityCode:"",
+            stateCode:"",
+            countryCode:"",
             postalCode:"",
             contactNo:"",
+          
                 data:[]        
         };
     }
+<<<<<<< HEAD
     getMuiTheme = () => createMuiTheme({
         overrides: {
           MUIDataTable: {
@@ -37,6 +39,9 @@ class CustomerList extends React.Component{
           }
         }
       })
+=======
+  
+>>>>>>> d07d7b4113db05b65a032f8673df0f51265e6353
 
     componentDidMount(){ 
         this.list();
@@ -56,9 +61,9 @@ class CustomerList extends React.Component{
         this.setState({customerGSTNo:response.customerGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({city:response.city})
-        this.setState({state:response.state})
-        this.setState({country:response.country})
+        this.setState({cityCode:response.cityName})
+        this.setState({stateCode:response.stateName})
+        this.setState({countryCode:response.countryName})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/editCustomer?id="+response._id;
@@ -101,9 +106,9 @@ class CustomerList extends React.Component{
               dataArray.push(responseData.customerGSTNo)
               //dataArray.push(responseData.addressLine1)
               //dataArray.push(responseData.addressLine2)
-              dataArray.push(responseData.city)
-              dataArray.push(responseData.state)
-              dataArray.push(responseData.country)
+              dataArray.push(responseData.cityName)
+              dataArray.push(responseData.stateName)
+              dataArray.push(responseData.countryName)
               //dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)

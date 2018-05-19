@@ -32,7 +32,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage
   }, 
-  
+
   {
     path: "/customer",
     sidebarName: "Customer",

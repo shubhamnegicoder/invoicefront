@@ -13,7 +13,7 @@ router.get('/allState', (req, res) => {
 });
 
 router.get('/allSelectedState', (req, res) => {
-    stateService.getAllSelectedState(req, res);
+    stateService.getAllSelectedState(req, res); 
 });
 
 

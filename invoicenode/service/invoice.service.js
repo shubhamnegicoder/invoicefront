@@ -27,4 +27,21 @@ service.addInvoice = async (req, res) => {
     }
 }
 
+service.getAllInvoice = async (req, res) => {
+    try {
+        var queryToFindCity = {}
+            queryToFindCity = {
+                query: {}
+            }
+        const invoice = await City.allInvoice(dataToFind);
+        logger.info('sending all invoice...');
+        return res.send({ success: true, code: 200, msg:"listed ok", data: invoice });
+         } catch (err)
+         {
+        logger.error('Error in getting invoice ' + err);
+        return res.send({ success: false, code: 500, msg: "listed false", err: err });
+
+       }
+}
+
 export default service;
