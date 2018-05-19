@@ -25,22 +25,6 @@ class Country extends React.Component {
             userId: "",
             iActive:false
              
-         }
-     };
-     getMuiTheme = () => createMuiTheme({
-        overrides: {
-          MUIDataTable: {
-            root: {
-              backgroundColor: "#F08080",
-            }
-          },
-          MUIDataTableBodyCell: {
-            root: {
-              backgroundColor: "#d5f5e3"
-            }
-          }
-        }
-      })
 
         }
     };
@@ -60,103 +44,58 @@ class Country extends React.Component {
     }
 
 
-onClose = () => {
- this.setState({load:false });
- this.data();
+    data = () => {
+        axios.get("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1")
+            .then(
+                (result) => {
 
-};
-     handlePageChange=(pageNumber)=> 
-     {
-         console.log(pageNumber,)
-         this.setState({ activePage:pageNumber});
-     }
-render(){
-    const columns = [
-        {
-          name: "Code",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },      
-        {
-          name: "Name",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-        {
-          name: "CGST(%)",
-          options: {
-            filter: false,
-            sort:true
-          }
-        },
-        {
-          name: "SGST(%)",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-        {
-          name: "IGST(%)",
-          options: {
-            filter: true
-          },sort:true
-          
-        },
-        {
-          name: "IsActive",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-          {
-            name: "Action"
-        }        
-  ];
-var tableData= this.state.List;
+                    var maindata = [];
+                    var localdata = []
+                    console.log(result.data)
+
+                    result.data.data && result.data.data.map((item, key) => {
+                        console.log(item.isActive,"active")
+                        localdata.push(item.countryCode, item.countryName,item.isActive?"True":"False")
+                        localdata.push(<button onClick={(e) => this.handleEdit(e, item)}>Edit</button>)
+                        maindata.push(localdata);
+                        localdata = [];
+                    })
 
 
-   const options = {
-    filter: true,
-    selectableRows:false,
-    filterType: 'dropdown',
-    responsive: 'stacked',
-    rowsPerPage: 10,
-    page: 1,
-    viewColumns:false,
-    print:false,
-    filter:false,
-    download:false,
-    textLabels: {
-      body: {
-        noMatch: "Sorry, no matching records found",
-        toolTip: "Sort",
-      }
+                    this.setState({ mydata: maindata })
+                    console.log(this.state.mydata, "arrsy")
+                },
+                (error) => {
+                    console.log("error", error)
+                }
+            )
     }
-  }
-    return (
-        <Grid container>
-            <ItemGrid xs={12} sm={12} md={12}>
-                
-                <RegularCard
-                    plainCard
-                    cardTitle="Country List"
-                    cardSubtitle={
-                        <Button style={{float:"right"}}variant="fab" color="primary" aria-label="add" onClick={this.clickaction} >
-                            <AddIcon />
-                        </Button>
-                    }
-                    content={
-                        <Table
-                            tableHeaderColor="primary"
-                            tableHead={["CountryCode", "Country","Operation"]}
-                            tableData={this.state.mydata}
-                        />
+    componentDidMount() {
+        this.data()
+
+    }
+    onClose = () => {
+        this.setState({ load: false });
+        this.data();
+
+    };
+    handlePageChange = (pageNumber) => {
+        console.log(pageNumber, )
+        this.setState({ activePage: pageNumber });
+    }
+    render() {
+        
+        return (
+            <Grid container>
+                <ItemGrid xs={12} sm={12} md={12}>
+
+                    <RegularCard
+                        plainCard
+                        cardTitle="Country List"
+                        cardSubtitle={
+                            <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.clickaction} >
+                                <AddIcon />
+                            </Button>
                         }
                         content={
                             <Table
