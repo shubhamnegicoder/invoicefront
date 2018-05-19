@@ -13,6 +13,7 @@ import Dashboard from "../Dashboard/Dashboard.jsx";
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
+
 // import iconsStyle from "assets/jss/material-dashboard-react/iconsStyle";
 
 
@@ -23,7 +24,7 @@ class Tax extends React.Component {
     super(props);
     this.state = {
     load : false,
-      List:[],
+    List:[],
     taxCode:"",
     taxName:"",
     cgst:"",
@@ -43,7 +44,7 @@ class Tax extends React.Component {
       },
       MUIDataTableBodyCell: {
         root: {
-          backgroundColor: "#FFB6C1"
+          backgroundColor: "#d5f5e3"
         }
       }
     }
@@ -174,7 +175,40 @@ class Tax extends React.Component {
           toolTip: "Sort",
         }
       }
-}
+    }
+      // },
+      // styles: {
+      //   table: {          
+      //     head: {
+      //       row: { fontSize:"20px",
+      //       width: "1000px"
+
+      //       },            
+      //       cell: {
+      //         root: {
+      //           fontSize:"20px",
+      //           width: "10000px"
+  
+
+      //         },
+      //         sortLabel: {
+      //         },
+      //       }
+      //     },
+      //     body: {
+      //       row: {
+      //         fontSize:"20px",
+      //         width: "10000px"
+
+      //       },
+      //       cell: {
+      //         root: {
+      //         }
+      //       }
+      //     },
+      //   },
+      // }
+    
    
         
         return(

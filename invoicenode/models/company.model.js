@@ -11,10 +11,12 @@ import mongoose from 'mongoose';
  * [CompanySchema is used for Company data validating aginst schema]
  * @type {[type]}
  */
-const CompanySchema = mongoose.Schema({
+const CompanySchema = mongoose.Schema({ 
+    file: { data: Buffer, contentType: String },
     companyName:{type:String},
     companyCode:{type:String, index: {unique:true,dropDups: true}},
     companyGSTNo:{type:String},
+    logo:{type:String},
     addressLine1:{type:String},
     addressLine2:{type:String},
     cityCode:{type:String},
@@ -22,15 +24,15 @@ const CompanySchema = mongoose.Schema({
     countryCode:{type:String},
     postalCode:{type:Number},
     contactNo:{type:String},
-    status:{type: String },
-    selectedFile:{type:String},
     createdBy:{type:mongoose.Schema.ObjectId},
     modifiedBy:{type: mongoose.Schema.ObjectId},
-    modifiedOn:{type: Date}
+    createAt:{type:Date},
+    updatedAt:{type: Date},
+    isActive:{type:Boolean}
 }, {collection : 'company'});
 
 let CompanyModel = mongoose.model('company', CompanySchema);
- 
+
 CompanyModel.allCompany = () =>{
     return CompanyModel.aggregate([
         { $match: {} },
@@ -75,6 +77,7 @@ CompanyModel.allCompany = () =>{
         
         {
             $project: {
+                file:1,
                 companyName:1,
                 companyCode:1,
                 companyGSTNo:1,
@@ -95,12 +98,14 @@ CompanyModel.allCompany = () =>{
 
     // return CompanyModel.find();
 }
-
+ 
 CompanyModel.oneCompany = (dataToFind) =>{
     return CompanyModel.findOne(dataToFind.query);
 }
 
 CompanyModel.addCompany = (addToCompany) =>{
+    console.log("saveeeeeeeeeee"+addToCompany.contactNo);
+    console.log("saveeeeeeeeeee"+addToCompany);
     return addToCompany.save();
 }
 

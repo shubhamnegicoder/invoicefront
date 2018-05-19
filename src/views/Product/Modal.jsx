@@ -66,7 +66,6 @@ class SimpleModal extends React.Component {
   }
 
   handleCheckbox = name => event => {
-      alert();
     this.setState({ [name]: event.target.checked });
   };
   handleDropDown=(event)=>{

@@ -1,7 +1,10 @@
 import React from "react";
-import { Grid ,Button} from "material-ui";
+import { Grid } from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
 import AddIcon from '@material-ui/icons/Add';
+import MUIDataTable from "mui-datatables";
+import Button from 'material-ui/Button';
+import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 class CustomerList extends React.Component{
     constructor(props){
@@ -21,7 +24,24 @@ class CustomerList extends React.Component{
                 data:[]        
         };
     }
+<<<<<<< HEAD
+    getMuiTheme = () => createMuiTheme({
+        overrides: {
+          MUIDataTable: {
+            root: {
+              backgroundColor: "#F08080",
+            }
+          },
+          MUIDataTableBodyCell: {
+            root: {
+              backgroundColor: "#d5f5e3"
+            }
+          }
+        }
+      })
+=======
   
+>>>>>>> d07d7b4113db05b65a032f8673df0f51265e6353
 
     componentDidMount(){ 
         this.list();
@@ -92,8 +112,8 @@ class CustomerList extends React.Component{
               //dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)
-              dataArray.push(<Button  class="RegularCard-purpleCardHeader-287" onClick={(e)=>this.handleEdit(e,responseData)} style={{backgroundColor:"purple",color:"white"}}>Edit Details</Button>)
-             dataArray.push(<Button  class="RegularCard-purpleCardHeader-287" style={{backgroundColor:"purple",color:"white"}} onClick={(e)=>this.handleView(e,responseData)}>View Details</Button>)
+              dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button>)
+             dataArray.push(<Button  onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)
       
@@ -112,23 +132,100 @@ class CustomerList extends React.Component{
       
 
     render(){
+        const columns = [
+            {
+              name: "Code",
+              options: {
+                filter: true,
+                sort:true
+              }
+            },      
+            {
+              name: "Name",
+              options: {
+                filter: true,
+                sort:true
+              }
+            },
+            {
+              name: "GST No",
+              options: {
+                filter: false,
+              }
+            },
+            
+              
+            {
+              name: "City",
+              options: {
+                filter: true,
+              }
+            },
+            {
+              name: "State",
+              options: {
+                filter: true
+              }
+            },
+            {
+              name: "Country",
+                options: {
+                  filter: true
+                }
+              },
+              {
+                name: "Contact No",
+                  options: {
+                    filter: true
+                  }
+                },
+                {
+                name: "Action",
+                     options: {
+                        filter: true
+                      }
+                    },
+                    {
+                    name: "Action",
+                         options: {
+                         filter: true
+                          }
+                        },
+              
+                      
+      ];
+      var tableData= this.state.data;
+      const options = {
+        filter: true,
+        selectableRows:false,
+        filterType: 'dropdown',
+        responsive: 'stacked',
+        rowsPerPage: 10,
+        page: 1,
+        viewColumns:false,
+        print:false,
+        filter:false,
+        download:false,
+        textLabels: {
+          body: {
+            noMatch: "Sorry, no matching records found",
+            toolTip: "Sort",
+          }
+        }
+  }
         return (
         <Grid container>
-        <ItemGrid xs={12} sm={12} md={12}>
+        <ItemGrid xs={30} sm={30} md={30}>
             <RegularCard
          cardTitle="Customer List"
             cardSubtitle={
                 <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
                     <AddIcon />
                 </Button>}
-            content={
-                <Table
-                tableHeaderColor="primary"
-                tableHead={["Code","Name","GST No", "City","State","Country","Contact No","Action"]}
-                tableData={this.state.data}
-                />
-            }
             />
+            <MuiThemeProvider theme={this.getMuiTheme()}>
+              <MUIDataTable title={"Customer list"} data={tableData} columns={columns} options={options} />
+              </MuiThemeProvider>  
         </ItemGrid>
         
         </Grid>

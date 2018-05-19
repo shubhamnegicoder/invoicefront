@@ -298,17 +298,18 @@ class CreateInvoice extends React.Component {
             item: finalArray
         }
         console.log("Data sent", invoiceData);
-        // superagent
-        //     .post("http://localhost:8080/addInvoice")
-        //     .send(invoiceData)
-        //     .then((res) => {
-        //         if (res.body.success) {
-        //             swal({
-        //                 text: "Invoice Saved !",
-        //                 icon: "success"
-        //             })
-        //         }
-        //     })
+        superagent
+            .post("http://localhost:8080/addInvoice")
+            .send(invoiceData)
+            .then((res) => {
+                if (res.body.success) {
+                    swal({
+                        text: "Invoice Saved !",
+                        icon: "success"
+                    })
+                    window.location.href="./viewInvoice"
+                }
+            })
     }
     componentWillMount() {
         this.getCompanyDropdownData();

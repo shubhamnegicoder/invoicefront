@@ -23,10 +23,11 @@ const CustomerSchema = mongoose.Schema({
     countryCode:{type:String},
     postalCode:{type:Number},
     contactNo:{type:String},
-    status:{type: String },
     createdBy:{type:mongoose.Schema.ObjectId},
     modifiedBy:{type: mongoose.Schema.ObjectId},
-    modifiedOn:{type: Date}
+    createAt:{type:Date},
+    updatedAt:{type: Date},
+    isActive:{type:Boolean}
 }, {collection : 'customer'});
 
 let CustomerModel = mongoose.model('customer', CustomerSchema);

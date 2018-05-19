@@ -7,6 +7,7 @@ const ProductSchema = mongoose.Schema({
     
     productCode: {type: String ,index:{unique:true}},
     productName: {type: String }, 
+
     taxCode:{type:String},
     rate:{type:Number},
     isActive: {type:Boolean},
