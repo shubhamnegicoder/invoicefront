@@ -25,25 +25,6 @@ class Country extends React.Component {
             userId: "",
             iActive:false
              
-<<<<<<< HEAD
-=======
-         }
-     };
-     getMuiTheme = () => createMuiTheme({
-        overrides: {
-          MUIDataTable: {
-            root: {
-              backgroundColor: "#F08080",
-            }
-          },
-          MUIDataTableBodyCell: {
-            root: {
-              backgroundColor: "#d5f5e3"
-            }
-          }
-        }
-      })
->>>>>>> 05d9401e1d07a916f1a8d15c761d0cd4af2158a2
 
         }
     };
@@ -62,7 +43,6 @@ class Country extends React.Component {
        
     }
 
-<<<<<<< HEAD
 
     data = () => {
         axios.get("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1")
@@ -116,106 +96,6 @@ class Country extends React.Component {
                             <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.clickaction} >
                                 <AddIcon />
                             </Button>
-=======
-}
-onClose = () => {
- this.setState({load:false });
- this.data();
-
-};
-     handlePageChange=(pageNumber)=> 
-     {
-         console.log(pageNumber,)
-         this.setState({ activePage:pageNumber});
-     }
-render(){
-    const columns = [
-        {
-          name: "Code",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },      
-        {
-          name: "Name",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-        {
-          name: "CGST(%)",
-          options: {
-            filter: false,
-            sort:true
-          }
-        },
-        {
-          name: "SGST(%)",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-        {
-          name: "IGST(%)",
-          options: {
-            filter: true
-          },sort:true
-          
-        },
-        {
-          name: "IsActive",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-          {
-            name: "Action"
-        }        
-  ];
-var tableData= this.state.List;
-
-
-   const options = {
-    filter: true,
-    selectableRows:false,
-    filterType: 'dropdown',
-    responsive: 'stacked',
-    rowsPerPage: 10,
-    page: 1,
-    viewColumns:false,
-    print:false,
-    filter:false,
-    download:false,
-    textLabels: {
-      body: {
-        noMatch: "Sorry, no matching records found",
-        toolTip: "Sort",
-      }
-    }
-  }
-    return (
-        <Grid container>
-            <ItemGrid xs={12} sm={12} md={12}>
-                
-                <RegularCard
-                    plainCard
-                    cardTitle="Country List"
-                    cardSubtitle={
-                        <Button style={{float:"right"}}variant="fab" color="primary" aria-label="add" onClick={this.clickaction} >
-                            <AddIcon />
-                        </Button>
-                    }
-                    content={
-                        <Table
-                            tableHeaderColor="primary"
-                            tableHead={["CountryCode", "Country","Operation"]}
-                            tableData={this.state.mydata}
-                        />
->>>>>>> 05d9401e1d07a916f1a8d15c761d0cd4af2158a2
                         }
                         content={
                             <Table
