@@ -9,7 +9,6 @@
 import express from "express";
 import companyService from "../service/company.service";
 import multer from "multer";
-import path from 'path';
 
 const router = express.Router()
 
@@ -31,8 +30,6 @@ router.get('/oneCompany', (req, res) => {
 });
 
 router.post('/addCompany',upload.single('file'), (req, res) => {
-//console.log(res);
-
     if (!req.file) {
         console.log("No file received");
         companyService.addCompany(req, res);
@@ -48,8 +45,6 @@ router.post('/addCompany',upload.single('file'), (req, res) => {
         })
       }
     
-});
-
 router.post('/editCompany', (req, res) => {
     companyService.editCompany(req, res);
 });

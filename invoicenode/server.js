@@ -20,6 +20,13 @@ import product from './routes/product.router.js';
 import net from 'net';
 import cors from 'cors';
 
+
+
+
+
+
+
+
 const port = config.serverPort;
 logger.stream = {
     write: function(message, encoding){

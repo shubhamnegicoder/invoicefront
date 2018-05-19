@@ -4,5 +4,5 @@ dist/
 npm-debug.*
 .idea
 src/.vscode/
-package-lock/
+package-lock.json
 

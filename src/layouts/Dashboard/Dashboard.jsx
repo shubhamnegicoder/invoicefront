@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route, Redirect ,Router} from "react-router-dom";
-// creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { withStyles } from "material-ui";
 
 import { Header, Footer, Sidebar } from "components";
-
 import dashboardRoutes from "routes/dashboard.jsx";
 import AddCustomer from "../../views/Customer/AddCustomer";
 import EditCustomer from "../../views/Customer/EditCustomer";
@@ -16,7 +14,7 @@ import AddCompany from "../../views/Company/AddCompany";
 import EditCompany from "../../views/Company/EditCompany";
 import ViewCompany from "../../views/Company/ViewCompany";
 import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
-//import Dashboard from "../../routes/dashboard";
+import Dashboard from "routes/dashboard";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import { createBrowserHistory } from "history";
@@ -24,39 +22,37 @@ const hist = createBrowserHistory();
 var routing=[] 
 const switchRoutes = ( 
   <Switch >  
-     {/* <Route path="/dashboard" component={Dashboard} key={'103'}/>    */}
     <Route path="/addCustomer" component={AddCustomer} key={'123'}/>
     <Route path="/editCustomer" component={EditCustomer} key={'432'} />
     <Route path="/viewCustomer" component={ViewCustomer} key={'532'} />
     <Route path="/addCompany" component={AddCompany} key={'632'} />
     <Route path="/editCompany" component={EditCompany} key={'732'} />
-    <Route path="/viewCompany" component={ViewCompany} key={'232'} />
+    <Route path="/viewCompany" component={ViewCompany} key={'232'} /> 
     {dashboardRoutes.map((prop, key) => { 
-      routing=[];
+      routing=[]
        console.log(prop.path,"path",prop.component)
       if (prop.redirect)
          return <Redirect from={prop.path} to={prop.to} key={key} />;
-     
-      if(prop.childs)
+         if(prop.childs)
       { 
         prop.childs.map((item,index)=>{
            console.log("childs",item.path,item.component)
-            routing.push(<Route  path={item.path} component={item.component} key={index}/>)
+            routing.push(<Route exact path={item.path} component={item.component} key={index}/>)
           })
         
       } 
-    routing.push(<Route  path={prop.path} component={prop.component} key={key} />)
-      return routing
+       routing.push(<Route exact path={prop.path} component={prop.component} key={key} />)
+        return routing
     })}
-   
+
   </Switch> 
-  
 );
-console.log(switchRoutes,"switch")
 class App extends React.Component {
   state = {
     mobileOpen:false, 
-    open:false
+    open:false,
+    collapse:false,
+    sidebar:[]
   }; 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -69,16 +65,34 @@ class App extends React.Component {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
+    dashboardRoutes.map((item,key)=>{
+        var name=item.sidebarName
+        this.state.sidebar.push({[item.sidebarName]:false})
+    })
+    this.setState({sidebar:this.state.sidebar})
   }
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
+  collapse=()=>{
+    alert("collapse")
+    this.setState({collapse: !this.state.collapse });
+
+  }
 
   handleClick = (ref) => {
-  
-    this.setState({ open: !this.state.open });
+    this.state.sidebar.map((item,key)=>{
+    
+       if(ref==Object.keys(item))
+       { 
+         item[Object.keys(item)] = !item[Object.keys(item)]
+       }
+    })
+   this.setState({sidebar:this.state.sidebar });
+   console.log("sidebar state",this.state.sidebar)
   };
   render() {
+    console.log(this.state.sidebar,"sidebar")
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
@@ -91,7 +105,10 @@ class App extends React.Component {
           open={this.state.mobileOpen}
           color="blue"
           handleClick={this.handleClick}
+          handleCollapse={this.collapse}
            state={this.state.open}
+           collapse={this.state.collapse}
+           sidebar={this.state.sidebar}
           {...rest}
         />
         <div className={classes.mainPanel} ref="mainPanel">

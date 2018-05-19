@@ -18,9 +18,9 @@ const CustomerSchema = mongoose.Schema({
     customerGSTNo:{type:String},
     addressLine1:{type:String},
     addressLine2:{type:String},
-    city:{type:String},
-    state:{type:String},
-    country:{type:String},
+    cityCode:{type:String},
+    stateCode:{type:String},
+    countryCode:{type:String},
     postalCode:{type:Number},
     contactNo:{type:String},
     createdBy:{type:mongoose.Schema.ObjectId},
@@ -33,7 +33,69 @@ const CustomerSchema = mongoose.Schema({
 let CustomerModel = mongoose.model('customer', CustomerSchema);
  
 CustomerModel.allCustomer = () =>{
-    return CustomerModel.find();
+    // return CustomerModel.find();
+    return CustomerModel.aggregate([
+        { $match: {} },
+        {
+            $lookup: {
+                from: "country",
+                localField: "countryCode",
+                foreignField: "countryCode",
+                as: "country_docs"
+            }
+
+        },
+        {
+            $unwind: "$country_docs"
+        },
+        {
+            $lookup: {
+                from: "state",
+                localField: "stateCode",
+                foreignField: "stateCode",
+                as: "state_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$state_docs"
+        }, 
+        {
+            $lookup: {
+                from: "city",
+                localField: "cityCode",
+                foreignField: "cityCode",
+                as: "city_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$city_docs"
+        }, 
+        
+        {
+            $project: {
+                customerName:1,
+                customerCode:1,
+                customerGSTNo:1,
+                addressLine1:1,
+                addressLine2:1,
+                status:1,
+                cityCode:1,
+                cityName:"$city_docs.cityName",
+                stateCode:1,
+                stateName:"$state_docs.stateName",
+                countryCode:1,
+                countryName:"$country_docs.countryName",
+                postalCode:1,
+                contactNo:1,
+
+            }
+        }
+    ]);
+    // return CustomerModel.find();
 }
 
 CustomerModel.oneCustomer = (dataToFind) =>{

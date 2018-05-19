@@ -44,6 +44,7 @@ class Login extends React.Component {
           })
         }
       });
+      window.location.href="/dashboard";
   }
   handlelink = (e) => {
     e.preventDefault();

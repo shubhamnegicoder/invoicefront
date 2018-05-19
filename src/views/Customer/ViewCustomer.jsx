@@ -47,9 +47,9 @@ class ViewCustomer extends React.Component{
                     this.setState({customerGSTNo:result.data.customerGSTNo});
                     this.setState({addressLine1:result.data.addressLine1});
                     this.setState({addressLine2:result.data.addressLine2});
-                    this.setState({city:result.data.city});
-                    this.setState({state:result.data.state});
-                    this.setState({country:result.data.country});
+                    this.setState({city:result.data.cityName});
+                    this.setState({state:result.data.stateName});
+                    this.setState({country:result.data.countryName});
                     this.setState({postalCode:result.data.postalCode});
                     this.setState({contactNo:result.data.contactNo});
                  

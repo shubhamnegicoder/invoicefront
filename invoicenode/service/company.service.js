@@ -15,20 +15,6 @@ import CompanyModel from '../models/company.model';
  */
 const service = {};
 
-
-// imageUpload=()=>{
-// 	if(req.url=="/addCompany"){
-// 		var form = new formidable.IncomingForm();
-// 		form.parse(req,function(err,fields,files){
-// 			var oldPath = files.fileToUpload.path;
-// 			var fileName = "uploaded_image/img_"+files.fileToUpload.name;
-// 			fs.rename(oldPath,fileName,function(err){
-// 				if(err) throw err;
-// 				console.log("File Uploaded Successfully!");
-// 			})
-// 		})
-// 	}
-// }
 /**
  * @description [with all the calculation before getAll function of model and after getAll]
  * @param  {[object]}
@@ -69,7 +55,6 @@ service.getOne = async (req,res)=>{
  * @return {[object]}
  */ 
 service.addCompany = async (req,res)=>{
-	console.log("callinggggg ");
 	if(req.body.companyCode == ""){
 		return res.send({success:false,code:500,msg:"Company code is required"});
 	}
@@ -100,9 +85,6 @@ service.addCompany = async (req,res)=>{
 	if(req.body.contactNo == ""){
 		return res.send({success:false,code:500,msg:"Contact no is required"});
 	}
-	// if(req.body.isActive == ""){
-	// 	return res.send({success:false,code:500,msg:"Status is required"});
-	// }
 	// if(req.body.createdBy == ""){
 	// 	return res.send({success:false,code:500,msg:"Created by is required"});
 	// }
@@ -122,13 +104,11 @@ service.addCompany = async (req,res)=>{
         countryCode:req.body.countryCode,
         postalCode:req.body.postalCode,
         contactNo:req.body.contactNo,
-      isActive: req.body.isActive,
-	//	createdBy: req.body.createdBy,
-		createAt:req.body.createAt	
+      	isActive: req.body.isActive,
+		createAt:req.body.createAt,
+		//createdBy: req.body.createdBy		
     });
 	try{
-		 console.log("this is add Company");
-		// console.log("treq.file",req.file);
 		var addCompany = await CompanyModel.addCompany(companyToAdd);
 		console("returning "+addCompany);
 		return res.send({success:true, code:200, msg:"Successfully added", data:addCompany}); 
@@ -138,8 +118,6 @@ service.addCompany = async (req,res)=>{
 }
 
 service.editCompany = async (req,res)=>{
-	//console.log("this is edit company");
-	
 	let companyToEdit={		
 		companyCode:req.body.companyCode,
 		companyName:req.body.companyName,
@@ -160,7 +138,6 @@ service.editCompany = async (req,res)=>{
 			data:{"$set":companyToEdit}
 	
 		};
-		//console.log("_id",req.body._id);
 		var editCompany = await CompanyModel.editCompany(companyEdit);
 
 		return res.send({success:true, code:200, msg:"Successfully edited", data:editCompany}); 
