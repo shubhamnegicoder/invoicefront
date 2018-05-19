@@ -20,6 +20,7 @@
 =======
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-19T07:52:12.069Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-19T07:52:12.157Z"}
 <<<<<<< Updated upstream
@@ -27,6 +28,8 @@
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-19T10:17:20.810Z"}
 =======
 =======
+=======
+>>>>>>> e2014181a2584b78942316b41011b60948bca412
 >>>>>>> d07d7b4113db05b65a032f8673df0f51265e6353
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-19T07:42:13.131Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-19T07:42:13.162Z"}
@@ -53,6 +56,7 @@
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-19T07:56:34.615Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-19T08:10:33.045Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-19T08:10:33.104Z"}
+<<<<<<< HEAD
 >>>>>>> 05d9401e1d07a916f1a8d15c761d0cd4af2158a2
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-19T08:23:13.825Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-19T08:23:13.866Z"}
@@ -68,3 +72,7 @@
 {"level":"info","message":"sending all country...","timestamp":"2018-05-19T11:28:25.622Z"}
 {"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-19T11:28:36.008Z"}
 {"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-19T11:28:36.945Z"}
+=======
+>>>>>>> e2014181a2584b78942316b41011b60948bca412
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-19T11:53:01.128Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-19T11:53:01.151Z"}
