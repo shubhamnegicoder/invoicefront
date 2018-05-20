@@ -7,7 +7,7 @@
  */
 
 import mongoose from 'mongoose';
-
+var ObjectID = require("mongodb").ObjectID;
 /**
  * [CustomerSchema is used for Customer data validating aginst schema]
  * @type {[type]}
@@ -82,7 +82,6 @@ CustomerModel.allCustomer = () =>{
                 customerGSTNo:1,
                 addressLine1:1,
                 addressLine2:1,
-                status:1,
                 cityCode:1,
                 cityName:"$city_docs.cityName",
                 stateCode:1,
@@ -99,7 +98,70 @@ CustomerModel.allCustomer = () =>{
 }
 
 CustomerModel.oneCustomer = (dataToFind) =>{
-    return CustomerModel.findOne(dataToFind.query);
+    //console.log("dataToFind---"+dataToFind);
+    var cid=new ObjectID(dataToFind.query._id);
+    //console.log("cid---"+cid);
+    return CustomerModel.aggregate([
+        { $match: {"_id":cid} },
+        {
+            $lookup: {
+                from: "country",
+                localField: "countryCode",
+                foreignField: "countryCode",
+                as: "country_docs"
+            }
+
+        },
+        {
+            $unwind: "$country_docs"
+        },
+        {
+            $lookup: {
+                from: "state",
+                localField: "stateCode",
+                foreignField: "stateCode",
+                as: "state_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$state_docs"
+        }, 
+        {
+            $lookup: {
+                from: "city",
+                localField: "cityCode",
+                foreignField: "cityCode",
+                as: "city_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$city_docs"
+        }, 
+        
+        {
+            $project: {
+                customerName:1,
+                customerCode:1,
+                customerGSTNo:1,
+                addressLine1:1,
+                addressLine2:1,
+                cityCode:1,
+                cityName:"$city_docs.cityName",
+                stateCode:1,
+                stateName:"$state_docs.stateName",
+                countryCode:1,
+                countryName:"$country_docs.countryName",
+                postalCode:1,
+                contactNo:1,
+
+            }
+        }
+    ]);
+    //return CustomerModel.findOne(dataToFind.query);
 }
 
 
@@ -108,7 +170,8 @@ CustomerModel.addCustomer = (addToCustomer) =>{
 }
 
 CustomerModel.editCustomer = (addToCustomer) =>{
-    		console.log("_id",addToCustomer.data);
+   
+    		//console.log("_id",addToCustomer.data);
     return CustomerModel.update(addToCustomer.query,addToCustomer.data);
 }
 export default CustomerModel;

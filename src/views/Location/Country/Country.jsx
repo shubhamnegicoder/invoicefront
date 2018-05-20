@@ -62,7 +62,7 @@ handleEdit=(e,item)=>{
 
                  var maindata = [];
                  var localdata = []
-                 console.log(result.data)
+                 console.log(result.data,"result")
 
                  result.data.data && result.data.data.map((item, key) => {
                      localdata.push(item.countryCode, item.countryName)

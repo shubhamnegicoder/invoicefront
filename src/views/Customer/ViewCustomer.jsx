@@ -13,9 +13,12 @@ class ViewCustomer extends React.Component{
             customerGSTNo:"",
             addressLine1:"",
             addressLine:"",
-            city:"",
-            state:"",
-            country:"",
+            cityCode:"",
+            stateCode:"",
+            countryCode:"",
+            cityName:"",
+            stateName:"",
+            countryName:"",
             postalCode:"",
             contactNo:""
         };
@@ -41,17 +44,23 @@ class ViewCustomer extends React.Component{
             .then(res => res.json())
             .then(
                 (result) => {
+                    // console.log("result of fetch on",result);
+                    // console.log("result of fetch on",result.data[0].countryName);
                     this.setState({_id:result.data._id});
-                    this.setState({customerCode:result.data.customerCode});
-                    this.setState({customerName:result.data.customerName});
-                    this.setState({customerGSTNo:result.data.customerGSTNo});
-                    this.setState({addressLine1:result.data.addressLine1});
-                    this.setState({addressLine2:result.data.addressLine2});
-                    this.setState({city:result.data.cityName});
-                    this.setState({state:result.data.stateName});
-                    this.setState({country:result.data.countryName});
-                    this.setState({postalCode:result.data.postalCode});
-                    this.setState({contactNo:result.data.contactNo});
+                    this.setState({customerCode:result.data[0].customerCode});
+                    this.setState({customerName:result.data[0].customerName});
+                    this.setState({customerGSTNo:result.data[0].customerGSTNo});
+                    this.setState({addressLine1:result.data[0].addressLine1});
+                    this.setState({addressLine2:result.data[0].addressLine2});
+                    this.setState({cityCode:result.data[0].cityCode});
+                    this.setState({stateCode:result.data[0].stateCode});
+                    this.setState({countryCode:result.data[0].countryCode});
+                    this.setState({postalCode:result.data[0].postalCode});
+                    this.setState({contactNo:result.data[0].contactNo});
+                    this.setState({cityName:result.data[0].cityName});
+                    this.setState({stateName:result.data[0].stateName});
+                    this.setState({countryName:result.data[0].countryName});
+                    //console.log("cityname:",this.state.cityName,"countryname:",this.state.countryName,"stateName:",this.state.stateName);
                  
                 },
                 (error) => {
@@ -100,16 +109,16 @@ class ViewCustomer extends React.Component{
                 <tr>
                     <td>City</td> 
                     <td></td>
-                    <td><input type="text" value={this.state.city} ref="city"/></td>
+                    <td><input type="text" value={this.state.cityName} ref="city"/></td>
                 </tr>
                 <tr>
                     <td>State</td><td></td>
-                    <td><input type="text" value={this.state.state} ref="state" /></td>
+                    <td><input type="text" value={this.state.stateName} ref="state" /></td>
                 </tr>
                 <tr>
                     <td>Country</td>
                     <td></td>
-                    <td><input type="text" value={this.state.country} ref="country" /></td>
+                    <td><input type="text" value={this.state.countryName} ref="country" /></td>
                 </tr>
                 <tr>
                     <td>Postal Code</td>

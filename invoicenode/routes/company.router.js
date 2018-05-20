@@ -5,7 +5,7 @@
  * @lastModifed 11-May-2018
  * @lastModifedBy Purti
  */
-
+ 
 import express from "express";
 import companyService from "../service/company.service";
 import multer from "multer";

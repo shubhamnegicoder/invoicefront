@@ -24,7 +24,6 @@ class CustomerList extends React.Component{
                 data:[]        
         };
     }
-<<<<<<< HEAD
     getMuiTheme = () => createMuiTheme({
         overrides: {
           MUIDataTable: {
@@ -39,12 +38,11 @@ class CustomerList extends React.Component{
           }
         }
       })
-=======
-  
->>>>>>> d07d7b4113db05b65a032f8673df0f51265e6353
 
     componentDidMount(){ 
+
         this.list();
+        console.log(this.state.data);
     }
 
     handleClick=(e)=>{
@@ -61,9 +59,9 @@ class CustomerList extends React.Component{
         this.setState({customerGSTNo:response.customerGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({cityCode:response.cityName})
-        this.setState({stateCode:response.stateName})
-        this.setState({countryCode:response.countryName})
+        this.setState({cityCode:response.cityCode})
+        this.setState({stateCode:response.stateCode})
+        this.setState({countryCode:response.countryCode})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/editCustomer?id="+response._id;
@@ -76,9 +74,9 @@ class CustomerList extends React.Component{
         this.setState({customerGSTNo:response.customerGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({city:response.city})
-        this.setState({state:response.state})
-        this.setState({country:response.country})
+        this.setState({cityCode:response.cityCode})
+        this.setState({stateCode:response.stateCode})
+        this.setState({countryCode:response.countryCode})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/viewCustomer?id="+response._id;
@@ -112,8 +110,9 @@ class CustomerList extends React.Component{
               //dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)
-              dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button>)
-             dataArray.push(<Button  onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
+             //var array = "";
+            dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button>);
+            dataArray.push(<Button  onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)
       
@@ -195,6 +194,7 @@ class CustomerList extends React.Component{
                       
       ];
       var tableData= this.state.data;
+
       const options = {
         filter: true,
         selectableRows:false,

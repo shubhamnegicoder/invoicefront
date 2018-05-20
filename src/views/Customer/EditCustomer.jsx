@@ -21,6 +21,9 @@ class EditCustomer extends React.Component{
             cityCode:"",
             stateCode:"",
             countryCode:"",
+            cityName:"",
+            stateName:"",
+            countryName:"",
             postalCode:"",
             contactNo:"",
             dropDownData: [],
@@ -124,7 +127,7 @@ class EditCustomer extends React.Component{
     }
 
     handleChange1 = (event) => {
-        console.log(event.target.value, "selected country")
+        //console.log(event.target.value, "selected country")
         this.setState({ countryCode: event.target.value })
         temp = event.target.value
         this.data2(temp)
@@ -168,17 +171,23 @@ class EditCustomer extends React.Component{
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({_id:result.data._id});
-                    this.setState({customerCode:result.data.customerCode});
-                    this.setState({customerName:result.data.customerName});
-                    this.setState({customerGSTNo:result.data.customerGSTNo});
-                    this.setState({addressLine1:result.data.addressLine1});
-                    this.setState({addressLine2:result.data.addressLine2});
-                    this.setState({city:result.data.city});
-                    this.setState({state:result.data.state});
-                    this.setState({country:result.data.country});
-                    this.setState({postalCode:result.data.postalCode});
-                    this.setState({contactNo:result.data.contactNo});
+                    console.log("result of one customer in edit",result);
+                    this.setState({_id:result.data[0]._id});
+                    this.setState({customerCode:result.data[0].customerCode});
+                    this.setState({customerName:result.data[0].customerName});
+                    this.setState({customerGSTNo:result.data[0].customerGSTNo});
+                    this.setState({addressLine1:result.data[0].addressLine1});
+                    this.setState({addressLine2:result.data[0].addressLine2});
+                    this.setState({cityCode:result.data[0].cityCode});
+                    this.setState({stateCode:result.data[0].stateCode});
+                    this.setState({cityName:result.data[0].cityName});
+                    this.setState({stateName:result.data[0].stateName});
+                    this.setState({countryName:result.data[0].countryName});
+                    this.setState({countryCode:result.data[0].countryCode});
+                    this.setState({postalCode:result.data[0].postalCode});
+                    this.setState({contactNo:result.data[0].contactNo});
+
+                    console.log("this.state.dropDownData2"+this.state.dropDownData2.length);
                 },
                 (error) => {
                     // alert("error",error)
@@ -194,9 +203,9 @@ class EditCustomer extends React.Component{
         this.setState({customerGSTNo:this.refs.customerGSTNo.value});
         this.setState({addressLine1:this.refs.addressLine1.value});
         this.setState({addressLine2:this.refs.addressLine2.value});
-        this.setState({city:this.refs.city.value});
-        this.setState({state:this.refs.state.value});
-        this.setState({country:this.refs.country.value});
+        this.setState({cityCode:this.refs.cityCode.value});
+        this.setState({stateCode:this.refs.stateCode.value});
+         this.setState({countryCode:this.refs.countryCode.value});
         this.setState({postalCode:this.refs.postalCode.value});
         this.setState({contactNo:this.refs.contactNo.value});
     }
@@ -243,7 +252,9 @@ class EditCustomer extends React.Component{
             return alert("Contact no is required");       
         }
         console.log(this.state,"edit customer")
-        fetch("http://localhost:8080/editCustomer",{
+        var val=this.props.location.search;
+        var response=val.substring(val.indexOf("=")+1); 
+        fetch("http://localhost:8080/editCustomer?_id="+response,{
             body:JSON.stringify(this.state),
             method: "POST",
             cache: 'no-cache',
@@ -257,6 +268,7 @@ class EditCustomer extends React.Component{
         .then(
             (result) => 
             {
+                //console.log("result of edit is ::",result)
                 if(result.success==true)
                 {
                     swal({
@@ -312,13 +324,11 @@ class EditCustomer extends React.Component{
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
                     <td><select placeholder="select country" onChange={this.handleChange1}>
-                        <option value="Select Country " style={{ width: "150px" }}> Select Country Name</option>
+                        <option value="Select "  style={{ width: "150px" }} >Select Country Name</option>
                         {
                             this.state.dropDownData && this.state.dropDownData.map((item, index) => {
 
-
-
-                                return <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
+                                return {...this.state.countryCode==item.countryCode?<option  selected styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>:<option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>}
                             })
                         }
 
@@ -330,7 +340,7 @@ class EditCustomer extends React.Component{
 
                         <option value="Select  " style={{ width: "150px" }}> Select State Name</option>
                         {
-                            this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
+                           this.state.dropDownData2.length==0?<option selected styles={{ width: '350px' }} name={this.state.stateName} value={this.state.stateCode}>{this.state.stateName}</option> :this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
 
                                 return <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
                             })
@@ -345,7 +355,8 @@ class EditCustomer extends React.Component{
 
                         <option value="Select  " style={{ width: "150px" }}> Select city Name</option>
                         {
-                            this.state.dropDownData3 && this.state.dropDownData3.map((item, index) => {
+                            this.state.dropDownData3.length==0?<option selected styles={{ width: '350px' }} name={this.state.cityName} value={this.state.cityCode}>{this.state.cityName}</option>
+                            :this.state.dropDownData3 && this.state.dropDownData3.map((item, index) => {
 
 
 

@@ -145,9 +145,9 @@ class EditCompany extends React.Component{
         console.log(this.state.cityCode, "set hui h state")
     }
 
-    componentDidMount(){
-        this.fetchCustomerById();
-           }
+    // componentDidMount(){
+    //     this.fetchCompanyById();
+    //        }
 
     componentDidMount(){
         this.fetchCompanyById();
@@ -169,17 +169,21 @@ class EditCompany extends React.Component{
             .then(res => res.json())
             .then(
                 (result) => {
+                    console.log("this is one company by id in edit",result)
                     this.setState({_id:result.data._id});
-                    this.setState({companyCode:result.data.companyCode});
-                    this.setState({companyName:result.data.companyName});
-                    this.setState({companyGSTNo:result.data.companyGSTNo});
-                    this.setState({addressLine1:result.data.addressLine1});
-                    this.setState({addressLine2:result.data.addressLine2});
-                    this.setState({city:result.data.city});
-                    this.setState({state:result.data.state});
-                    this.setState({country:result.data.country});
-                    this.setState({postalCode:result.data.postalCode});
-                    this.setState({contactNo:result.data.contactNo});
+                    this.setState({companyCode:result.data[0].companyCode});
+                    this.setState({companyName:result.data[0].companyName});
+                    this.setState({companyGSTNo:result.data[0].companyGSTNo});
+                    this.setState({addressLine1:result.data[0].addressLine1});
+                    this.setState({addressLine2:result.data[0].addressLine2});
+                    this.setState({cityCode:result.data[0].cityCode});
+                    this.setState({stateCode:result.data[0].stateCode});
+                    this.setState({countryCode:result.data[0].countryCode});
+                    this.setState({cityName:result.data[0].cityName});
+                    this.setState({stateName:result.data[0].stateName});
+                    this.setState({countryName:result.data[0].countryName});
+                    this.setState({postalCode:result.data[0].postalCode});
+                    this.setState({contactNo:result.data[0].contactNo});
                  
                 },
                 (error) => {

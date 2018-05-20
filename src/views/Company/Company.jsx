@@ -2,8 +2,8 @@ import React from "react";
 import { Grid ,Button} from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
 import AddIcon from '@material-ui/icons/Add';
-import MUIDataTable from "mui-datatables";
-import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
+//import MUIDataTable from "mui-datatables";
+//import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 class CompanyList extends React.Component{
     constructor(props){
         super(props);
@@ -13,28 +13,28 @@ class CompanyList extends React.Component{
             companyGSTNo:"",
             addressLine1:"",
             addressLine2:"",
-            city:"",
-            state:"",
-            country:"",
+            cityName:"",
+            stateName:"",
+            countryName:"",
             postalCode:"",
             contactNo:"",
             data:[]        
         };
     }
-    getMuiTheme = () => createMuiTheme({
-        overrides: {
-          MUIDataTable: {
-            root: {
-              backgroundColor: "#F08080",
-            }
-          },
-          MUIDataTableBodyCell: {
-            root: {
-              backgroundColor: "#FFB6C1"
-            }
-          }
-        }
-      })
+    // getMuiTheme = () => createMuiTheme({
+    //     overrides: {
+    //       MUIDataTable: {
+    //         root: {
+    //           backgroundColor: "#F08080",
+    //         }
+    //       },
+    //       MUIDataTableBodyCell: {
+    //         root: {
+    //           backgroundColor: "#FFB6C1"
+    //         }
+    //       }
+    //     }
+    //   })
 
     componentDidMount(){ 
         this.list();
@@ -54,9 +54,9 @@ class CompanyList extends React.Component{
         this.setState({companyGSTNo:response.companyGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({city:response.city}) 
-        this.setState({state:response.state})
-        this.setState({country:response.country})
+        this.setState({city:response.cityName}) 
+        this.setState({state:response.stateName})
+        this.setState({country:response.countryName})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/editCompany?id="+response._id;
@@ -69,9 +69,9 @@ class CompanyList extends React.Component{
         this.setState({companyGSTNo:response.companyGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({city:response.city})
-        this.setState({state:response.state})
-        this.setState({country:response.country})
+        this.setState({city:response.cityName})
+        this.setState({state:response.stateName})
+        this.setState({country:response.countryName})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/viewCompany?id="+response._id;
@@ -90,18 +90,16 @@ class CompanyList extends React.Component{
       .then(res => res.json())
       .then(
         (result) => {
-            console.log(result.data,"jjjjjjjjjjjooooooooooooo")
           var mainArray = [];
           result.data.forEach((responseData)=>{
-              var dataArray = [];
-              
+              var dataArray = []; 
               dataArray.push(responseData.companyCode)
               dataArray.push(responseData.companyName)
               dataArray.push(responseData.companyGSTNo)
-            //   var a1 = responseData.addressLine1;
-            //   var a2 = responseData.addressLine2;
-            //   var address = a1+" "+a2;
-            //   dataArray.push(address)
+              // var a1 = responseData.addressLine1;
+              // var a2 = responseData.addressLine2;
+              // var address = a1+" "+a2;
+              //dataArray.push(address) 
               dataArray.push(responseData.cityName)
               dataArray.push(responseData.stateName)
               dataArray.push(responseData.countryName)
@@ -125,99 +123,106 @@ class CompanyList extends React.Component{
       
 
     render(){
-        const columns = [
-            {
-              name: "Code",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },      
-            {
-              name: "Name",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },
-            {
-              name: "GST No",
-              options: {
-                filter: false,
-              }
-            },
+      //   const columns = [
+      //       {
+      //         name: "Code",
+      //         options: {
+      //           filter: true,
+      //           sort:true
+      //         }
+      //       },      
+      //       {
+      //         name: "Name",
+      //         options: {
+      //           filter: true,
+      //           sort:true
+      //         }
+      //       },
+      //       {
+      //         name: "GST No",
+      //         options: {
+      //           filter: false,
+      //         }
+      //       },
             
               
-            {
-              name: "City",
-              options: {
-                filter: true,
-              }
-            },
-            {
-              name: "State",
-              options: {
-                filter: true
-              }
-            },
-            {
-              name: "Country",
-                options: {
-                  filter: true
-                }
-              },
-              {
-                name: "Contact No",
-                  options: {
-                    filter: true
-                  }
-                },
-                {
-                name: "Action",
-                     options: {
-                        filter: true
-                      }
-                    },
-                    {
-                    name: "Action",
-                         options: {
-                         filter: true
-                          }
-                        },
+      //       {
+      //         name: "City",
+      //         options: {
+      //           filter: true,
+      //         }
+      //       },
+      //       {
+      //         name: "State",
+      //         options: {
+      //           filter: true
+      //         }
+      //       },
+      //       {
+      //         name: "Country",
+      //           options: {
+      //             filter: true
+      //           }
+      //         },
+      //         {
+      //           name: "Contact No",
+      //             options: {
+      //               filter: true
+      //             }
+      //           },
+      //           {
+      //           name: "Action",
+      //                options: {
+      //                   filter: true
+      //                 }
+      //               },
+      //               {
+      //               name: "Action",
+      //                    options: {
+      //                    filter: true
+      //                     }
+      //                   },
               
                       
-      ];
-      var tableData= this.state.data;
-      console.log(tableData,"medha")
-      const options = {
-        filter: true,
-        selectableRows:false,
-        filterType: 'dropdown',
-        responsive: 'stacked',
-        rowsPerPage: 10,
-        page: 1,
-        viewColumns:false,
-        print:false,
-        filter:false,
-        download:false,
-        textLabels: {
-          body: {
-            noMatch: "Sorry, no matching records found",
-            toolTip: "Sort",
-          }
-        }
-  }
+      // ];
+      //var tableData= this.state.data;
+      //console.log(tableData,"medha")
+      // const options = {
+      //   filter: true,
+      //   selectableRows:false,
+      //   filterType: 'dropdown',
+      //   responsive: 'stacked',
+      //   rowsPerPage: 10,
+      //   page: 1,
+      //   viewColumns:false,
+      //   print:false,
+      //   filter:false,
+      //   download:false,
+      //   textLabels: {
+      //     body: {
+      //       noMatch: "Sorry, no matching records found",
+      //       toolTip: "Sort",
+      //     }
+      //   }
+  //}
         return (
         <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-         cardTitle="Company List"
+            cardTitle="Company List"
             cardSubtitle={
                 <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
                     <AddIcon />
                 </Button>}
-           
+            content={
+              <Table
+              tableHeaderColor="primary"
+              tableHead={["Code","Name","GST No", "City","State","Country","Contact No","Action"]}
+              tableData={this.state.data}
+              />
+          }
                 />
+
             
             {/* <MuiThemeProvider theme={this.getMuiTheme()}>
               <MUIDataTable title={"Company list"} data={tableData} columns={columns} options={options} />
