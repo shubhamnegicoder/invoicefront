@@ -17,20 +17,22 @@ AutoIncrement.initialize(mongoose);
 
 
 const CountrySchema = mongoose.Schema({
-    countryCode: { type: String, index:{ unique: true }  },
+    countryCode: { type: String, index: { unique: true } },
     countryName: { type: String },
     createdBy: { type: mongoose.Schema.ObjectId },
     createAt: { type: Date },
-    updatedAt: { type: Date }
+    updatedAt: { type: Date },
+    modifiedBy: { type: mongoose.Schema.ObjectId },
+    isActive: { type: Boolean }
 }, { collection: 'country' });
 CountrySchema.plugin(AutoIncrement.plugin, {
     model: 'country',
     field: 'SerialNo',
-    startAt:1,
+    startAt: 1,
     incrementBy: 1
 });
 
-let CountryModal = mongoose.model('country',CountrySchema);
+let CountryModal = mongoose.model('country', CountrySchema);
 
 
 CountryModal.allCountry = (dataToFind) => {

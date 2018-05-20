@@ -14,6 +14,7 @@ import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 
+
 // import iconsStyle from "assets/jss/material-dashboard-react/iconsStyle";
 
 
@@ -165,16 +166,45 @@ class Tax extends React.Component {
       responsive: 'stacked',
       rowsPerPage: 10,
       page: 1,
-      viewColumns:false,
+      viewColumns:true,
       print:false,
-      filter:false,
+      filter:true,
       download:false,
+      // customToolbarSelect: (selectedRows) => <CustomToolbarSelect selectedRows={selectedRows} />,
       textLabels: {
         body: {
           noMatch: "Sorry, no matching records found",
           toolTip: "Sort",
-        }
+        },
+        pagination: {
+          next: "Next Page",
+          previous: "Previous Page",
+          rowsPerPage: "Rows per page:",
+          displayRows: "of",
+        },
+        toolbar: {
+          search: "Search",
+          downloadCsv: "Download CSV",
+          print: "Print",
+          viewColumns: "View Columns",
+          filterTable: "Filter Table",
+        },
+        filter: {
+          all: "All",
+          title: "FILTERS",
+          reset: "RESET",
+        },
+        viewColumns: {
+          title: "Show Columns",
+          titleAria: "Show/Hide Table Columns",
+        },
+        selectedRows: {
+          text: "rows(s) deleted",
+          delete: "Delete",
+          deleteAria: "Delete Selected Rows",
+        },
       }
+      
     }
       // },
       // styles: {
