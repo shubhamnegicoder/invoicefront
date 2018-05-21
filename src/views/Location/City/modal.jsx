@@ -24,7 +24,7 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { countryCode: '', stateCode: '', cityCode: '', cityName: '', dropDownData: [], dropDownData2: []};
+        this.state = { countryCode: '', stateCode: '', cityCode: '', cityName: '', dropDownData: [], dropDownData2: [], userId: "",isActive:""};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,6 +34,9 @@ export default class App extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
         // this.setState({countryname: this.refs.name.value });
 
+    }
+    handleCheck(event){
+        this.setState({ [event.target.name]: event.target.checked });
     }
     handleChange1 = (event) => {
         console.log(event.target.value)
@@ -59,6 +62,8 @@ export default class App extends React.Component {
 
         this.setState({ cityName: newprops.data.cityName })
         this.setState({ _id: newprops.data._id })
+        this.setState({ userId:newprops.data.userId,
+            isActive:newprops.data.isActive})
 
     }
     
@@ -184,7 +189,9 @@ export default class App extends React.Component {
                     stateCode: this.state.stateCode,
                     cityCode: this.state.cityCode,
                     cityName: this.state.cityName,
-                    _id: this.state._id
+                    isActive:this.state.isActive,
+                    id:this.state._id,
+                    userId: this.state.userId,
                 };
         }
         else {
@@ -197,6 +204,7 @@ export default class App extends React.Component {
                 stateCode: this.state.stateCode,
                 cityCode: this.state.cityCode,
                 cityName: this.state.cityName,
+                isActive:this.state.isActive
             }
         }
         console.log(data)
@@ -286,6 +294,11 @@ export default class App extends React.Component {
                                                     <label>
                                                         <h5>  City Name:</h5>
                                                         <input  required type="text" ref="name" name="cityName" value={this.state.cityName} onChange={this.handleChange} />
+                                                    </label>
+                                                </ItemGrid>
+                                                <ItemGrid xs={12} sm={12} md={15}>
+                                                    <label>  <h5> Is Active *:</h5>
+                                                        <input  type="checkbox"  name="isActive" onChange={(event)=>{this.handleCheck(event)}} color="primary"/>
                                                     </label>
                                                 </ItemGrid>
                                             </Grid>

@@ -37,47 +37,11 @@ export default class App extends React.Component {
         this.setState({ countryCode: newprops.data.countryCode })
         this.setState({ countryName: newprops.data.countryName })
         this.setState({ _id: newprops.data._id })
-        this.setState({ userId: newprops.data.userId})
-       
+        this.setState({ userId: newprops.data.userId,
+            isActive:newprops.data.isActive})
+
     }
 
-    // handleSubmit(event) {
-    //     event.preventDefault();
-    //     const formdata = {"_id": "5af170d60c06c02559273df1","countryCode":this.state.countryCode,"countryName":this.state.countryName}
-    //     fetch("http://localhost:8080/addCountry", {
-    //         body:JSON.stringify(formdata),
-    //         method: "POST",
-    //         cache: 'no-cache',
-    //         mode: 'cors',
-    //         headers: new Headers({
-    //             'Content-Type': 'application/json',
-    //             'authorization': "Key@123"
-    //         })
-    //     }).then(res => res.json()).then(
-    //             (result) => {
-    //             if(result.success==true)
-    //             {
-    //                 swal({
-    //                     title: "Country added!",
-    //                     icon: "success",
-    //                 });
-
-    //             }
-    //             else {
-    //                 swal({
-    //                     title: " Sorry !! this Country Code already exist!",
-    //                     icon: "warning",
-    //                 });
-
-    //             }
-
-    //                  },
-    //             (error) => {
-    //                 console.log("error", error)
-    //             }
-    //         )
-    //     // var data= new FormData(event.target.elements.countryCode.value)
-    // }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -106,8 +70,9 @@ export default class App extends React.Component {
                 countryName: this.state.countryName,
                 isActive:this.state.isActive
             }
+            
         }
-        console.log(data)
+        
         axios.post(url, data)
             .then((result) => {
                 //access the results here....
@@ -163,7 +128,6 @@ export default class App extends React.Component {
                                                 </ItemGrid>
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>  <h5> Is Active *:</h5>
-                                                      
                                                         <input  type="checkbox"  name="isActive" onChange={(event)=>{this.handleCheck(event)}} color="primary"/>
                                                     </label>
                                                 </ItemGrid>

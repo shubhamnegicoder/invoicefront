@@ -10,8 +10,12 @@ const StateSchema = mongoose.Schema({
     stateName: { type: String },
     createdBy: { type: mongoose.Schema.ObjectId },
     createAt: { type: Date },
-    updatedAt: { type: Date }
+    updatedAt: { type: Date },
+    modifiedBy: { type: mongoose.Schema.ObjectId },
+    isActive: { type: Boolean }
 }, { collection: 'state' });
+
+
 StateSchema.plugin(AutoIncrement.plugin, {
     model: 'state',
     field: 'SerialNo',
@@ -43,7 +47,9 @@ StateModal.allState = (dataToFind) => {
                 countryCode:1 ,
                 countryName: "$country_docs.countryName",
                 stateCode:1,
-                stateName:1
+                stateName:1,
+                isActive:1,
+                createdBy:1
 
             }
         }

@@ -3,6 +3,7 @@ import { Grid } from "material-ui";
 import Button from 'material-ui/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Modal from './modal'
+import axios from 'axios';
 // import Modal from 'react-responsive-modal';
 
 import { RegularCard, Table, ItemGrid } from "components";
@@ -16,7 +17,9 @@ class State extends React.Component {
             stateCode: "",
             stateName: "",
             countryCode: "",
-            _id: ""
+            _id: "",  
+            userId: "",
+            isActive:false
         }
     };
 
@@ -32,25 +35,22 @@ class State extends React.Component {
         this.setState({ countryCode: item.countryCode })
         this.setState({ stateName: item.stateName })
         this.setState({ stateCode: item.stateCode })
-        this.setState({ _id: item._id })
+        this.setState({ _id: item._id ,userId:item.createdBy
+            ,options:"edit"})
+
+            console.log(this.state,"pass as props")
 
     } 
+  
     data = () => {
-        fetch("http://localhost:8080/allState?_id=5af170d60c06c02559273df1", {
-            method: "GET",
-            cache: 'no-cache',
-            mode: 'cors',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'authorization': "Key@123"
-            })
-        }).then(res => res.json()).then(
-            (result) => {
-                console.log(result.data,"aaya")
+        axios.get("http://localhost:8080/allState?id=5af170d60c06c02559273df1")
+            .then(
+                (result) => {
+                    console.log(result.data.data," get all state")
                 var maindata = [];
                 var localdata = []
-           result.data && result.data.map((item, key) => {
-                    localdata.push(item.countryName,item.stateCode, item.stateName)
+           result.data.data && result.data.data.map((item, key) => {
+                    localdata.push(item.countryName,item.stateCode, item.stateName,item.isActive?"True":"False")
                     localdata.push(<button onClick={(e) => this.handleEdit(e, item)}>Edit</button>)
                     maindata.push(localdata);
                     localdata = [];
@@ -61,7 +61,7 @@ class State extends React.Component {
                
             },
             (error) => {
-                console.log("error", error)
+                // console.log("error", error)
             }
         )
     }
@@ -91,7 +91,7 @@ class State extends React.Component {
                         content={
                             <Table
                                 tableHeaderColor="primary"
-                                tableHead={["Country", "StateCode","State"]}
+                                tableHead={["Country", "StateCode","State","Is Active","Operation"]}
                                 tableData={this.state.mydata}
                             />
                         }
@@ -99,7 +99,7 @@ class State extends React.Component {
                     />
 
                 </ItemGrid>
-                <Modal open={this.state.load} data={{ "_id": this.state._id, "stateName": this.state.stateName, "stateCode": this.state.stateCode , "countryCode": this.state.countryCode }} onClose={this.onClose} />
+                <Modal open={this.state.load} data={{ "_id": this.state._id, "isActive":this.state.isActive, "stateName": this.state.stateName, "stateCode": this.state.stateCode , "countryCode": this.state.countryCode ,"userId": this.state.userId , }} onClose={this.onClose} />
                
             </Grid>
 

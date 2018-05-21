@@ -23,8 +23,7 @@ class Country extends React.Component {
             countryCode: "",
             _id: "",
             userId: "",
-            iActive:false
-             
+            isActive:false
 
         }
     };
@@ -35,40 +34,12 @@ class Country extends React.Component {
     }
 
     handleEdit = (e, item) => {
-        console.log(item.isActive,"activa")
-        this.setState({ load: true })
-    this.setState({countryName: item.countryName ,countryCode: item.countryCode , _id: item._id
+        // console.log(item.isActive,"activa")
+    this.setState({ load: true })
+    this.setState({countryName: item.countryName ,countryCode: item.countryCode , _id: item._id ,userId:item.createdBy
     ,options:"edit"})
-    
-    }    
 
-
-     data = () => {
-         axios.get("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1")
-        .then(
-             (result) => {
-
-                 var maindata = [];
-                 var localdata = []
-                 console.log(result.data,"result")
-
-                 result.data.data && result.data.data.map((item, key) => {
-                     localdata.push(item.countryCode, item.countryName)
-                     localdata.push(<button onClick={(e)=>this.handleEdit(e ,item) }>Edit</button>)
-                     maindata.push(localdata);
-                     localdata = [];
-                 })
-
-
-                 this.setState({ mydata: maindata })
-                 console.log(this.state.mydata, "arrsy")
-             },
-             (error) => {
-                 console.log("error", error)
-             }
-         )
-     }
-
+    }
 
 
     data = () => {
@@ -136,7 +107,7 @@ class Country extends React.Component {
 
                 </ItemGrid>
 
-                <Modal open={this.state.load} data={{ "_id": this.state._id, "countryName": this.state.countryName, "countryCode": this.state.countryCode, "userId": this.state.userId }} onClose={this.onClose} />
+                <Modal open={this.state.load} data={{ "_id": this.state._id,"isActive":this.state.isActive , "countryName": this.state.countryName, "countryCode": this.state.countryCode, "userId": this.state.userId }} onClose={this.onClose} />
             </Grid>
 
         );
