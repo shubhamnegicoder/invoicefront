@@ -2,13 +2,13 @@ import React from "react";
 import { Grid ,Button} from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
 import AddIcon from '@material-ui/icons/Add';
-//import MUIDataTable from "mui-datatables";
-//import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
+import MUIDataTable from "mui-datatables";
+import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 class CompanyList extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            companyCode:"",
+            companyCode:"", 
             companyName:"",
             companyGSTNo:"",
             addressLine1:"",
@@ -18,23 +18,24 @@ class CompanyList extends React.Component{
             countryName:"",
             postalCode:"",
             contactNo:"",
+            createdBy:"",
             data:[]        
         };
     }
-    // getMuiTheme = () => createMuiTheme({
-    //     overrides: {
-    //       MUIDataTable: {
-    //         root: {
-    //           backgroundColor: "#F08080",
-    //         }
-    //       },
-    //       MUIDataTableBodyCell: {
-    //         root: {
-    //           backgroundColor: "#FFB6C1"
-    //         }
-    //       }
-    //     }
-    //   })
+    getMuiTheme = () => createMuiTheme({
+        overrides: {
+          MUIDataTable: {
+            root: {
+              backgroundColor: "#F08080",
+            }
+          },
+          MUIDataTableBodyCell: {
+            root: {
+              backgroundColor: "#FFB6C1"
+            }
+          }
+        }
+      })
 
     componentDidMount(){ 
         this.list();
@@ -78,7 +79,7 @@ class CompanyList extends React.Component{
     }
 
     list=()=>{
-        fetch("http://localhost:8080/allCompany",{  
+        fetch("http://localhost:8080/allCompany?id=",{  
           method: "GET",
           cache: 'no-cache', 
           mode: 'cors',
@@ -96,18 +97,18 @@ class CompanyList extends React.Component{
               dataArray.push(responseData.companyCode)
               dataArray.push(responseData.companyName)
               dataArray.push(responseData.companyGSTNo)
-              // var a1 = responseData.addressLine1;
+              // var a1 = responseData.addressLine1; 
               // var a2 = responseData.addressLine2;
               // var address = a1+" "+a2;
               //dataArray.push(address) 
-              dataArray.push(responseData.cityName)
-              dataArray.push(responseData.stateName)
+              // dataArray.push(responseData.cityName)
+              // dataArray.push(responseData.stateName)
               dataArray.push(responseData.countryName)
             //  dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)
-              dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)}>Edit Details</Button>)
-             dataArray.push(<Button onClick={(e)=>this.handleView(e,responseData)}>View Details</Button>)
+              dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)}>Edit</Button>)
+             dataArray.push(<Button onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)     
             })
@@ -123,113 +124,106 @@ class CompanyList extends React.Component{
       
 
     render(){
-      //   const columns = [
-      //       {
-      //         name: "Code",
-      //         options: {
-      //           filter: true,
-      //           sort:true
-      //         }
-      //       },      
-      //       {
-      //         name: "Name",
-      //         options: {
-      //           filter: true,
-      //           sort:true
-      //         }
-      //       },
-      //       {
-      //         name: "GST No",
-      //         options: {
-      //           filter: false,
-      //         }
-      //       },
+        const columns = [
+            {
+              name: "Code",
+              options: {
+                filter: true,
+                sort:true
+              }
+            },      
+            {
+              name: "Name",
+              options: {
+                filter: true,
+                sort:true
+              }
+            },
+            {
+              name: "GST No",
+              options: {
+                filter: false,
+              }
+            },
             
               
-      //       {
-      //         name: "City",
-      //         options: {
-      //           filter: true,
-      //         }
-      //       },
-      //       {
-      //         name: "State",
-      //         options: {
-      //           filter: true
-      //         }
-      //       },
-      //       {
-      //         name: "Country",
-      //           options: {
-      //             filter: true
-      //           }
-      //         },
-      //         {
-      //           name: "Contact No",
-      //             options: {
-      //               filter: true
-      //             }
-      //           },
-      //           {
-      //           name: "Action",
-      //                options: {
-      //                   filter: true
-      //                 }
-      //               },
-      //               {
-      //               name: "Action",
-      //                    options: {
-      //                    filter: true
-      //                     }
-      //                   },
+            // {
+            //   name: "City",
+            //   options: {
+            //     filter: true,
+            //   }
+            // },
+            // {
+            //   name: "State",
+            //   options: {
+            //     filter: true
+            //   }
+            // },
+            {
+              name: "Country",
+                options: {
+                  filter: true
+                }
+              },
+              {
+                name: "Contact No",
+                  options: {
+                    filter: true
+                  }
+                },
+                {
+                name: "Action",
+                     options: {
+                        filter: true
+                      }
+                    },
+                    {
+                    name: "Action",
+                         options: {
+                         filter: true
+                          }
+                        },
               
                       
-      // ];
-      //var tableData= this.state.data;
-      //console.log(tableData,"medha")
-      // const options = {
-      //   filter: true,
-      //   selectableRows:false,
-      //   filterType: 'dropdown',
-      //   responsive: 'stacked',
-      //   rowsPerPage: 10,
-      //   page: 1,
-      //   viewColumns:false,
-      //   print:false,
-      //   filter:false,
-      //   download:false,
-      //   textLabels: {
-      //     body: {
-      //       noMatch: "Sorry, no matching records found",
-      //       toolTip: "Sort",
-      //     }
-      //   }
-  //}
-        return (
+      ];
+      var tableData= this.state.data;
+    
+      const options = {
+        filter: true,
+        selectableRows:false,
+        filterType: 'dropdown',
+        responsive: 'stacked',
+        rowsPerPage: 10,
+        page: 1,
+        viewColumns:false,
+        print:false,
+        filter:false,
+        download:false,
+        textLabels: {
+          body: {
+            noMatch: "Sorry, no matching records found",
+            toolTip: "Sort",
+          }
+        }
+  }
+        return (<div>
         <Grid container>
-        <ItemGrid xs={12} sm={12} md={12}>
+        <ItemGrid xs={30} sm={30} md={30}>
             <RegularCard
-            cardTitle="Company List"
+            cardTitle="Company"
             cardSubtitle={
                 <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
                     <AddIcon />
                 </Button>}
-            content={
-              <Table
-              tableHeaderColor="primary"
-              tableHead={["Code","Name","GST No", "City","State","Country","Contact No","Action"]}
-              tableData={this.state.data}
-              />
-          }
                 />
 
             
-            {/* <MuiThemeProvider theme={this.getMuiTheme()}>
+            <MuiThemeProvider theme={this.getMuiTheme()}>
               <MUIDataTable title={"Company list"} data={tableData} columns={columns} options={options} />
-              </MuiThemeProvider>   */}
+              </MuiThemeProvider>  
         </ItemGrid>
         
-        </Grid>
+        </Grid></div>
     );
     }
     }

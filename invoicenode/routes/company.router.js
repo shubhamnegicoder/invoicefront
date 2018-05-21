@@ -13,7 +13,7 @@ import multer from "multer";
 const router = express.Router()
 
 const storage = multer.diskStorage({
-    destination: './public/uploads',
+    destination: "../public/uploads",
     filename: function (req, file, callback) {
         callback(null, file.originalname); 
     }

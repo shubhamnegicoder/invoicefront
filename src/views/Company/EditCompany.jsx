@@ -60,7 +60,7 @@ class EditCompany extends React.Component{
         )
     }
     data2 = (temp) => {
-        console.log(temp, "set hui in url")
+        console.log(temp, "data2 temp country ")
         fetch("http://localhost:8080/allSelectedState?countryCode=" + temp, {
             method: "GET",
             cache: 'no-cache',
@@ -89,7 +89,7 @@ class EditCompany extends React.Component{
         )
     }
     data3 = (temp2) => {
-        console.log(temp2, "set hui in url")
+        console.log(temp2, "data3 temp state")
         fetch("http://localhost:8080/allSelectedCity?stateCode=" + temp2, {
             method: "GET",
             cache: 'no-cache',
@@ -102,7 +102,7 @@ class EditCompany extends React.Component{
             (result) => {
                 var maindata = [];
                 var localdata = []
-                console.log(result.data, "kkkloololo in city data")
+                console.log(result.data, "result.data city data")
                 result.data && result.data.map((item, key) => {
                     maindata.push(item);
 
@@ -131,18 +131,20 @@ class EditCompany extends React.Component{
     }
 
     handleChange2 = (event) => {
-        console.log(event.target.value)
-        this.setState({ stateCode: event.target.value })
-        console.log(this.state.stateCode, "set hui h state")
+
+        this.setState({stateCode: event.target.value })
+        console.log(this.state.stateCode, "state code")
         temp2 = event.target.value
         this.data3(temp2)
 
     }
 
     handleChange3 = (event) => {
-        console.log(event.target.value)
+        console.log("handle 3")
         this.setState({ cityCode: event.target.value })
-        console.log(this.state.cityCode, "set hui h state")
+        console.log(this.state.cityCode, "city code")
+        console.log(this.state.stateCode, "state code")
+        console.log(this.state.countryCode, "country code")
     }
 
     // componentDidMount(){
@@ -170,7 +172,7 @@ class EditCompany extends React.Component{
             .then(
                 (result) => {
                     console.log("this is one company by id in edit",result)
-                    this.setState({_id:result.data._id});
+                    this.setState({_id:result.data[0]._id});
                     this.setState({companyCode:result.data[0].companyCode});
                     this.setState({companyName:result.data[0].companyName});
                     this.setState({companyGSTNo:result.data[0].companyGSTNo});
@@ -184,7 +186,8 @@ class EditCompany extends React.Component{
                     this.setState({countryName:result.data[0].countryName});
                     this.setState({postalCode:result.data[0].postalCode});
                     this.setState({contactNo:result.data[0].contactNo});
-                 
+                    this.data2(this.state.countryCode);
+                    this.data3(this.state.stateCode);
                 },
                 (error) => {
                     // alert("error",error)
@@ -200,9 +203,9 @@ class EditCompany extends React.Component{
         this.setState({companyGSTNo:this.refs.companyGSTNo.value});
         this.setState({addressLine1:this.refs.addressLine1.value});
         this.setState({addressLine2:this.refs.addressLine2.value});
-        this.setState({city:this.refs.city.value});
-        this.setState({state:this.refs.state.value});
-        this.setState({country:this.refs.country.value});
+        this.setState({cityCode:this.refs.cityCode.value});
+        this.setState({stateCode:this.refs.stateCode.value});
+        this.setState({countryCode:this.refs.countryCode.value});
         this.setState({postalCode:this.refs.postalCode.value});
         this.setState({contactNo:this.refs.contactNo.value});
     }
@@ -233,13 +236,13 @@ class EditCompany extends React.Component{
         if(this.state.addressLine2==""){
             return alert("Address 2 is required");       
         }
-        if(this.state.city==""){
+        if(this.state.cityCode==""){
             return alert("City is required");       
         }
-        if(this.state.state==""){
+        if(this.state.stateCode==""){
             return alert("State is required");       
         }
-        if(this.state.country==""){
+        if(this.state.countryCode==""){
             return alert("Country is required");       
         }
         if(this.state.postalCode=="" ){
@@ -254,6 +257,7 @@ class EditCompany extends React.Component{
         if(this.state.contactNo.length<10){
             return alert("Contact no should be of 10 digits");       
         }
+        console.log(this.state.countryCode,"update country",this.state.stateCode,"state ",this.state.cityCode,"city")
         fetch("http://localhost:8080/editCompany",{
             body:JSON.stringify(this.state),
             method: "POST",
@@ -268,6 +272,7 @@ class EditCompany extends React.Component{
         .then(
             (result) => 
             {
+                console.log(result,"this is update function in edit company")
                 if(result.success==true)
                 {
                     swal({
@@ -322,14 +327,15 @@ class EditCompany extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
-                    <td><select placeholder="select country" onChange={this.handleChange1}>
+                    <td><select ref="countryCode" placeholder="select country" onChange={this.handleChange1}>
                         <option value="Select Country " style={{ width: "150px" }}> Select Country Name</option>
                         {
                             this.state.dropDownData && this.state.dropDownData.map((item, index) => {
 
-
-
-                                return <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
+                                return this.state.countryCode==item.countryCode ?
+                                <option selected styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
+                                :
+                                <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
                             })
                         }
 
@@ -337,13 +343,16 @@ class EditCompany extends React.Component{
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>State</td><td></td>
-                    <td> <select placeholder="select State" onChange={this.handleChange2}>
+                    <td> <select ref="stateCode" placeholder="select State" onChange={this.handleChange2}>
 
                         <option value="Select  " style={{ width: "150px" }}> Select State Name</option>
                         {
                             this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
 
-                                return <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
+                                return this.state.stateCode==item.stateCode?
+                                <option selected styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
+                                :
+                                <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
                             })
                         }
 
@@ -352,7 +361,7 @@ class EditCompany extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>City</td>
                     <td></td>
-                    <td><select placeholder="select State" onChange={this.handleChange3}>
+                    <td><select ref="cityCode" placeholder="select State" onChange={this.handleChange3}>
 
                         <option value="Select  " style={{ width: "150px" }}> Select city Name</option>
                         {
@@ -360,7 +369,10 @@ class EditCompany extends React.Component{
 
 
 
-                                return <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
+                                return this.state.cityCode==item.cityCode?
+                                <option selected styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
+                                :
+                                <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
                             })
                         }
 

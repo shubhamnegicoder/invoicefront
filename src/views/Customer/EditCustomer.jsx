@@ -123,7 +123,9 @@ class EditCustomer extends React.Component{
     }
 
     componentWillMount() {
+     
         this.data();
+        
     }
 
     handleChange1 = (event) => {
@@ -137,7 +139,7 @@ class EditCustomer extends React.Component{
     handleChange2 = (event) => {
         console.log(event.target.value)
         this.setState({ stateCode: event.target.value })
-        console.log(this.state.stateCode, "set hui h state")
+        //console.log(this.state.stateCode, "set hui h state")
         temp2 = event.target.value
         this.data3(temp2)
 
@@ -151,6 +153,7 @@ class EditCustomer extends React.Component{
 
     componentDidMount(){
         this.fetchCustomerById();
+       
            }
 
     fetchCustomerById=()=>{
@@ -187,8 +190,9 @@ class EditCustomer extends React.Component{
                     this.setState({postalCode:result.data[0].postalCode});
                     this.setState({contactNo:result.data[0].contactNo});
 
-                    console.log("this.state.dropDownData2"+this.state.dropDownData2.length);
-                },
+                    this.data2(this.state.countryCode)
+                    this.data3(this.state.stateCode)
+      },
                 (error) => {
                     // alert("error",error)
                     console.log("error",error)
@@ -323,12 +327,14 @@ class EditCustomer extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
-                    <td><select placeholder="select country" onChange={this.handleChange1}>
+                    <td><select placeholder="select country" ref="countryCode" onChange={this.handleChange1}>
                         <option value="Select "  style={{ width: "150px" }} >Select Country Name</option>
                         {
                             this.state.dropDownData && this.state.dropDownData.map((item, index) => {
 
-                                return {...this.state.countryCode==item.countryCode?<option  selected styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>:<option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>}
+                                return {...this.state.countryCode==item.countryCode?
+                                <option  selected styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
+                                :<option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>}
                             })
                         }
 
@@ -336,13 +342,17 @@ class EditCustomer extends React.Component{
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>State</td><td></td>
-                    <td> <select placeholder="select State" onChange={this.handleChange2}>
+                    <td> <select placeholder="select State" ref="stateCode" onChange={this.handleChange2}>
 
                         <option value="Select  " style={{ width: "150px" }}> Select State Name</option>
                         {
-                           this.state.dropDownData2.length==0?<option selected styles={{ width: '350px' }} name={this.state.stateName} value={this.state.stateCode}>{this.state.stateName}</option> :this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
+                           this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
 
-                                return <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
+                                return this.state.stateCode==item.stateCode?
+                                <option selected styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
+                            :
+                            <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
+                           
                             })
                         }
 
@@ -351,16 +361,19 @@ class EditCustomer extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>City</td>
                     <td></td>
-                    <td><select placeholder="select State" onChange={this.handleChange3}>
+                    <td><select placeholder="select State" ref="cityCode" onChange={this.handleChange3}>
 
                         <option value="Select  " style={{ width: "150px" }}> Select city Name</option>
                         {
-                            this.state.dropDownData3.length==0?<option selected styles={{ width: '350px' }} name={this.state.cityName} value={this.state.cityCode}>{this.state.cityName}</option>
-                            :this.state.dropDownData3 && this.state.dropDownData3.map((item, index) => {
+                            this.state.dropDownData3 && this.state.dropDownData3.map((item, index) => {
 
 
 
-                                return <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
+                                return this.state.cityCode==item.cityCode?
+                                <option selected styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
+                            :
+                            <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
+                            
                             })
                         }
 

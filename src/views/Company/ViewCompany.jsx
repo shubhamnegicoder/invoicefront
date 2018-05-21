@@ -94,8 +94,8 @@ class ViewCompany extends React.Component{
                 <tr>
                     <td>Company Logo </td>
                     <td></td>
-                   {/* { url = "../../../invoicenode/public/uploads/"+this.state.logo} */}
-                    <td><img src= {"../../../invoicenode/public/uploads/"+this.state.logo}/></td>
+                   {/* { url = "../../../invoicenode/public'/uploads/"+this.state.logo} */}
+                    <td><img src={"uploads/"+this.state.logo} width="75" height="50"/></td>
                 </tr>
                 <tr>
                     <td>Company GST No</td>
@@ -115,16 +115,17 @@ class ViewCompany extends React.Component{
                 <tr>
                     <td>City</td> 
                     <td></td>
-                    <td><input type="text" value={this.state.cityName} ref="city"/></td>
+                    <td><input type="text" value={this.state.cityName} ref="cityCode"/></td>
                 </tr>
                 <tr>
-                    <td>State</td><td></td>
-                    <td><input type="text" value={this.state.stateName} ref="state" /></td>
+                    <td>State</td>
+                    <td></td>
+                    <td><input type="text" value={this.state.stateName} ref="stateCode" /></td>
                 </tr>
                 <tr>
                     <td>Country</td>
                     <td></td>
-                    <td><input type="text" value={this.state.countryName} ref="country" /></td>
+                    <td><input type="text" value={this.state.countryName} ref="countryCode" /></td>
                 </tr>
                 <tr>
                     <td>Postal Code</td>

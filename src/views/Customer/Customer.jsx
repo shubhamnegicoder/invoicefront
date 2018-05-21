@@ -104,9 +104,9 @@ class CustomerList extends React.Component{
               dataArray.push(responseData.customerGSTNo)
               //dataArray.push(responseData.addressLine1)
               //dataArray.push(responseData.addressLine2)
-              dataArray.push(responseData.cityName)
-              dataArray.push(responseData.stateName)
-              dataArray.push(responseData.countryName)
+              // dataArray.push(responseData.cityName)
+              // dataArray.push(responseData.stateName)
+               dataArray.push(responseData.countryName)
               //dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)
@@ -154,18 +154,18 @@ class CustomerList extends React.Component{
             },
             
               
-            {
-              name: "City",
-              options: {
-                filter: true,
-              }
-            },
-            {
-              name: "State",
-              options: {
-                filter: true
-              }
-            },
+            // {
+            //   name: "City",
+            //   options: {
+            //     filter: true,
+            //   }
+            // },
+            // {
+            //   name: "State",
+            //   options: {
+            //     filter: true
+            //   }
+            // },
             {
               name: "Country",
                 options: {
@@ -217,7 +217,7 @@ class CustomerList extends React.Component{
         <Grid container>
         <ItemGrid xs={30} sm={30} md={30}>
             <RegularCard
-         cardTitle="Customer List"
+         cardTitle="Customer"
             cardSubtitle={
                 <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
                     <AddIcon />

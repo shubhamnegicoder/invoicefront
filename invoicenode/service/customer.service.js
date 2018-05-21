@@ -152,5 +152,5 @@ service.editCustomer = async (req,res)=>{
 		return res.send({success:false, code:500, msg:"Error in editing Customer", err:error})
 	}
 }
-
+ 
 export default service;

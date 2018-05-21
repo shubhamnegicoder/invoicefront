@@ -27,7 +27,7 @@ service.getAll = async (req,res)=>{
     // }
 	try{
 		// var queryToFindCompany = {
-		// 	query: {createdBy:ObjectID(req.query.userId)}
+		// 	query: {createdBy:ObjectID(req.query.userId)} 
 		// }
 		var allCompany = await CompanyModel.allCompany();
 		console.log(allCompany,"====== allCompany");
@@ -132,9 +132,9 @@ service.editCompany = async (req,res)=>{
 		companyGSTNo:req.body.companyGSTNo,
 		addressLine1:req.body.addressLine1,
 		addressLine2:req.body.addressLine2,
-		city:req.body.city,
-		state:req.body.state,
-		country:req.body.country,
+		cityCode:req.body.cityCode,
+		stateCode:req.body.stateCode,
+		countryCode:req.body.countryCode,
 		postalCode:req.body.postalCode,
 		contactNo:req.body.contactNo,
 		modifiedBy:req.body.modifiedBy,
