@@ -8,3 +8,5 @@
 {"level":"info","message":"sending all city...","timestamp":"2018-05-22T06:18:04.160Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-22T06:36:23.295Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-22T06:36:23.338Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-22T06:40:20.261Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-22T06:40:20.303Z"}

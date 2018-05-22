@@ -29,6 +29,7 @@ class Product extends React.Component {
     taxCode:"",
     rate:"",
     isActive:false,
+    userId:"",
     _id:""
     
     };
@@ -42,18 +43,31 @@ class Product extends React.Component {
       },
       MUIDataTableBodyCell: {
         root: {
-          backgroundColor: "#FFB6C1"
+          backgroundColor: "#d5f5e3"
         }
       }
     }
   })
+  handleOpen=()=>{
+    this.setState({load : true});
+    this.setState({productCode:"",productName:"",taxCode:"",rate:"",sgst:"",_id:"",isActive:""});
+      
+  }
+  handleClose = () => {
+    
+    this.setState({load: false });
+  };
+  handleEdit = (e,product) => {
+    this.setState({load: true ,productCode :product.productCode,productName : product.productName,taxCode : product.taxCode,rate:product.rate,isActive:product.isActive,_id:product._id,userId:product.createdBy});
+    
+  };
  
   componentDidMount(){
     this.List();
    }
    List = () => {
     
-    fetch("http://localhost:8080/allProduct",{
+    fetch("http://localhost:8080/allProduct?id=5af170d60c06c02559273df1",{
         method: "GET",
         cache: 'no-cache', 
         mode: 'cors', 
@@ -74,12 +88,11 @@ class Product extends React.Component {
                  dataArray.push(product.productName)
                  dataArray.push(product.taxCode)
                  dataArray.push(product.rate)
-                 dataArray.push(product.isActive ? "Active" : "Inactive")
+                 dataArray.push(product.isActive ? "True" : "False")
                  dataArray.push(<button onClick={(e)=>{this.handleEdit(e,product)}}>Edit</button>)
                 // dataArray.push(new Date(tax.createAt).toDateString());
                 mainArray.push(dataArray)
-                
-                console.log(product.taxCode,"tax hai")
+              
 
              })
              this.setState({
@@ -131,7 +144,7 @@ class Product extends React.Component {
           }        
     ];
     var tableData= this.state.List;
-    console.log(tableData,"medha")
+    // console.log(tableData,"medha")
     const options = {
       filter: true,
       selectableRows:false,
@@ -139,13 +152,13 @@ class Product extends React.Component {
       responsive: 'stacked',
       rowsPerPage: 10,
       page: 1,
-      viewColumns:false,
+      viewColumns:true,
       print:false,
-      filter:false,
+      filter:true,
       download:false,
       textLabels: {
         body: {
-          noMatch: "Sorry, no matching records found",
+          noMatch: "No Records Found!!",
           toolTip: "Sort",
         }
       }

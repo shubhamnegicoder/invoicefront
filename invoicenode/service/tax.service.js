@@ -6,20 +6,8 @@
  * @lastModifedBy Shakshi
  */
 
-// import User from '../models/user.model'
-// import roleConfig from '../models/role.model'
-// import Customer from '../models/customer.model'
-// import logger from '../core/logger/app.logger'
-// import successMsg from '../core/message/success.msg'
-// import msg from '../core/message/error.msg.js'
-// import utility from '../core/utility.js' 
-// import  crypto from 'crypto'
-// import jwt from 'jsonwebtoken'
-// import nm from 'nodemailer'
-// import rand from 'csprng'
-// import ObjectID from "bson-objectid";
-// import RoleConfig from '../models/role.model'
 import Tax from '../models/tax.model'
+import ObjectId from 'bson-objectid'
 
 
 /**
@@ -30,17 +18,22 @@ import Tax from '../models/tax.model'
 const service = {};
 
 service.getAll = async (req, res) => {
+  
+    
     try {
-        // let dataToFind = {
-        // 	query:{parentId:ObjectID(req.query._id)}
-        // };
-        const tax = await Tax.getAll();
+             var dataToFind={}
+             var dataToFind={
+                 query:{createdBy:ObjectId(req.query.id)}
+           }
+         console.log("kkkkkkkkkkkk")
+        const tax = await Tax.getAll(dataToFind);
         res.send({ success: true, code: 200, "msg": "success", data: tax });
         // console.log(tax,"data");
-    } catch (err) {
+    } 
+    catch (err) {
         // logger.error('Error in getting user- ' + err);
-        // console.log(err);
-        res.send({ success: false, code: 500, "msg": "error", err: err });
+        console.log(err,"error!!");
+        res.send({ success: false, code: 500, "msg": "error111", err: err });
     }
 }
 
@@ -73,10 +66,10 @@ service.addTax = async (req, res) => {
         cgst: req.body.cgst,
         sgst: req.body.sgst,
         igst: req.body.igst,
-        isActive: req.body.isActive
-        //   createdBy: req.body._id,
+        isActive: req.body.isActive,
+        createdBy: req.body.id,
         //   modifiedBy: {type:mongooseSchema.ObjectId },
-        //   modifiedOn:new Date()
+        modifiedOn:new Date()
     });
 
 
@@ -108,8 +101,7 @@ service.editTax = async (req, res) => {
         sgst: req.body.sgst,
         igst: req.body.igst,
         isActive: req.body.isActive,
-        createdBy: req.body.createdBy,
-        modifiedBy: req.body.modifiedBy,
+        modifiedBy: req.body.userId,
         modifiedOn: new Date()
     }
     let taxToEdit = {

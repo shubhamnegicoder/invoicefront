@@ -60,6 +60,7 @@ class SimpleModal extends React.Component {
     igst: "",
     sgst: "",
     isActive: false,
+    userId:"",
     _id: ""
 
 
@@ -74,7 +75,7 @@ class SimpleModal extends React.Component {
   };
   onCancel = () => {
     this.props.handleClose();
-    this.setState({ taxCode: "", taxName: "", cgst: "", sgst: "", igst: "" ,isActive:"",_id:""})
+    this.setState({ taxCode: "", taxName: "", cgst: "", sgst: "", igst: "" ,isActive:"",_id:"",userId:""})
   };
 
   componentWillReceiveProps(newprops) {
@@ -87,6 +88,7 @@ class SimpleModal extends React.Component {
       igst: newprops.igst,
       sgst: newprops.sgst,
       _id: newprops._id,
+     userId: newprops.userId,
       isActive:newprops.isActive
     })
 
@@ -128,6 +130,7 @@ class SimpleModal extends React.Component {
               igst: this.state.igst,
               sgst: this.state.sgst,
               _id:this.state._id,
+              userId: this.state.userId,
               isActive:this.state.isActive
             };
           }
@@ -136,6 +139,7 @@ class SimpleModal extends React.Component {
 
         url = "http://localhost:8080/addTax";
         data = {
+          "id": "5af170d60c06c02559273df1",
           taxCode: this.state.taxCode,
           taxName: this.state.taxName,
           cgst: this.state.cgst,

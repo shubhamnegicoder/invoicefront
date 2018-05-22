@@ -27,6 +27,20 @@ class Country extends React.Component {
 
         }
     };
+    getMuiTheme = () => createMuiTheme({
+        overrides: {
+          MUIDataTable: {
+            root: {
+              backgroundColor: "#F08080",
+            }
+          },
+          MUIDataTableBodyCell: {
+            root: {
+              backgroundColor: "#d5f5e3"
+            }
+          }
+        }
+      })
 
     clickaction = () => {
         this.setState({ countryName: "", countryCode: "", _id: "" })
@@ -77,11 +91,53 @@ class Country extends React.Component {
         this.data();
 
     };
-    handlePageChange = (pageNumber) => {
-        console.log(pageNumber, )
-        this.setState({ activePage: pageNumber });
-    }
+    
     render() {
+        const columns = [
+            {
+              name: "Code",
+              options: {
+                filter: true,
+                sort:true
+              }
+            },      
+            {
+              name: "Name",
+              options: {
+                filter: true,
+                sort:true
+              }
+            },
+            {
+              name: "IsActive",
+              options: {
+                filter: true
+              }
+            },
+              {
+                name: "Action"
+            }        
+      ];
+      var tableData= this.state.mydata;
+    
+      const options = {
+        filter: true,
+        selectableRows:false,
+        filterType: 'dropdown',
+        responsive: 'stacked',
+        rowsPerPage: 10,
+        page: 1,
+        viewColumns:true,
+        print:false,
+        filter:true,
+        download:false,
+        textLabels: {
+          body: {
+            noMatch: "No Records Found!!",
+            toolTip: "Sort",
+          }
+        }
+  }
         
         return (
             <Grid container>
@@ -89,21 +145,17 @@ class Country extends React.Component {
 
                     <RegularCard
                         plainCard
-                        cardTitle="Country List"
+                        cardTitle={<h2><b>Country</b></h2>}
                         cardSubtitle={
                             <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.clickaction} >
                                 <AddIcon />
                             </Button>
                         }
-                        content={
-                            <Table
-                                tableHeaderColor="primary"
-                                tableHead={["CountryCode", "Country", "Is Active","Operation"]}
-                                tableData={this.state.mydata}
-                            />
-                        }
-
+                        
                     />
+                      <MuiThemeProvider theme={this.getMuiTheme()}>
+                      <MUIDataTable title={"Country list"}  columns={columns} options={options} data={tableData}/>
+                      </MuiThemeProvider> 
 
                 </ItemGrid>
 

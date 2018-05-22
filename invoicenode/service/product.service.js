@@ -6,19 +6,7 @@
  * @lastModifedBy Shakshi
  */
 
-// import User from '../models/user.model'
-// import roleConfig from '../models/role.model'
-// import Customer from '../models/customer.model'
-// import logger from '../core/logger/app.logger'
-// import successMsg from '../core/message/success.msg'
-// import msg from '../core/message/error.msg.js'
-// import utility from '../core/utility.js' 
-// import  crypto from 'crypto'
-// import jwt from 'jsonwebtoken'
-// import nm from 'nodemailer'
-// import rand from 'csprng'
-// import ObjectID from "bson-objectid";
-// import RoleConfig from '../models/role.model'
+import ObjectID from "bson-objectid";
 import Product from '../models/product.model'
 
 
@@ -31,9 +19,9 @@ const service = {};
 
 service.getAll = async (req, res) => {
     try {
-        // let dataToFind = {
-        // 	query:{parentId:ObjectID(req.query._id)}
-        // };
+        let dataToFind = {
+        	query:{parentId:ObjectID(req.query.id)}
+        };
         const product = await Product.getAll();
         res.send({ success: true, code: 200, "msg": "success", data: product });
         // console.log(tax,"data");
@@ -59,7 +47,7 @@ service.addProduct = async (req, res) => {
     console.log(req.body, "hi")
     // console.log(req.body.cgst.length)
      
-    // if (!req.body.productCode || !req.body.productName || !req.body.date || !req.body.tax || !req.body.rate) {
+    // if (!req.body.productCode || !req.body.productName || !req.body.taxCode || !req.body.rate) {
     //     return res.send({ "success": false, "code": 500, "msg": "error" });
     // }
  
@@ -69,10 +57,9 @@ service.addProduct = async (req, res) => {
         productName: req.body.productName,
         taxCode: req.body.taxCode,
         rate: req.body.rate,
-        isActive: req.body.isActive
-        //   createdBy: req.body._id,
-        //   modifiedBy: {type:mongooseSchema.ObjectId },
-        //   modifiedOn:new Date()
+        isActive: req.body.isActive,
+        createdBy: req.body.id,
+        modifiedOn:new Date()
     });
 
 
@@ -93,16 +80,15 @@ service.addProduct = async (req, res) => {
 }
 
 service.editProduct = async (req, res) => {
-    // if (!req.body._id) {
-    //   return res.send({ "success": false, "code": 500, "msg": "error" })
-    // }
+    if (!req.body._id) {
+      return res.send({ "success": false, "code": 500, "msg": "error" })
+    }
     let ProductEdit = {
         productName: req.body.productName,
         taxCode: req.body.taxCode,
         rate: req.body.rate,
         isActive: req.body.isActive,
-        createdBy: req.body.createdBy,
-        modifiedBy: req.body.modifiedBy,
+        modifiedBy: req.body.userId,
         modifiedOn: new Date()
     }
     let productToEdit = {

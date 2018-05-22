@@ -7,13 +7,13 @@ const ProductSchema = mongoose.Schema({
     
     productCode: {type: String ,index:{unique:true}},
     productName: {type: String }, 
-
     taxCode:{type:String},
     rate:{type:Number},
     isActive: {type:Boolean},
-    createdBy:{type:mongoose.Schema.ObjectId },
-    modifiedBy:{type:mongoose.Schema.ObjectId },
-    modifiedOn:{type: Date }
+    createdBy: { type: mongoose.Schema.ObjectId },
+    createAt: { type: Date },
+    updatedAt: { type: Date },
+    modifiedBy: { type: mongoose.Schema.ObjectId },
     
     
  }, {collection : 'product'});
@@ -52,7 +52,7 @@ ProductModel.allProduct = (dataToFind) => {
 }
 
 
-ProductModel.getAll= () => {
+ProductModel.getAll= (dataToFind) => {
     // console.log(userToFind," = userToFind")
     return ProductModel.find();
 }

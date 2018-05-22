@@ -134,7 +134,7 @@ class ListInvoice extends React.Component {
     download:false,
     textLabels: {
       body: {
-        noMatch: "Sorry, no matching records found",
+        noMatch: "No Records Found!!",
         toolTip: "Sort",
       }
     }

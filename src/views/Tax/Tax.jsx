@@ -32,6 +32,7 @@ class Tax extends React.Component {
     igst:"",
     sgst:"",
     isActive:false,
+    userId:"",
     _id:""
     
     };
@@ -60,7 +61,7 @@ class Tax extends React.Component {
     this.setState({load: false });
   };
   handleEdit = (e,tax) => {
-    this.setState({load: true ,taxCode :tax.taxCode,taxName : tax.taxName,sgst : tax.sgst,cgst : tax.cgst,igst :tax.igst,isActive:tax.isActive,_id:tax._id});
+    this.setState({load: true ,taxCode :tax.taxCode,taxName : tax.taxName,sgst : tax.sgst,cgst : tax.cgst,igst :tax.igst,isActive:tax.isActive,_id:tax._id,userId:tax.createdBy});
     
   };
   componentDidMount(){
@@ -68,7 +69,7 @@ class Tax extends React.Component {
    }
    List = () => {
     
-    fetch("http://localhost:8080/allTax",{
+    fetch("http://localhost:8080/allTax?id=5af170d60c06c02559273df1",{
         method: "GET",
         cache: 'no-cache', 
         mode: 'cors', 
@@ -80,7 +81,7 @@ class Tax extends React.Component {
     .then(res => res.json())
     .then(
         (result) => {
-            // console.log("listabc = ",result)
+             console.log("listabc = ",result)
              var mainArray = [];
              result.data.forEach((tax)=>{
                  var dataArray = [];
@@ -173,7 +174,7 @@ class Tax extends React.Component {
       // customToolbarSelect: (selectedRows) => <CustomToolbarSelect selectedRows={selectedRows} />,
       textLabels: {
         body: {
-          noMatch: "Sorry, no matching records found",
+          noMatch: "No Records Found!!",
           toolTip: "Sort",
         },
         pagination: {

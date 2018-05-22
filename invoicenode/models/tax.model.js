@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 // import AutoIncrement from "mongoose-auto-increment";
-// import ObjectID from "bson-objectid";
+import ObjectID from "bson-objectid";
 // AutoIncrement.initialize(mongoose);
 
 const TaxSchema = mongoose.Schema({
@@ -12,9 +12,9 @@ const TaxSchema = mongoose.Schema({
     igst:{type:Number },
     isActive: {type:Boolean},
     createdBy:{type:mongoose.Schema.ObjectId },
+    createAt:{type: Date },
+    updatedAt:{type: Date },
     modifiedBy:{type:mongoose.Schema.ObjectId },
-    modifiedOn:{type: Date }
-    
     
  }, {collection : 'tax'});
 
@@ -54,9 +54,9 @@ let TaxModel = mongoose.model('tax',TaxSchema);
 //     }
 //    ]);
 // }
-TaxModel.getAll= () => {
+TaxModel.getAll=(dataToFind) => {
     // console.log(userToFind," = userToFind")
-    return TaxModel.find();
+    return TaxModel.find(dataToFind.query);
 }
 
 // UserModel.getAggregation = (query) => {

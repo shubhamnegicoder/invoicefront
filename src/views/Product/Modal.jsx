@@ -56,6 +56,7 @@ class SimpleModal extends React.Component {
     rate: "",
     dropDownData:[],
     isActive: false,
+    userId:"",
     _id: ""
 
 
@@ -69,6 +70,7 @@ class SimpleModal extends React.Component {
     this.setState({ [name]: event.target.checked });
   };
   handleDropDown=(event)=>{
+
      this.setState({taxCode:event.target.value});
      //console.log(this.state.tax, "state tax")
   };
@@ -86,13 +88,14 @@ class SimpleModal extends React.Component {
       taxCode: newprops.taxCode,
       rate: newprops.rate,
       _id: newprops._id,
+      userId: newprops.userId,
       isActive:newprops.isActive
     })
 
 
   }
   data = () => {
-    fetch("http://localhost:8080/allTax", {
+    fetch("http://localhost:8080/allTax?id=5af170d60c06c02559273df1", {
         method: "GET",
         cache: 'no-cache',
         mode: 'cors',
@@ -103,7 +106,7 @@ class SimpleModal extends React.Component {
     }).then(res => res.json()).then(
         (result) => {
             var maindata = [];
-            // console.log(result.data,"dropdown")
+            console.log(result.data,"dropdown")
             result.data && result.data.map((item, key) => {
                 maindata.push(item);
               
@@ -150,18 +153,20 @@ componentDidMount() {
               taxCode: this.state.taxCode,
               rate: this.state.rate,
               _id:this.state._id,
+              userId: this.state.userId,
               isActive:this.state.isActive
             };
           }
       else
        { 
-
+        
         url = "http://localhost:8080/addProduct";
         data = {
+            "id": "5af170d60c06c02559273df1",
             productCode: this.state.productCode,
             productName: this.state.productName,
             taxCode: this.state.taxCode,
-            rate: this.state.rate,
+            rate: this.state.rate, 
             isActive:this.state.isActive
           };
         };
