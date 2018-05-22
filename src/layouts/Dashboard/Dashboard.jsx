@@ -90,8 +90,8 @@ show=(token)=>{
   console.log(token,"query data")
   if(token1==token){
     // alert("kb aayaa")
-    side=true;
-    // this.setState({showSideBar:true})
+    // side=true;
+    this.setState({showSideBar:true})
   }
   // console.log(this.state,"yha to state")
   }
@@ -133,11 +133,11 @@ show=(token)=>{
    console.log("sidebar state",this.state.sidebar)
   };
   render() {
-    console.log(side,"ab kya hua tujhe sidebar")
+    console.log(this.state,"ab kya hua tujhe sidebar")
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
-       {side?<Sidebar
+       {this.state.showSideBar?<Sidebar
           routes={dashboardRoutes}
           logoText={"Invoice"}
           logo={logo}

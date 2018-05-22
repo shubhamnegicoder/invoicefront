@@ -27,6 +27,24 @@ service.addInvoice = async (req, res) => {
     }
 }
 
+
+service.countInvoice = async (req, res) => {
+let invoiceToCount={
+    query:{createdBy:ObjectID(req.query.id)},
+    projection:{}
+};
+
+try {
+    const countInvoice = await Invoice.getCount(invoiceToCount);
+    logger.info('countinvoice...');
+    res.send({ "success": true, "code": "200", "msg": successMsg.addInvoice, "data": countInvoice });
+}
+catch (err) {
+    console.log("catch");
+    logger.error('Error in getting Invoice- ' + err);
+    res.send({ "success": false, "code": "500", "msg": "not found invoicecount", "err": err });
+}
+}
 service.getAllInvoice = async (req, res) => {
     try {
         var queryToFindCity = {}
