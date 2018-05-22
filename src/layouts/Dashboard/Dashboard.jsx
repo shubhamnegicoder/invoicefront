@@ -10,6 +10,7 @@ import dashboardRoutes from "routes/dashboard.jsx";
 import AddCustomer from "../../views/Customer/AddCustomer";
 import EditCustomer from "../../views/Customer/EditCustomer";
 import ViewCustomer from "../../views/Customer/ViewCustomer";
+// import Login from "../../views/login/login"
 import AddCompany from "../../views/Company/AddCompany";
 import EditCompany from "../../views/Company/EditCompany";
 import ViewCompany from "../../views/Company/ViewCompany";
@@ -20,6 +21,8 @@ import logo from "assets/img/reactlogo.png";
 import { createBrowserHistory } from "history";
 const hist = createBrowserHistory();
 var routing=[] 
+var blog,token,dd,token1;
+var side=false
 const switchRoutes = ( 
   <Switch >
     <Route path="/addCustomer" component={AddCustomer}></Route>
@@ -30,7 +33,9 @@ const switchRoutes = (
     <Route path="/editCustomer" component={EditCustomer}></Route>
     <Route path="/viewInvoice" component={ViewInvoice}></Route>
 
-    {dashboardRoutes.map((prop, key) => { 
+    {dashboardRoutes.map((prop, key) => {
+
+  
       routing=[]
        console.log(prop.path,"path",prop.component)
       if (prop.redirect)
@@ -54,14 +59,43 @@ class App extends React.Component {
     mobileOpen:false, 
     open:false,
     collapse:false,
-    sidebar:[]
+    sidebar:[],
+    showSideBar:false
   }; 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
+
   };
   getRoute() {
     return this.props.location.pathname !== "/maps";
+   
   }
+  getQuery=(sParam)=>{
+    var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    
+  }
+
+show=(token)=>{
+  token1=localStorage.getItem("token")
+  console.log(token1,"localstorage data")
+  console.log(token,"query data")
+  if(token1==token){
+    // alert("kb aayaa")
+    side=true;
+    // this.setState({showSideBar:true})
+  }
+  // console.log(this.state,"yha to state")
+  }
+  
   componentDidMount() {
     if(navigator.platform.indexOf('Win') > -1){
       // eslint-disable-next-line
@@ -71,8 +105,13 @@ class App extends React.Component {
         var name=item.sidebarName
         this.state.sidebar.push({[item.sidebarName]:false})
     })
+
     this.setState({sidebar:this.state.sidebar})
+    token=this.getQuery('token');
+    this.show(token)
+
   }
+
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
@@ -94,11 +133,11 @@ class App extends React.Component {
    console.log("sidebar state",this.state.sidebar)
   };
   render() {
-    console.log(this.state.sidebar,"sidebar")
+    console.log(side,"ab kya hua tujhe sidebar")
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
-        <Sidebar
+       {side?<Sidebar
           routes={dashboardRoutes}
           logoText={"Invoice"}
           logo={logo}
@@ -112,7 +151,7 @@ class App extends React.Component {
            collapse={this.state.collapse}
            sidebar={this.state.sidebar}
           {...rest}
-        />
+        />:<div></div>}
         <div className={classes.mainPanel} ref="mainPanel">
           {/* <Header
             routes={dashboardRoutes}

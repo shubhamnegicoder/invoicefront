@@ -5,6 +5,7 @@ import axios from 'axios'
 import $ from 'jquery'
 import swal from 'sweetalert'
  //import Dashboard from '../../layouts/Dashboard/Dashboard'
+ var token="";
 
 class Login extends React.Component {
 
@@ -33,9 +34,12 @@ class Login extends React.Component {
     axios.post('http://localhost:8080/login', { emailId, password })
       .then((result) => {
         if (result.data.success) {
-          console.log(result.data, "mmm")
-          localStorage.setItem("token", result.data.token2)
-          window.location.href = "/dashboard"
+          // console.log(result.data, "mmm")
+          localStorage.setItem("id", result.data.data._id)
+          localStorage.setItem("token", result.data.data.password)
+          token= result.data.data.password;
+          // console.log(token,"kkkkoooooooooo")
+          window.location.href="/dashboard?token="+token;
         }
         else {
           swal({
@@ -44,7 +48,7 @@ class Login extends React.Component {
           })
         }
       });
-      window.location.href="/dashboard";
+     
   }
   handlelink = (e) => {
     e.preventDefault();
