@@ -4,6 +4,8 @@ import Button from 'material-ui/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Modal from './modal'
 import axios from 'axios';
+import MUIDataTable from "mui-datatables";
+import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 // import Modal from 'react-responsive-modal';
 
 import { RegularCard, Table, ItemGrid } from "components";
@@ -23,6 +25,20 @@ class City extends React.Component {
             isActive:false
         }
     };
+    getMuiTheme = () => createMuiTheme({
+        overrides: {
+          MUIDataTable: {
+            root: {
+              backgroundColor: "#F08080",
+            }
+          },
+          MUIDataTableBodyCell: {
+            root: {
+              backgroundColor: "#d5f5e3"
+            }
+          }
+        }
+      })
 
     clickaction = () => {
         this.setState({
@@ -79,27 +95,83 @@ class City extends React.Component {
     };
 
     render() {
+        const columns = [
+            {
+              name: "Country",
+              options: {
+                filter: true,
+                sort:true
+              }
+            },      
+            {
+              name: "State",
+              options: {
+                filter: true,
+                sort:true
+              }
+            },
+            {
+                name: "City Code",
+                options: {
+                  filter: true,
+                  sort:true
+                }
+              },
+              {
+                name: "City",
+                options: {
+                  filter: true,
+                  sort:true
+                }
+              },
+            {
+              name: "IsActive",
+              options: {
+                filter: true
+              }
+            },
+              {
+                name: "Action"
+            }        
+      ];
+      var tableData= this.state.mydata;
+    
+      const options = {
+        filter: true,
+        selectableRows:false,
+        filterType: 'dropdown',
+        responsive: 'stacked',
+        rowsPerPage: 10,
+        page: 1,
+        viewColumns:true,
+        print:false,
+        filter:true,
+        download:false,
+        textLabels: {
+          body: {
+            noMatch: "No Records Found!!",
+            toolTip: "Sort",
+          }
+        }
+  }
         return (
             <Grid container>
                 <ItemGrid xs={12} sm={12} md={12}>
 
                     <RegularCard
                         plainCard
-                        cardTitle="City List"
+                        cardTitle={<h2><b>City</b></h2>}
                         cardSubtitle={
                             <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.clickaction} >
                                 <AddIcon />
                             </Button>
                         }
-                        content={
-                            <Table
-                                tableHeaderColor="primary"
-                                tableHead={[ "Country","State" , "CityCode", "CityName","Is Active","Operation"]}
-                                tableData={this.state.mydata}
-                            />
-                        }
 
                     />
+                    <MuiThemeProvider theme={this.getMuiTheme()}>
+                      <MUIDataTable title={"City list"}  columns={columns} options={options} data={tableData}/>
+                      </MuiThemeProvider> 
+
 
                 </ItemGrid>
                 <Modal open={this.state.load} data={{ "_id": this.state._id, "isActive":this.state.isActive, "cityName": this.state.cityName, "cityCode": this.state.cityCode,"userId": this.state.userId , "stateCode": this.state.stateCode, "countryCode": this.state.countryCode }} onClose={this.onClose} />

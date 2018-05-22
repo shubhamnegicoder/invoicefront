@@ -189,19 +189,18 @@ class CompanyList extends React.Component{
       var tableData= this.state.data;
     
       const options = {
-        filter: true,
         selectableRows:false,
         filterType: 'dropdown',
         responsive: 'stacked',
         rowsPerPage: 10,
         page: 1,
-        viewColumns:false,
+        viewColumns:true,
         print:false,
-        filter:false,
+        filter:true,
         download:false,
         textLabels: {
           body: {
-            noMatch: "Sorry, no matching records found",
+            noMatch: "No Records Found!!",
             toolTip: "Sort",
           }
         }

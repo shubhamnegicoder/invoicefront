@@ -174,7 +174,7 @@ class Tax extends React.Component {
       // customToolbarSelect: (selectedRows) => <CustomToolbarSelect selectedRows={selectedRows} />,
       textLabels: {
         body: {
-          noMatch: "Sorry, no matching records found",
+          noMatch: "No Records Found!!",
           toolTip: "Sort",
         },
         pagination: {
