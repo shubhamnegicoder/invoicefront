@@ -12,3 +12,7 @@
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-22T06:40:20.303Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-22T06:58:06.437Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-22T06:58:06.479Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-22T07:28:15.707Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-05-22T07:28:16.733Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-22T07:28:42.559Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-22T07:28:42.582Z"}

@@ -9,7 +9,8 @@ import axios from 'axios';
 
 import { RegularCard, Button, CustomInput, ItemGrid, Table } from "components";
 
-var invoiceRow = [], itemTotal = 0, cgstTotal = 0, sgstTotal = 0, igstTotal = 0;
+var invoiceRow = [], itemTotal = 0, cgstTotal = 0, sgstTotal = 0, igstTotal = 0, data = {}, items = [];
+var invoiceNoPart1, invoiceNoPart2, invoiceNo;
 
 class CreateInvoice extends React.Component {
     constructor(props) {
@@ -41,8 +42,29 @@ class CreateInvoice extends React.Component {
             setAddressOfCustomer: false,
             check: false,
             check2: false,
-            check3: false
+            check3: false,
+            invoiceNo: 0
         }
+    }
+    padDigits = (number, digits) => {
+        return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+    }
+    getDate = () => {
+        var date = new Date();
+        var year = date.getFullYear();
+        year = year.toString();
+        var month = date.getMonth();
+        month = month.toString();
+        month++;
+        month = this.padDigits(month, 2);
+        invoiceNoPart1 = year + month;
+        invoiceNoPart2 = 1;
+        invoiceNoPart2 = this.padDigits(invoiceNoPart2, 4);
+        invoiceNo = invoiceNoPart1 + invoiceNoPart2;
+        invoiceNo = parseInt(invoiceNo);
+        this.setState({
+            invoiceNo: invoiceNo
+        })
     }
     handleDropdown = (e, param) => {
         if (param == "company") {
@@ -94,13 +116,11 @@ class CreateInvoice extends React.Component {
                 }
             })
         }
-        // }
     }
     getCompanyDropdownData = () => {
         axios
             .get("http://localhost:8080/allCompany")
             .then((res) => {
-                console.log("response from /allCompany", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -114,7 +134,6 @@ class CreateInvoice extends React.Component {
         axios
             .get("http://localhost:8080/allCustomer")
             .then((res) => {
-                console.log("response from /allCustomer", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -128,6 +147,7 @@ class CreateInvoice extends React.Component {
         axios
             .get("http://localhost:8080/allProduct")
             .then((res) => {
+                console.log("response from /allProduct", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -140,8 +160,9 @@ class CreateInvoice extends React.Component {
     }
     getTaxData = () => {
         axios
-            .get("http://localhost:8080/allTax")
+            .get("http://localhost:8080/allTax?id=5af170d60c06c02559273df1")
             .then((res) => {
+                console.log("response from /allTax", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -162,7 +183,10 @@ class CreateInvoice extends React.Component {
     addRow = (params) => {
         invoiceRow.push(
             <div style={{ marginTop: '5px' }}>
-                <div className={"row row" + invoiceRow.length} id={"btn" + invoiceRow.length}>
+                <div
+                    className={"row row" + invoiceRow.length}
+                    id={"btn_" + this.state.invoiceRow.length}
+                >
                     {/* <div className="col">
                         {tempLength}
                     </div> */}
@@ -184,8 +208,8 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            className={"form-control name" + invoiceRow.length}
-                            name={"itemName " + invoiceRow.length}
+                            className={"form-control name" + this.state.invoiceRow.length}
+                            name={"itemName" + invoiceRow.length}
                             onChange={(e) => this.handleInvoice(e)}
                             readOnly
                         />
@@ -193,8 +217,8 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            className={"form-control qty" + invoiceRow.length}
-                            name={"qty " + invoiceRow.length}
+                            className={"form-control qty" + this.state.invoiceRow.length}
+                            name={"qty" + invoiceRow.length}
                             onChange={(e) => this.handleInvoice(e)}
                             required
                             pattern="^[0-9]*$"
@@ -204,8 +228,8 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            className={"form-control rate" + invoiceRow.length}
-                            name={"rate " + invoiceRow.length}
+                            className={"form-control rate" + this.state.invoiceRow.length}
+                            name={"rate" + invoiceRow.length}
                             onChange={(e) => this.handleInvoice(e)}
                             readOnly
                         />
@@ -213,8 +237,8 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            className={"form-control total" + invoiceRow.length}
-                            name={"total " + invoiceRow.length}
+                            className={"form-control total" + this.state.invoiceRow.length}
+                            name={"total" + invoiceRow.length}
                             onChange={(e) => this.handleInvoice(e)}
                             required
                         />
@@ -223,7 +247,7 @@ class CreateInvoice extends React.Component {
                         <input
                             type="text"
                             className="form-control"
-                            name={"discount " + invoiceRow.length}
+                            name={"discount" + this.state.invoiceRow.length}
                             onChange={(e) => this.handleInvoice(e)}
                             required
                         />
@@ -231,7 +255,7 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            name={"CGSTRate " + invoiceRow.length}
+                            name={"CGSTRate" + this.state.invoiceRow.length}
                             className={"form-control cgstrate" + invoiceRow.length}
                             readOnly
                         />
@@ -239,7 +263,7 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            name={"CGSTAmount " + invoiceRow.length}
+                            name={"CGSTAmount" + this.state.invoiceRow.length}
                             className={"form-control cgstamnt" + invoiceRow.length}
                             readOnly
                         />
@@ -247,7 +271,7 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            name={"SGSTRate " + invoiceRow.length}
+                            name={"SGSTRate" + this.state.invoiceRow.length}
                             className={"form-control sgstrate" + invoiceRow.length}
                             readOnly
                         />
@@ -255,7 +279,7 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            name={"SGSTAmount " + invoiceRow.length}
+                            name={"SGSTAmount" + this.state.invoiceRow.length}
                             className={"form-control sgstamnt" + invoiceRow.length}
                             readOnly
                         />
@@ -263,7 +287,7 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            name={"IGSTRate " + invoiceRow.length}
+                            name={"IGSTRate" + this.state.invoiceRow.length}
                             className={"form-control igstrate" + invoiceRow.length}
                             readOnly
                             required
@@ -272,7 +296,7 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            name={"IGSTAmount " + invoiceRow.length}
+                            name={"IGSTAmount" + this.state.invoiceRow.length}
                             className={"form-control igstamnt" + invoiceRow.length}
                             readOnly
                             required
@@ -281,8 +305,8 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <button
                             className="btn btn-danger"
-                            id={"btn" + invoiceRow.length}
-                            value={"btn" + invoiceRow.length}
+                            id={"btn_" + this.state.invoiceRow.length}
+                            value={"btn_" + this.state.invoiceRow.length}
                             onClick={this.removeRow}
                         >x
                     </button>
@@ -297,14 +321,24 @@ class CreateInvoice extends React.Component {
     }
     submitInvoice = (e) => {
         e.preventDefault();
-        console.log("length", invoiceRow.length);
-        var data = parse(e.target);
-        console.log("data", data)
-        let items = {};
+        data = parse(e.target);
+        let item = {};
         for (var i = 0; i < invoiceRow.length; i++) {
-            items.itemName = data.qty + " " + i;
+            item.name = data["itemName" + i];
+            item.qty = data["qty" + i];
+            item.rate = data["rate" + i];
+            item.total = data["total" + i];
+            item.discount = data["discount" + i];
+            item.CGSTRate = data["CGSTRate" + i];
+            item.CGSTAmount = data["CGSTAmount" + i];
+            item.SGSTRate = data["SGSTRate" + i];
+            item.SGSTAmount = data["SGSTAmount" + i];
+            item.IGSTRate = data["IGSTRate" + i];
+            item.IGSTAmount = data["IGSTAmount" + i];
+            items.push(item);
+            item = {};
         }
-        console.log("items", items);
+        items = items.filter(item => item.name != undefined);
         var data2 = {
             companyCode: data.companyCode,
             companyAddressLine1: data.companyAddressLine1,
@@ -314,27 +348,14 @@ class CreateInvoice extends React.Component {
             customerAddressLine2: data.customerAddressLine2,
             invoiceDate: data.invoiceDate,
             invoiceNumber: data.invoiceNumber,
+            items: items
         }
         console.log("data2", data2);
-        var finalArray = [];
-        var temp = {};
-        var limit = 1;
-        var finalKey = '';
-        for (var key in data) {
-            finalKey = key.split(" ")[0];
-            temp[finalKey] = data[key];
-            if (limit == 10) {
-                finalArray.push(temp);
-                temp = {};
-                limit = 0;
-            }
-            limit++;
-        }
-        console.log("finalArray", finalArray);
-        let invoiceData = {
-            item: finalArray
-        }
-        console.log("Data sent", invoiceData);
+        invoiceNo++;
+        this.setState({
+            invoiceNo: invoiceNo
+        })
+        console.log("states", this.state);
         // superagent
         //     .post("http://localhost:8080/addInvoice")
         //     .send(data)
@@ -351,6 +372,7 @@ class CreateInvoice extends React.Component {
     componentWillMount() {
         this.getCompanyDropdownData();
         this.getCustomerDropdownData();
+        this.getDate();
         this.getItemDropdownData();
         this.getTaxData();
     }
@@ -403,7 +425,6 @@ class CreateInvoice extends React.Component {
                 sgstTotal += parseFloat($('.sgstamnt' + j).val());
                 igstTotal += parseFloat($('.igstamnt' + j).val());
             }
-
         }
         $('.itemTotal').val(itemTotal);
         $('.taxTotal').val(cgstTotal + sgstTotal + igstTotal);
@@ -413,7 +434,7 @@ class CreateInvoice extends React.Component {
     }
     render() {
         return (
-            <form onSubmit={this.submitInvoice}>
+            <form id="invoice_form" onSubmit={this.submitInvoice}>
                 {this.state.check ? this.addRow() : ""}
                 <div style={{ textAlign: 'center' }}>
                     {/* Company & Customer Headings */}
@@ -495,7 +516,7 @@ class CreateInvoice extends React.Component {
                             <input type="date" style={{ minWidth: '200px' }} name="invoiceDate" />
                         </div>
                         <div className="col-sm">
-                            <input type="text" style={{ minWidth: '200px' }} name="invoiceNumber" />
+                            <input type="text" style={{ minWidth: '200px' }} name="invoiceNumber" value={this.state.invoiceNo} />
                         </div>
                     </div>
                 </div>
