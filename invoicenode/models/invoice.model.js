@@ -11,7 +11,6 @@ const InvoiceSchema = mongoose.Schema({
             customerAddressLine1:{type:String},
             customerAddressLine2:{type:String},
             customerCode:{type:String},
-            // discount: { type: Number },
             invoiceDate:{type:Date},
             invoiceNumber:{type:Number},
             items:[{type:String}]
@@ -35,7 +34,10 @@ InvoiceSchema.plugin(AutoIncrement.plugin, { model: 'invoice', field: 'invoiceId
 let InvoiceModel = mongoose.model('invoice', InvoiceSchema);
 
 InvoiceModel.addInvoice = (invoiceToAdd) => {
-    return invoiceToAdd.save();
+    return InvoiceModel.save();
+}
+InvoiceModel.getCount=(invoiceToCount)=>{
+    return InvoiceModel.find(invoiceToCount.query).count();
 }
 
 InvoiceModel.allInvoice = (dataToFind) => {
