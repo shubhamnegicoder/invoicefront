@@ -22,7 +22,7 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { countryCode:'', stateCode: '', stateName: '',dropDownData:[]};
+        this.state = { countryCode:'', stateCode: '', stateName: '',dropDownData:[], _id: '', userId: "",isActive:""};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,21 +33,25 @@ export default class App extends React.Component {
         // this.setState({countryname: this.refs.name.value });
 
     }
+    handleCheck(event){
+        this.setState({ [event.target.name]: event.target.checked });
+    }
     componentDidMount(){
         this.data();
     }
     handleChange1 = (event) => {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({ countryCode:event.target.value })
-        console.log(this.state.countryCode, "set hui")
+        // console.log(this.state.countryCode, "set hui")
     }
     componentWillReceiveProps(newprops) {
-        console.log(newprops, "jjj")
+        // console.log(newprops, "will  receive ")
         this.setState({ countryCode: newprops.data.countryCode })
         this.setState({ stateCode: newprops.data.stateCode })
-
         this.setState({ stateName: newprops.data.stateName })
         this.setState({ _id: newprops.data._id })
+        this.setState({ userId:newprops.data.userId,
+            isActive:newprops.data.isActive})
 
     }
     
@@ -64,7 +68,7 @@ export default class App extends React.Component {
             (result) => {
                 var maindata = [];
                 var localdata = []
-                console.log(result.data,"kkk")
+                // console.log(result.data,"kkk")
                 result.data && result.data.map((item, key) => {
                     maindata.push(item);
                   
@@ -72,7 +76,7 @@ export default class App extends React.Component {
 
 
                 this.setState({ dropDownData: maindata })
-                console.log(this.state.dropDownData, "arrsy")
+                // console.log(this.state.dropDownData, "arrsy")
             },
             (error) => {
                 console.log("error", error)
@@ -97,7 +101,10 @@ export default class App extends React.Component {
                     countryCode: this.state.countryCode,
                     stateCode: this.state.stateCode,
                     stateName: this.state.stateName,
-                    _id: this.state._id
+                    isActive:this.state.isActive,
+                    id:this.state._id,
+                    userId: this.state.userId,
+
                 };
         }
         else {
@@ -109,15 +116,16 @@ export default class App extends React.Component {
                 countryCode: this.state.countryCode,
                 stateCode: this.state.stateCode,
                 stateName: this.state.stateName,
+                isActive:this.state.isActive
             }
         }
-        console.log(data)
+        // console.log(data)
         axios.post(url, data)
             .then((result) => {
                 //access the results here....
-                console.log("result = ", result)
+                // console.log("result = ", result)
                 if (result.data.success == true) {
-                    console.log()
+                    // console.log()
                     swal({
                         text: "Successfully Done",
                         icon: "success"
@@ -140,54 +148,11 @@ export default class App extends React.Component {
 
     }
 
-   
-   
-    
-   
-
-    // handleSubmit(event) {
-    //     event.preventDefault();read
-    //     console.log(this.state,"state")
-    //     const formdata = { "_id": "5af170d60c06c02559273df1", "countryCode": this.state.countryCode,"stateCode":this.state.stateCode, "stateName": this.state.stateName }
-    //     fetch("http://localhost:8080/addState", {
-    //         body: JSON.stringify(formdata),
-    //         method: "POST",
-    //         cache: 'no-cache',
-    //         mode: 'cors',
-    //         headers: new Headers({
-    //             'Content-Type': 'application/json',
-    //             'authorization': "Key@123"
-    //         })
-    //     }).then(res => res.json()).then(
-    //         (result) => {
-    //             if (result.success == true) {
-    //                 swal({
-    //                     title: "State added!",
-    //                     icon: "success",
-    //                 });
-
-
-    //             }
-    //             else {
-    //                 swal({
-    //                     title: " Sorry !! this StateCode already exist!",
-    //                     icon: "warning",
-    //                 });
-
-    //             }
-               
-    //         },
-    //         (error) => {
-    //             console.log("error", error)
-    //         }
-    //     )
-    //     // var data= new FormData(event.target.elements.countryCode.value)
-    // }
     render() {
-       
+
         return (
             <div>
-                {console.log(this.state.dropDownData,"drop")}
+                {/* {console.log(this.state.dropDownData,"drop")} */}
                 <Modal styles={{ width: '379px' }} open={this.props.open} onClose={this.props.onClose} center>
                     <Grid container >
                         <form onSubmit={this.handleSubmit}>
@@ -225,6 +190,11 @@ export default class App extends React.Component {
                                                     <label>
                                                         <h5>  State Name:</h5>
                                                         <input  required type="text" ref="name" name="stateName" value={this.state.stateName} onChange={this.handleChange} />
+                                                    </label>
+                                                </ItemGrid>
+                                                <ItemGrid xs={12} sm={12} md={15}>
+                                                    <label>  <h5> Is Active *:</h5>
+                                                        <input  type="checkbox"  name="isActive" onChange={(event)=>{this.handleCheck(event)}} color="primary"/>
                                                     </label>
                                                 </ItemGrid>
                                             </Grid>

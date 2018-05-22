@@ -24,7 +24,6 @@ class Country extends React.Component {
             _id: "",
             userId: "",
             isActive:false
-             
 
         }
     };
@@ -49,12 +48,11 @@ class Country extends React.Component {
     }
 
     handleEdit = (e, item) => {
-        console.log(item.isActive,"activa")
-        this.setState({ load: true })
-        this.setState({
-            countryName: item.countryName, countryCode: item.countryCode, _id: item._id, userId: item.createdBy
-        })
-       
+        // console.log(item.isActive,"activa")
+    this.setState({ load: true })
+    this.setState({countryName: item.countryName ,countryCode: item.countryCode , _id: item._id ,userId:item.createdBy
+    ,options:"edit"})
+
     }
 
 
@@ -161,7 +159,7 @@ class Country extends React.Component {
 
                 </ItemGrid>
 
-                <Modal open={this.state.load} data={{ "_id": this.state._id, "countryName": this.state.countryName, "countryCode": this.state.countryCode, "userId": this.state.userId }} onClose={this.onClose} />
+                <Modal open={this.state.load} data={{ "_id": this.state._id,"isActive":this.state.isActive , "countryName": this.state.countryName, "countryCode": this.state.countryCode, "userId": this.state.userId }} onClose={this.onClose} />
             </Grid>
 
         );

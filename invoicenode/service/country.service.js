@@ -58,20 +58,7 @@ service.getAllCountry = async (req, res) => {
     }
 
     try {
-        // const Alldevices = await Device.allDevice(dataToFind);
-        // var assetArray = [];
-
-        // for (var i = 0; i < Alldevices.length; i++) {
-        //     console.log(typeof Alldevices[i].assetId)
-
-        //     assetArray.push(Alldevices[i].assetId)
-        // }
-
-        // if (req.query.isAssetType) {
-        //     dataToFind.projection = {
-        //         assetType: 1, assetId: 1
-        //     }
-        // }
+       
         var queryToFindCountry = {}
         queryToFindCountry = {
             query: { createdBy: ObjectID(req.query.id) }
@@ -98,8 +85,7 @@ service.addCountry = async (req, res) => {
     if (!req.body.countryCode || !req.body.countryName) {
         return res.send({ "success": false, "code": "500", "msg": msg.param });
     }
-    // console.log(req.body,"addddddddddddd conyrrrrrrrrrr")
-    //let clientId = utility.removeQuotationMarks(req.body.clientId);
+    
     let countryToAdd = Country({
         countryCode: req.body.countryCode,
         countryName: req.body.countryName,
@@ -128,7 +114,7 @@ service.addCountry = async (req, res) => {
  * @return {[type]}
  */
 service.editCountry = async (req, res) => {
-    console.log(req.body, "editttttttttttt")
+    console.log(req.body, "editttttttttttt in country")
     let countryToEdit = {
         countryName: req.body.countryName,
         modifiedBy: req.body.userId,

@@ -46,7 +46,7 @@ service.getOne = async (req,res)=>{
 		var oneCustomer = await CustomerModel.oneCustomer(dataToFind);
 		return res.send({success:true, code:200, msg:"Successfully found", data:oneCustomer}); 
 	}catch(error){
-		return res.send({success:false, code:500, msg:"Error in getting Customer", err:error})
+		return res.send({success:false, code:500, msg:"Error in getting Customer"+error, err:error})
 	}
 }
 
@@ -152,5 +152,5 @@ service.editCustomer = async (req,res)=>{
 		return res.send({success:false, code:500, msg:"Error in editing Customer", err:error})
 	}
 }
-
+ 
 export default service;

@@ -3,14 +3,13 @@ import { Button } from "material-ui";
 import swal from "sweetalert";
 import axios from "axios";
 import Checkbox from 'material-ui/Checkbox';
-// import ImageUploader from 'react-images-upload';
 
 var maindata = [];
 var dropDownData = [];
 var dd;
 var temp;
 var temp2;
-
+ 
 class AddCompany extends React.Component {
     constructor(props) {
         super(props);
@@ -195,11 +194,11 @@ class AddCompany extends React.Component {
         data.append('companyCode', this.state.companyCode);
         data.append('companyName', this.state.companyName);
         data.append('companyGSTNo', this.state.companyGSTNo);
-        data.append('addressLine1', this.state.companyName);
-        data.append('addressLine2', this.state.companyName);
-        data.append('country', this.state.country);
-        data.append('state', this.state.state);
-        data.append('city', this.state.city);
+        data.append('addressLine1', this.state.addressLine1);
+        data.append('addressLine2', this.state.addressLine2);
+        data.append('countryCode', this.state.countryCode);
+        data.append('stateCode', this.state.stateCode);
+        data.append('cityCode', this.state.cityCode);
         data.append('postalCode', this.state.postalCode);
         data.append('contactNo', this.state.contactNo);
         data.append('isActive', this.state.isActive);
@@ -287,8 +286,6 @@ class AddCompany extends React.Component {
                     <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option>
                     {     
                         this.state.dropDownData && this.state.dropDownData.map((item, index) => {
-
-
 
                         return <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
                         })

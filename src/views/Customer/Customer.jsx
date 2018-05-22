@@ -37,11 +37,12 @@ class CustomerList extends React.Component{
           }
         }
       }
-    })
-  
+      })
 
     componentDidMount(){ 
+
         this.list();
+        console.log(this.state.data);
     }
 
     handleClick=(e)=>{
@@ -58,9 +59,9 @@ class CustomerList extends React.Component{
         this.setState({customerGSTNo:response.customerGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({cityCode:response.cityName})
-        this.setState({stateCode:response.stateName})
-        this.setState({countryCode:response.countryName})
+        this.setState({cityCode:response.cityCode})
+        this.setState({stateCode:response.stateCode})
+        this.setState({countryCode:response.countryCode})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/editCustomer?id="+response._id;
@@ -73,9 +74,9 @@ class CustomerList extends React.Component{
         this.setState({customerGSTNo:response.customerGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({city:response.city})
-        this.setState({state:response.state})
-        this.setState({country:response.country})
+        this.setState({cityCode:response.cityCode})
+        this.setState({stateCode:response.stateCode})
+        this.setState({countryCode:response.countryCode})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/viewCustomer?id="+response._id;
@@ -103,14 +104,15 @@ class CustomerList extends React.Component{
               dataArray.push(responseData.customerGSTNo)
               //dataArray.push(responseData.addressLine1)
               //dataArray.push(responseData.addressLine2)
-              dataArray.push(responseData.cityName)
-              dataArray.push(responseData.stateName)
-              dataArray.push(responseData.countryName)
+              // dataArray.push(responseData.cityName)
+              // dataArray.push(responseData.stateName)
+               dataArray.push(responseData.countryName)
               //dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)
-              dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button>)
-             dataArray.push(<Button  onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
+             //var array = "";
+            dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button>);
+            dataArray.push(<Button  onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)
       
@@ -152,18 +154,18 @@ class CustomerList extends React.Component{
             },
             
               
-            {
-              name: "City",
-              options: {
-                filter: true,
-              }
-            },
-            {
-              name: "State",
-              options: {
-                filter: true
-              }
-            },
+            // {
+            //   name: "City",
+            //   options: {
+            //     filter: true,
+            //   }
+            // },
+            // {
+            //   name: "State",
+            //   options: {
+            //     filter: true
+            //   }
+            // },
             {
               name: "Country",
                 options: {
@@ -192,6 +194,7 @@ class CustomerList extends React.Component{
                       
       ];
       var tableData= this.state.data;
+
       const options = {
         filter: true,
         selectableRows:false,
@@ -214,7 +217,7 @@ class CustomerList extends React.Component{
         <Grid container>
         <ItemGrid xs={30} sm={30} md={30}>
             <RegularCard
-         cardTitle="Customer List"
+         cardTitle="Customer"
             cardSubtitle={
                 <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
                     <AddIcon />

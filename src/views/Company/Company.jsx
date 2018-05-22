@@ -8,16 +8,17 @@ class CompanyList extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            companyCode:"",
+            companyCode:"", 
             companyName:"",
             companyGSTNo:"",
             addressLine1:"",
             addressLine2:"",
-            city:"",
-            state:"",
-            country:"",
+            cityName:"",
+            stateName:"",
+            countryName:"",
             postalCode:"",
             contactNo:"",
+            createdBy:"",
             data:[]        
         };
     }
@@ -54,9 +55,9 @@ class CompanyList extends React.Component{
         this.setState({companyGSTNo:response.companyGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({city:response.city}) 
-        this.setState({state:response.state})
-        this.setState({country:response.country})
+        this.setState({city:response.cityName}) 
+        this.setState({state:response.stateName})
+        this.setState({country:response.countryName})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/editCompany?id="+response._id;
@@ -69,16 +70,16 @@ class CompanyList extends React.Component{
         this.setState({companyGSTNo:response.companyGSTNo})
         this.setState({addressLine1:response.addressLine1})
         this.setState({addressLine2:response.addressLine2})
-        this.setState({city:response.city})
-        this.setState({state:response.state})
-        this.setState({country:response.country})
+        this.setState({city:response.cityName})
+        this.setState({state:response.stateName})
+        this.setState({country:response.countryName})
         this.setState({postalCode:response.postalCode})
         this.setState({contactNo:response.contactNo})      
        window.location.href="/viewCompany?id="+response._id;
     }
 
     list=()=>{
-        fetch("http://localhost:8080/allCompany",{  
+        fetch("http://localhost:8080/allCompany?id=",{  
           method: "GET",
           cache: 'no-cache', 
           mode: 'cors',
@@ -90,26 +91,24 @@ class CompanyList extends React.Component{
       .then(res => res.json())
       .then(
         (result) => {
-            console.log(result.data,"jjjjjjjjjjjooooooooooooo")
           var mainArray = [];
           result.data.forEach((responseData)=>{
-              var dataArray = [];
-              
+              var dataArray = []; 
               dataArray.push(responseData.companyCode)
               dataArray.push(responseData.companyName)
               dataArray.push(responseData.companyGSTNo)
-            //   var a1 = responseData.addressLine1;
-            //   var a2 = responseData.addressLine2;
-            //   var address = a1+" "+a2;
-            //   dataArray.push(address)
-              dataArray.push(responseData.cityName)
-              dataArray.push(responseData.stateName)
+              // var a1 = responseData.addressLine1; 
+              // var a2 = responseData.addressLine2;
+              // var address = a1+" "+a2;
+              //dataArray.push(address) 
+              // dataArray.push(responseData.cityName)
+              // dataArray.push(responseData.stateName)
               dataArray.push(responseData.countryName)
             //  dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
              // dataArray.push(responseData.isActive)
-              dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)}>Edit Details</Button>)
-             dataArray.push(<Button onClick={(e)=>this.handleView(e,responseData)}>View Details</Button>)
+              dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)}>Edit</Button>)
+             dataArray.push(<Button onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)     
             })
@@ -148,18 +147,18 @@ class CompanyList extends React.Component{
             },
             
               
-            {
-              name: "City",
-              options: {
-                filter: true,
-              }
-            },
-            {
-              name: "State",
-              options: {
-                filter: true
-              }
-            },
+            // {
+            //   name: "City",
+            //   options: {
+            //     filter: true,
+            //   }
+            // },
+            // {
+            //   name: "State",
+            //   options: {
+            //     filter: true
+            //   }
+            // },
             {
               name: "Country",
                 options: {
@@ -188,7 +187,7 @@ class CompanyList extends React.Component{
                       
       ];
       var tableData= this.state.data;
-      console.log(tableData,"medha")
+    
       const options = {
         filter: true,
         selectableRows:false,
@@ -207,24 +206,24 @@ class CompanyList extends React.Component{
           }
         }
   }
-        return (
+        return (<div>
         <Grid container>
-        <ItemGrid xs={12} sm={12} md={12}>
+        <ItemGrid xs={30} sm={30} md={30}>
             <RegularCard
-         cardTitle="Company List"
+            cardTitle="Company"
             cardSubtitle={
                 <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
                     <AddIcon />
                 </Button>}
-           
                 />
+
             
-            {/* <MuiThemeProvider theme={this.getMuiTheme()}>
+            <MuiThemeProvider theme={this.getMuiTheme()}>
               <MUIDataTable title={"Company list"} data={tableData} columns={columns} options={options} />
-              </MuiThemeProvider>   */}
+              </MuiThemeProvider>  
         </ItemGrid>
         
-        </Grid>
+        </Grid></div>
     );
     }
     }

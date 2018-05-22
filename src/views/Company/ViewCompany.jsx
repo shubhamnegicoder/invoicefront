@@ -10,14 +10,18 @@ class ViewCompany extends React.Component{
              _id:"",
             companyCode:"",
             companyName:"",
+            logo:"",
             companyGSTNo:"",
             addressLine1:"",
             addressLine:"",
-            city:"",
-            state:"",
-            country:"",
+            cityCode:"",
+            stateCode:"",
+            countryCode:"",
             postalCode:"",
-            contactNo:""
+            contactNo:"",
+            countryName:"",
+            stateName:"",
+            cityName:""
         };
     }
 
@@ -41,18 +45,22 @@ class ViewCompany extends React.Component{
             .then(res => res.json())
             .then(
                 (result) => {
-                   // console.log("result============++++",result);
-                    this.setState({_id:result.data._id});
-                    this.setState({companyCode:result.data.companyCode});
-                    this.setState({companyName:result.data.companyName});
-                    this.setState({companyGSTNo:result.data.companyGSTNo});
-                    this.setState({addressLine1:result.data.addressLine1});
-                    this.setState({addressLine2:result.data.addressLine2});
-                    this.setState({city:result.data.city});
-                    this.setState({state:result.data.state});
-                    this.setState({country:result.data.country});
-                    this.setState({postalCode:result.data.postalCode});
-                    this.setState({contactNo:result.data.contactNo});
+                   console.log("result============++++",result);
+                    this.setState({_id:result.data[0]._id});
+                    this.setState({companyCode:result.data[0].companyCode});
+                    this.setState({companyName:result.data[0].companyName});
+                    this.setState({logo:result.data[0].logo});
+                    this.setState({companyGSTNo:result.data[0].companyGSTNo});
+                    this.setState({addressLine1:result.data[0].addressLine1});
+                    this.setState({addressLine2:result.data[0].addressLine2});
+                    this.setState({cityCode:result.data[0].cityCode});
+                    this.setState({stateCode:result.data[0].stateCode});
+                    this.setState({countryCode:result.data[0].countryCode});
+                    this.setState({postalCode:result.data[0].postalCode});
+                    this.setState({contactNo:result.data[0].contactNo});
+                    this.setState({cityName:result.data[0].cityName});
+                    this.setState({stateName:result.data[0].stateName});
+                    this.setState({countryName:result.data[0].countryName});
                  
                 },
                 (error) => {
@@ -84,6 +92,12 @@ class ViewCompany extends React.Component{
                     <td><input type="text"  value={this.state.companyName} ref="companyName"/></td>
                 </tr>
                 <tr>
+                    <td>Company Logo </td>
+                    <td></td>
+                   {/* { url = "../../../invoicenode/public'/uploads/"+this.state.logo} */}
+                    <td><img src={"uploads/"+this.state.logo} width="75" height="50"/></td>
+                </tr>
+                <tr>
                     <td>Company GST No</td>
                     <td></td>
                     <td><input type="text"  value={this.state.companyGSTNo} ref="companyGSTNo"/></td>
@@ -101,16 +115,17 @@ class ViewCompany extends React.Component{
                 <tr>
                     <td>City</td> 
                     <td></td>
-                    <td><input type="text" value={this.state.city} ref="city"/></td>
+                    <td><input type="text" value={this.state.cityName} ref="cityCode"/></td>
                 </tr>
                 <tr>
-                    <td>State</td><td></td>
-                    <td><input type="text" value={this.state.state} ref="state" /></td>
+                    <td>State</td>
+                    <td></td>
+                    <td><input type="text" value={this.state.stateName} ref="stateCode" /></td>
                 </tr>
                 <tr>
                     <td>Country</td>
                     <td></td>
-                    <td><input type="text" value={this.state.country} ref="country" /></td>
+                    <td><input type="text" value={this.state.countryName} ref="countryCode" /></td>
                 </tr>
                 <tr>
                     <td>Postal Code</td>

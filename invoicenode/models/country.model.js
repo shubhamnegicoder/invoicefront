@@ -25,6 +25,9 @@ const CountrySchema = mongoose.Schema({
     modifiedBy: { type: mongoose.Schema.ObjectId },
     isActive: { type: Boolean }
 }, { collection: 'country' });
+
+
+
 CountrySchema.plugin(AutoIncrement.plugin, {
     model: 'country',
     field: 'SerialNo',

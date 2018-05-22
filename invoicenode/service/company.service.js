@@ -22,12 +22,18 @@ const service = {};
  * @return {[object]}
  */
 service.getAll = async (req,res)=>{
-	console.log(req.query,"kkkklist")
+	// if (!req.query.userId) {
+    //     return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
+    // }
 	try{
+		// var queryToFindCompany = {
+		// 	query: {createdBy:ObjectID(req.query.userId)} 
+		// }
 		var allCompany = await CompanyModel.allCompany();
+		console.log(allCompany,"====== allCompany");
 		return res.send({success:true, code:200, msg:"Successfully found", data:allCompany}); 
 	}catch(error){
-		return res.send({success:false, code:500, msg:"Error in getting Company", err:error})
+		return res.send({success:false, code:500, msg:"Error in getting Company", err:error});
 	}
 }
 
@@ -37,9 +43,9 @@ service.getAll = async (req,res)=>{
  * @param  {[object]}
  * @return {[object]}
  */
-service.getOne = async (req,res)=>{
+service.getOne = async (req,res)=>{ 
 	try{
-		let dataToFind={
+		let dataToFind={ 
 			query:{'_id':req.query._id}
 		};
 		var oneCompany = await CompanyModel.oneCompany(dataToFind);
@@ -56,6 +62,7 @@ service.getOne = async (req,res)=>{
  * @return {[object]}
  */ 
 service.addCompany = async (req,res)=>{
+	//console.log("this is add company")
 	if(req.body.companyCode == ""){
 		return res.send({success:false,code:500,msg:"Company code is required"});
 	}
@@ -125,9 +132,9 @@ service.editCompany = async (req,res)=>{
 		companyGSTNo:req.body.companyGSTNo,
 		addressLine1:req.body.addressLine1,
 		addressLine2:req.body.addressLine2,
-		city:req.body.city,
-		state:req.body.state,
-		country:req.body.country,
+		cityCode:req.body.cityCode,
+		stateCode:req.body.stateCode,
+		countryCode:req.body.countryCode,
 		postalCode:req.body.postalCode,
 		contactNo:req.body.contactNo,
 		modifiedBy:req.body.modifiedBy,

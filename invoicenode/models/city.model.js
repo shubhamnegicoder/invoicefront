@@ -11,7 +11,9 @@ const CitySchema = mongoose.Schema({
     cityName: { type: String },
     createdBy: { type: mongoose.Schema.ObjectId },
     createAt: { type: Date },
-    updatedAt: { type: Date }
+    updatedAt: { type: Date },
+    modifiedBy: { type: mongoose.Schema.ObjectId },
+    isActive: { type: Boolean }
 }, { collection: 'city' });
 CitySchema.plugin(AutoIncrement.plugin, {
     model: 'city',
@@ -59,6 +61,8 @@ CityModal.allCity = (dataToFind) => {
                 stateName: "$state_docs.stateName",
                 cityCode:1,
                 cityName:1,
+                isActive:1,
+                createdBy:1
                
                
 
@@ -66,7 +70,7 @@ CityModal.allCity = (dataToFind) => {
         }
     ]);
 
-    return CityModal.find(dataToFind.query, dataToFind.projection);
+    // return CityModal.find(dataToFind.query, dataToFind.projection);
 }
 
 CityModal.allSelectedCity=(dataToFind)=>{

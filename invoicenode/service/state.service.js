@@ -7,42 +7,12 @@ import successMsg from '../core/message/success.msg'
 import utility from '../core/utility.js'
 import ObjectID from "bson-objectid";
 
-
-
-
 /**
  * [service is a object ]
  * @type {Object}
  */
 const service = {};
 
-/**
- * @description [with all the calculation before getAll function of model and after getAll]
- * @param  {[object]}
- * @param  {[object]}
- * @return {[object]}
- */
-// service.getAll = async (req, res) => {
-//     var location = {};
-//     if (!req.query._id) {
-//         return res.send({ "success": false, "code": "500", "msg": "userId is missing" });
-//     }
-//     // if (req.query.location) {
-//     //     location = req.query.location;
-//     // }
-
-//     //let clientId = utility.removeQuotationMarks(req.query.clientId);
-//     try {
-//          // console.log(dataToFind);
-//         const state = await State.getAll(dataToFind);
-//         logger.info('sending all country...');
-//         return res.send({ success: true, code: 200, msg: "succsess", data:country });
-//     } catch (err) {
-//         logger.error('Error in getting country- ' + err);
-//         return res.send({ success: false, code: 500, msg: "error", err: err });
-
-//     }
-// }
 
 /**
  * @description get all asset that is not associated with device
@@ -51,18 +21,13 @@ const service = {};
  * @return {[object]}
  */
 service.getAllState = async (req, res) => {
-    // var location = {};
-    // if (!req.query.countryCode) {
-    //     return res.send({ "success": false, "code": "500", "msg": "countryCode is missing" });
-    // }
+  
 
     try {
-       
         var queryToFindState = {}
             queryToFindState = {
-                query: {createdBy:ObjectID(req.query._id)}
+                query: {createdBy:ObjectID(req.query.id)}
             }
-        
 
         // console.log(dataToFind);
         const state = await State.allState(queryToFindState);
@@ -106,7 +71,7 @@ service.getAllSelectedState = async (req, res) => {
  * @return {[object]}
  */
 service.addState = async (req, res) => {
-   
+    console.log(req.body,"add k liye k liye ")
     if (!req.body.stateCode || !req.body.stateName) {
        return res.send({ "success": false, "code": "500", "msg": msg.param });
     }
@@ -117,6 +82,7 @@ service.addState = async (req, res) => {
         stateCode: req.body.stateCode,
         stateName: req.body.stateName,
         createdBy: req.body.id,
+        isActive: req.body.isActive,
         createAt: new Date()
     });
 
@@ -140,12 +106,15 @@ service.addState = async (req, res) => {
  * @return {[type]}
  */
 service.editState = async (req, res) => {
+    // console.log(req.body, "editttttttttttt in state")
     let stateToEdit = {
-        stateCode: req.body.stateCode,
-        stateName: req.body.stateName
+        stateName: req.body.stateName,
+        modifiedBy: req.body.userId,
+        isActive: req.body.isActive,
+        updatedAt: new Date()
     };
     let stateEdit = {
-        query:{ "_id": req.body._id },
+        query:{ "_id": req.body.id },
         data: { "$set": stateToEdit }
     };
     try {
@@ -161,27 +130,7 @@ service.editState = async (req, res) => {
 
 
 
-/**
- * @description [calculation before delete Device to db and after delete Device]
- * @param  {[type]}
- * @param  {[type]}
- * @return {[type]}
- */
-// service.deleteAsset = async (req, res) => {
-//     let assetToDelete = req.body.assetId;
-//     if (!req.body.assetId) {
-//         return res.send({ "success": false, "code": "500", "msg": msg.assetId });
-//     }
-//     try {
-//         const removedAsset = await Asset.removeAsset(assetToDelete);
-//         logger.info('Deleted asset- ' + removedAsset);
-//         return res.send({ "success": true, "code": "200", "msg": successMsg.deleteAsset, "data": removedAsset });
-//     }
-//     catch (err) {
-//         logger.error('Failed to delete Asset- ' + err);
-//         return res.send({ "success": false, "code": "500", "msg": msg.deleteAsset, "err": err });
-//     }
-// }
+
 
 /** 
 * @description [with all the calculation before getOne function of model and after getAll]
@@ -189,21 +138,5 @@ service.editState = async (req, res) => {
 * @param  {[type]}
 * @return {[type]}
 */
-// service.getOne = async (req, res) => {
-
-//     let assetToFind = {
-//         assetId: req.query.assetId
-//     }
-//     try {
-//         const getOneAsset = await Asset.getOne(assetToFind);
-//         logger.info('get one asset-' + getOneAsset);
-//         return res.send({ "success": true, "code": "200", "msg": successMsg.allAsset, "data": getOneAsset });
-//     }
-//     catch (err) {
-//         logger.error('Failed to get Asset- ' + err);
-//         return res.send({ "success": false, "code": "500", "msg": msg.getAsset, "err": err });
-
-//     }
-// }
 
 export default service;

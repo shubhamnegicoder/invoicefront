@@ -24,8 +24,8 @@ const service = {};
  * @return {[object]}
  */
 service.getAllCity = async (req, res) => {
-    if (!req.query._id) {
-        return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
+    if (!req.query.id) {
+        return res.send({ "success": false, "code": "500", "msg": "id is missing" });
     }
 
     try {
@@ -89,6 +89,7 @@ service.addCity = async (req, res) => {
         cityCode: req.body.cityCode,
         cityName: req.body.cityName,
         createdBy: req.body.id,
+        isActive: req.body.isActive,
         createAt: new Date()
     });
 
@@ -114,11 +115,13 @@ service.addCity = async (req, res) => {
  */
 service.editCity = async (req, res) => {
     let cityToEdit = {
-        cityCode: req.body.cityCode,
-        cityName: req.body.cityName
+        cityName: req.body.cityName,
+        modifiedBy: req.body.userId,
+        isActive: req.body.isActive,
+        updatedAt: new Date()
     };
     let cityEdit = {
-        query:{ "_id": req.body._id },
+        query:{ "_id": req.body.id },
         data: { "$set": cityToEdit }
     };
     try {
@@ -134,49 +137,7 @@ service.editCity = async (req, res) => {
 
 
 
-/**
- * @description [calculation before delete Device to db and after delete Device]
- * @param  {[type]}
- * @param  {[type]}
- * @return {[type]}
- */
-// service.deleteAsset = async (req, res) => {
-//     let assetToDelete = req.body.assetId;
-//     if (!req.body.assetId) {
-//         return res.send({ "success": false, "code": "500", "msg": msg.assetId });
-//     }
-//     try {
-//         const removedAsset = await Asset.removeAsset(assetToDelete);
-//         logger.info('Deleted asset- ' + removedAsset);
-//         return res.send({ "success": true, "code": "200", "msg": successMsg.deleteAsset, "data": removedAsset });
-//     }
-//     catch (err) {
-//         logger.error('Failed to delete Asset- ' + err);
-//         return res.send({ "success": false, "code": "500", "msg": msg.deleteAsset, "err": err });
-//     }
-// }
 
-/** 
-* @description [with all the calculation before getOne function of model and after getAll]
-* @param  {[type]}
-* @param  {[type]}
-* @return {[type]}
-*/
-// service.getOne = async (req, res) => {
 
-//     let assetToFind = {
-//         assetId: req.query.assetId
-//     }
-//     try {
-//         const getOneAsset = await Asset.getOne(assetToFind);
-//         logger.info('get one asset-' + getOneAsset);
-//         return res.send({ "success": true, "code": "200", "msg": successMsg.allAsset, "data": getOneAsset });
-//     }
-//     catch (err) {
-//         logger.error('Failed to get Asset- ' + err);
-//         return res.send({ "success": false, "code": "500", "msg": msg.getAsset, "err": err });
-
-//     }
-// }
 
 export default service;

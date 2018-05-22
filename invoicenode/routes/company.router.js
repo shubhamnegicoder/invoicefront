@@ -5,7 +5,7 @@
  * @lastModifed 11-May-2018
  * @lastModifedBy Purti
  */
-
+ 
 import express from "express";
 import companyService from "../service/company.service";
 import multer from "multer";
@@ -13,7 +13,7 @@ import multer from "multer";
 const router = express.Router()
 
 const storage = multer.diskStorage({
-    destination: './public/uploads',
+    destination: "../public/uploads",
     filename: function (req, file, callback) {
         callback(null, file.originalname); 
     }
