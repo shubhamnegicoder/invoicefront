@@ -14,6 +14,7 @@ const InvoiceSchema = mongoose.Schema({
             // discount: { type: Number },
             invoiceDate:{type:Date},
             invoiceNumber:{type:Number},
+            items:[{type:String}]
             // itemName: { type: String },
             // qty: { type: Number },
             // rate: { type: Number },
