@@ -21,9 +21,9 @@ class Login extends React.Component {
     }
 
   }
-  componentWillMount(){
-    window.location.reload()
-  }
+  // componentDidUpdate(){
+  //   window.location.reload()
+  // }
   // componentDidUpdate(){
   //   localStorage.removeItem("show")
   // }
@@ -123,7 +123,7 @@ class Login extends React.Component {
 
   render() {
     const { emailId, password, code } = this.state
-
+  
     return (
       <div>
         <form id="login" onSubmit={this.handleSubmit} class="login" style={{ marginLeft: '500px', marginTop: "200px" }}>
@@ -166,7 +166,7 @@ class Login extends React.Component {
             <span class="state">change Password</span>
           </button>
         </form>
-
+       
 
 
       </div>
@@ -179,6 +179,9 @@ class Login extends React.Component {
 
 
     )
+window.location.reload()
+
+
   }
 }
 export default Login

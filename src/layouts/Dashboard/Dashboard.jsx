@@ -89,7 +89,6 @@ show=(token)=>{
   console.log(token1,"localstorage data")
   console.log(token,"query data")
     if(token1==token && token!="" && token !==undefined){
-      alert()
       this.setState({showSideBar:true})
       localStorage.setItem("show",true)
 
@@ -102,7 +101,7 @@ show=(token)=>{
     // this.setState({showSideBar:false})
     localStorage.removeItem("token")
     localStorage.removeItem("show")
-    // window.location.reload()
+    //  window.location.reload()
   }
   }
   
@@ -132,6 +131,7 @@ show=(token)=>{
       this.setState({showSideBar:true})
     }
     this.refs.mainPanel.scrollTop = 0;
+    
   
   }
   collapse=()=>{
@@ -149,11 +149,12 @@ show=(token)=>{
        }
     })
    this.setState({sidebar:this.state.sidebar });
+   
   //  console.log("sidebar state",this.state.sidebar)
   };
   render() {
     console.log(this.state,"ab kya hua tujhe sidebar")
-   
+  
     // localStorage.removeItem("token")
     const { classes, ...rest } = this.props;
     return (
@@ -192,6 +193,7 @@ show=(token)=>{
         </div>
       </div>
     );
+   
   }
 }
 
