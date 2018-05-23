@@ -10,6 +10,7 @@ import dashboardRoutes from "routes/dashboard.jsx";
 import AddCustomer from "../../views/Customer/AddCustomer";
 import EditCustomer from "../../views/Customer/EditCustomer";
 import ViewCustomer from "../../views/Customer/ViewCustomer";
+// import Login from "../../views/login/login"
 import AddCompany from "../../views/Company/AddCompany";
 import EditCompany from "../../views/Company/EditCompany";
 import ViewCompany from "../../views/Company/ViewCompany";
@@ -20,6 +21,8 @@ import logo from "assets/img/reactlogo.png";
 import { createBrowserHistory } from "history";
 const hist = createBrowserHistory();
 var routing=[] 
+var blog,token,dd,token1,show;
+var side=false
 const switchRoutes = ( 
   <Switch >
     <Route path="/addCustomer" component={AddCustomer}></Route>
@@ -30,15 +33,17 @@ const switchRoutes = (
     <Route path="/editCustomer" component={EditCustomer}></Route>
     <Route path="/viewInvoice" component={ViewInvoice}></Route>
 
-    {dashboardRoutes.map((prop, key) => { 
+    {dashboardRoutes.map((prop, key) => {
+
+  
       routing=[]
-       console.log(prop.path,"path",prop.component)
+      //  console.log(prop.path,"path",prop.component)
       if (prop.redirect)
          return <Redirect from={prop.path} to={prop.to} key={key} />;
          if(prop.childs)
       { 
         prop.childs.map((item,index)=>{
-           console.log("childs",item.path,item.component)
+          //  console.log("childs",item.path,item.component)
             routing.push(<Route exact path={item.path} component={item.component} key={index}/>)
           })
         
@@ -54,27 +59,80 @@ class App extends React.Component {
     mobileOpen:false, 
     open:false,
     collapse:false,
-    sidebar:[]
+    sidebar:[],
+    showSideBar:localStorage.getItem("show")
   }; 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
+
   };
   getRoute() {
     return this.props.location.pathname !== "/maps";
+   
   }
+getQuery=(sParam)=>{
+    var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    
+  }
+
+show=(token)=>{
+  token1=localStorage.getItem("token")
+  console.log(token1,"localstorage data")
+  console.log(token,"query data")
+    if(token1==token && token!="" && token !==undefined){
+      alert()
+      this.setState({showSideBar:true})
+      localStorage.setItem("show",true)
+
+     
+      
+
+    }
+ else
+  {
+    // this.setState({showSideBar:false})
+    localStorage.removeItem("token")
+    localStorage.removeItem("show")
+    // window.location.reload()
+  }
+  }
+  
   componentDidMount() {
+  
     if(navigator.platform.indexOf('Win') > -1){
-      // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
     dashboardRoutes.map((item,key)=>{
         var name=item.sidebarName
         this.state.sidebar.push({[item.sidebarName]:false})
     })
+    
     this.setState({sidebar:this.state.sidebar})
+    token=this.getQuery('token');
+    this.show(token)
+
   }
+
+    
+    // this.forceUpdate()
+
+
   componentDidUpdate() {
+    if(localStorage.getItem("show")==true){
+      alert("abhiu")
+      this.setState({showSideBar:true})
+    }
     this.refs.mainPanel.scrollTop = 0;
+  
   }
   collapse=()=>{
     alert("collapse")
@@ -91,14 +149,16 @@ class App extends React.Component {
        }
     })
    this.setState({sidebar:this.state.sidebar });
-   console.log("sidebar state",this.state.sidebar)
+  //  console.log("sidebar state",this.state.sidebar)
   };
   render() {
-    console.log(this.state.sidebar,"sidebar")
+    console.log(this.state,"ab kya hua tujhe sidebar")
+   
+    // localStorage.removeItem("token")
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
-        <Sidebar
+       {this.state.showSideBar?<Sidebar
           routes={dashboardRoutes}
           logoText={"Invoice"}
           logo={logo}
@@ -112,7 +172,7 @@ class App extends React.Component {
            collapse={this.state.collapse}
            sidebar={this.state.sidebar}
           {...rest}
-        />
+        />:<div></div>}
         <div className={classes.mainPanel} ref="mainPanel">
           <Header
             routes={dashboardRoutes}
