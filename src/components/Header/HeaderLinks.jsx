@@ -30,16 +30,12 @@ class HeaderLinks extends React.Component {
       confirmButtonText: 'Log out' 
     }).then((result) => {
       if (result.value) {
-        // localStorage.removeItem(id);
-        window.history.replaceState( "/");
+         localStorage.removeItem("id");
+         localStorage.removeItem("show");
+        window.location.href="/";
+        // window.location.replaceHistory
       }
     })
-    
-    // .then(willDelete => {
-    //   if (willDelete) {
-    //     swal("Deleted!", "Your imaginary file has been deleted!", "success");
-    //   }
-    // });
   }
   render() {
     const { classes } = this.props;

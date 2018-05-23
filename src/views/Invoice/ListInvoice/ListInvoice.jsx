@@ -31,7 +31,7 @@ class ListInvoice extends React.Component {
        }
        List = () => {
     
-        fetch("http://localhost:8080/allProduct",{
+        fetch("http://localhost:8080/allInvoice",{
             method: "GET",
             cache: 'no-cache', 
             mode: 'cors', 
@@ -122,7 +122,6 @@ class ListInvoice extends React.Component {
 //   var tableData= this.state.List;
  // console.log(tableData,"medha")
   const options = {
-    filter: true,
     selectableRows:false,
     filterType: 'dropdown',
     responsive: 'stacked',

@@ -33,10 +33,17 @@ import {
 
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 
+
 class Dashboard extends React.Component {
   state = {
     value: 0
   };
+  componentWillMount(){
+    let id=localStorage.getItem("id")
+    if(id==""&& id==undefined){
+      window.location.href="/login"
+    }
+  }
   handleChange = (event, value) => {
     this.setState({ value });
   };
