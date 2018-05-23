@@ -22,7 +22,7 @@ class Login extends React.Component {
 
   }
   componentWillMount(){
-    window.location.reload()
+    // window.location.reload()
   }
   // componentDidUpdate(){
   //   localStorage.removeItem("show")
