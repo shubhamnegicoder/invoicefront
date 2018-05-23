@@ -27,7 +27,7 @@ import avatar from "assets/img/faces/marc.jpg";
 // function rand() {
 //   return Math.round(Math.random() * 20) - 10;
 // }
-
+var localStorageId=localStorage.getItem("id")
 function getModalStyle() {
   const top = 50
   const left = 50
@@ -95,7 +95,7 @@ class SimpleModal extends React.Component {
 
   }
   
-  onSubmit = (e) => 
+  onSubmit = (e,localStorageId) => 
   { e.preventDefault()
     if(this.state.taxCode==""){
      return alert("Please enter taxcode!!")
@@ -117,6 +117,7 @@ class SimpleModal extends React.Component {
      }
     var url = "";
   var  data ={}
+  console.log(localStorageId,"local")
   
        if (this.state._id != "")
         { 
@@ -139,13 +140,13 @@ class SimpleModal extends React.Component {
 
         url = "http://localhost:8080/addTax";
         data = {
-          "id": "5af170d60c06c02559273df1",
+          id: localStorageId,
           taxCode: this.state.taxCode,
           taxName: this.state.taxName,
           cgst: this.state.cgst,
           igst: this.state.igst,
           sgst: this.state.sgst,
-          isActive:this.state.isActive
+          isActive:this.state.isActive,
         };
       }
    

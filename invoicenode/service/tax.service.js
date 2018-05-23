@@ -52,7 +52,7 @@ service.addTax = async (req, res) => {
     // console.log(req.body, "hi")
     // console.log(req.body.cgst.length)
      
-    if (!req.body.taxCode || !req.body.taxName || !req.body.igst || !req.body.sgst || !req.body.cgst) {
+    if (!req.body.taxCode || !req.body.taxName || !req.body.igst || !req.body.sgst || !req.body.cgst || !req.body.id) {
         return res.send({ "success": false, "code": 500, "msg": "error" });
     }
     if (req.body.cgst.length> 2 || req.body.igst.length > 2 || req.body.sgst.length > 2) {
@@ -67,7 +67,7 @@ service.addTax = async (req, res) => {
         sgst: req.body.sgst,
         igst: req.body.igst,
         isActive: req.body.isActive,
-        createdBy: req.body.id,
+        createdBy: req.body.createdBy,
         //   modifiedBy: {type:mongooseSchema.ObjectId },
         modifiedOn:new Date()
     });

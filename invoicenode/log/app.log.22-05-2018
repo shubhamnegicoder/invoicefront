@@ -1,3 +1,4 @@
+
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-22T04:43:27.905Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-22T04:43:27.998Z"}
 {"level":"info","message":"sending all state...","timestamp":"2018-05-22T06:17:40.611Z"}

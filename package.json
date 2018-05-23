@@ -38,7 +38,8 @@
     "react-swipeable-views": "0.12.12",
     "react-tap-event-plugin": "^3.0.2",
     "superagent": "^3.8.3",
-    "sweetalert": "^2.1.0"
+    "sweetalert": "^2.1.0",
+    "sweetalert2": "^7.20.7"
   },
   "scripts": {
     "start": "react-scripts start",
