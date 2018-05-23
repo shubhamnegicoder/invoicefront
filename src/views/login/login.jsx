@@ -22,12 +22,14 @@ class Login extends React.Component {
     }
 
   }
+
   componentWillMount(){
     let id=localStorage.getItem("id")
     if(id!=""&& id!=undefined){
       window.location.href="/dashboard"
     }
   }
+
   // componentDidUpdate(){
   //   localStorage.removeItem("show")
   // }
