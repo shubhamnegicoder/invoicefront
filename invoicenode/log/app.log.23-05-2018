@@ -951,3 +951,5 @@
 {"level":"info","message":"countinvoice...","timestamp":"2018-05-23T11:00:25.406Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-05-23T11:01:27.719Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-05-23T11:02:04.405Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-23T11:07:27.683Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-23T11:07:27.713Z"}
