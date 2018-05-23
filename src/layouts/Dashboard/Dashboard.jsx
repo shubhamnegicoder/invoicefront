@@ -100,7 +100,7 @@ show=(token)=>{
   {
     // this.setState({showSideBar:false})
     localStorage.removeItem("token")
-    localStorage.removeItem("show")
+    // localStorage.removeItem("show")
     //  window.location.reload()
   }
   }
@@ -175,11 +175,11 @@ show=(token)=>{
           {...rest}
         />:<div></div>}
         <div className={classes.mainPanel} ref="mainPanel">
-          <Header
+         {this.state.showSideBar?<Header
             routes={dashboardRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
-          />
+          />:<div></div>}
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
           {this.getRoute() ? (
           

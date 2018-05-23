@@ -6,7 +6,8 @@ import $ from 'jquery'
 import swal from 'sweetalert'
  //import Dashboard from '../../layouts/Dashboard/Dashboard'
  var token="";
-
+var id=localStorage.getItem("id")
+console.log(id,"id in login")
 class Login extends React.Component {
 
   constructor(props) {
@@ -21,9 +22,12 @@ class Login extends React.Component {
     }
 
   }
-  // componentDidUpdate(){
-  //   window.location.reload()
-  // }
+  componentWillMount(){
+    let id=localStorage.getItem("id")
+    if(id!=""&& id!=undefined){
+      window.location.href="/dashboard"
+    }
+  }
   // componentDidUpdate(){
   //   localStorage.removeItem("show")
   // }
