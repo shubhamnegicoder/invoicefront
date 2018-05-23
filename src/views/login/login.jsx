@@ -15,11 +15,22 @@ class Login extends React.Component {
       emailId: '',
       password: '',
       code: '',
-      ishidden: true
+      ishidden: true,
+      show:""
 
     }
 
   }
+  componentWillMount(){
+    window.location.reload()
+  }
+  // componentDidUpdate(){
+  //   localStorage.removeItem("show")
+  // }
+  // componentDidMount(){
+  //   // localStorage.removeItem("show")
+  //   localStorage.setItem("show",false)
+  // }
   onChange = (e) => {
     const state = this.state
     state[e.target.name] = e.target.value;
@@ -38,7 +49,6 @@ class Login extends React.Component {
           localStorage.setItem("id", result.data.data._id)
           localStorage.setItem("token", result.data.data.password)
           token= result.data.data.password;
-          console.log(token,"kkkkoooooooooo")
           window.location.href="/dashboard?token="+token;
         }
         else {
