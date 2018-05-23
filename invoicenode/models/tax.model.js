@@ -55,7 +55,7 @@ let TaxModel = mongoose.model('tax',TaxSchema);
 //    ]);
 // }
 TaxModel.getAll=(dataToFind) => {
-    // console.log(userToFind," = userToFind")
+    // console.log(dataToFind.query," = userToFind")
     return TaxModel.find(dataToFind.query);
 }
 
