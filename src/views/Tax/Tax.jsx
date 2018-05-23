@@ -16,7 +16,8 @@ import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles
 
 
 // import iconsStyle from "assets/jss/material-dashboard-react/iconsStyle";
-
+var localStorageId=localStorage.getItem('id')
+console.log(localStorageId,"local");
 
 class Tax extends React.Component {
    pro=({ ...this.props});
@@ -69,7 +70,7 @@ class Tax extends React.Component {
    }
    List = () => {
     
-    fetch("http://localhost:8080/allTax?id=5af170d60c06c02559273df1",{
+    fetch("http://localhost:8080/allTax?id="+localStorageId,{
         method: "GET",
         cache: 'no-cache', 
         mode: 'cors', 
