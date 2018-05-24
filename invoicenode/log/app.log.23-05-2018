@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> c280a44c8ed4c6c734d6cc501aa100004610bc96
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-23T06:32:02.115Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-23T06:32:02.195Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-23T09:27:00.371Z"}
@@ -38,7 +42,11 @@
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-23T11:21:47.228Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-23T11:27:47.875Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-23T11:27:47.898Z"}
+<<<<<<< HEAD
 =======
+=======
+
+>>>>>>> c280a44c8ed4c6c734d6cc501aa100004610bc96
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-23T03:51:23.978Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-23T03:51:24.021Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-23T06:28:29.326Z"}
@@ -994,6 +1002,7 @@
 {"level":"info","message":"countinvoice...","timestamp":"2018-05-23T11:02:04.405Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-23T11:07:27.683Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-23T11:07:27.713Z"}
+<<<<<<< HEAD
 >>>>>>> aa4972bad037046ae780d3848b13c0c02ab1c60f
 {"level":"info","message":"server started -  8080","timestamp":"2018-05-23T11:40:14.811Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-23T11:40:14.838Z"}
@@ -1014,3 +1023,6 @@
 {"level":"info","message":"sending all country...","timestamp":"2018-05-23T12:01:23.600Z"}
 {"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-23T12:01:26.396Z"}
 {"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-23T12:01:26.415Z"}
+=======
+
+>>>>>>> c280a44c8ed4c6c734d6cc501aa100004610bc96
