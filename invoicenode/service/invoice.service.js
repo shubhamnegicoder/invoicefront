@@ -43,8 +43,7 @@ service.countInvoice = async (req, res) => {
     console.log("req.query", req.query);
     let invoiceToCount = {
         // query: { createdBy: ObjectId(req.query.id) },
-        query: { },
-        projection: {}
+        query: { }
     };
 
     try {

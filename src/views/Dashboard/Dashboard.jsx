@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import axios from 'axios';
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 import {
@@ -33,16 +34,29 @@ import {
 
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 
-
+var cardoptions={}
 class Dashboard extends React.Component {
   state = {
-    value: 0
+    value: 0,
+    cardoptions:[{totalinvoice:""},{totalsales:""}]
   };
   componentWillMount(){
     let id=localStorage.getItem("id")
     if(id==""&& id==undefined){
       window.location.href="/login"
     }
+    
+  }
+  tickets=()=>{
+    axios.get("http://localhost:8080/countInvoice")
+      .then(
+        (result) => {
+          this.setState({ [cardoptions.totalinvoice]: result.data.data })
+        },
+        (error) => {
+          // console.log("error", error)
+        }
+      )
   }
   handleChange = (event, value) => {
     this.setState({ value });
@@ -59,34 +73,25 @@ class Dashboard extends React.Component {
             <StatsCard
               icon={ContentCopy}
               iconColor="orange"
-              title="Used Space"
+              title="Total Invoice"
               description="49/50"
               small="GB"
               statIcon={Warning}
               statIconColor="danger"
-              statLink={{ text: "Get More Space...", href: "#pablo" }}
+            
             />
           </ItemGrid>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
               icon={Store}
               iconColor="green"
-              title="Revenue"
+              title="Total sales"
               description="$34,245"
               statIcon={DateRange}
               statText="Last 24 Hours"
             />
           </ItemGrid>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <StatsCard
-              icon={InfoOutline}
-              iconColor="red"
-              title="Fixed Issues"
-              description="75"
-              statIcon={LocalOffer}
-              statText="Tracked from Github"
-            />
-          </ItemGrid>
+          
         </Grid>
       </div>
     );
