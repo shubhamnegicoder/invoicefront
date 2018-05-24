@@ -127,7 +127,7 @@ class CreateInvoice extends React.Component {
         axios
             .get("http://localhost:8080/allCompany")
             .then((res) => {
-                console.log("response from /allCompany", res);
+                // console.log("response from /allCompany", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -152,9 +152,9 @@ class CreateInvoice extends React.Component {
     }
     getItemDropdownData = () => {
         axios
-            .get("http://localhost:8080/allProduct")
+            .get("http://localhost:8080/allProduct?id=" + this.state.id)
             .then((res) => {
-                // console.log("response from /allProduct", res);
+                console.log("response from /allProduct", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
