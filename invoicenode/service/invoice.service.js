@@ -23,7 +23,15 @@ service.addInvoice = async (req, res) => {
         customerCode: req.body.customerCode,
         invoiceDate: req.body.invoiceDate,
         invoiceNumber: req.body.invoiceNumber,
-        items: req.body.items
+        items: req.body.items,
+        itemTotal: req.body.itemTotal,
+        discountTotal: req.body.discountTotal,
+        cgstTotal: req.body.cgstTotal,
+        sgstTotal: req.body.sgstTotal,
+        igstTotal: req.body.igstTotal,
+        taxTotal: req.body.taxTotal,
+        invoiceTotal: req.body.invoiceTotal,
+        createdBy: req.body.id,
     })
     console.log("invoiceToAdd", invoiceToAdd);
     try {
@@ -43,7 +51,7 @@ service.countInvoice = async (req, res) => {
     console.log("req.query", req.query);
     let invoiceToCount = {
         // query: { createdBy: ObjectId(req.query.id) },
-        query: { },
+        query: {},
         projection: {}
     };
 
@@ -59,12 +67,18 @@ service.countInvoice = async (req, res) => {
     }
 }
 service.getAllInvoice = async (req, res) => {
+    console.log("req.query", req.query);
+    let invoiceNumber = parseInt(req.query.invoiceNumber);
+    console.log("invoiceNumber", invoiceNumber);
     try {
-        var queryToFindCity = {}
-        queryToFindCity = {
-            query: {}
+        var dataToFind = {}
+        dataToFind = {
+            query: {
+                createdBy: ObjectId(req.query.id),
+                invoiceNumber: invoiceNumber
+            }
         }
-        const invoice = await City.allInvoice(dataToFind);
+        const invoice = await Invoice.allInvoice(dataToFind);
         logger.info('sending all invoice...');
         return res.send({ success: true, code: 200, msg: "listed ok", data: invoice });
     } catch (err) {

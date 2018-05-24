@@ -1,0 +1,13 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-24T06:24:03.542Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-24T06:24:03.637Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-24T06:26:08.144Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-24T06:27:18.947Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-24T06:29:13.339Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-24T06:29:48.775Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-24T06:32:07.969Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-24T06:33:21.218Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-05-24T06:33:59.975Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-05-24T06:34:09.548Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-24T06:34:23.461Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-05-24T06:35:08.205Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-05-24T06:35:10.870Z"}
