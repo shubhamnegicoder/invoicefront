@@ -20,9 +20,11 @@ const service = {};
 service.getAll = async (req, res) => {
     try {
         let dataToFind = {
-        	query:{parentId:ObjectID(req.query.id)}
+            query:{createdBy:ObjectID(req.query.id)}
+            
         };
-        const product = await Product.getAll();
+        console.log(dataToFind,"aaaaaa")
+        const product = await Product.getAll(dataToFind);
         res.send({ success: true, code: 200, "msg": "success", data: product });
         // console.log(tax,"data");
     } catch (err) {
@@ -47,9 +49,9 @@ service.addProduct = async (req, res) => {
     console.log(req.body, "hi")
     // console.log(req.body.cgst.length)
      
-    // if (!req.body.productCode || !req.body.productName || !req.body.taxCode || !req.body.rate) {
-    //     return res.send({ "success": false, "code": 500, "msg": "error" });
-    // }
+    if (!req.body.productCode || !req.body.productName || !req.body.taxCode || !req.body.rate || !req.body.id) {
+        return res.send({ "success": false, "code": 500, "msg": "error" });
+    }
  
     let productToAdd = Product({
 

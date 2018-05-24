@@ -34,6 +34,7 @@ class Tax extends React.Component {
     sgst:"",
     isActive:false,
     userId:"",
+    id :localStorage.getItem("id"),
     _id:""
     
     };
@@ -70,7 +71,7 @@ class Tax extends React.Component {
    }
    List = () => {
     
-    fetch("http://localhost:8080/allTax?id="+localStorageId,{
+    fetch("http://localhost:8080/allTax?id="+this.state.id,{
         method: "GET",
         cache: 'no-cache', 
         mode: 'cors', 

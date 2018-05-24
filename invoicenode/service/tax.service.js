@@ -25,7 +25,7 @@ service.getAll = async (req, res) => {
              var dataToFind={
                  query:{createdBy:ObjectId(req.query.id)}
            }
-         console.log("kkkkkkkkkkkk")
+         
         const tax = await Tax.getAll(dataToFind);
         res.send({ success: true, code: 200, "msg": "success", data: tax });
         // console.log(tax,"data");
@@ -67,7 +67,7 @@ service.addTax = async (req, res) => {
         sgst: req.body.sgst,
         igst: req.body.igst,
         isActive: req.body.isActive,
-        createdBy: req.body.createdBy,
+        createdBy: req.body.id,
         //   modifiedBy: {type:mongooseSchema.ObjectId },
         modifiedOn:new Date()
     });

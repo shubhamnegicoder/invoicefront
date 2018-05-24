@@ -57,6 +57,7 @@ class SimpleModal extends React.Component {
     dropDownData:[],
     isActive: false,
     userId:"",
+    id :localStorage.getItem("id"),
     _id: ""
 
 
@@ -95,7 +96,7 @@ class SimpleModal extends React.Component {
 
   }
   data = () => {
-    fetch("http://localhost:8080/allTax?id=5af170d60c06c02559273df1", {
+    fetch("http://localhost:8080/allTax?id="+this.state.id, {
         method: "GET",
         cache: 'no-cache',
         mode: 'cors',
@@ -147,7 +148,7 @@ componentDidMount() {
          
            url = "http://localhost:8080/editProduct";
            data = 
-           {
+           { 
               productCode: this.state.productCode,
               productName: this.state.productName,
               taxCode: this.state.taxCode,
@@ -162,7 +163,7 @@ componentDidMount() {
         
         url = "http://localhost:8080/addProduct";
         data = {
-            "id": "5af170d60c06c02559273df1",
+            id :this.state.id,
             productCode: this.state.productCode,
             productName: this.state.productName,
             taxCode: this.state.taxCode,

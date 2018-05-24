@@ -28,6 +28,7 @@ import avatar from "assets/img/faces/marc.jpg";
 //   return Math.round(Math.random() * 20) - 10;
 // }
 var localStorageId=localStorage.getItem("id")
+console.log(localStorageId,"localid medha")
 function getModalStyle() {
   const top = 50
   const left = 50
@@ -61,6 +62,7 @@ class SimpleModal extends React.Component {
     sgst: "",
     isActive: false,
     userId:"",
+    id:localStorage.getItem("id"),
     _id: ""
 
 
@@ -95,7 +97,7 @@ class SimpleModal extends React.Component {
 
   }
   
-  onSubmit = (e,localStorageId) => 
+  onSubmit = (e) => 
   { e.preventDefault()
     if(this.state.taxCode==""){
      return alert("Please enter taxcode!!")
@@ -117,7 +119,7 @@ class SimpleModal extends React.Component {
      }
     var url = "";
   var  data ={}
-  console.log(localStorageId,"local")
+  console.log(localStorageId,"localId")
   
        if (this.state._id != "")
         { 
@@ -140,7 +142,7 @@ class SimpleModal extends React.Component {
 
         url = "http://localhost:8080/addTax";
         data = {
-          id: localStorageId,
+          id: this.state.id,
           taxCode: this.state.taxCode,
           taxName: this.state.taxName,
           cgst: this.state.cgst,
@@ -148,6 +150,7 @@ class SimpleModal extends React.Component {
           sgst: this.state.sgst,
           isActive:this.state.isActive,
         };
+        console.log(data.id,"medhaaaaa id")
       }
    
     axios.post(url, data)

@@ -30,6 +30,7 @@ class Product extends React.Component {
     rate:"",
     isActive:false,
     userId:"",
+    id :localStorage.getItem("id"),
     _id:""
     
     };
@@ -67,7 +68,7 @@ class Product extends React.Component {
    }
    List = () => {
     
-    fetch("http://localhost:8080/allProduct?id=5af170d60c06c02559273df1",{
+    fetch("http://localhost:8080/allProduct?id="+this.state.id,{
         method: "GET",
         cache: 'no-cache', 
         mode: 'cors', 

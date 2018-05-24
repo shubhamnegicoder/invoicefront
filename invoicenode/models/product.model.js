@@ -53,8 +53,8 @@ ProductModel.allProduct = (dataToFind) => {
 
 
 ProductModel.getAll= (dataToFind) => {
-    // console.log(userToFind," = userToFind")
-    return ProductModel.find();
+    console.log(dataToFind.query," = dataToFind")
+    return ProductModel.find(dataToFind.query);
 }
 
 // UserModel.getAggregation = (query) => {
@@ -62,7 +62,7 @@ ProductModel.getAll= (dataToFind) => {
 // }
 
 ProductModel.addProduct = (productToAdd) => {
-    return productToAdd.save();
+    return productToAdd.save(productToAdd);
 }
 
 ProductModel.editProduct = (productToEdit) =>{

@@ -11,3 +11,5 @@
 {"level":"info","message":"countinvoice...","timestamp":"2018-05-24T06:34:23.461Z"}
 {"level":"info","message":"Adding invoice...","timestamp":"2018-05-24T06:35:08.205Z"}
 {"level":"info","message":"sending all invoice...","timestamp":"2018-05-24T06:35:10.870Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-24T06:37:50.382Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-24T06:37:50.464Z"}
