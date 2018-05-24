@@ -3,21 +3,24 @@ import { Grid } from "material-ui";
 import './style.css';
 import logo from './logo.png'
 import axios from 'axios';
-// var invoiceNo
 
 export default class ViewInvoice extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       id: localStorage.getItem("id"),
       invoiceNo: "",
-      companyName: "",
-      companyAddressLine1: "",
-      companyAddressLine2: "",
+      data: [],
+      logo: "",
       customerName: "",
+      customerAddress: "",
+      itemTotal: "",
+      cgstTotal: "",
+      sgstTotal: "",
+      igstTotal: "",
+      discountTotal: "",
+      invoiceTotal: ""
     };
-
   }
   getQuery = (sParam) => {
     var sPageURL = window.location.search.substring(1);
@@ -28,76 +31,69 @@ export default class ViewInvoice extends React.Component {
         return sParameterName[1];
       }
     }
-
   }
   getData = (invoiceNo) => {
     axios
       .get("http://localhost:8080/allInvoice?id=" + this.state.id + "&invoiceNumber=" + invoiceNo)
       .then((res) => {
         console.log("response from /allInvoice", res);
-        var staticdata = []
-        var maindata = [];
-        var localdata = []
-        // result.data.data && result.data.data.map((item, key) => {
-
-        //     localdata.push(item.countryName,item.stateName,item.cityCode,item.cityName,item.isActive?"True":"False")
-        //     localdata.push(<button onClick={(e) => this.handleEdit(e, item)}>Edit</button>)
-        //     maindata.push(localdata);
-        //     localdata = [];
-        // })
-
-
-        this.setState({ mydata: maindata })
-
-
+        console.log("logo", res.data.data[0].logo);
+        this.setState({
+          logo: res.data.data[0].logo,
+          companyName: res.data.data[0].companyName,
+          customerName: res.data.data[0].customerName,
+          customerAddress: res.data.data[0].customerAddressLine1 + " " + res.data.data[0].customerAddressLine2,
+          itemTotal: res.data.data[0].itemTotal,
+          cgstTotal: res.data.data[0].cgstTotal,
+          sgstTotal: res.data.data[0].sgstTotal,
+          igstTotal: res.data.data[0].igstTotal,
+          discountTotal: res.data.data[0].discountTotal,
+          invoiceTotal: res.data.data[0].invoiceTotal
+        })
       })
   }
   componentWillMount() {
     let invoiceNo = this.getQuery('invoiceNo');
-    console.log("invoiceNo", invoiceNo);
     this.getData(invoiceNo);
   }
-
   render() {
     return (
       <div>
         <header class="clearfix">
           <div id="logo">
-            <img src={logo} />
+            <img src={"uploads/" + this.state.logo} />
           </div>
           <center>
-            <div><b>Company Name</b><br />
-              <h4>Limitless Mobilty Solution</h4>
-            </div>
+            {/* <div><b>Company Name</b><br /> */}
+            <h4>{this.state.companyName}</h4>
+            {/* </div> */}
           </center>
           <h1> TAX-INVOICE</h1>
-          <div id="company" class="clearfix">
-            <div><b>shipped To</b></div>
-            <div>455 Foggy Heights,<br /> AZ 85004, US</div>
-            <div>(602) 519-0450</div>
-            <div><a href="mailto:company@example.com">company@example.com</a></div>
-          </div>
           <div id="project">
             <div><b>Billed To</b></div>
-            <div><span>PROJECT</span> Website development</div>
-            <div><span>CLIENT</span> John Doe</div>
-            <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>
-            <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
-            <div><span>DATE</span> August 17, 2015</div>
-            <div><span>DUE DATE</span> September 17, 2015</div>
+            <div>
+              <span>CLIENT</span>
+              {this.state.customerName}
+            </div>
+            <div>
+              <span>ADDRESS</span>
+              {this.state.customerAddress}
+            </div>
+            <div>
+              <span>DATE</span>
+              August 17, 2015
+              </div>
           </div>
         </header>
         <main>
           <table style={{ fontSize: '11px' }}>
             <thead>
               <tr>
-                <th class="service">SERVICE</th>
-                <th class="desc">Accounting Code</th>
+                <th>NAME</th>
                 <th>QTY</th>
-                <th>PRICE</th>
+                <th>RATE</th>
                 <th>TOTAL</th>
                 <th>DISCOUNT</th>
-                <th>TAXABLE VALUE</th>
                 <th>CGST</th>
                 <th>SGST</th>
                 <th>IGST</th>
@@ -105,8 +101,6 @@ export default class ViewInvoice extends React.Component {
               <tr>
                 <th class="service"></th>
                 <th class="desc"></th>
-                <th></th>
-                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -143,7 +137,6 @@ export default class ViewInvoice extends React.Component {
                   <td class="amount">$40.00</td></td>
                 <td>  <td class="rate">26</td>
                   <td class="amount">$1,040.00</td></td>
-
               </tr>
               <tr>
                 <td class="service">Design</td>
@@ -159,7 +152,6 @@ export default class ViewInvoice extends React.Component {
                   <td class="amount">$40.00</td></td>
                 <td>  <td class="rate">26</td>
                   <td class="amount">$1,040.00</td></td>
-
               </tr>
               <tr>
                 <td class="service">Design</td>
@@ -175,10 +167,8 @@ export default class ViewInvoice extends React.Component {
                   <td class="amount">$40.00</td></td>
                 <td>  <td class="rate">26</td>
                   <td class="amount">$1,040.00</td></td>
-
               </tr>
               <tr>
-
               </tr>
               <tr>
                 <td colspan="4"><b>Total</b></td>
@@ -188,46 +178,37 @@ export default class ViewInvoice extends React.Component {
                 <td class="code">-</td>
                 <td class="code">-</td>
                 <td class="code">-</td>
-
               </tr>
-
               <tr>
                 <td colspan="9">TAXABLE VALUE BEFORE TAX</td>
-                <td class="total">$5,200.00</td>
+                <td class="total">{"₹ " + this.state.itemTotal}</td>
               </tr>
               <tr>
                 <td colspan="9">CGST</td>
-                <td class="total">$1,300.00</td>
+                <td class="total">{"₹ " + this.state.cgstTotal}</td>
               </tr>
               <tr>
                 <td colspan="9">SGST</td>
-                <td class="total">$1,300.00</td>
+                <td class="total">{"₹ " + this.state.sgstTotal}</td>
               </tr>
               <tr>
                 <td colspan="9">IGST</td>
-                <td class="total">$1,300.00</td>
+                <td class="total">{"₹ " + this.state.igstTotal}</td>
+              </tr>
+              <tr>
+                <td colspan="9">TOTAL DISCOUNT</td>
+                <td class="total">{"₹ " + this.state.discountTotal}</td>
               </tr>
               <tr>
                 <td colspan="9" class="grand total">GRAND TOTAL</td>
-                <td class="grand total">$6,500.00</td>
+                <td class="grand total">{"₹ " + this.state.invoiceTotal}</td>
               </tr>
             </tbody>
           </table>
-          <div id="notices">
-            <div>NOTICE:</div>
-            <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-          </div>
         </main>
-
       </div>
-
-
-
     )
   }
-
-
-
 }
 
 

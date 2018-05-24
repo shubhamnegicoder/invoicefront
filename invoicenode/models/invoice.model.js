@@ -53,7 +53,7 @@ InvoiceModel.getCount = (invoiceToCount) => {
 InvoiceModel.allInvoice = (dataToFind) => {
     console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
     return InvoiceModel.aggregate([
-        { $match: {invoiceNumber:dataToFind.query.invoiceNumber} },
+        { $match: { invoiceNumber: dataToFind.query.invoiceNumber } },
         {
             $lookup: {
                 from: "customer",
@@ -80,7 +80,7 @@ InvoiceModel.allInvoice = (dataToFind) => {
             $unwind: "$company_docs"
         }, {
             $project: {
-                logo:"$company_docs.logo",
+                logo: "$company_docs.logo",
                 companyAddressLine1: 1,
                 companyAddressLine2: 1,
                 companyCode: 1,
@@ -92,19 +92,7 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 discount: 1,
                 invoiceDate: 1,
                 invoiceNumber: 1,
-                items: [{
-                    name: 1,
-                    qty: 1,
-                    rate: 1,
-                    total: 1,
-                    discount: 1,
-                    CGSTRate: 1,
-                    CGSTAmount: 1,
-                    SGSTRate: 1,
-                    SGSTAmount: 1,
-                    IGSTRate: 1,
-                    IGSTAmount: 1
-                }],
+                items: 1,
                 itemTotal: 1,
                 discountTotal: 1,
                 cgstTotal: 1,

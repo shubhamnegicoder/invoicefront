@@ -168,9 +168,9 @@ class CreateInvoice extends React.Component {
     }
     getTaxData = () => {
         axios
-            .get("http://localhost:8080/allTax?id=5af170d60c06c02559273df1")
+            .get("http://localhost:8080/allTax?id=" + this.state.id)
             .then((res) => {
-                // console.log("response from /allTax", res);
+                console.log("response from /allTax", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -399,6 +399,10 @@ class CreateInvoice extends React.Component {
         this.getItemDropdownData();
         this.getTaxData();
         this.getCount();
+
+    }
+    componentWillUnmount() {
+        window.location.reload();
     }
     componentDidUpdate() {
         this.state.companyDropdownData.map((item, key) => {
