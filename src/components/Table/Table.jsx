@@ -5,8 +5,7 @@ import {
   TableHead,
   TableRow,
   TableBody,
-  TableCell,
-  
+  TableCell
 } from "material-ui";
 
 import PropTypes from "prop-types";

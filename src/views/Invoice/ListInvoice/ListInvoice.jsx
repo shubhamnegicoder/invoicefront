@@ -45,19 +45,20 @@ class ListInvoice extends React.Component {
             (result) => {
                 // console.log("listabc = ",result)
                  var mainArray = [];
-                 result.data.forEach((product)=>{
+                 result.data.forEach((invoice)=>{
                      var dataArray = [];
                     //  dataArray.push(tax._id)
-                     dataArray.push(product.productCode)
-                     dataArray.push(product.productName)
-                     dataArray.push(product.taxCode)
-                     dataArray.push(product.rate)
-                     dataArray.push(product.isActive ? "Active" : "Inactive")
-                     dataArray.push(<button onClick={(e)=>{this.handleEdit(e,product)}}>Edit</button>)
+                     dataArray.push(invoice.customerName)
+                     dataArray.push(invoice.companyName)
+                     dataArray.push(invoice.invoiceNumbe)
+                     dataArray.push(invoice.invoiceDate)
+                     dataArray.push(invoice.invoiceTotal)
+                     dataArray.push(invoice.isActive ? "True" : "False")
+                     dataArray.push(<button onClick={(e)=>{this.handleEdit(e,invoice)}}>Edit</button>)
                     // dataArray.push(new Date(tax.createAt).toDateString());
                     mainArray.push(dataArray)
                     
-                    console.log(product.taxCode,"tax hai")
+                   
     
                  })
                  this.setState({

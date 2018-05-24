@@ -16,6 +16,7 @@ class CreateInvoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: localStorage.getItem("id"),
             companyCode: "",
             companyState: "",
             companyAddressLine1: "",
@@ -243,6 +244,7 @@ class CreateInvoice extends React.Component {
                             className={"form-control total" + this.state.invoiceRow.length}
                             name={"total" + invoiceRow.length}
                             onChange={(e) => this.handleInvoice(e)}
+                            readOnly
                             required
                         />
                     </div>
@@ -335,6 +337,9 @@ class CreateInvoice extends React.Component {
     submitInvoice = (e) => {
         e.preventDefault();
         parsedData = parse(e.target);
+        this.setState({
+            invoiceNo: parsedData.invoiceNumber
+        })
         let item = {};
         for (var i = 0; i < invoiceRow.length; i++) {
             item.name = parsedData["itemName" + i];
@@ -353,6 +358,7 @@ class CreateInvoice extends React.Component {
         }
         items = items.filter(item => item.name != undefined);
         var finalData = {
+            id: this.state.id,
             companyCode: parsedData.companyCode,
             companyAddressLine1: parsedData.companyAddressLine1,
             companyAddressLine2: parsedData.companyAddressLine2,
@@ -380,7 +386,9 @@ class CreateInvoice extends React.Component {
                         text: "Invoice Saved !",
                         icon: "success"
                     })
-                    window.location.href = "./viewInvoice";
+                        .then(() => {
+                            window.location.href = "./viewInvoice?invoiceNo=" + this.state.invoiceNo;
+                        })
                 }
             })
     }
@@ -515,12 +523,12 @@ class CreateInvoice extends React.Component {
                     {/* Address Fields */}
                     <div className="row">
                         <div className="col-sm">
-                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine1" value={this.state.companyAddressLine1} /><br />
-                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine2" value={this.state.companyAddressLine2} />
+                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine1" value={this.state.companyAddressLine1} readOnly /><br />
+                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine2" value={this.state.companyAddressLine2} readOnly />
                         </div>
                         <div className="col-sm">
-                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="customerAddressLine1" value={this.state.customerAddressLine1} /><br />
-                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="customerAddressLine2" value={this.state.customerAddressLine2} />
+                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="customerAddressLine1" value={this.state.customerAddressLine1} readOnly /><br />
+                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="customerAddressLine2" value={this.state.customerAddressLine2} readOnly />
                         </div>
                     </div>
                     <br />
@@ -610,6 +618,7 @@ class CreateInvoice extends React.Component {
                             type="text"
                             name="itemTotal"
                             className="form-control itemTotal"
+                            readOnly
                         />
                     </div>
                     <div className="col">
@@ -627,6 +636,7 @@ class CreateInvoice extends React.Component {
                             type="text"
                             name="cgstTotal"
                             className="form-control cgstTotal"
+                            readOnly
                         />
                     </div>
                     <div className="col"></div>
@@ -636,6 +646,7 @@ class CreateInvoice extends React.Component {
                             type="text"
                             name="sgstTotal"
                             className="form-control sgstTotal"
+                            readOnly
                         />
                     </div>
                     <div className="col"></div>
@@ -645,6 +656,7 @@ class CreateInvoice extends React.Component {
                             type="text"
                             name="igstTotal"
                             className="form-control igstTotal"
+                            readOnly
                         />
                     </div>
                     <div className="col">
@@ -653,6 +665,7 @@ class CreateInvoice extends React.Component {
                             type="text"
                             name="taxTotal"
                             className="form-control taxTotal"
+                            readOnly
                         />
                     </div>
                 </div>
