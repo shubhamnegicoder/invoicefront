@@ -18,21 +18,21 @@ import ObjectId from 'bson-objectid'
 const service = {};
 
 service.getAll = async (req, res) => {
-  
-    
+
+    console.log("req.query.id", req.query.id)
     try {
-             var dataToFind={}
-             var dataToFind={
-                 query:{createdBy:ObjectId(req.query.id)}
-           }
-         
+        var dataToFind = {}
+        var dataToFind = {
+            query: { createdBy: ObjectId(req.query.id) }
+        }
+
         const tax = await Tax.getAll(dataToFind);
         res.send({ success: true, code: 200, "msg": "success", data: tax });
-        // console.log(tax,"data");
-    } 
+        console.log(tax,"data");
+    }
     catch (err) {
         // logger.error('Error in getting user- ' + err);
-        console.log(err,"error!!");
+        console.log(err, "error!!");
         res.send({ success: false, code: 500, "msg": "error111", err: err });
     }
 }
@@ -51,14 +51,14 @@ service.getAll = async (req, res) => {
 service.addTax = async (req, res) => {
     // console.log(req.body, "hi")
     // console.log(req.body.cgst.length)
-     
+
     if (!req.body.taxCode || !req.body.taxName || !req.body.igst || !req.body.sgst || !req.body.cgst || !req.body.id) {
         return res.send({ "success": false, "code": 500, "msg": "error" });
     }
-    if (req.body.cgst.length> 2 || req.body.igst.length > 2 || req.body.sgst.length > 2) {
-       return res.send({ "success": false, "code": 500, "msg": "error"})
+    if (req.body.cgst.length > 2 || req.body.igst.length > 2 || req.body.sgst.length > 2) {
+        return res.send({ "success": false, "code": 500, "msg": "error" })
     }
-   
+
     let taxToAdd = Tax({
 
         taxCode: req.body.taxCode,
@@ -69,7 +69,7 @@ service.addTax = async (req, res) => {
         isActive: req.body.isActive,
         createdBy: req.body.id,
         //   modifiedBy: {type:mongooseSchema.ObjectId },
-        modifiedOn:new Date()
+        modifiedOn: new Date()
     });
 
 
@@ -90,10 +90,10 @@ service.addTax = async (req, res) => {
 
 service.editTax = async (req, res) => {
     if (!req.body._id) {
-      return res.send({ "success": false, "code": 500, "msg": "error" })
+        return res.send({ "success": false, "code": 500, "msg": "error" })
     }
-    if (req.body.cgst.length >2 || req.body.igst.length >2 || req.body.sgst.length > 2) {
-       return res.send({ "success": false, "code": 500, "msg": "error" })
+    if (req.body.cgst.length > 2 || req.body.igst.length > 2 || req.body.sgst.length > 2) {
+        return res.send({ "success": false, "code": 500, "msg": "error" })
     }
     let TaxEdit = {
         taxName: req.body.taxName,

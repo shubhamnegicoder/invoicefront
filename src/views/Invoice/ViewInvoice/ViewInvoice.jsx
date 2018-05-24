@@ -36,7 +36,7 @@ export default class ViewInvoice extends React.Component {
     axios
       .get("http://localhost:8080/allInvoice?id=" + this.state.id + "&invoiceNumber=" + invoiceNo)
       .then((res) => {
-        console.log("response from /allInvoice", res.data.data);
+        console.log("response from /allInvoice", res);
         console.log("logo", res.data.data[0].logo);
         this.setState({
           logo: res.data.data[0].logo,
