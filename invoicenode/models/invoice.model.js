@@ -25,6 +25,13 @@ const InvoiceSchema = mongoose.Schema({
         IGSTRate: { type: Number },
         IGSTAmount: { type: Number }
     }],
+    itemTotal: { type: Number },
+    discountTotal: { type: Number },
+    cgstTotal: { type: Number },
+    sgstTotal: { type: Number },
+    igstTotal: { type: Number },
+    taxTotal: { type: Number },
+    invoiceTotal: { type: Number },
     createdBy: { type: mongoose.Schema.ObjectId },
     createdAt: { type: Date },
     updatedAt: { type: Date },
@@ -44,9 +51,9 @@ InvoiceModel.getCount = (invoiceToCount) => {
 }
 
 InvoiceModel.allInvoice = (dataToFind) => {
-    console.log(dataToFind, " = dataToFindinvoice")
+    console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
     return InvoiceModel.aggregate([
-        { $match: {} },
+        { $match: {invoiceNumber:dataToFind.query.invoiceNumber} },
         {
             $lookup: {
                 from: "customer",
@@ -73,6 +80,7 @@ InvoiceModel.allInvoice = (dataToFind) => {
             $unwind: "$company_docs"
         }, {
             $project: {
+                logo:"$company_docs.logo",
                 companyAddressLine1: 1,
                 companyAddressLine2: 1,
                 companyCode: 1,
@@ -96,8 +104,18 @@ InvoiceModel.allInvoice = (dataToFind) => {
                     SGSTAmount: 1,
                     IGSTRate: 1,
                     IGSTAmount: 1
-                }]
-
+                }],
+                itemTotal: 1,
+                discountTotal: 1,
+                cgstTotal: 1,
+                sgstTotal: 1,
+                igstTotal: 1,
+                taxTotal: 1,
+                invoiceTotal: 1,
+                createdBy: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                modifiedBy: 1
             }
         }
     ]);
