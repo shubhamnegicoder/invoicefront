@@ -17,8 +17,9 @@ class ViewCustomer extends React.Component{
             stateCode:"",
             countryCode:"",
             cityName:"",
+            isActive:"",
             stateName:"",
-            countryName:"",
+            countryName:"", 
             postalCode:"",
             contactNo:""
         };
@@ -60,6 +61,7 @@ class ViewCustomer extends React.Component{
                     this.setState({cityName:result.data[0].cityName});
                     this.setState({stateName:result.data[0].stateName});
                     this.setState({countryName:result.data[0].countryName});
+                    this.setState({ isActive: result.data[0].isActive });
                     //console.log("cityname:",this.state.cityName,"countryname:",this.state.countryName,"stateName:",this.state.stateName);
                  
                 },
@@ -129,6 +131,13 @@ class ViewCustomer extends React.Component{
                     <td>Contact No</td>
                     <td></td>
                     <td><input type="text" value={this.state.contactNo} ref="contactNo"/></td>
+                </tr>
+                <tr>
+                    <td>IsActive</td><td>
+                    </td><td>
+
+                        <input type="text" value={this.state.isActive ? "Yes" : "No"} ref="isActive" />
+                    </td>
                 </tr>
                 <tr>
 

@@ -107,7 +107,7 @@ service.addCustomer = async (req,res)=>{
         contactNo:req.body.contactNo,
 		 isActive: req.body.isActive,
 		createdBy: req.body.createdBy,
-		createAt:req.body.		
+		//createAt:req.body.		
     });
 	try{
 		console.log("this is add Customer");
@@ -130,9 +130,9 @@ service.editCustomer = async (req,res)=>{
 		stateCode:req.body.stateCode,
 		countryCode:req.body.countryCode,
 		postalCode:req.body.postalCode,
-		contactNo:req.body.contactNo
-		// modifiedBy:,
-		// modifiedOn:
+		contactNo:req.body.contactNo,
+		isActive:req.body.isActive
+		
 	};
 	try{
 		let customerEdit = {

@@ -25,7 +25,7 @@ class EditCompany extends React.Component{
             countryCode:"",
             postalCode:"",
             contactNo:"",
-             isActive:false,
+            isActive:false,
             dropDownData: [],
             dropDownData2: [],
             dropDownData3: [],
@@ -212,6 +212,7 @@ class EditCompany extends React.Component{
         this.setState({countryCode:this.refs.countryCode.value});
         this.setState({postalCode:this.refs.postalCode.value});
         this.setState({contactNo:this.refs.contactNo.value});
+        
     }
 
     handleClose=(e)=>{
@@ -395,7 +396,7 @@ class EditCompany extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>IsActive</td><td>
                     </td><td>
-                        <Checkbox
+                        <Checkbox selected
                             checked={this.state.isActive}
                             onChange={this.handleCheckbox('isActive')}
                             value="isActive"

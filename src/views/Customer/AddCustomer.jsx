@@ -1,6 +1,7 @@
 import React from "react";
 import { Button} from "material-ui";
 import swal from "sweetalert";
+import Checkbox from 'material-ui/Checkbox';
 var maindata = [];
 var dropDownData = [];
 var dd;
@@ -21,6 +22,7 @@ class AddCustomer extends React.Component{
             countryCode:"",
             postalCode:"",
             contactNo:"",
+            isActive:"",
             dropDownData: [],
             dropDownData2: [],
             dropDownData3: [],
@@ -231,6 +233,11 @@ class AddCustomer extends React.Component{
             }
         )
     }
+
+    handleCheckbox = name => event => {
+        this.setState({ [name]: event.target.checked });
+    };
+
     render(){
         return (<div>
             <table style={{width:"600px",height:"450px"}} align="center">
@@ -317,6 +324,17 @@ class AddCustomer extends React.Component{
                     <td><span style={{color:"red"}}>*</span>Contact No</td>
                     <td></td>
                     <td><input type="text" placeholder="Contact No" ref="contactNo" onChange={this.handleChange}/></td>
+                </tr>
+                <tr>
+                    <td><span style={{ color: "red" }}>*</span>IsActive</td><td>
+                    </td><td>
+                        <Checkbox
+                            checked={this.state.isActive}
+                            onChange={this.handleCheckbox('isActive')}
+                            value="isActive"
+                            color="primary"
+                        />
+                    </td>
                 </tr>
                 <tr>
 

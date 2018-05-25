@@ -137,6 +137,7 @@ service.editCompany = async (req,res)=>{
 		countryCode:req.body.countryCode,
 		postalCode:req.body.postalCode,
 		contactNo:req.body.contactNo,
+		isActive:req.body.isActive,
 		modifiedBy:req.body.modifiedBy,
 		updatedAt:req.body.updatedAt
 	};

@@ -19,6 +19,7 @@ class CompanyList extends React.Component{
             postalCode:"",
             contactNo:"",
             createdBy:"",
+            isActive:false,
             data:[]        
         };
     }
@@ -59,7 +60,8 @@ class CompanyList extends React.Component{
         this.setState({state:response.stateName})
         this.setState({country:response.countryName})
         this.setState({postalCode:response.postalCode})
-        this.setState({contactNo:response.contactNo})      
+        this.setState({contactNo:response.contactNo})  
+      this.setState({ isActive: response.isActive })      
        window.location.href="/editCompany?id="+response._id;
     }
 
@@ -74,12 +76,13 @@ class CompanyList extends React.Component{
         this.setState({state:response.stateName})
         this.setState({country:response.countryName})
         this.setState({postalCode:response.postalCode})
-        this.setState({contactNo:response.contactNo})      
+        this.setState({contactNo:response.contactNo})
+      this.setState({ isActive: response.isActive })      
        window.location.href="/viewCompany?id="+response._id;
     }
 
     list=()=>{
-        fetch("http://localhost:8080/allCompany?id=",{  
+        fetch("http://localhost:8080/allCompany",{  
           method: "GET",
           cache: 'no-cache', 
           mode: 'cors',
@@ -92,7 +95,9 @@ class CompanyList extends React.Component{
       .then(
         (result) => {
           var mainArray = [];
+          console.log("result of list company like result",result);
           result.data.forEach((responseData)=>{
+            console.log("responseData.isActive",responseData.isActive);
               var dataArray = []; 
               dataArray.push(responseData.companyCode)
               dataArray.push(responseData.companyName)
@@ -103,12 +108,14 @@ class CompanyList extends React.Component{
               //dataArray.push(address) 
               // dataArray.push(responseData.cityName)
               // dataArray.push(responseData.stateName)
-              dataArray.push(responseData.countryName)
+             // dataArray.push(responseData.countryName)
             //  dataArray.push(responseData.postalCode)
-              dataArray.push(responseData.contactNo)
-             // dataArray.push(responseData.isActive)
-              dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)}>Edit</Button>)
-             dataArray.push(<Button onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
+            
+            dataArray.push(responseData.isActive?"Yes":"No")
+            dataArray.push(responseData.contactNo)
+             
+            dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)}>Edit</Button>)
+            dataArray.push(<Button onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)     
             })
@@ -160,7 +167,7 @@ class CompanyList extends React.Component{
             //   }
             // },
             {
-              name: "Country",
+              name: "IsActive",
                 options: {
                   filter: true
                 }
@@ -219,6 +226,7 @@ class CompanyList extends React.Component{
             
             <MuiThemeProvider theme={this.getMuiTheme()}>
               <MUIDataTable title={"Company list"} data={tableData} columns={columns} options={options} />
+             
               </MuiThemeProvider>  
         </ItemGrid>
         
