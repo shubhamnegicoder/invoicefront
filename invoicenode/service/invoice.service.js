@@ -11,7 +11,8 @@ import rand from 'csprng'
 import ObjectId from 'bson-objectid';
 
 const service = {};
-
+var today = new Date(),
+ date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 service.addInvoice = async (req, res) => {
     console.log("req.body", req.body);
     let invoiceToAdd = Invoice({
@@ -65,6 +66,20 @@ service.countInvoice = async (req, res) => {
         res.send({ "success": false, "code": "500", "msg": "not found invoicecount", "err": err });
     }
 }
+
+service.topTenInvoice = async (req, res) => {
+    console.log("topTenInvoice service");
+    try {
+        const topTenInvoice = await Invoice.topTenInvoice();
+        console.log("topTenInvoice after model", topTenInvoice);
+        res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": topTenInvoice });
+    }
+    catch (err) {
+        console.log("catch");
+        res.send({ "success": false, "code": "500", "msg": "Not found top ten invoice", "err": err });
+    }
+}
+
 service.getAllInvoice = async (req, res) => {
     console.log("req.query", req.query);
     let invoiceNumber = parseInt(req.query.invoiceNumber);

@@ -1,6 +1,8 @@
 import React from "react";
 import { Button} from "material-ui";
 import swal from "sweetalert";
+import Checkbox from 'material-ui/Checkbox';
+
 var maindata = [];
 var dropDownData = [];
 var dd;
@@ -23,6 +25,7 @@ class EditCompany extends React.Component{
             countryCode:"",
             postalCode:"",
             contactNo:"",
+             isActive:false,
             dropDownData: [],
             dropDownData2: [],
             dropDownData3: [],
@@ -147,9 +150,9 @@ class EditCompany extends React.Component{
         console.log(this.state.countryCode, "country code")
     }
 
-    // componentDidMount(){
-    //     this.fetchCompanyById();
-    //        }
+    handleCheckbox = name => event => {
+        this.setState({ [name]: event.target.checked });
+    }
 
     componentDidMount(){
         this.fetchCompanyById();
@@ -170,7 +173,7 @@ class EditCompany extends React.Component{
             })
             .then(res => res.json())
             .then(
-                (result) => {
+                (result) => { 
                     console.log("this is one company by id in edit",result)
                     this.setState({_id:result.data[0]._id});
                     this.setState({companyCode:result.data[0].companyCode});
@@ -186,6 +189,7 @@ class EditCompany extends React.Component{
                     this.setState({countryName:result.data[0].countryName});
                     this.setState({postalCode:result.data[0].postalCode});
                     this.setState({contactNo:result.data[0].contactNo});
+                    this.setState({ isActive: result.data[0].isActive});
                     this.data2(this.state.countryCode);
                     this.data3(this.state.stateCode);
                 },
@@ -374,7 +378,7 @@ class EditCompany extends React.Component{
                                 :
                                 <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
                             })
-                        }
+                        } 
 
                     </select></td>
                 </tr>
@@ -387,6 +391,17 @@ class EditCompany extends React.Component{
                     <td><span style={{color:"red"}}>*</span>Contact No</td>
                     <td></td>
                     <td><input type="text" value={this.state.contactNo} ref="contactNo" onChange={this.handleChange}/></td>
+                </tr>
+                <tr>
+                    <td><span style={{ color: "red" }}>*</span>IsActive</td><td>
+                    </td><td>
+                        <Checkbox
+                            checked={this.state.isActive}
+                            onChange={this.handleCheckbox('isActive')}
+                            value="isActive"
+                            color="primary"
+                        />
+                    </td>
                 </tr>
                 <tr>
 

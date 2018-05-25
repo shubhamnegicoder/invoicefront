@@ -13,7 +13,7 @@ import CustomerModel from '../models/customer.model';
  * [service is a object ]
  * @type {Object}
  */
-const service = {};
+const service = {}; 
 
 /**
  * @description [with all the calculation before getAll function of model and after getAll]
@@ -93,12 +93,7 @@ service.addCustomer = async (req,res)=>{
 	if(req.body.createdBy == ""){
 		return res.send({success:false,code:500,msg:"Created by is required"});
 	}
-	// if(req.body.modifiedBy == ""){
-	// 	return res.send({success:false,code:500,msg:"Modified by is required"});
-	// }
-	// if(req.body.modifiedOn == ""){
-	// 	return res.send({success:false,code:500,msg:"Modified on is required"});
-	// }
+
 	let customerToAdd = CustomerModel({
 		customerName: req.body.customerName,
         customerCode : req.body.customerCode,   
@@ -110,8 +105,9 @@ service.addCustomer = async (req,res)=>{
         countryCode:req.body.countryCode,
         postalCode:req.body.postalCode,
         contactNo:req.body.contactNo,
-        status: req.body.status
-		//createdBy: req.body.createdBy		
+		 isActive: req.body.isActive,
+		createdBy: req.body.createdBy,
+		createAt:req.body.		
     });
 	try{
 		console.log("this is add Customer");

@@ -78,7 +78,7 @@ service.addCompany = async (req,res)=>{
 	if(req.body.addressLine2 == ""){
 		return res.send({success:false,code:500,msg:"Address is required"});
 	}
-	if(req.body.cityCode == ""){
+	if(req.body.cityCode == ""){ 
 		return res.send({success:false,code:500,msg:"City is required"});
 	}
 	if(req.body.stateCode == ""){

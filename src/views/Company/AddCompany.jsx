@@ -41,7 +41,7 @@ class AddCompany extends React.Component {
         this.setState({ addressLine1: this.refs.addressLine1.value });
         this.setState({ addressLine2: this.refs.addressLine2.value });
         this.setState({ postalCode: this.refs.postalCode.value });
-        this.setState({ contactNo: this.refs.contactNo.value });
+        this.setState({ contactNo: this.refs.contactNo.value }); 
     }
     handleChange1 = (event) => {
         console.log(event.target.value, "selected country")
