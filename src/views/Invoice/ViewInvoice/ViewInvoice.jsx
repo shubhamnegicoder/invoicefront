@@ -3,6 +3,8 @@ import { Grid } from "material-ui";
 import './style.css';
 import logo from './logo.png'
 import axios from 'axios';
+import { RegularCard, Table, ItemGrid } from "components";
+import $ from 'jquery';
 
 export default class ViewInvoice extends React.Component {
   constructor(props) {
@@ -12,14 +14,18 @@ export default class ViewInvoice extends React.Component {
       invoiceNo: "",
       data: [],
       logo: "",
+      companyName: "",
+      companyAddress: "",
       customerName: "",
+      List: [],
       customerAddress: "",
       itemTotal: "",
       cgstTotal: "",
       sgstTotal: "",
       igstTotal: "",
       discountTotal: "",
-      invoiceTotal: ""
+      invoiceTotal: "",
+      buttonView: true
     };
   }
   getQuery = (sParam) => {
@@ -36,11 +42,32 @@ export default class ViewInvoice extends React.Component {
     axios
       .get("http://localhost:8080/allInvoice?id=" + this.state.id + "&invoiceNumber=" + invoiceNo)
       .then((res) => {
-        console.log("response from /allInvoice", res);
-        console.log("logo", res.data.data[0].logo);
+        console.log("response from /allInvoice", res.data.data[0]);
+        var mainArray = [];
+        res.data.data[0].items.forEach((invoice) => {
+          var dataArray = [];
+          dataArray.push(invoice.name)
+          dataArray.push(invoice.qty)
+          dataArray.push(invoice.rate)
+          dataArray.push(invoice.total)
+          dataArray.push(invoice.discount)
+          dataArray.push(invoice.CGSTRate)
+          dataArray.push(invoice.CGSTAmount)
+          dataArray.push(invoice.SGSTRate)
+          dataArray.push(invoice.SGSTAmount)
+          dataArray.push(invoice.IGSTRate)
+          dataArray.push(invoice.IGSTAmount)
+          mainArray.push(dataArray)
+        })
+        let invoiceDate = (res.data.data[0].invoiceDate).toString();
+        invoiceDate = invoiceDate.split("T", 1);
+        invoiceDate = invoiceDate[0];
         this.setState({
           logo: res.data.data[0].logo,
           companyName: res.data.data[0].companyName,
+          companyAddress: res.data.data[0].companyAddressLine1 + " " + res.data.data[0].companyAddressLine2,
+          invoiceNo: invoiceNo,
+          invoiceDate: invoiceDate,
           customerName: res.data.data[0].customerName,
           customerAddress: res.data.data[0].customerAddressLine1 + " " + res.data.data[0].customerAddressLine2,
           itemTotal: res.data.data[0].itemTotal,
@@ -48,162 +75,158 @@ export default class ViewInvoice extends React.Component {
           sgstTotal: res.data.data[0].sgstTotal,
           igstTotal: res.data.data[0].igstTotal,
           discountTotal: res.data.data[0].discountTotal,
-          invoiceTotal: res.data.data[0].invoiceTotal
+          invoiceTotal: res.data.data[0].invoiceTotal,
+          List: mainArray
         })
+        console.log("states", this.state);
       })
+  }
+  print = () => {
+    $('.printButton').hide();
+    window.print();
+    $('.printButton').show();
   }
   componentWillMount() {
     let invoiceNo = this.getQuery('invoiceNo');
     this.getData(invoiceNo);
   }
   render() {
+    const styles = theme => ({
+      root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+        overflowX: 'auto',
+      },
+      table: {
+        minWidth: 700,
+      },
+      row: {
+        '&:nth-of-type(odd)': {
+          backgroundColor: theme.palette.background.default,
+        },
+      },
+    });
     return (
       <div>
-        <header class="clearfix">
-          <div id="logo">
-            <img src={"uploads/" + this.state.logo} />
-          </div>
-          <center>
-            {/* <div><b>Company Name</b><br /> */}
-            <h4>{this.state.companyName}</h4>
-            {/* </div> */}
-          </center>
-          <h1> TAX-INVOICE</h1>
-          <div id="project">
-            <div><b>Billed To</b></div>
-            <div>
-              <span>CLIENT</span>
-              {this.state.customerName}
-            </div>
-            <div>
-              <span>ADDRESS</span>
-              {this.state.customerAddress}
-            </div>
-            <div>
-              <span>DATE</span>
-              August 17, 2015
+        <table style={{ backgroundColor: 'white' }}>
+          <tr>
+            <td style={{ width: '10%' }}>
+              <div id="logo" style={{ float: 'left' }}>
+                <img src={"uploads/" + this.state.logo} />
               </div>
-          </div>
+            </td>
+            <td>
+              <div>
+                <center>
+                  <h4>{this.state.companyName}</h4>
+                  {this.state.companyAddress}
+                </center>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <header class="clearfix">
+          <h1>TAX-INVOICE</h1>
         </header>
+        <table>
+          <tr>
+            <td style={{ textAlign: 'left' }}>
+              <div >
+                <div>
+                  <b>Invoice Date</b></div>
+                <div>
+                  {this.state.invoiceDate}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div>
+                <div>
+                  <b>Invoice Number</b></div>
+                <div>
+                  {this.state.invoiceNo}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td style={{ textAlign: 'left' }}>
+              <div >
+                <div>
+                  <b>Billed To</b></div>
+                <div>
+                  {this.state.customerName}
+                </div>
+                <div>
+                  {this.state.customerAddress}
+                </div>
+                <div>GSTIN / UIN:</div>
+              </div>
+            </td>
+            <td>
+              <div>
+                <div>
+                  <b>Shipped To</b></div>
+                <div>
+                  {this.state.customerName}
+                </div>
+                <div>
+                  {this.state.customerAddress}
+                </div>
+                <div>GSTIN / UIN:</div>
+              </div>
+            </td>
+          </tr>
+        </table>
         <main>
           <table style={{ fontSize: '11px' }}>
-            <thead>
-              <tr>
-                <th>NAME</th>
-                <th>QTY</th>
-                <th>RATE</th>
-                <th>TOTAL</th>
-                <th>DISCOUNT</th>
-                <th>CGST</th>
-                <th>SGST</th>
-                <th>IGST</th>
-              </tr>
-              <tr>
-                <th class="service"></th>
-                <th class="desc"></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th style={{ Position: "fixed" }}>
-                  <th style={{ position: 'relative', left: "12px", borderBottom: "none" }}>Rate</th>
-                  <th style={{ position: 'relative', left: "15px", borderBottom: "none" }}>Amount</th>
-                </th>
-                <th style={{ Position: "fixed" }}>
-                  <th style={{ position: 'relative', left: "20px", borderBottom: "none" }}>Rate</th>
-                  <th style={{ position: 'relative', left: "30px", borderBottom: "none" }}>Amount</th>
-                </th>
-                <th style={{ Position: "fixed" }}>
-                  <th style={{ position: 'relative', left: "12px", borderBottom: "none" }}>Rate</th>
-                  <th style={{ position: 'relative', left: "15px", borderBottom: "none" }}>Amount</th>
-                </th>
-                {/* <th><th>Rate</th>
-            <th>Amount</th></th>
-           <th><th>Rate</th>
-            <th>Amount</th></th> */}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="service">Design</td>
-                <td class="code">67545</td>
-                <td class="code">$40.00</td>
-                <td class="code">26</td>
-                <td class="code">$1,040.00</td>
-                <td class="code">Design</td>
-                <td class="code">56</td>
-                <td><td class="rate">$40.00</td>
-                  <td class="amount">26</td></td>
-                <td><td class="rate">$1,040.00</td>
-                  <td class="amount">$40.00</td></td>
-                <td>  <td class="rate">26</td>
-                  <td class="amount">$1,040.00</td></td>
-              </tr>
-              <tr>
-                <td class="service">Design</td>
-                <td class="code">67545</td>
-                <td class="code">$40.00</td>
-                <td class="code">26</td>
-                <td class="code">$1,040.00</td>
-                <td class="code">Design</td>
-                <td class="code">56</td>
-                <td><td class="rate">$40.00</td>
-                  <td class="amount">26</td></td>
-                <td><td class="rate">$1,040.00</td>
-                  <td class="amount">$40.00</td></td>
-                <td>  <td class="rate">26</td>
-                  <td class="amount">$1,040.00</td></td>
-              </tr>
-              <tr>
-                <td class="service">Design</td>
-                <td class="code">67545</td>
-                <td class="code">$40.00</td>
-                <td class="code">26</td>
-                <td class="code">$1,040.00</td>
-                <td class="code">Design</td>
-                <td class="code">56</td>
-                <td><td class="rate">$40.00</td>
-                  <td class="amount">26</td></td>
-                <td><td class="rate">$1,040.00</td>
-                  <td class="amount">$40.00</td></td>
-                <td>  <td class="rate">26</td>
-                  <td class="amount">$1,040.00</td></td>
-              </tr>
-              <tr>
-              </tr>
-              <tr>
-                <td colspan="4"><b>Total</b></td>
-                <td class="code">-</td>
-                <td class="code">-</td>
-                <td class="code">-</td>
-                <td class="code">-</td>
-                <td class="code">-</td>
-                <td class="code">-</td>
-              </tr>
-              <tr>
-                <td colspan="9">TAXABLE VALUE BEFORE TAX</td>
-                <td class="total">{"₹ " + this.state.itemTotal}</td>
-              </tr>
-              <tr>
-                <td colspan="9">CGST</td>
-                <td class="total">{"₹ " + this.state.cgstTotal}</td>
-              </tr>
-              <tr>
-                <td colspan="9">SGST</td>
-                <td class="total">{"₹ " + this.state.sgstTotal}</td>
-              </tr>
-              <tr>
-                <td colspan="9">IGST</td>
-                <td class="total">{"₹ " + this.state.igstTotal}</td>
-              </tr>
-              <tr>
-                <td colspan="9">TOTAL DISCOUNT</td>
-                <td class="total">{"₹ " + this.state.discountTotal}</td>
-              </tr>
-              <tr>
-                <td colspan="9" class="grand total">GRAND TOTAL</td>
-                <td class="grand total">{"₹ " + this.state.invoiceTotal}</td>
-              </tr>
-            </tbody>
+            <Table
+              tableHeaderColor="gray"
+              tableHead={["Name", "Quantity", "Rate", "Total", "Discount", "CGST Rate", "CGST Amount", "SGST Rate", "SGST Amount", "IGST Rate", "IGST Amount"]}
+              tableData={this.state.List}
+              className="table"
+            />
+            <tr>
+              <td class="total"><b>TOTAL VALUE BEFORE TAX &nbsp;&nbsp;{"₹ " + this.state.itemTotal}</b></td>
+            </tr>
+            <tr>
+              <td class="total"> <b>CGST &nbsp;&nbsp;{"₹ " + this.state.cgstTotal}</b></td>
+            </tr>
+            <tr>
+              <td class="total"><b>SGST&nbsp;&nbsp;{"₹ " + this.state.sgstTotal}</b></td>
+            </tr>
+            <tr>
+              <td class="total"><b>IGST&nbsp;&nbsp;{"₹ " + this.state.igstTotal}</b></td>
+            </tr>
+            <tr>
+              <td class="total"><b>TOTAL DISCOUNT&nbsp;&nbsp;{"₹ " + this.state.discountTotal}</b></td>
+            </tr>
+            <tr>
+              <td class="grand total"><b>GRAND TOTAL&nbsp;&nbsp;{"₹ " + this.state.invoiceTotal}</b></td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td>Signature</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Signatory</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Designation / Status</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <center>
+                  <button className="printButton btn btn-primary" onClick={this.print}>Print</button>
+                </center>
+              </td>
+            </tr>
           </table>
         </main>
       </div>

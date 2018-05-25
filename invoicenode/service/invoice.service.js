@@ -16,7 +16,7 @@ service.addInvoice = async (req, res) => {
     console.log("req.body", req.body);
     let invoiceToAdd = Invoice({
         companyAddressLine1: req.body.companyAddressLine1,
-        companyAddressLine2: req.body.companyAddressLine1,
+        companyAddressLine2: req.body.companyAddressLine2,
         companyCode: req.body.companyCode,
         customerAddressLine1: req.body.customerAddressLine1,
         customerAddressLine2: req.body.customerAddressLine2,
@@ -46,7 +46,6 @@ service.addInvoice = async (req, res) => {
     }
 }
 
-
 service.countInvoice = async (req, res) => {
     console.log("req.query", req.query);
     let invoiceToCount = {
@@ -54,7 +53,6 @@ service.countInvoice = async (req, res) => {
         query: {},
         projection: {}
     };
-
     try {
         const countInvoice = await Invoice.getCount(invoiceToCount);
         logger.info('countinvoice...');
@@ -66,6 +64,7 @@ service.countInvoice = async (req, res) => {
         res.send({ "success": false, "code": "500", "msg": "not found invoicecount", "err": err });
     }
 }
+
 service.getAllInvoice = async (req, res) => {
     console.log("req.query", req.query);
     let invoiceNumber = parseInt(req.query.invoiceNumber);
@@ -81,10 +80,10 @@ service.getAllInvoice = async (req, res) => {
         const invoice = await Invoice.allInvoice(dataToFind);
         logger.info('sending all invoice...');
         return res.send({ success: true, code: 200, msg: "listed ok", data: invoice });
-    } catch (err) {
+    }
+    catch (err) {
         logger.error('Error in getting invoice ' + err);
         return res.send({ success: false, code: 500, msg: "listed false", err: err });
-
     }
 }
 

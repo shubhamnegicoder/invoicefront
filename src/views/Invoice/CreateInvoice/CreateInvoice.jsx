@@ -21,10 +21,12 @@ class CreateInvoice extends React.Component {
             companyState: "",
             companyAddressLine1: "",
             companyAddressLine2: "",
+            companyGSTIN: "",
             customerCode: "",
             customerState: "",
             customerAddressLine1: "",
             customerAddressLine2: "",
+            customerGSTIN: "",
             productCode: "",
             taxCode: "",
             code: "",
@@ -127,7 +129,7 @@ class CreateInvoice extends React.Component {
         axios
             .get("http://localhost:8080/allCompany")
             .then((res) => {
-                // console.log("response from /allCompany", res);
+                console.log("response from /allCompany", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -141,6 +143,7 @@ class CreateInvoice extends React.Component {
         axios
             .get("http://localhost:8080/allCustomer")
             .then((res) => {
+                console.log("response from /allCustomer", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -362,9 +365,11 @@ class CreateInvoice extends React.Component {
             companyCode: parsedData.companyCode,
             companyAddressLine1: parsedData.companyAddressLine1,
             companyAddressLine2: parsedData.companyAddressLine2,
+            companyGSTIN: this.state.companyGSTIN,
             customerCode: parsedData.customerCode,
             customerAddressLine1: parsedData.customerAddressLine1,
             customerAddressLine2: parsedData.customerAddressLine2,
+            customerGSTIN: this.state.customerGSTIN,
             invoiceDate: parsedData.invoiceDate,
             invoiceNumber: parsedData.invoiceNumber,
             items: items,
@@ -387,7 +392,7 @@ class CreateInvoice extends React.Component {
                         icon: "success"
                     })
                         .then(() => {
-                            window.location.href = "./viewInvoice?invoiceNo=" + this.state.invoiceNo;
+                            window.location.href = "./viewInvoice?id=" + this.state.id + "&invoiceNo=" + this.state.invoiceNo;
                         })
                 }
             })
@@ -398,7 +403,6 @@ class CreateInvoice extends React.Component {
         this.getItemDropdownData();
         this.getTaxData();
         this.getCount();
-
     }
     componentWillUnmount() {
         window.location.reload();
@@ -410,6 +414,7 @@ class CreateInvoice extends React.Component {
                     this.setState({
                         companyAddressLine1: item.addressLine1,
                         companyAddressLine2: item.addressLine2,
+                        companyGSTIN: item.companyGSTNo,
                         companyState: item.stateName,
                         setAddressOfCompany: true
                     })
@@ -422,6 +427,7 @@ class CreateInvoice extends React.Component {
                     this.setState({
                         customerAddressLine1: item.addressLine1,
                         customerAddressLine2: item.addressLine2,
+                        customerGSTIN: item.customerGSTNo,
                         customerState: item.stateName,
                         setAddressOfCustomer: true
                     })

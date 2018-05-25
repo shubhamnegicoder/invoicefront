@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import AutoIncrement from "mongoose-auto-increment";
 import ObjectId from 'bson-objectid';
+
 AutoIncrement.initialize(mongoose);
 
 const InvoiceSchema = mongoose.Schema({
@@ -45,6 +46,7 @@ let InvoiceModel = mongoose.model('invoice', InvoiceSchema);
 InvoiceModel.addInvoice = (invoiceToAdd) => {
     return invoiceToAdd.save();
 }
+
 InvoiceModel.getCount = (invoiceToCount) => {
     console.log("invoiceToCount", invoiceToCount);
     return InvoiceModel.find(invoiceToCount.query).count();
@@ -53,7 +55,11 @@ InvoiceModel.getCount = (invoiceToCount) => {
 InvoiceModel.allInvoice = (dataToFind) => {
     console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
     return InvoiceModel.aggregate([
-        { $match: { invoiceNumber: dataToFind.query.invoiceNumber } },
+        {
+            $match: {
+                invoiceNumber: dataToFind.query.invoiceNumber
+            }
+        },
         {
             $lookup: {
                 from: "customer",
@@ -61,7 +67,6 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 foreignField: "customerCode",
                 as: "customer_docs"
             }
-
         },
         {
             $unwind: "$customer_docs"
@@ -73,12 +78,11 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 foreignField: "companyCode",
                 as: "company_docs"
             }
-
-
         },
         {
             $unwind: "$company_docs"
-        }, {
+        },
+        {
             $project: {
                 logo: "$company_docs.logo",
                 companyAddressLine1: 1,
@@ -108,6 +112,5 @@ InvoiceModel.allInvoice = (dataToFind) => {
         }
     ]);
 }
-
 
 export default InvoiceModel 
