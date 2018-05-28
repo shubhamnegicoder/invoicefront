@@ -403,6 +403,11 @@ class CreateInvoice extends React.Component {
         this.getItemDropdownData();
         this.getTaxData();
         this.getCount();
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
     }
     componentWillUnmount() {
         window.location.reload();

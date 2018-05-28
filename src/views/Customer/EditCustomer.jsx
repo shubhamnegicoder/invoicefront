@@ -125,7 +125,11 @@ class EditCustomer extends React.Component{
     componentWillMount() {
      
         this.data();
-        
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
     }
 
     handleChange1 = (event) => {

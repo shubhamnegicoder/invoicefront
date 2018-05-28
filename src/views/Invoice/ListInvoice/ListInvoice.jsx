@@ -29,6 +29,13 @@ class ListInvoice extends React.Component {
       componentDidMount(){
         this.List();
        }
+       componentWillMount(){
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
+      }
        List = () => {
     
         fetch("http://localhost:8080/allProduct",{

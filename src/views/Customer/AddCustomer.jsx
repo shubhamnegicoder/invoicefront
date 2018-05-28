@@ -117,6 +117,11 @@ class AddCustomer extends React.Component{
 
     componentWillMount() {
         this.data();
+            let id=localStorage.getItem("id")
+            if(id==null){
+              window.location.href="/login"
+            }
+
     }
 
     handleChange1 = (event) => {

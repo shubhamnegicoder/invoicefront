@@ -39,8 +39,15 @@ class CompanyList extends React.Component{
 
     componentDidMount(){ 
         this.list();
+       
     }
-
+   componentWillMount(){
+    console.log(this.state.data);
+    let id=localStorage.getItem("id")
+    if(id==null){
+      window.location.href="/login"
+    }
+   }
     handleClick=(e)=>{
        // console.log('button cliked');
         e.preventDefault();

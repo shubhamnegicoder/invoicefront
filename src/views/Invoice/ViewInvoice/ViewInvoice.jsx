@@ -89,6 +89,11 @@ export default class ViewInvoice extends React.Component {
   componentWillMount() {
     let invoiceNo = this.getQuery('invoiceNo');
     this.getData(invoiceNo);
+    console.log(this.state.data);
+    let id=localStorage.getItem("id")
+    if(id==null){
+      window.location.href="/login"
+    }
   }
   render() {
     const styles = theme => ({

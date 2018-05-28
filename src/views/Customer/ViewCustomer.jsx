@@ -26,6 +26,14 @@ class ViewCustomer extends React.Component{
 
     componentDidMount(){
         this.fetchCustomerById();
+      
+           }
+    componentWillMount(){
+            console.log(this.state.data);
+            let id=localStorage.getItem("id")
+            if(id==null){
+              window.location.href="/login"
+            }
            }
 
     fetchCustomerById=()=>{

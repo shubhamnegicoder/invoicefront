@@ -25,6 +25,13 @@ class City extends React.Component {
             isActive:false
         }
     };
+    componentWillMount(){
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
+    }
     getMuiTheme = () => createMuiTheme({
         overrides: {
           MUIDataTable: {

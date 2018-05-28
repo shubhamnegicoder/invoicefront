@@ -42,7 +42,14 @@ class CustomerList extends React.Component{
     componentDidMount(){ 
 
         this.list();
-        console.log(this.state.data);
+       
+    }
+    componentWillMount(){
+      console.log(this.state.data);
+      let id=localStorage.getItem("id")
+      if(id==null){
+        window.location.href="/login"
+      }
     }
 
     handleClick=(e)=>{

@@ -40,7 +40,8 @@ class Dashboard extends React.Component {
   };
   componentWillMount(){
     let id=localStorage.getItem("id")
-    if(id==""&& id==undefined){
+    
+     if(id==null){
       window.location.href="/login"
     }
   }

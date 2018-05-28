@@ -27,6 +27,13 @@ class Country extends React.Component {
 
         }
     };
+    componentWillMount(){
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
+    }
     getMuiTheme = () => createMuiTheme({
         overrides: {
           MUIDataTable: {

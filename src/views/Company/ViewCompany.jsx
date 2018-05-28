@@ -27,6 +27,14 @@ class ViewCompany extends React.Component{
 
     componentDidMount(){
         this.fetchCompanyById();
+        
+           }
+           componentWillMount(){
+            console.log(this.state.data);
+            let id=localStorage.getItem("id")
+            if(id==null){
+              window.location.href="/login"
+            }
            }
 
     fetchCompanyById=()=>{
