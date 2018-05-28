@@ -48,15 +48,20 @@ service.addInvoice = async (req, res) => {
 }
 
 service.countInvoice = async (req, res) => {
-    console.log("req.query", req.query);
+   // console.log("invoice date in count service",new Date());
+  var inDate = new Date();
+  inDate.setHours(5);
+  inDate.setMinutes(30);
+  inDate.setSeconds(0);
+  inDate.setMilliseconds(0);
+  console.log("date after changes is :",inDate);
     let invoiceToCount = {
-        // query: { createdBy: ObjectId(req.query.id) },
-        query: { }
+        query: { invoiceDate: inDate },     
     };
     try {
         const countInvoice = await Invoice.getCount(invoiceToCount);
         logger.info('countinvoice...');
-        res.send({ "success": true, "code": "200", "msg": successMsg.addInvoice, "data": countInvoice });
+        res.send({ "success": true, "code": "200", "msg": "successMsg.countInvoice", "data": countInvoice });
     }
     catch (err) {
         console.log("catch");
@@ -65,18 +70,34 @@ service.countInvoice = async (req, res) => {
     }
 }
 
-service.topTenInvoice = async (req, res) => {
-    console.log("topTenInvoice service");
-    try {
-        const topTenInvoice = await Invoice.topTenInvoice();
-        console.log("topTenInvoice after model", topTenInvoice);
-        res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": topTenInvoice });
-    }
-    catch (err) {
-        console.log("catch");
-        res.send({ "success": false, "code": "500", "msg": "Not found top ten invoice", "err": err });
-    }
-}
+// service.sales = async (req, res) => {
+//     console.log("this is sales service"); 
+//     try {
+//         const invoiceSales = await Invoice.sales();
+//         console.log("invoiceSales", invoiceSales);
+//        //logger.info('countinvoice...');
+//         res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": invoiceSales });
+//     }
+//     catch (err) {
+//         console.log("catch");
+//        // logger.error('Error in getting Invoice- ' + err);
+//         res.send({ "success": false, "code": "500", "msg": "not found invoicecount", "err": err });
+//     }
+// }
+
+
+// service.topTenInvoice = async (req, res) => {
+//     console.log("topTenInvoice service");
+//     try {
+//         const topTenInvoice = await Invoice.topTenInvoice();
+//         console.log("topTenInvoice after model", topTenInvoice);
+//         res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": topTenInvoice });
+//     }
+//     catch (err) {
+//         console.log("catch");
+//         res.send({ "success": false, "code": "500", "msg": "Not found top ten invoice", "err": err });
+//     }
+// } 
 
 service.getAllInvoice = async (req, res) => {
     console.log("req.query", req.query);

@@ -36,22 +36,29 @@ import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 
 var cardoptions={}
 class Dashboard extends React.Component {
+
   state = {
     value: 0,
-    cardoptions:[{totalinvoice:""},{totalsales:""}]
+    totalinvoice:"",
+    totalsales:""
   };
+
   componentWillMount(){
+    this.tickets();
     let id=localStorage.getItem("id")
     if(id==""&& id==undefined){
       window.location.href="/login"
     }
     
   }
+
   tickets=()=>{
     axios.get("http://localhost:8080/countInvoice")
       .then(
         (result) => {
-          this.setState({ [cardoptions.totalinvoice]: result.data.data })
+          console.log("result of count invoice",result.data.data);
+          this.setState({ totalinvoice: result.data.data })
+          console.log("totalinvoice count", this.state.totalinvoice);
         },
         (error) => {
           // console.log("error", error)
@@ -62,22 +69,28 @@ class Dashboard extends React.Component {
     this.setState({ value });
   };
 
+  // componentWillMount(){
+  //   this.tickets();
+  // }
+
+
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
   render() {
+   
     return (
-      <div>
+      <div> 
         <Grid container>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
               icon={ContentCopy}
               iconColor="orange"
               title="Total Invoice"
-              description="49/50"
-              small="GB"
-              statIcon={Warning}
-              statIconColor="danger"
+              description={this.state.totalinvoice}
+              small=""
+             statIcon={Warning}
+              statIconColor=""
             
             />
           </ItemGrid>
@@ -86,7 +99,17 @@ class Dashboard extends React.Component {
               icon={Store}
               iconColor="green"
               title="Total sales"
-              description="$34,245"
+              description=""
+              statIcon={DateRange}
+              statText="Last 24 Hours"
+            />
+          </ItemGrid>
+          <ItemGrid xs={12} sm={6} md={3}>
+            <StatsCard
+              icon={Store}
+              iconColor="green"
+              title="Top Ten Invoice"
+              description=""
               statIcon={DateRange}
               statText="Last 24 Hours"
             />
