@@ -88,16 +88,14 @@ class CompanyList extends React.Component{
           mode: 'cors',
           headers:  new Headers({
           'Content-Type': 'application/json'
-        // 'authorization':"Key@123"
+        // 'authorization':"Key@123" 
         })
       })
       .then(res => res.json())
       .then(
         (result) => {
           var mainArray = [];
-          console.log("result of list company like result",result);
           result.data.forEach((responseData)=>{
-            console.log("responseData.isActive",responseData.isActive);
               var dataArray = []; 
               dataArray.push(responseData.companyCode)
               dataArray.push(responseData.companyName)
