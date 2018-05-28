@@ -138,11 +138,6 @@ class Dashboard extends React.Component {
     this.setState({ value });
   };
 
-  // componentWillMount(){
-  //   this.tickets();
-  // }
-
-
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
@@ -189,7 +184,7 @@ class Dashboard extends React.Component {
       selectableRows: false,
       filterType: 'false',
       responsive: 'stacked',
-      rowsPerPage: 10,
+     rowsPerPage: 10,
       page: 1,
       viewColumns: true,
       print: false,
