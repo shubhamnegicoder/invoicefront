@@ -4,6 +4,7 @@ import ObjectId from 'bson-objectid';
 
 AutoIncrement.initialize(mongoose);
 
+
 const InvoiceSchema = mongoose.Schema({
     companyAddressLine1: { type: String },
     companyAddressLine2: { type: String },
@@ -48,9 +49,101 @@ InvoiceModel.addInvoice = (invoiceToAdd) => {
 }
 
 InvoiceModel.getCount = (invoiceToCount) => {
-    console.log("invoiceToCount", invoiceToCount);
-    return InvoiceModel.find(invoiceToCount.query).count();
+   // console.log("invoiceToCount", invoiceToCount);
+    return InvoiceModel.find({invoiceDate:{$eq:invoiceToCount.query.invoiceDate}}).count();
 }
+
+InvoiceModel.sales = (invoiceSalesDate) => {
+    console.log("invoiceOfSales in sales model", invoiceSalesDate);
+    return InvoiceModel.aggregate([
+        {
+            $match: { "invoiceDate": { "$eq": invoiceSalesDate.query.invoiceDate } }
+        },
+        {
+        $group: {
+            _id:"",
+            total: { $sum: '$invoiceTotal' }
+        }
+    }, {
+            $project: {
+                total: 1
+            }
+        }
+    ]);
+}
+
+InvoiceModel.topTenInvoice = (topTenData) => {
+    console.log("topTenInvoice model");
+   // var topTenInvoiceDate = eqDate
+   // console.log("eqDate", eqDate)
+    return InvoiceModel.aggregate([
+        {
+            $match: {
+                "invoiceDate": {
+                    $eq: topTenData.query.invoiceDate
+                  
+                }
+               // .sort({ invoiceTotal: -1 }).limit(2)
+            }
+                 
+        }, { $sort: { invoiceTotal: -1 } }, { $limit: 10 },
+        {
+            $lookup: {
+                from: "customer",
+                localField: "customerCode",
+                foreignField: "customerCode",
+                as: "customer_docs"
+            }
+
+        },
+        {
+            $unwind: "$customer_docs"
+        },
+        {
+            $lookup: {
+                from: "company",
+                localField: "companyCode",
+                foreignField: "companyCode",
+                as: "company_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$company_docs"
+        }, {
+            $project: {
+                logo: "$company_docs.logo",
+                companyAddressLine1: 1,
+                companyAddressLine2: 1,
+                companyCode: 1,
+                companyName: "$company_docs.companyName",
+                customerAddressLine1: 1,
+                customerAddressLine2: 1,
+                customerCode: 1,
+                customerName: "$customer_docs.customerName",
+                discount: 1,
+                invoiceDate: 1,
+                invoiceNumber: 1,
+                items: 1,
+                itemTotal: 1,
+                discountTotal: 1,
+                cgstTotal: 1,
+                sgstTotal: 1,
+                igstTotal: 1,
+                taxTotal: 1,
+                invoiceTotal: 1,
+                createdBy: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                modifiedBy: 1
+            }
+        }
+    ]);
+//     //  return InvoiceModel.find({ invoiceDate: { $eq: today } }).sort({ invoiceTotal: -1 }).limit(2);
+   
+ }
+
 
 InvoiceModel.allInvoice = (dataToFind) => {
     console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
@@ -102,7 +195,7 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 cgstTotal: 1,
                 sgstTotal: 1,
                 igstTotal: 1,
-                taxTotal: 1,
+                taxTotal: 1, 
                 invoiceTotal: 1,
                 createdBy: 1,
                 createdAt: 1,

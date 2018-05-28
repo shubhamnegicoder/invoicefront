@@ -20,6 +20,7 @@ class CustomerList extends React.Component{
             countryCode:"",
             postalCode:"",
             contactNo:"",
+            isActive:"",
           
                 data:[]        
         };
@@ -113,10 +114,10 @@ class CustomerList extends React.Component{
               //dataArray.push(responseData.addressLine2)
               // dataArray.push(responseData.cityName)
               // dataArray.push(responseData.stateName)
-               dataArray.push(responseData.countryName)
+              // dataArray.push(responseData.countryName)
               //dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
-             // dataArray.push(responseData.isActive)
+           dataArray.push(responseData.isActive?"Yes":"No")
              //var array = "";
             dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button>);
             dataArray.push(<Button  onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
@@ -174,7 +175,7 @@ class CustomerList extends React.Component{
             //   }
             // },
             {
-              name: "Country",
+              name: "IsActive",
                 options: {
                   filter: true
                 }

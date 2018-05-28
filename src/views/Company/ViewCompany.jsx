@@ -1,6 +1,7 @@
 import React from "react";
 import { Button} from "material-ui";
 import swal from "sweetalert";
+import Checkbox from 'material-ui/Checkbox';
 
 class ViewCompany extends React.Component{
     constructor(props){
@@ -21,6 +22,7 @@ class ViewCompany extends React.Component{
             contactNo:"",
             countryName:"",
             stateName:"",
+            isActive:"",
             cityName:""
         };
     }
@@ -68,6 +70,7 @@ class ViewCompany extends React.Component{
                     this.setState({contactNo:result.data[0].contactNo});
                     this.setState({cityName:result.data[0].cityName});
                     this.setState({stateName:result.data[0].stateName});
+                    this.setState({ isActive: result.data[0].isActive });
                     this.setState({countryName:result.data[0].countryName});
                  
                 },
@@ -142,12 +145,19 @@ class ViewCompany extends React.Component{
                 </tr>
                 <tr>
                     <td>Contact No</td>
-                    <td></td>
+                    <td></td> 
                     <td><input type="text" value={this.state.contactNo} ref="contactNo"/></td>
                 </tr>
                 <tr>
+                    <td>IsActive</td><td>
+                    </td><td>
+                        
+                        <input type="text" value={this.state.isActive ? "Yes" : "No"} ref="isActive"/>
+                    </td>
+                </tr>
+                <tr>
 
-                    {/* <td align="right"><input type="submit" value="Update" onClick={this.update} style={{backgroundColor:"purple"}}/></td> */}  
+                     
                     <td></td> 
                     <td align="center"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"purple"}}/></td>
                     <td></td>

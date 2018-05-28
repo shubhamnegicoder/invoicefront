@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Grid } from "material-ui";
 import $ from 'jquery';
@@ -157,7 +158,7 @@ class CreateInvoice extends React.Component {
         axios
             .get("http://localhost:8080/allProduct?id=" + this.state.id)
             .then((res) => {
-                // console.log("response from /allProduct", res);
+                console.log("response from /allProduct", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);

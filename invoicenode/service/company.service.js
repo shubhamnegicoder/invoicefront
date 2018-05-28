@@ -78,7 +78,7 @@ service.addCompany = async (req,res)=>{
 	if(req.body.addressLine2 == ""){
 		return res.send({success:false,code:500,msg:"Address is required"});
 	}
-	if(req.body.cityCode == ""){
+	if(req.body.cityCode == ""){ 
 		return res.send({success:false,code:500,msg:"City is required"});
 	}
 	if(req.body.stateCode == ""){
@@ -137,6 +137,7 @@ service.editCompany = async (req,res)=>{
 		countryCode:req.body.countryCode,
 		postalCode:req.body.postalCode,
 		contactNo:req.body.contactNo,
+		isActive:req.body.isActive,
 		modifiedBy:req.body.modifiedBy,
 		updatedAt:req.body.updatedAt
 	};
