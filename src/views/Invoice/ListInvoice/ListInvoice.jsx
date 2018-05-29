@@ -43,6 +43,13 @@ class ListInvoice extends React.Component {
        
         window.location.href="/EditInvoice?_id="+id
        }
+       componentWillMount(){
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
+      }
        List = () => {
     
         fetch("http://localhost:8080/allList?id="+this.state.id,{

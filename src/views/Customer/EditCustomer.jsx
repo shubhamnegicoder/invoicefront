@@ -1,6 +1,8 @@
 import React from "react";
 import { Button} from "material-ui";
 import swal from "sweetalert";
+import Checkbox from 'material-ui/Checkbox';
+
 var maindata = [];
 var dropDownData = [];
 var dd;
@@ -26,6 +28,7 @@ class EditCustomer extends React.Component{
             countryName:"",
             postalCode:"",
             contactNo:"",
+            isActive:false,
             dropDownData: [],
             dropDownData2: [],
             dropDownData3: [],
@@ -125,7 +128,11 @@ class EditCustomer extends React.Component{
     componentWillMount() {
      
         this.data();
-        
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
     }
 
     handleChange1 = (event) => {
@@ -189,7 +196,7 @@ class EditCustomer extends React.Component{
                     this.setState({countryCode:result.data[0].countryCode});
                     this.setState({postalCode:result.data[0].postalCode});
                     this.setState({contactNo:result.data[0].contactNo});
-
+                    this.setState({ isActive: result.data[0].isActive });
                     this.data2(this.state.countryCode)
                     this.data3(this.state.stateCode)
       },
@@ -294,6 +301,11 @@ class EditCustomer extends React.Component{
             }
         )
     }
+
+    handleCheckbox = name => event => {
+        this.setState({ [name]: event.target.checked });
+    }
+
     render(){
         return (<div>
             <table style={{width:"600px",height:"450px"}} align="center">
@@ -388,6 +400,17 @@ class EditCustomer extends React.Component{
                     <td><span style={{color:"red"}}>*</span>Contact No</td>
                     <td></td>
                     <td><input type="text" value={this.state.contactNo} ref="contactNo" onChange={this.handleChange}/></td>
+                </tr>
+                 <tr>
+                    <td><span style={{ color: "red" }}>*</span>IsActive</td><td>
+                    </td><td>
+                        <Checkbox selected
+                            checked={this.state.isActive}
+                            onChange={this.handleCheckbox('isActive')}
+                            value="isActive"
+                            color="primary"
+                        />
+                    </td>
                 </tr>
                 <tr>
 

@@ -33,6 +33,13 @@ export default class App extends React.Component {
         // this.setState({countryname: this.refs.name.value });
 
     }
+    componentWillMount(){
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
+    }
     handleCheck(event){
         this.setState({ [event.target.name]: event.target.checked });
     }

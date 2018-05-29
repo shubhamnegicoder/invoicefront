@@ -66,6 +66,13 @@ export default class App extends React.Component {
             isActive:newprops.data.isActive})
 
     }
+    componentWillMount(){
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
+    }
     
     data = () => {
       

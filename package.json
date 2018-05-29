@@ -29,6 +29,7 @@
     "react-chartist": "0.13.1",
     "react-dom": "16.3.2",
     "react-google-maps": "9.4.5",
+    "react-history": "^0.18.2",
     "react-image-upload": "0.0.1",
     "react-images-upload": "^1.0.8",
     "react-js-pagination": "^3.0.2",

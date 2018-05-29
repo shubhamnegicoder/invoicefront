@@ -28,7 +28,7 @@ const CompanySchema = mongoose.Schema({
     modifiedBy:{type: mongoose.Schema.ObjectId},
     createAt:{type:Date},
     updatedAt:{type: Date},
-    isActive:{type:Boolean}
+    isActive:{type:Boolean} 
 }, {collection : 'company'});
 
 let CompanyModel = mongoose.model('company', CompanySchema);
@@ -91,6 +91,7 @@ CompanyModel.allCompany = () =>{
                 countryName:"$country_docs.countryName",
                 postalCode:1,
                 contactNo:1,
+                isActive:1
 
             }
         }
@@ -160,6 +161,7 @@ CompanyModel.oneCompany = (dataToFind) =>{
                 countryName:"$country_docs.countryName",
                 postalCode:1,
                 contactNo:1,
+                isActive:1
 
             }
         }

@@ -19,6 +19,7 @@ class HeaderLinks extends React.Component {
   };
   
   logout=()=>{
+   
     swal({
      
       text: "Are you sure that you want to leave this page?",
@@ -32,8 +33,8 @@ class HeaderLinks extends React.Component {
       if (result.value) {
          localStorage.removeItem("id");
          localStorage.removeItem("show");
+         localStorage.setItem("log",true)
         window.location.href="/";
-        // window.location.replaceHistory
       }
     })
   }
@@ -49,7 +50,6 @@ class HeaderLinks extends React.Component {
     }
     return (
       <div>
-        
         <Button variant="raised" color="secondary" classNames={classes.button} onClick={this.logout}>
         Logout
       </Button>

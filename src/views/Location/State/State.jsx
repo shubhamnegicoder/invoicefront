@@ -57,6 +57,13 @@ class State extends React.Component {
             console.log(this.state,"pass as props")
 
     } 
+    componentWillMount(){
+        console.log(this.state.data);
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
+    }
   
     data = () => {
         axios.get("http://localhost:8080/allState?id=5af170d60c06c02559273df1")

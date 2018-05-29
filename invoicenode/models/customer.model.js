@@ -90,6 +90,7 @@ CustomerModel.allCustomer = () =>{
                 countryName:"$country_docs.countryName",
                 postalCode:1,
                 contactNo:1,
+                isActive:1
 
             }
         }
@@ -157,6 +158,7 @@ CustomerModel.oneCustomer = (dataToFind) =>{
                 countryName:"$country_docs.countryName",
                 postalCode:1,
                 contactNo:1,
+                isActive:1
 
             }
         }
