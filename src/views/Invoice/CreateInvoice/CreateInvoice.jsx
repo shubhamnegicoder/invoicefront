@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Grid } from "material-ui";
 import $ from 'jquery';
@@ -96,6 +95,7 @@ class CreateInvoice extends React.Component {
                 if (e.target.value == item.productCode) {
                     tempTaxCode = item.taxCode;
                     $('.name' + i).val(item.productName);
+                    $('.hsn' + i).val(item.taxCode);
                     $('.rate' + i).val(item.rate);
                     this.setState({
                         taxCode: item.taxCode
@@ -158,7 +158,7 @@ class CreateInvoice extends React.Component {
         axios
             .get("http://localhost:8080/allProduct?id=" + this.state.id)
             .then((res) => {
-                console.log("response from /allProduct", res);
+                // console.log("response from /allProduct", res);
                 let tempData = [];
                 res.data.data.map((item, key) => {
                     tempData.push(item);
@@ -222,7 +222,16 @@ class CreateInvoice extends React.Component {
                             readOnly
                         />
                     </div>
-                    <div className="col">
+                    <div className="col" style={{ marginLeft: '7px' }}>
+                        <input
+                            type="text"
+                            className={"form-control hsn" + this.state.invoiceRow.length}
+                            name={"hsn" + invoiceRow.length}
+                            onChange={(e) => this.handleInvoice(e)}
+                            readOnly
+                        />
+                    </div>
+                    <div className="col" style={{ marginLeft: '15px' }}>
                         <input
                             type="text"
                             className={"form-control qty" + this.state.invoiceRow.length}
@@ -347,6 +356,7 @@ class CreateInvoice extends React.Component {
         let item = {};
         for (var i = 0; i < invoiceRow.length; i++) {
             item.name = parsedData["itemName" + i];
+            item.hsn = parsedData["hsn" + i];
             item.qty = parsedData["qty" + i];
             item.rate = parsedData["rate" + i];
             item.total = parsedData["total" + i];
@@ -383,20 +393,34 @@ class CreateInvoice extends React.Component {
             invoiceTotal: parsedData.invoiceTotal
         }
         console.log("Data sent", finalData);
-        superagent
-            .post("http://localhost:8080/addInvoice")
-            .send(finalData)
-            .then((res) => {
-                if (res.body.success) {
-                    swal({
-                        text: "Invoice Saved !",
-                        icon: "success"
-                    })
-                        .then(() => {
+        if (this.validation(finalData) == true) {
+            superagent
+                .post("http://localhost:8080/addInvoice")
+                .send(finalData)
+                .then((res) => {
+                    if (res.body.success) {
+                        swal({
+                            text: "Invoice Saved !",
+                            icon: "success"
+                        }).then(() => {
                             window.location.href = "./viewInvoice?id=" + this.state.id + "&invoiceNo=" + this.state.invoiceNo;
                         })
-                }
-            })
+                    }
+                })
+        }
+    }
+    validation = (data) => {
+        if (data.companyAddressLine1 == "" || data.companyAddressLine2 == "") {
+            alert("Please select Company from dropdown !");
+            return false;
+        }
+        if (data.customerAddressLine1 == "" || data.customerAddressLine2 == "") {
+            alert("Please select Customer from dropdown !");
+            return false;
+        }
+        else {
+            return true;
+        }
     }
     componentWillMount() {
         this.getCompanyDropdownData();
@@ -404,11 +428,6 @@ class CreateInvoice extends React.Component {
         this.getItemDropdownData();
         this.getTaxData();
         this.getCount();
-        console.log(this.state.data);
-        let id=localStorage.getItem("id")
-        if(id==null){
-          window.location.href="/login"
-        }
     }
     componentWillUnmount() {
         window.location.reload();
@@ -483,6 +502,7 @@ class CreateInvoice extends React.Component {
         return (
             <form onSubmit={this.submitInvoice}>
                 {this.state.check ? this.addRow() : ""}
+                <hr />
                 <div style={{ textAlign: 'center' }}>
                     {/* Company & Customer Headings */}
                     <div className="row">
@@ -560,7 +580,7 @@ class CreateInvoice extends React.Component {
                     {/* Invoice Date and Number Fields */}
                     <div className="row">
                         <div className="col-sm">
-                            <input type="date" style={{ minWidth: '200px' }} name="invoiceDate" />
+                            <input type="date" style={{ minWidth: '200px' }} name="invoiceDate" required />
                         </div>
                         <div className="col-sm">
                             <input type="text" style={{ minWidth: '200px' }} name="invoiceNumber" value={this.state.invoiceNo} />
@@ -579,6 +599,9 @@ class CreateInvoice extends React.Component {
                     </div>
                     <div className="col">
                         <label color="black">Item Name</label>
+                    </div>
+                    <div className="col">
+                        <label color="black">HSN Code / Accounting Code</label>
                     </div>
                     <div className="col">
                         <label color="black">Quantity</label>
@@ -621,14 +644,17 @@ class CreateInvoice extends React.Component {
                 }
                 <hr />
                 <div className="row" style={{ textAlign: 'center' }}>
-                    {/* <div className="col">
-                        <label color="black">Serial No.</label>
-                    </div> */}
-                    <div className="col"></div>
-                    <div className="col"></div>
-                    <div className="col"></div>
-                    <div className="col"></div>
                     <div className="col">
+                        <input
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={this.addRow}
+                            value="+ Add Row"
+                        /></div>
+                    <div className="col"></div>
+                    <div className="col"></div>
+                    <div className="col"></div>
+                    <div className="col" style={{ marginLeft: '50px' }}>
                         <label color="black">Grand Total</label>
                         <input
                             type="text"
@@ -686,9 +712,6 @@ class CreateInvoice extends React.Component {
                     </div>
                 </div>
                 <div className="row" style={{ textAlign: 'center' }}>
-                    {/* <div className="col">
-                        <label color="black">Serial No.</label>
-                    </div> */}
                     <div className="col"></div>
                     <div className="col"></div>
                     <div className="col"></div>
@@ -706,22 +729,9 @@ class CreateInvoice extends React.Component {
                             type="text"
                             name={"invoiceTotal"}
                             className="form-control invoiceTotal"
+                            readOnly
                         />
-                    </div>
-                    <div className="col"></div>
-                </div>
-                <hr />
-                {/* Invoice Buttons */}
-                <div className="row">
-                    <div className="col-8">
-                        <input
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={this.addRow}
-                            value="+ Add Row"
-                        />
-                    </div>
-                    <div className="col-4">
+                        <hr />
                         <input
                             type="submit"
                             className="btn btn-success"
@@ -730,6 +740,7 @@ class CreateInvoice extends React.Component {
                         />
                     </div>
                 </div>
+                <hr />
             </form >
         );
     }
