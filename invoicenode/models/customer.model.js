@@ -176,4 +176,7 @@ CustomerModel.editCustomer = (addToCustomer) =>{
     		//console.log("_id",addToCustomer.data);
     return CustomerModel.update(addToCustomer.query,addToCustomer.data);
 }
+CustomerModel.getOneCustomer=(oneCustomer)=>{
+    return CustomerModel.find(oneCustomer.query);
+}
 export default CustomerModel;

@@ -154,5 +154,16 @@ service.editCompany = async (req,res)=>{
 		return res.send({success:false, code:500, msg:"Error in editing Company", err:error})
 	}
 }
+service.getOneCompany = async (req,res)=>{ 
+	try{
+		let dataToFind={ 
+			query:{"companyCode":req.query.companyCode}
+		};
+		var oneCompany = await CompanyModel.getOneCompany(dataToFind);
+		return res.send({success:true, code:200, msg:"Successfully found", data:oneCompany}); 
+	}catch(error){
+		return res.send({success:false, code:500, msg:"Error in getting Company", err:error})
+	}
+}
 
 export default service;

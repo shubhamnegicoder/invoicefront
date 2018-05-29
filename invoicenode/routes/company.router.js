@@ -51,5 +51,8 @@ router.post('/addCompany',upload.single('file'), (req, res) => {
 router.post('/editCompany', (req, res) => {
     companyService.editCompany(req, res);
 });
+router.get('/getOneCompany', (req, res) => {
+    companyService.getOneCompany(req, res);
+  });
 
 export default router;

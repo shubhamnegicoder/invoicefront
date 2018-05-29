@@ -20,6 +20,7 @@ class ViewInvoice extends React.Component {
       companyAddress: "",
       companyGSTIN: "",
       customerName: "",
+      List:[],
       customerAddress: "",
       customerGSTIN: "",
       List: [],
@@ -179,7 +180,23 @@ class ViewInvoice extends React.Component {
     let invoiceNo = this.getQuery('invoiceNo');
     this.getData(invoiceNo);
   }
+  
   render() {
+    const styles = theme => ({
+      root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+        overflowX: 'auto',
+      },
+      table: {
+        minWidth: 700,
+      },
+      row: {
+        '&:nth-of-type(odd)': {
+          backgroundColor: theme.palette.background.default,
+        },
+      },
+    });
     return (
       <div id="container" class="container-fluid">
         <div class="row">

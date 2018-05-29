@@ -35,4 +35,5 @@ TaxModel.editTax = (taxToEdit) =>{
     return TaxModel.update(taxToEdit.query,taxToEdit.data);
 }
 
+
 export default TaxModel;

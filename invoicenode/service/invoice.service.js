@@ -140,5 +140,86 @@ service.getAllInvoice = async (req, res) => {
         return res.send({ success: false, code: 500, msg: "listed false", err: err });
     }
 }
+service.getAllList = async (req, res) => {
+    try {
+        let dataTo = {
+            query:{createdBy:ObjectId(req.query.id)}
+            
+        };
+        
+        console.log(dataTo,"aaaaaa")
+       
+        const invoicedata = await Invoice.getAllList(dataTo);
+        res.send({ success: true, code: 200, "msg": "success", data:invoicedata });
+        
+       
+        // console.log(tax,"data");
+    } catch (err) {
+        // logger.error('Error in getting user- ' + err);
+        // console.log(err);
+        res.send({ success: false, code: 500, "msg": "error", err: err });
+    }
+}
+service.editInvoice = async (req, res) => {
+   
+    if (!req.body.id) {
+        return res.send({ "success": false, "code": 500, "msg": "error" })
+    }
+   
+    let InvoiceEdit = {
+        companyAddressLine1: req.body.companyAddressLine1,
+        companyAddressLine2: req.body.companyAddressLine1,
+        companyCode: req.body.companyCode,
+        customerAddressLine1: req.body.customerAddressLine1,
+        customerAddressLine2: req.body.customerAddressLine2,
+        customerCode: req.body.customerCode,
+        invoiceDate: req.body.invoiceDate,
+        invoiceNumber: req.body.invoiceNumber,
+        items: req.body.items,
+        itemTotal: req.body.itemTotal,
+        discountTotal: req.body.discountTotal,
+        cgstTotal: req.body.cgstTotal,
+        sgstTotal: req.body.sgstTotal,
+        igstTotal: req.body.igstTotal,
+        taxTotal: req.body.taxTotal,
+        invoiceTotal: req.body.invoiceTotal,
+        modifiedBy: ObjectId(req.body.userId)
+       
+    }
+    let invoiceToEdit = {
+        query: { "_id": ObjectId(req.body.id )},
+        data: { "$set": InvoiceEdit }
+
+    };
+    console.log(invoiceToEdit ,"body")
+  
+    try {
+        const editInvoice = await Invoice.editInvoice(invoiceToEdit);
+          console.log(editInvoice,"data")
+        res.send({ "success": true, "code": 200, "msg": "success", "data": editInvoice });
+
+    }
+    catch (err) {
+        console.log(err, "erreo")
+        res.send({ "success": false, "code": "500", "msg": "failllll", "err": err });
+    }
+}
+service.getEditList=async (req,res)=>{
+   
+    let dataToedit={
+        query:{"_id":ObjectId(req.query.id)}
+    }
+    console.log(dataToedit,"1111")
+    try{
+      
+
+        const editdata = await Invoice.getEditList(dataToedit);
+        console.log(editdata,"editdata")
+        res.send({ success: true, code: 200, "msg": "success", data:editdata });
+    }
+    catch(err){
+        res.send({ "success": false, "code": "500", "msg": "failu", "err": err });
+    }
+}
 
 export default service;

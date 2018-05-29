@@ -6,27 +6,26 @@ import swal from 'sweetalert';
 import './bootstrap.min.css';
 import parse from 'form-parse';
 import axios from 'axios';
-
+import sweetalert from "sweetalert2";
 import { RegularCard, Button, CustomInput, ItemGrid, Table } from "components";
 
 var invoiceRow = [], parsedData = {}, items = [];
 var invoiceNoPart1, invoiceNoPart2, invoiceNo, deletedRows = 0;
-
-class CreateInvoice extends React.Component {
+var query;
+class EditInvoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             id: localStorage.getItem("id"),
+            query:"",
             companyCode: "",
             companyState: "",
             companyAddressLine1: "",
             companyAddressLine2: "",
-            companyGSTIN: "",
             customerCode: "",
             customerState: "",
             customerAddressLine1: "",
             customerAddressLine2: "",
-            customerGSTIN: "",
             productCode: "",
             taxCode: "",
             code: "",
@@ -35,7 +34,12 @@ class CreateInvoice extends React.Component {
             rate: "",
             total: "",
             discount: "",
-            cgst: "",
+            CGSTRate: "",
+            CGSTAmount:"",
+            SGSTRate:" ",
+            SGSTAmount:"",
+            IGSTRate:"",
+            IGSTAmount:"",
             invoiceRow: [],
             companyDropdownData: [],
             customerDropdownData: [],
@@ -46,34 +50,34 @@ class CreateInvoice extends React.Component {
             check: false,
             check2: false,
             check3: false,
-            invoiceNo: 0
+            invoiceNo:""
         }
     }
     padDigits = (number, digits) => {
         return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
     }
-    getCount = () => {
-        var date = new Date();
-        var year = date.getFullYear();
-        year = year.toString();
-        var month = date.getMonth();
-        month = month.toString();
-        month++;
-        month = this.padDigits(month, 2);
-        invoiceNoPart1 = year + month;
-        axios
-            .get("http://localhost:8080/countInvoice?id=5af170d60c06c02559273df1")
-            .then((res) => {
-                // console.log("response from /countInvoice", res);
-                invoiceNoPart2 = res.data.data + 1;
-                invoiceNoPart2 = this.padDigits(invoiceNoPart2, 4);
-                invoiceNo = invoiceNoPart1 + invoiceNoPart2;
-                invoiceNo = parseInt(invoiceNo);
-                this.setState({
-                    invoiceNo: invoiceNo
-                })
-            })
+    handleInvoice = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
+   
+    // getItemDropdownData = () => {
+    //     axios
+    //         .get("http://localhost:8080/allProduct?id=" + this.state.id)
+    //         .then((res) => {
+    //             console.log("response from /allProduct", res);
+    //             let tempData = [];
+    //             res.data.data.map((item, key) => {
+    //                 tempData.push(item);
+    //             });
+    //             this.setState({
+    //                 itemsDropdownData: tempData,
+    //                 check: true
+    //             });
+    //         })
+    // }
+    
     handleDropdown = (e, param) => {
         if (param == "company") {
             this.setState({
@@ -95,7 +99,6 @@ class CreateInvoice extends React.Component {
                 if (e.target.value == item.productCode) {
                     tempTaxCode = item.taxCode;
                     $('.name' + i).val(item.productName);
-                    $('.hsn' + i).val(item.taxCode);
                     $('.rate' + i).val(item.rate);
                     this.setState({
                         taxCode: item.taxCode
@@ -125,70 +128,55 @@ class CreateInvoice extends React.Component {
                 })
             }
         }
-    }
-    getCompanyDropdownData = () => {
-        axios
-            .get("http://localhost:8080/allCompany")
-            .then((res) => {
-                console.log("response from /allCompany", res);
-                let tempData = [];
-                res.data.data.map((item, key) => {
-                    tempData.push(item);
-                });
-                this.setState({
-                    companyDropdownData: tempData
-                });
-            })
-    }
-    getCustomerDropdownData = () => {
-        axios
-            .get("http://localhost:8080/allCustomer")
-            .then((res) => {
-                console.log("response from /allCustomer", res);
-                let tempData = [];
-                res.data.data.map((item, key) => {
-                    tempData.push(item);
-                });
-                this.setState({
-                    customerDropdownData: tempData
-                });
-            })
-    }
-    getItemDropdownData = () => {
-        axios
-            .get("http://localhost:8080/allProduct?id=" + this.state.id)
-            .then((res) => {
-                console.log("response from /allProduct", res);
-                let tempData = [];
-                res.data.data.map((item, key) => {
-                    tempData.push(item);
-                });
-                this.setState({
-                    itemsDropdownData: tempData,
-                    check: true
-                });
-            })
-    }
-    getTaxData = () => {
-        axios
-            .get("http://localhost:8080/allTax?id=" + this.state.id)
-            .then((res) => {
-                console.log("response from /allTax", res);
-                let tempData = [];
-                res.data.data.map((item, key) => {
-                    tempData.push(item);
-                });
-                this.setState({
-                    taxData: tempData
-                });
-            })
-    }
-    handleInvoice = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+    }   
+    
     addRow = (params) => {
+
+      var query=window.location.search.substring(window.location.search.indexOf("=")+1);
+         this.setState({query:query});
+        axios.get("http://localhost:8080/editList?id="+query)
+        .then((result) => {
+            console.log(result,"medhaaa")
+            
+            result.data.data.map((item)=>{
+                this.setState({companyCode:item.companyCode}),
+                this.setState({companyState:item.companyState}),
+                this.setState({ companyAddressLine1:item. companyAddressLine1}),
+                this.setState({companyAddressLine2:item.companyAddressLine2}),
+                this.setState({customerCode:item.customerCode}),
+                this.setState({customerState:item.customerState}),
+                this.setState({customerAddressLine1:item.customerAddressLine1}),
+                this.setState({ customerAddressLine2:item. customerAddressLine2}),
+                this.setState({productCode:item.productCode}),
+                this.setState({taxCode:item.taxCode}),
+                this.setState({code:item.code}),
+                this.setState({itemName:item.itemName}),
+                this.setState({qty:item.qty}),
+                this.setState({ rate:item.rate}),
+                this.setState({total:item.total}),
+                this.setState({ discount:item.discount}),
+                this.setState({invoiceNo:item.invoiceNumber})
+            })
+            this.getCompanyDropdownData();
+            this.getCustomerDropdownData()
+          //access the results here....
+          console.log(result.data.data[0].items.CGSTRate,"arsfyw")
+          result.data.data[0].items.forEach((items)=>{
+            console.log(items,"hjhjh")
+              this.setState({CGSTRate:items.CGSTRate}),
+              this.setState({CGSTAmount:items.CGSTAmount}),
+              this.setState({SGSTRate:items.SGSTRate}),
+              this.setState({SGSTAmount:items.SGSSTAmount}),
+              this.setState({IGSTRate:items.IGSTRate}),
+              this.setState({IGSTAmount:items.IGSTAmount})
+
+          })
+         
+             
+              
+            })
+
+
         invoiceRow.push(
             <div style={{ marginTop: '5px' }}>
                 <div
@@ -201,7 +189,7 @@ class CreateInvoice extends React.Component {
                     <div className="col">
                         <select
                             id={"select" + invoiceRow.length}
-                            name={"itemCode"+invoiceRow.length}
+                            name={"select" + invoiceRow.length}
                             className="form-control"
                             onChange={(e, param) => this.handleDropdown(e, "items")}
                             required
@@ -223,16 +211,7 @@ class CreateInvoice extends React.Component {
                             readOnly
                         />
                     </div>
-                    <div className="col" style={{ marginLeft: '7px' }}>
-                        <input
-                            type="text"
-                            className={"form-control hsn" + this.state.invoiceRow.length}
-                            name={"hsn" + invoiceRow.length}
-                            onChange={(e) => this.handleInvoice(e)}
-                            readOnly
-                        />
-                    </div>
-                    <div className="col" style={{ marginLeft: '15px' }}>
+                    <div className="col">
                         <input
                             type="text"
                             className={"form-control qty" + this.state.invoiceRow.length}
@@ -322,15 +301,7 @@ class CreateInvoice extends React.Component {
                             required
                         />
                     </div>
-                    <div className="col">
-                        <button
-                            className="btn btn-danger"
-                            id={"btn_" + this.state.invoiceRow.length}
-                            value={"btn_" + this.state.invoiceRow.length}
-                            onClick={this.removeRow}
-                        >x
-                    </button>
-                    </div>
+                   
                 </div>
             </div>
         )
@@ -339,27 +310,19 @@ class CreateInvoice extends React.Component {
             check: false
         })
     }
-    removeRow = (e) => {
-        let target = e.target.value.split("_");
-        let targetIndex = target[1];
-        delete invoiceRow[targetIndex];
-        this.setState({
-            invoiceRow: invoiceRow
-        })
-        deletedRows++;
+    close = (e) => {
+       window.location.href="/InvoiceList"
     }
     submitInvoice = (e) => {
         e.preventDefault();
         parsedData = parse(e.target);
-        console.log(parsedData,"parsed")
+        console.log(parsedData,"parseddata")
         this.setState({
             invoiceNo: parsedData.invoiceNumber
         })
         let item = {};
         for (var i = 0; i < invoiceRow.length; i++) {
-            item.itemCode=parsedData["itemCode"+i];
             item.name = parsedData["itemName" + i];
-            item.hsn = parsedData["hsn" + i];
             item.qty = parsedData["qty" + i];
             item.rate = parsedData["rate" + i];
             item.total = parsedData["total" + i];
@@ -375,15 +338,13 @@ class CreateInvoice extends React.Component {
         }
         items = items.filter(item => item.name != undefined);
         var finalData = {
-            id: this.state.id,
-            companyCode: parsedData.companyCode,
-            companyAddressLine1: parsedData.companyAddressLine1,
+            id:this.state.query,
+            companyCode:parsedData.companyCode,
+            companyAddressLine1:parsedData.companyAddressLine1,
             companyAddressLine2: parsedData.companyAddressLine2,
-            companyGSTIN: this.state.companyGSTIN,
             customerCode: parsedData.customerCode,
             customerAddressLine1: parsedData.customerAddressLine1,
             customerAddressLine2: parsedData.customerAddressLine2,
-            customerGSTIN: this.state.customerGSTIN,
             invoiceDate: parsedData.invoiceDate,
             invoiceNumber: parsedData.invoiceNumber,
             items: items,
@@ -393,48 +354,89 @@ class CreateInvoice extends React.Component {
             sgstTotal: parsedData.sgstTotal,
             igstTotal: parsedData.igstTotal,
             taxTotal: parsedData.taxTotal,
-            invoiceTotal: parsedData.invoiceTotal
+            invoiceTotal:parsedData.invoiceTotal,
+            userId:this.state.id
         }
         console.log("Data sent", finalData);
-        if (this.validation(finalData) == true) {
-            superagent
-                .post("http://localhost:8080/addInvoice")
-                .send(finalData)
-                .then((res) => {
-                    if (res.body.success) {
-                        swal({
-                            text: "Invoice Saved !",
-                            icon: "success"
-                        }).then(() => {
-                            window.location.href = "./viewInvoice?id=" + this.state.id + "&invoiceNo=" + this.state.invoiceNo;
-                        })
-                    }
-                })
-        }
-    }
-    validation = (data) => {
-        if (data.companyAddressLine1 == "" || data.companyAddressLine2 == "") {
-            alert("Please select Company from dropdown !");
-            return false;
-        }
-        if (data.customerAddressLine1 == "" || data.customerAddressLine2 == "") {
-            alert("Please select Customer from dropdown !");
-            return false;
-        }
-        else {
-            return true;
-        }
+        superagent
+            .post("http://localhost:8080/editInvoice")
+            .send(finalData)
+            .then((res) => {
+                if (res.body.success) {
+                    swal({
+                        text: "Invoice Edited !",
+                        icon: "success"
+                    })
+                        
+                }
+            })
     }
     componentWillMount() {
-        this.getCompanyDropdownData();
-        this.getCustomerDropdownData();
-        this.getItemDropdownData();
-        this.getTaxData();
-        this.getCount();
-         
+      
+       this.getItemDropdownData();
+       this.getTaxData();
     }
     componentWillUnmount() {
         window.location.reload();
+    }
+    getTaxData = () => {
+        axios
+            .get("http://localhost:8080/allTax?id=" + this.state.id)
+            .then((res) => {
+                console.log("response from /allTax", res);
+                let tempData = [];
+                res.data.data.map((item, key) => {
+                    tempData.push(item);
+                });
+                this.setState({
+                    taxData: tempData
+                });
+            })
+    }
+    getCompanyDropdownData = () => {
+    
+        axios
+            .get("http://localhost:8080/getOneCompany?companyCode="+this.state.companyCode)
+            .then((res) => {
+                 console.log("response from /Company", res);
+                let tempData = [];
+                res.data.data.map((item, key) => {
+                    tempData.push(item);
+                });
+                this.setState({
+                    companyDropdownData: tempData
+                });
+            })
+    }
+    getCustomerDropdownData = () => {
+        axios
+            .get("http://localhost:8080/getOneCustomer?customerCode=" +this.state.customerCode)
+            .then((res) => {
+                console.log("response from /Customer", res);
+                let tempData = [];
+                res.data.data.map((item, key) => {
+                    tempData.push(item);
+                });
+                this.setState({
+                    customerDropdownData: tempData
+                });
+            })
+    }
+    getItemDropdownData = () => {
+        axios
+            .get("http://localhost:8080/allProduct?id=" + this.state.id)
+            .then((res) => {
+                console.log("response from /allProduct", res);
+                let tempData = [];
+                res.data.data.map((item, key) => {
+                    tempData.push(item);
+                });
+                this.setState({
+                    itemsDropdownData: tempData,
+                    check: true
+                });
+            })
+           
     }
     componentDidUpdate() {
         this.state.companyDropdownData.map((item, key) => {
@@ -443,7 +445,6 @@ class CreateInvoice extends React.Component {
                     this.setState({
                         companyAddressLine1: item.addressLine1,
                         companyAddressLine2: item.addressLine2,
-                        companyGSTIN: item.companyGSTNo,
                         companyState: item.stateName,
                         setAddressOfCompany: true
                     })
@@ -456,7 +457,6 @@ class CreateInvoice extends React.Component {
                     this.setState({
                         customerAddressLine1: item.addressLine1,
                         customerAddressLine2: item.addressLine2,
-                        customerGSTIN: item.customerGSTNo,
                         customerState: item.stateName,
                         setAddressOfCustomer: true
                     })
@@ -504,9 +504,9 @@ class CreateInvoice extends React.Component {
     }
     render() {
         return (
-            <form onSubmit={this.submitInvoice}>
+            <form onSubmit={this.submitInvoice  }>
+                 
                 {this.state.check ? this.addRow() : ""}
-                <hr />
                 <div style={{ textAlign: 'center' }}>
                     {/* Company & Customer Headings */}
                     <div className="row">
@@ -584,7 +584,7 @@ class CreateInvoice extends React.Component {
                     {/* Invoice Date and Number Fields */}
                     <div className="row">
                         <div className="col-sm">
-                            <input type="date" style={{ minWidth: '200px' }} name="invoiceDate" required />
+                            <input type="date" style={{ minWidth: '200px' }} name="invoiceDate" />
                         </div>
                         <div className="col-sm">
                             <input type="text" style={{ minWidth: '200px' }} name="invoiceNumber" value={this.state.invoiceNo} />
@@ -603,9 +603,6 @@ class CreateInvoice extends React.Component {
                     </div>
                     <div className="col">
                         <label color="black">Item Name</label>
-                    </div>
-                    <div className="col">
-                        <label color="black">HSN Code / Accounting Code</label>
                     </div>
                     <div className="col">
                         <label color="black">Quantity</label>
@@ -648,17 +645,14 @@ class CreateInvoice extends React.Component {
                 }
                 <hr />
                 <div className="row" style={{ textAlign: 'center' }}>
+                    {/* <div className="col">
+                        <label color="black">Serial No.</label>
+                    </div> */}
+                    <div className="col"></div>
+                    <div className="col"></div>
+                    <div className="col"></div>
+                    <div className="col"></div>
                     <div className="col">
-                        <input
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={this.addRow}
-                            value="+ Add Row"
-                        /></div>
-                    <div className="col"></div>
-                    <div className="col"></div>
-                    <div className="col"></div>
-                    <div className="col" style={{ marginLeft: '50px' }}>
                         <label color="black">Grand Total</label>
                         <input
                             type="text"
@@ -716,6 +710,9 @@ class CreateInvoice extends React.Component {
                     </div>
                 </div>
                 <div className="row" style={{ textAlign: 'center' }}>
+                    {/* <div className="col">
+                        <label color="black">Serial No.</label>
+                    </div> */}
                     <div className="col"></div>
                     <div className="col"></div>
                     <div className="col"></div>
@@ -733,21 +730,33 @@ class CreateInvoice extends React.Component {
                             type="text"
                             name={"invoiceTotal"}
                             className="form-control invoiceTotal"
-                            readOnly
                         />
-                        <hr />
+                    </div>
+                    <div className="col"></div>
+                </div>
+                <hr />
+                {/* Invoice Buttons */}
+                <div className="row">
+                    <div className="col-8">
                         <input
                             type="submit"
-                            className="btn btn-success"
-                            value="Create Invoice"
+                            className="btn btn-primary"
+                            value="Save"
+                        />
+                    </div>
+                    <div className="col-4">
+                        <input
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={this.close}
+                            value="Cancel"
                             style={{ float: 'right' }}
                         />
                     </div>
                 </div>
-                <hr />
             </form >
         );
     }
 }
 
-export default CreateInvoice;
+export default EditInvoice;
