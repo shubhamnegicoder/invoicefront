@@ -152,5 +152,19 @@ service.editCustomer = async (req,res)=>{
 		return res.send({success:false, code:500, msg:"Error in editing Customer", err:error})
 	}
 }
+service.getOneCustomer = async (req,res)=>{
+
+	try{
+		let dataToFind = {
+			query:{"customerCode":req.query.customerCode}
+	
+		};
+		var oneCustomer = await CustomerModel.getOneCustomer(dataToFind);
+		return res.send({success:true, code:200, msg:"Successfully found", data:oneCustomer}); 
+	}catch(error){
+		return res.send({success:false, code:500, msg:"Error in getting Customer"+error, err:error})
+	}
+}
+
  
 export default service;

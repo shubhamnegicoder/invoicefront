@@ -26,5 +26,7 @@ router.post('/addCustomer', (req, res) => {
 router.post('/editCustomer', (req, res) => {
     customerService.editCustomer(req, res);
 });
-
+router.get('/getOneCustomer',(req,res)=>{
+    customerService.getOneCustomer(req,res);
+});
 export default router;

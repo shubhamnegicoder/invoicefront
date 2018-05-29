@@ -21,10 +21,10 @@ const ProductSchema = mongoose.Schema({
 //   UserSchema.plugin(AutoIncrement.plugin,{model:'user',field:'userId',startAt:1,incrementBy:1});
 
 let ProductModel = mongoose.model('product',ProductSchema);
-ProductModel.allProduct = (dataToFind) => {
-    console.log(dataToFind, " = dataToFind44")
+ProductModel.getAll = (dataToFind) => {
+    console.log(dataToFind.query, " = dataToFindmadhar")
     return ProductModel.aggregate([
-        { $match: {} },
+        { $match: {createdBy:dataToFind.query.createdBy} },
         {
             $lookup: {
                 from: "tax",
@@ -41,7 +41,8 @@ ProductModel.allProduct = (dataToFind) => {
             $project: {
                 productCode:1,
                 productName:1 ,
-                taxCode: "$tax_docs.taxName",
+                taxName: "$tax_docs.taxName",
+                taxCode:1,
                 rate:1,
                 isActive:1
 
@@ -52,10 +53,7 @@ ProductModel.allProduct = (dataToFind) => {
 }
 
 
-ProductModel.getAll= (dataToFind) => {
-    console.log(dataToFind.query," = dataToFind")
-    return ProductModel.find(dataToFind.query);
-}
+
 
 // UserModel.getAggregation = (query) => {
 //     return UserModel.aggregate(query);

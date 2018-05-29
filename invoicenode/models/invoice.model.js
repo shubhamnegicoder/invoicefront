@@ -13,6 +13,7 @@ const InvoiceSchema = mongoose.Schema({
     invoiceDate: { type: Date },
     invoiceNumber: { type: Number },
     items: [{
+        itemCode:{type:String},
         name: { type: String },
         qty: { type: Number },
         rate: { type: Number },
@@ -49,11 +50,10 @@ InvoiceModel.getCount = (invoiceToCount) => {
     console.log("invoiceToCount", invoiceToCount);
     return InvoiceModel.find(invoiceToCount.query).count();
 }
-
-InvoiceModel.allInvoice = (dataToFind) => {
-    console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
+InvoiceModel.getAllList=(data)=>{
+    console.log("getalllist")
     return InvoiceModel.aggregate([
-        { $match: {invoiceNumber:dataToFind.query.invoiceNumber} },
+        { $match: {createdBy:data.query.createdBy} },
         {
             $lookup: {
                 from: "customer",
@@ -80,7 +80,56 @@ InvoiceModel.allInvoice = (dataToFind) => {
             $unwind: "$company_docs"
         }, {
             $project: {
-                logo:"$company_docs.logo",
+                
+                companyName: "$company_docs.companyName",
+                
+                customerName: "$customer_docs.customerName",
+                
+                invoiceDate: 1,
+                invoiceNumber: 1,
+               
+                invoiceTotal: 1,
+                createdBy: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                modifiedBy: 1
+            }
+        }
+    ]);
+
+}
+
+InvoiceModel.allInvoice = (dataToFind) => {
+    console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
+    return InvoiceModel.aggregate([
+        { $match: { invoiceNumber: dataToFind.query.invoiceNumber } },
+        {
+            $lookup: {
+                from: "customer",
+                localField: "customerCode",
+                foreignField: "customerCode",
+                as: "customer_docs"
+            }
+
+        },
+        {
+            $unwind: "$customer_docs"
+        },
+        {
+            $lookup: {
+                from: "company",
+                localField: "companyCode",
+                foreignField: "companyCode",
+                as: "company_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$company_docs"
+        }, {
+            $project: {
+                logo: "$company_docs.logo",
                 companyAddressLine1: 1,
                 companyAddressLine2: 1,
                 companyCode: 1,
@@ -92,19 +141,7 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 discount: 1,
                 invoiceDate: 1,
                 invoiceNumber: 1,
-                items: [{
-                    name: 1,
-                    qty: 1,
-                    rate: 1,
-                    total: 1,
-                    discount: 1,
-                    CGSTRate: 1,
-                    CGSTAmount: 1,
-                    SGSTRate: 1,
-                    SGSTAmount: 1,
-                    IGSTRate: 1,
-                    IGSTAmount: 1
-                }],
+                items: 1,
                 itemTotal: 1,
                 discountTotal: 1,
                 cgstTotal: 1,
@@ -119,6 +156,14 @@ InvoiceModel.allInvoice = (dataToFind) => {
             }
         }
     ]);
+}
+InvoiceModel.editInvoice = (invoiceToEdit) =>{
+    console.log(invoiceToEdit,"hiiiii");
+    return InvoiceModel.update(invoiceToEdit.query,invoiceToEdit.data);
+}
+InvoiceModel.getEditList = (invoiceToEdit) =>{
+    console.log(invoiceToEdit,"hiiiii");
+return InvoiceModel.find(invoiceToEdit.query);
 }
 
 

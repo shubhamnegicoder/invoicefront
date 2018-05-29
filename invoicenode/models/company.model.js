@@ -176,5 +176,8 @@ CompanyModel.addCompany = (addToCompany) =>{
 CompanyModel.editCompany = (editToCompany) =>{
 return CompanyModel.update(editToCompany.query,editToCompany.data);
 }
+CompanyModel.getOneCompany=(oneCompany)=>{
+    return CompanyModel.find(oneCompany.query)
+}
 
 export default CompanyModel;

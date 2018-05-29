@@ -12,6 +12,14 @@ import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 class ListInvoice extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      List:[],
+      id:localStorage.getItem("id"),
+      
+    }
+  }
     getMuiTheme = () => createMuiTheme({
         overrides: {
           MUIDataTable: {
@@ -21,7 +29,7 @@ class ListInvoice extends React.Component {
           },
           MUIDataTableBodyCell: {
             root: {
-              backgroundColor: "#FFB6C1"
+              backgroundColor: "#d5f5e3"
             }
           }
         }
@@ -29,9 +37,15 @@ class ListInvoice extends React.Component {
       componentDidMount(){
         this.List();
        }
+       handleEdit=(id)=>{
+        // alert(id)
+        // this.setState({_id:id})
+       
+        window.location.href="/EditInvoice?_id="+id
+       }
        List = () => {
     
-        fetch("http://localhost:8080/allInvoice",{
+        fetch("http://localhost:8080/allList?id="+this.state.id,{
             method: "GET",
             cache: 'no-cache', 
             mode: 'cors', 
@@ -43,18 +57,19 @@ class ListInvoice extends React.Component {
         .then(res => res.json())
         .then(
             (result) => {
-                // console.log("listabc = ",result)
+                console.log("listabc = ",result.data[0].customerName)
                  var mainArray = [];
-                 result.data.forEach((invoice)=>{
+                 result.data.forEach((item,index)=>{
+                   console.log(item,"item")
                      var dataArray = [];
                     //  dataArray.push(tax._id)
-                     dataArray.push(invoice.customerName)
-                     dataArray.push(invoice.companyName)
-                     dataArray.push(invoice.invoiceNumbe)
-                     dataArray.push(invoice.invoiceDate)
-                     dataArray.push(invoice.invoiceTotal)
-                     dataArray.push(invoice.isActive ? "True" : "False")
-                     dataArray.push(<button onClick={(e)=>{this.handleEdit(e,invoice)}}>Edit</button>)
+                     dataArray.push(item.customerName)
+                     dataArray.push(item.companyName)
+                     dataArray.push(item.invoiceNumber)
+                     dataArray.push(item.invoiceDate)
+                     dataArray.push(item.invoiceTotal)
+                     dataArray.push(item.isActive ? "True" : "False")
+                     dataArray.push(<button onClick={(e)=>{this.handleEdit(item._id)}}>Edit</button>)
                     // dataArray.push(new Date(tax.createAt).toDateString());
                     mainArray.push(dataArray)
                     
@@ -73,6 +88,7 @@ class ListInvoice extends React.Component {
       }
 
   render(){
+    
     const columns = [
         {
           name: "Company",
@@ -120,8 +136,7 @@ class ListInvoice extends React.Component {
             name: "Action"
         }        
   ];
-//   var tableData= this.state.List;
- // console.log(tableData,"medha")
+  var tableData= this.state.List;
   const options = {
     selectableRows:false,
     filterType: 'dropdown',
@@ -145,13 +160,13 @@ class ListInvoice extends React.Component {
           
         <Grid container>
        
-        <ItemGrid xs={12} sm={12} md={12}>
+        <ItemGrid xs={20} sm={20} md={20}>
           <RegularCard
             cardTitle={<h2><b>Invoice</b></h2>}
             
           />
            <MuiThemeProvider theme={this.getMuiTheme()}>
-            <MUIDataTable title={"Invoice list"}  columns={columns} options={options} />
+            <MUIDataTable title={"Invoice list"}  columns={columns} options={options} data={tableData} />
             </MuiThemeProvider>  
           
           </ItemGrid>

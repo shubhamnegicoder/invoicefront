@@ -14,6 +14,14 @@ router.get('/countInvoice', (req, res) => {
 router.get('/allInvoice', (req, res) => {
     invoiceService.getAllInvoice(req, res);
 });
-
+router.get('/allList', (req, res) => {
+    invoiceService.getAllList(req, res);
+});
+router.get('/editList',(req,res)=>{
+    invoiceService.getEditList(req,res);
+});
+router.post('/editInvoice',(req,res)=>{
+    invoiceService.editInvoice(req,res);
+});
 
 export default router;

@@ -46,16 +46,19 @@ const tableStyle = theme => ({
   tableHeadCell: {
     color: "inherit",
     ...defaultFont,
-    fontSize: "1em"
+    fontSize: "1.5em"
   },
   tableCell: {
     ...defaultFont,
+    width:"100%",
     lineHeight: "1.42857143",
-    padding: "12px 8px",
-    verticalAlign: "middle"
+    padding: "10px",
+    verticalAlign: "middle",
+    fontSize: "1.5em",
+    textAlign:"center"
   },
   tableResponsive: {
-    width: "100%",
+    minWidth: "100%",
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
   }
