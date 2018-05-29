@@ -189,7 +189,7 @@ InvoiceModel.topTenInvoice = (topTenData) => {
             }
         }
     ]);
-<<<<<<< HEAD
+
 }
 InvoiceModel.editInvoice = (invoiceToEdit) =>{
     console.log(invoiceToEdit,"hiiiii");
@@ -199,12 +199,8 @@ InvoiceModel.getEditList = (invoiceToEdit) =>{
     console.log(invoiceToEdit,"hiiiii");
 return InvoiceModel.find(invoiceToEdit.query);
 }
-=======
-//     //  return InvoiceModel.find({ invoiceDate: { $eq: today } }).sort({ invoiceTotal: -1 }).limit(2);
    
- }
 
->>>>>>> 3218d5bea34c5106aa7c2ad8c4fe974f46bda385
 
 InvoiceModel.allInvoice = (dataToFind) => {
     console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
