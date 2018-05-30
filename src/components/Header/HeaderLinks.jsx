@@ -50,7 +50,7 @@ class HeaderLinks extends React.Component {
     }
     return (
       <div>
-        <Button variant="raised" color="secondary" classNames={classes.button} onClick={this.logout}>
+        <Button variant="raised" style={{backgroundColor:"#76323f", color:"white"}}onClick={this.logout}>
         Logout
       </Button>
       </div>
