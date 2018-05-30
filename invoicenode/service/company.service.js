@@ -8,7 +8,7 @@
 
 
 import CompanyModel from '../models/company.model';
-
+import ObjectID from "bson-objectid"; 
 /**
  * [service is a object ]
  * @type {Object}
@@ -22,14 +22,15 @@ const service = {};
  * @return {[object]}
  */
 service.getAll = async (req,res)=>{
-	// if (!req.query.userId) {
-    //     return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
-    // }
+	if (!req.query.id) {
+        return res.send({ "success": false, "code": "500", "msg": " User Id is missing" });
+	}
+	let queryToFindCompany = {
+		query: {createdBy:ObjectID(req.query.id)} 
+	}
 	try{
-		// var queryToFindCompany = {
-		// 	query: {createdBy:ObjectID(req.query.userId)} 
-		// }
-		var allCompany = await CompanyModel.allCompany();
+		console.log("queryToFindCompany",queryToFindCompany);
+		var allCompany = await CompanyModel.allCompany(queryToFindCompany);
 		console.log(allCompany,"====== allCompany");
 		return res.send({success:true, code:200, msg:"Successfully found", data:allCompany}); 
 	}catch(error){
@@ -59,10 +60,13 @@ service.getOne = async (req,res)=>{
  * @description [with all the calculation before add function of model and after add]
  * @param  {[object]}
  * @param  {[object]}
- * @return {[object]}
+ * @return {[object]} 
  */ 
 service.addCompany = async (req,res)=>{
 	//console.log("this is add company")
+	if(req.body.id == ""){
+		return res.send({success:false,code:500,msg:"User Id is required"});
+	}
 	if(req.body.companyCode == ""){
 		return res.send({success:false,code:500,msg:"Company code is required"});
 	}
@@ -93,9 +97,6 @@ service.addCompany = async (req,res)=>{
 	if(req.body.contactNo == ""){
 		return res.send({success:false,code:500,msg:"Contact no is required"});
 	}
-	// if(req.body.createdBy == ""){
-	// 	return res.send({success:false,code:500,msg:"Created by is required"});
-	// }
 	if(req.body.logo == ""){
 		return res.send({success:false,code:500,msg:"Logo is required"});
 	}
@@ -114,7 +115,7 @@ service.addCompany = async (req,res)=>{
         contactNo:req.body.contactNo,
       	isActive: req.body.isActive,
 		createAt:req.body.createAt,
-		//createdBy: req.body.createdBy		
+		createdBy: req.body.id		
     });
 	try{
 		var addCompany = await CompanyModel.addCompany(companyToAdd);
@@ -126,7 +127,7 @@ service.addCompany = async (req,res)=>{
 }
 
 service.editCompany = async (req,res)=>{
-	let companyToEdit={		
+	let companyToEdit={			
 		companyCode:req.body.companyCode,
 		companyName:req.body.companyName,
 		companyGSTNo:req.body.companyGSTNo,
@@ -138,7 +139,7 @@ service.editCompany = async (req,res)=>{
 		postalCode:req.body.postalCode,
 		contactNo:req.body.contactNo,
 		isActive:req.body.isActive,
-		modifiedBy:req.body.modifiedBy,
+		modifiedBy:req.body.id,
 		updatedAt:req.body.updatedAt
 	};
 	try{

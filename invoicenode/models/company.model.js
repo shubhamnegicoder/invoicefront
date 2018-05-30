@@ -33,9 +33,10 @@ const CompanySchema = mongoose.Schema({
 
 let CompanyModel = mongoose.model('company', CompanySchema);
 
-CompanyModel.allCompany = () =>{
+CompanyModel.allCompany = (queryToFindCompany) =>{
+    let createdBy = queryToFindCompany.query.createdBy;
     return CompanyModel.aggregate([
-        { $match: {} },
+        { $match: {createdBy:createdBy} },
         {
             $lookup: {
                 from: "country",

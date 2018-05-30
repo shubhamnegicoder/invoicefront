@@ -9,11 +9,12 @@ var dropDownData = [];
 var dd;
 var temp;
 var temp2;
- 
+//var localStorageId = localStorage.getItem('id');
 class AddCompany extends React.Component {
     constructor(props) {
         super(props);
         this.state={
+            id:"",
             companyCode:"",
             companyName:"",
             companyGSTNo:"",
@@ -142,6 +143,7 @@ class AddCompany extends React.Component {
         if(id==null){
           window.location.href="/login"
         }
+        this.setState({id:id});
     }
     handleClose = (e) => {
         e.preventDefault();
@@ -196,6 +198,7 @@ class AddCompany extends React.Component {
         const data = new FormData();
         data.append('file', this.state.uploadFile);
         data.append('logo', this.state.logo);
+        data.append('id',this.state.id);
         data.append('companyCode', this.state.companyCode);
         data.append('companyName', this.state.companyName);
         data.append('companyGSTNo', this.state.companyGSTNo);
@@ -208,6 +211,7 @@ class AddCompany extends React.Component {
         data.append('contactNo', this.state.contactNo);
         data.append('isActive', this.state.isActive);
         data.append('createAt',date);
+        
 
         fetch("http://localhost:8080/addCompany",{
              body:data,
@@ -228,7 +232,7 @@ class AddCompany extends React.Component {
                 else
                 {
                     swal({
-                        title: "Something went wrong !!" ,
+                        title: "Something Went Wrong !!" ,
                         icon: "fail",
                     })
                 }
