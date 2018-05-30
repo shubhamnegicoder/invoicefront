@@ -199,7 +199,6 @@ InvoiceModel.getEditList = (invoiceToEdit) =>{
     console.log(invoiceToEdit,"hiiiii");
 return InvoiceModel.find(invoiceToEdit.query);
 }
-   
 
 
 InvoiceModel.allInvoice = (dataToFind) => {

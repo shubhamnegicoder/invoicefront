@@ -9,7 +9,8 @@ import {
   infoColor,
   successColor,
   warningColor,
-  dangerColor
+  dangerColor,
+  
 } from "assets/jss/material-dashboard-react.jsx";
 
 const buttonStyle = {
@@ -131,7 +132,8 @@ const buttonStyle = {
   disabled: {
     opacity: "0.65",
     pointerEvents: "none"
-  }
+  },
+ 
 };
 
 export default buttonStyle;
