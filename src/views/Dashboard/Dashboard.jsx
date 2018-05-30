@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
 import MUIDataTable from "mui-datatables";
+import "bootstrap";
 import { createMuiTheme, MuiThemeProvider} from 'material-ui/styles';
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
@@ -42,7 +43,7 @@ class Dashboard extends React.Component {
   state = {
     value: 0,
     totalinvoice:"",
-    totalsales:"",
+    totalsales:"0",
     data:""
   };
 
@@ -76,6 +77,19 @@ class Dashboard extends React.Component {
     this.list();
   }
 
+  allCustomer=()=>{
+    axios.get("http://localhost:8080/countInvoice")
+      .then(
+        (result) => {
+          console.log("result of count invoice", result.data.data);
+          this.setState({ totalinvoice: result.data.data })
+          console.log("totalinvoice count", this.state.totalinvoice);
+        },
+        (error) => {
+          // console.log("error", error)
+        }
+      )
+  }
   ticket1=()=>{
     axios.get("http://localhost:8080/countInvoice")
       .then(
@@ -200,6 +214,14 @@ class Dashboard extends React.Component {
     }
     return (
       <div> 
+        <form class="form-inline">
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label"><h5>Company: </h5></label>
+            <div class="col-sm-10">
+              <input type="text" id="staticEmail" placeholder="Input Company"value=""/>
+            </div>
+          </div>
+        </form>
         <Grid container>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
