@@ -4,10 +4,12 @@ import { RegularCard, Table, ItemGrid } from "components";
 import AddIcon from '@material-ui/icons/Add';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
+
 class CompanyList extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            id:"",
             companyCode:"", 
             companyName:"",
             companyGSTNo:"",
@@ -40,6 +42,7 @@ class CompanyList extends React.Component{
 
     componentDidMount(){ 
         this.list();
+      
        
     }
    componentWillMount(){
@@ -48,6 +51,7 @@ class CompanyList extends React.Component{
     if(id==null){
       window.location.href="/login"
     }
+    this.setState({id:id});
    }
     handleClick=(e)=>{
        // console.log('button cliked');
@@ -89,7 +93,7 @@ class CompanyList extends React.Component{
     }
 
     list=()=>{
-        fetch("http://localhost:8080/allCompany",{  
+        fetch("http://localhost:8080/allCompany?id="+this.state.id,{  
           method: "GET",
           cache: 'no-cache', 
           mode: 'cors',
@@ -107,21 +111,10 @@ class CompanyList extends React.Component{
               dataArray.push(responseData.companyCode)
               dataArray.push(responseData.companyName)
               dataArray.push(responseData.companyGSTNo)
-              // var a1 = responseData.addressLine1; 
-              // var a2 = responseData.addressLine2;
-              // var address = a1+" "+a2;
-              //dataArray.push(address) 
-              // dataArray.push(responseData.cityName)
-              // dataArray.push(responseData.stateName)
-             // dataArray.push(responseData.countryName)
-            //  dataArray.push(responseData.postalCode)
-            
-            dataArray.push(responseData.isActive?"Yes":"No")
-            dataArray.push(responseData.contactNo)
-             
+            dataArray.push(responseData.contactNo) 
+            dataArray.push(responseData.isActive?"Yes":"No")   
             dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)}>Edit</Button>)
             dataArray.push(<Button onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
-              //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)     
             })
             this.setState({
@@ -157,32 +150,18 @@ class CompanyList extends React.Component{
                 filter: false,
               }
             },
-            
-              
-            // {
-            //   name: "City",
-            //   options: {
-            //     filter: true,
-            //   }
-            // },
-            // {
-            //   name: "State",
-            //   options: {
-            //     filter: true
-            //   }
-            // },
-            {
-              name: "IsActive",
-                options: {
-                  filter: true
-                }
-              },
               {
                 name: "Contact No",
                   options: {
                     filter: true
                   }
                 },
+                {
+                  name: "IsActive",
+                    options: {
+                      filter: true
+                    }
+                  },
                 {
                 name: "Action",
                      options: {

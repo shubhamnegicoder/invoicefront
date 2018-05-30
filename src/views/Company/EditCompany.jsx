@@ -8,13 +8,15 @@ var dropDownData = [];
 var dd;
 var temp;
 var temp2;
-
+var today = new Date(),
+            date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 class EditCompany extends React.Component{
     constructor(props){
         super(props);
 
          this.state={
              _id:"",
+             id:"",
             companyCode:"",
             companyName:"",
             companyGSTNo:"",
@@ -25,6 +27,7 @@ class EditCompany extends React.Component{
             countryCode:"",
             postalCode:"",
             contactNo:"",
+            updatedAt:"",
             isActive:false,
             dropDownData: [],
             dropDownData2: [],
@@ -128,6 +131,8 @@ class EditCompany extends React.Component{
         if(id==null){
           window.location.href="/login"
         }
+        this.setState({id:id});
+        this.setState({updatedAt:date});
     }
 
     handleChange1 = (event) => {
@@ -228,6 +233,7 @@ class EditCompany extends React.Component{
     }
 
     update=()=>{
+
         if(this.state._id==""){
             return alert("_id is required");       
         }
@@ -267,7 +273,10 @@ class EditCompany extends React.Component{
         if(this.state.contactNo.length<10){
             return alert("Contact no should be of 10 digits");       
         }
-        console.log(this.state.countryCode,"update country",this.state.stateCode,"state ",this.state.cityCode,"city")
+        
+           
+            console.log("this.state.updatedAt",this.state.updatedAt);
+            // console.log(this.state.countryCode,"update country",this.state.stateCode,"state ",this.state.cityCode,"city")
         fetch("http://localhost:8080/editCompany",{
             body:JSON.stringify(this.state),
             method: "POST",
