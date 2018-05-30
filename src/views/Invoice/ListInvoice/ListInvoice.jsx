@@ -133,7 +133,7 @@ class ListInvoice extends React.Component {
             }
           },
         {
-          name: "IsActive",
+          name: "Status",
           options: {
             filter: true,
             sort:true

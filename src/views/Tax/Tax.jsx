@@ -6,6 +6,7 @@ import Modal from './Modal.jsx';
 import Button from 'material-ui/Button';
 import  {Grid} from "material-ui";
 import AddIcon from '@material-ui/icons/Add';
+import Search from '@material-ui/icons/Search';
 
 import { RegularCard, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
@@ -163,16 +164,17 @@ class Tax extends React.Component {
   
 
      const options = {
-      filter: true,
+      filter: false,
       selectableRows:false,
       filterType: 'dropdown',
       responsive: 'stacked',
       rowsPerPage: 10,
       page: 1,
-      viewColumns:true,
+      viewColumns:false,
       print:false,
-      filter:true,
+      filter:false,
       download:false,
+      search:false,
       // customToolbarSelect: (selectedRows) => <CustomToolbarSelect selectedRows={selectedRows} />,
       textLabels: {
         body: {
@@ -251,17 +253,15 @@ class Tax extends React.Component {
          
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-              cardTitle={<h2><b>Tax</b></h2>}
-              cardSubtitle={<Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleOpen} >
-              <AddIcon />
-            </Button>
+               cardTitle={<div>Tax<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} >
+              <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
 
-              } 
-             
+            </Button></div>}
+
   
               />
               <MuiThemeProvider theme={this.getMuiTheme()}>
-              <MUIDataTable title={"Tax list"} data={tableData} columns={columns} options={options} />
+              <MUIDataTable data={tableData} columns={columns} options={options} />
               </MuiThemeProvider>  
             </ItemGrid>
             </Grid> 
