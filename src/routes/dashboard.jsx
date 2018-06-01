@@ -24,7 +24,7 @@ import {
   Notifications,
   Assignment
 } from "@material-ui/icons";
-
+var name= "Welcome" +" "+ localStorage.getItem("name")
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -37,13 +37,14 @@ const dashboardRoutes = [
     path: "/customer",
     sidebarName: "Customer",
     icon: Person,
+    navbarName:name,
     component: Customer
   },
-  
+
   {
     path: "/company",
     sidebarName: "Company",
-    navbarName: "Company",
+    navbarName: name,
     icon: BubbleChart,
     component: Company
   },
@@ -51,44 +52,44 @@ const dashboardRoutes = [
   {
     path: "/invoice",
     sidebarName: "Invoice",
-    navbarName: "Invoice",
+    navbarName: name,
     icon: Assignment,
     childs: [
       {
         path: "/createInvoice",
         sidebarName: "Create Invoice",
         icon: LocationOn,
-        navbarName: "Invoice Creation",
+        navbarName: name,
         component: CreateInvoice
       },
-      
+
       {
         path: "/InvoiceList",
         sidebarName: "Invoice List",
-        navbarName: "List of Invoices",
+        navbarName: name,
         icon: LocationOn,
         component: ListInvoice
       }
     ]
   },
-  
+
   {
     path: "/Product",
     sidebarName: "Product",
-    navbarName: "Product",
+    navbarName: name,
     icon: BubbleChart,
     childs: [
       {
         path: "/Product/tax",
-        sidebarName: "Tax", 
-        navbarName: "Tax",   
+        sidebarName: "Tax",
+        navbarName: name,
         icon: BubbleChart,
         component: Tax
       },
       {
         path: "/Product/product",
-        sidebarName: "Product", 
-        navbarName: "Product",   
+        sidebarName: "Product",
+        navbarName: name,
         icon: BubbleChart,
         component: Product
       },
@@ -97,27 +98,27 @@ const dashboardRoutes = [
   {
     path: "/Location",
     sidebarName: "Location",
-    navbarName: "Location",
+    navbarName: name,
     icon: LocationOn,
     childs: [
       {
         path: "/Location/country",
-        sidebarName: "Country", 
+        sidebarName: "Country",
         icon: LocationOn,
-        navbarName: "Country",
-        component: Country 
+        navbarName: name,
+        component: Country
       }, {
         path: "/Location/state",
-        sidebarName: "State", 
-        navbarName: "State",   
+        sidebarName: "State",
+        navbarName: name,
         icon: LocationOn,
         component: State
       },
       {
-        path: "/Location/city", 
-        sidebarName: "City",   
-        navbarName: "City",
-        icon: LocationOn,  
+        path: "/Location/city",
+        sidebarName: "City",
+        navbarName: name,
+        icon: LocationOn,
         component: City
       }
     ]

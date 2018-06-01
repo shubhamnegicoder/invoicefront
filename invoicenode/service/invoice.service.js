@@ -33,6 +33,7 @@ service.addInvoice = async (req, res) => {
         taxTotal: req.body.taxTotal,
         invoiceTotal: req.body.invoiceTotal,
         createdBy: req.body.id,
+        status:"Invoiced"
     })
     console.log("invoiceToAdd", invoiceToAdd);
     try {
@@ -161,12 +162,20 @@ service.getAllList = async (req, res) => {
     }
 }
 service.editInvoice = async (req, res) => {
-   
+    console.log(req.body,"aaaasss")
+   var invoiceToEdit;
     if (!req.body.id) {
         return res.send({ "success": false, "code": 500, "msg": "error" })
     }
+    if(req.body.status){
+        invoiceToEdit={
+           query:{"_id":ObjectId(req.body.id)},
+           data:{"$set":{status:req.body.status}}
+       }
+    }
+    else{
    
-    let InvoiceEdit = {
+      let InvoiceEdit = {
         companyAddressLine1: req.body.companyAddressLine1,
         companyAddressLine2: req.body.companyAddressLine1,
         companyCode: req.body.companyCode,
@@ -184,13 +193,13 @@ service.editInvoice = async (req, res) => {
         taxTotal: req.body.taxTotal,
         invoiceTotal: req.body.invoiceTotal,
         modifiedBy: ObjectId(req.body.userId)
-       
     }
-    let invoiceToEdit = {
+     invoiceToEdit = {
         query: { "_id": ObjectId(req.body.id )},
         data: { "$set": InvoiceEdit }
 
     };
+}
     console.log(invoiceToEdit ,"body")
   
     try {

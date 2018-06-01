@@ -47,6 +47,7 @@ const tableStyle = theme => ({
     color: "#76323f",
     ...defaultFont,
     fontSize: "1em",
+    maxWidth :"100%",
     fontWeight:"bold !important",
 
 
