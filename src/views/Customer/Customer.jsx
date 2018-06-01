@@ -6,6 +6,10 @@ import Search from '@material-ui/icons/Search';
 import Modal from './modal';
 // import MUIDataTable from "mui-datatables";
 import Button from 'material-ui/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from '@material-ui/icons/ViewList';
+
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 class CustomerList extends React.Component{
@@ -69,8 +73,6 @@ class CustomerList extends React.Component{
       }
       onClose = () => {
         this.setState({ load: false });
-        // this.data();
-
     };
     onmodal=(data)=>{
      console.log(data,"yha hu")
@@ -83,8 +85,12 @@ class CustomerList extends React.Component{
          dataArray.push(responseData.contactNo)
       dataArray.push(responseData.isActive?"Yes":"No")
         //var array = "";
-       dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
+      //  dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
+      dataArray.push(<div>
+        <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+        <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
 
+        </div>);
          //dataArray.push(new Date(responseData.createdAt).toDateString());
          mainArray.push(dataArray)
  
@@ -147,8 +153,12 @@ class CustomerList extends React.Component{
               dataArray.push(responseData.contactNo)
            dataArray.push(responseData.isActive?"Yes":"No")
              //var array = "";
-            dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
-
+            // dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
+            dataArray.push(<div>
+              <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+              <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+    
+              </div>);
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)
       

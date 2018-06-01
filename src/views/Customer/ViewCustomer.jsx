@@ -151,7 +151,7 @@ class ViewCustomer extends React.Component{
 
                     {/* <td align="right"><input type="submit" value="Update" onClick={this.update} style={{backgroundColor:"purple"}}/></td> */}  
                     <td></td> 
-                    <td align="center"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"purple"}}/></td>
+                    <td align="center"><input type="button" onClick={this.handleClose} value="Close" style={{ backgroundColor:"#76323f", color:"white" }}/></td>
                     <td></td>
                 </tr>
             </table>        

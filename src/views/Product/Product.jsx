@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Modal from './Modal.jsx';
 import  {Grid} from "material-ui";
+import Search from '@material-ui/icons/Search';
 
 import { RegularCard,Button, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
 import AddIcon from '@material-ui/icons/Add';
 import MUIDataTable from "mui-datatables";
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from '@material-ui/icons/ViewList';
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 // import iconsStyle from "assets/jss/material-dashboard-react/iconsStyle";
@@ -89,16 +93,15 @@ class Product extends React.Component {
                  dataArray.push(product.taxCode)
                  dataArray.push(product.rate)
                  dataArray.push(product.isActive ? "True" : "False")
-                 dataArray.push(<button onClick={(e)=>{this.handleEdit(e,product)}}>Edit</button>)
+                 dataArray.push(<Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,product)}style={{color:"black"}}><EditIcon/></a></Tooltip>)
                 // dataArray.push(new Date(tax.createAt).toDateString());
                 mainArray.push(dataArray)
-              
 
              })
              this.setState({
                  List:mainArray
              })
-            
+
             },
             (error) => {
               console.log("error",error)
@@ -106,81 +109,30 @@ class Product extends React.Component {
     )
   }
       render(){
-        const columns = [
-          {
-            name: "Code",
-            options: {
-              filter: true,
-              sort:true
-            }
-          },      
-          {
-            name: "Name",
-            options: {
-              filter: true,
-              sort:true
-            }
-          },
-          {
-            name: "Tax",
-            options: {
-              filter: false,
-            }
-          },
-          {
-            name: "Rate",
-            options: {
-              filter: true,
-            }
-          },
-          {
-            name: "IsActive",
-            options: {
-              filter: true
-            }
-          },
-            {
-              name: "Action"
-          }        
-    ];
-    var tableData= this.state.List;
-    // console.log(tableData,"medha")
-    const options = {
-      filter: true,
-      selectableRows:false,
-      filterType: 'dropdown',
-      responsive: 'stacked',
-      rowsPerPage: 10,
-      page: 1,
-      viewColumns:true,
-      print:false,
-      filter:true,
-      download:false,
-      textLabels: {
-        body: {
-          noMatch: "No Records Found!!",
-          toolTip: "Sort",
-        }
-      }
-}
+     
+   
         
         return(
           <div>
-            
           <Grid container>
-         
-          <ItemGrid xs={12} sm={12} md={12}>
-            <RegularCard
-              cardTitle={<div><h2 ><b>Product</b></h2><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} variant="fab" aria-label="add" onClick={this.handleOpen} >
-              <AddIcon />
-            </Button></div>}
-            />
-             <MuiThemeProvider theme={this.getMuiTheme()}>
-              <MUIDataTable title={"Product list"} data={tableData} columns={columns} options={options} />
-              </MuiThemeProvider>  
-            
-            </ItemGrid>
-            </Grid>
+            <ItemGrid xs={12} sm={12} md={12}>
+              <RegularCard
+                 cardTitle={<div>Product<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
+                <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+              </Button></div>
+              }
+  
+              content={
+                  <Table
+                      tableHeaderColor="primary"
+                      tableHead={["Code", "Name","Tax" , "Rate", "IsActive","Action"]}
+                      tableData={this.state.List}
+                  />
+              }
+              />
+  
+              </ItemGrid>
+              </Grid> 
             <Modal {...this.state} handleClose={this.handleClose} List={this.List}/>
       
         </div>

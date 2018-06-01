@@ -159,7 +159,7 @@ class ViewCompany extends React.Component{
 
                      
                     <td></td> 
-                    <td align="center"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"purple"}}/></td>
+                    <td align="center"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"#76323f", color:"white"}}/></td>
                     <td></td>
                 </tr>
             </table>        

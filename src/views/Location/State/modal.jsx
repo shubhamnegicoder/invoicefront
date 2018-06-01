@@ -207,7 +207,7 @@ export default class App extends React.Component {
                                             </Grid>
                                         </div>
                                     }
-                                    footer={<Button color="primary" type="submit" round>
+                                    footer={<Button color="primary" style={{backgroundColor:"#76323f", color:"white"}} type="submit" round>
                                         Submit</Button>}
                                 />
                             </ItemGrid>

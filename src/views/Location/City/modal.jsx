@@ -305,13 +305,13 @@ export default class App extends React.Component {
                                                 </ItemGrid>
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>  <h5> Is Active *:</h5>
-                                                        <input  type="checkbox"  name="isActive" onChange={(event)=>{this.handleCheck(event)}} color="primary"/>
+                                                        <input  type="checkbox"   name="isActive" onChange={(event)=>{this.handleCheck(event)}} color="primary"/>
                                                     </label>
                                                 </ItemGrid>
                                             </Grid>
                                         </div>
                                     }
-                                    footer={<Button color="primary" type="submit" round>
+                                    footer={<Button color="primary" style={{backgroundColor:"#76323f", color:"white"}} type="submit" round>
                                         Submit</Button>}
                                 />
                             </ItemGrid>

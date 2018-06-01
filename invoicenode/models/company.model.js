@@ -169,10 +169,75 @@ CompanyModel.oneCompany = (dataToFind) =>{
     ]);
     //return CompanyModel.findOne(dataToFind.query);
 }
+CompanyModel.searchCompany = (query) =>{
+    console.log(query,"sssssssssssssssssssssssssss")
+    return CompanyModel.aggregate([
+        {$match:{$and:[query]}},
+        {
+            $lookup: {
+                from: "country",
+                localField: "countryCode",
+                foreignField: "countryCode",
+                as: "country_docs"
+            }
+
+        },
+        {
+            $unwind: "$country_docs"
+        },
+        {
+            $lookup: {
+                from: "state",
+                localField: "stateCode",
+                foreignField: "stateCode",
+                as: "state_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$state_docs"
+        }, 
+        {
+            $lookup: {
+                from: "city",
+                localField: "cityCode",
+                foreignField: "cityCode",
+                as: "city_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$city_docs"
+        }, 
+        
+        {
+            $project: {
+                file:1,
+                logo:1,
+                companyName:1,
+                companyCode:1,
+                companyGSTNo:1, 
+                addressLine1:1,
+                addressLine2:1,
+                cityCode:1,
+                cityName:"$city_docs.cityName",
+                stateCode:1,
+                stateName:"$state_docs.stateName",
+                countryCode:1,
+                countryName:"$country_docs.countryName",
+                postalCode:1,
+                contactNo:1,
+                isActive:1
+
+            }
+        }
+    ]);
+}
+
 
 CompanyModel.addCompany = (addToCompany) =>{
-    console.log("saveeeeeeeeeee"+addToCompany.contactNo);
-    console.log("saveeeeeeeeeee"+addToCompany);
     return addToCompany.save();
 }
 

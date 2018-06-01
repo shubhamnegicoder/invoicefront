@@ -28,7 +28,9 @@ router.get('/allCompany', (req, res) => {
 router.get('/oneCompany', (req, res) => {
     companyService.getOne(req, res); 
 });
-
+router.get('/searchCompany', (req, res) => {
+    companyService.searchCompany(req, res);
+});
 router.post('/addCompany',upload.single('file'), (req, res) => {
     if (!req.file) {
         console.log("No file received");

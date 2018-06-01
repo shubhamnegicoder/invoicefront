@@ -2,6 +2,7 @@ import React from "react";
 import { Button} from "material-ui";
 import swal from "sweetalert";
 import Checkbox from 'material-ui/Checkbox';
+import $ from "jquery"
 
 var maindata = [];
 var dropDownData = [];
@@ -96,7 +97,7 @@ class EditCustomer extends React.Component{
         )
     }
     data3 = (temp2) => {
-        console.log(temp2, "set hui in url")
+        console.log(temp2, "set hui in url of city")
         fetch("http://localhost:8080/allSelectedCity?stateCode=" + temp2, {
             method: "GET",
             cache: 'no-cache',
@@ -117,7 +118,7 @@ class EditCustomer extends React.Component{
 
 
                 this.setState({ dropDownData3: maindata })
-                // console.log(this.state.dropDownData, "arrsy")
+                console.log(this.state.dropDownData3, "arrsy")
             },
             (error) => {
                 console.log("error", error)
@@ -137,9 +138,11 @@ class EditCustomer extends React.Component{
 
     handleChange1 = (event) => {
         //console.log(event.target.value, "selected country")
-        this.setState({ countryCode: event.target.value })
+        this.setState({ countryCode: event.target.value,stateCode:"",cityCode:"" })
         temp = event.target.value
         this.data2(temp)
+        $('.state').val("")
+        $('.city').val("")
 
     }
 
@@ -149,13 +152,15 @@ class EditCustomer extends React.Component{
         //console.log(this.state.stateCode, "set hui h state")
         temp2 = event.target.value
         this.data3(temp2)
+       
 
     }
 
     handleChange3 = (event) => {
-        console.log(event.target.value)
+        //  alert("")
+        // console.log(event.target.value)
         this.setState({ cityCode: event.target.value })
-        console.log(this.state.cityCode, "set hui h state")
+        // console.log(this.state.cityCode, "set hui h city")
     }
 
     componentDidMount(){
@@ -215,10 +220,10 @@ class EditCustomer extends React.Component{
         this.setState({addressLine1:this.refs.addressLine1.value});
         this.setState({addressLine2:this.refs.addressLine2.value});
         this.setState({cityCode:this.refs.cityCode.value});
-        this.setState({stateCode:this.refs.stateCode.value});
          this.setState({countryCode:this.refs.countryCode.value});
         this.setState({postalCode:this.refs.postalCode.value});
         this.setState({contactNo:this.refs.contactNo.value});
+        this.setState({stateCode:this.refs.stateCode.value});
     }
 
     handleClose=(e)=>{
@@ -307,6 +312,7 @@ class EditCustomer extends React.Component{
     }
 
     render(){
+        console.log(this.state,"yha ki state")
         return (<div>
             <table style={{width:"600px",height:"450px"}} align="center">
 
@@ -314,7 +320,7 @@ class EditCustomer extends React.Component{
 
                     <td><span style={{color:"red"}}>*</span>Customer Code </td>
                     <td></td>
-                    <td><input type="hidden" value={this.state._id} ref="_id"/><input type="text"  ref="customerCode" value={this.state.customerCode} /></td>
+                    <td style={{textAlign:"center"}}><input type="hidden" value={this.state._id} ref="_id"/><label ref="customerCode" >{this.state.customerCode}</label></td>
                 </tr>
                 <tr>
                     <td><span style={{color:"red"}}>*</span>Customer Name </td>
@@ -339,57 +345,45 @@ class EditCustomer extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
-                    <td><select placeholder="select country" ref="countryCode" onChange={this.handleChange1}>
-                        <option value="Select "  style={{ width: "150px" }} >Select Country Name</option>
-                        {
-                            this.state.dropDownData && this.state.dropDownData.map((item, index) => {
+                    <td><input class="country" type="text" Value={this.state.countryName}  ref="countryCode" list="country"placeholder="select country" onChange={this.handleChange1}/>
+                    <datalist id="country">
+                    {/* <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option> */}
+                    {     
+                        this.state.dropDownData && this.state.dropDownData.map((item, index) => {
 
-                                return {...this.state.countryCode==item.countryCode?
-                                <option  selected styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
-                                :<option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>}
-                            })
-                        }
-
-                    </select></td>
+                        return <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
+                        })
+                    }
+                    </datalist></td>
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>State</td><td></td>
-                    <td> <select placeholder="select State" ref="stateCode" onChange={this.handleChange2}>
+                    <td> <input class="state" type="text" Value={this.state.stateName} list="state"  ref="stateCode" placeholder="select State" onChange={this.handleChange2}/>
 
-                        <option value="Select  " style={{ width: "150px" }}> Select State Name</option>
+                      <datalist id="state">
                         {
-                           this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
+                            this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
 
-                                return this.state.stateCode==item.stateCode?
-                                <option selected styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
-                            :
-                            <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
-                           
+                                return <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
                             })
                         }
 
-                    </select></td>
+                    </datalist></td>
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>City</td>
                     <td></td>
-                    <td><select placeholder="select State" ref="cityCode" onChange={this.handleChange3}>
+                    <td> <input class="city" type="text" Value={this.state.cityName} list="city"  ref="stateCode" placeholder="select State" onChange={this.handleChange3}/>
 
-                        <option value="Select  " style={{ width: "150px" }}> Select city Name</option>
+                      <datalist id="city">
                         {
                             this.state.dropDownData3 && this.state.dropDownData3.map((item, index) => {
 
-
-
-                                return this.state.cityCode==item.cityCode?
-                                <option selected styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
-                            :
-                            <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
-                            
+                                return <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
                             })
                         }
 
-                    </select></td>
+                    </datalist></td>
                 </tr>
                 <tr>
                     <td><span style={{color:"red"}}>*</span>Postal Code</td>
@@ -414,9 +408,9 @@ class EditCustomer extends React.Component{
                 </tr>
                 <tr>
 
-                    <td align="right"><input type="submit" value="Update" onClick={this.update} style={{backgroundColor:"purple"}}/></td>   
+                    <td align="right"><input type="submit" value="Update" onClick={this.update} style={{backgroundColor:"#76323f", color:"white"}}/></td>   
                   <td></td>
-                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"purple"}}/></td>
+                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"#76323f", color:"white"}}/></td>
                 </tr>
             </table>        
         </div>);

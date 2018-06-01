@@ -22,6 +22,7 @@ import {
   ItemGrid
 } from "components";
 
+
 import avatar from "assets/img/faces/marc.jpg";
 
 // function rand() {
@@ -50,7 +51,7 @@ const styles = theme => ({
   },
 
 });
-
+var cardoption;
 
 class SimpleModal extends React.Component {
   state = {
@@ -203,7 +204,8 @@ render()
           <Grid container>
             <ItemGrid xs={30} sm={30} md={30}>
               <RegularCard
-                cardTitle="Add Tax"
+                {...this.state._id ? cardoption = "Edit Tax" : cardoption = "Add Tax"}
+                cardTitle={cardoption}
                 content={
                   <div>
                      
@@ -296,8 +298,8 @@ render()
                 }
                 footer={
                   <div>
-                    <Button color="primary"  onClick={this.onSubmit}   style={{ flooat: "left" }}>Submit</Button>
-                    <Button color="primary" onClick={this.onCancel} style={{ float: "right" }}>Cancel</Button>
+                    <Button color="primary"  onClick={this.onSubmit}   style={{ flooat: "left", backgroundColor:"#76323f", color:"white" }}>Submit</Button>
+                    <Button color="primary" onClick={this.onCancel} style={{ float: "right",backgroundColor:"#76323f", color:"white" }}>Cancel</Button>
                   </div>
                 }
               />
