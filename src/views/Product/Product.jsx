@@ -3,10 +3,9 @@ import React from "react";
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Modal from './Modal.jsx';
-import Button from 'material-ui/Button';
 import  {Grid} from "material-ui";
 
-import { RegularCard, Table, ItemGrid } from "components";
+import { RegularCard,Button, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
 import AddIcon from '@material-ui/icons/Add';
@@ -172,12 +171,9 @@ class Product extends React.Component {
          
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-              cardTitle={<h2><b>Product</b></h2>}
-              cardSubtitle={
-                <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleOpen} >
-                  <AddIcon />
-                </Button>
-              } 
+              cardTitle={<div><h2 ><b>Product</b></h2><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} variant="fab" aria-label="add" onClick={this.handleOpen} >
+              <AddIcon />
+            </Button></div>}
             />
              <MuiThemeProvider theme={this.getMuiTheme()}>
               <MUIDataTable title={"Product list"} data={tableData} columns={columns} options={options} />

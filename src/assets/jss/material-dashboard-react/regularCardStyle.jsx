@@ -21,7 +21,8 @@ const regularCardStyle = {
   },
   cardHeader: {
     ...cardHeader,
-    ...defaultFont
+    ...defaultFont,
+    
   },
   cardPlainHeader: {
     marginLeft: 0,
@@ -33,11 +34,11 @@ const regularCardStyle = {
   blueCardHeader,
   purpleCardHeader,
   cardTitle: {
-    color: "#FFFFFF",
+    color: "#76323f",
     marginTop: "0",
-    marginBottom: "5px",
+    marginBottom: "0",
     ...defaultFont,
-    fontSize: "1.125em"
+    fontSize: "2em"
   },
   cardSubtitle: {
     ...defaultFont,

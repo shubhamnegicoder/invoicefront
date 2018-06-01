@@ -1,0 +1,60 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-01T05:17:59.926Z"}
+{"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-06-01T05:18:00.002Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-01T05:18:51.382Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-01T05:18:51.410Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T05:21:11.886Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T05:21:14.277Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-01T05:21:21.610Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-01T05:21:37.687Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-01T05:21:40.797Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T05:21:47.310Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T05:54:07.838Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T06:50:39.996Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T06:54:19.625Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T06:54:20.457Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T06:54:20.850Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-01T07:06:07.113Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-01T07:06:22.659Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-01T07:06:25.810Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T07:26:38.379Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T07:26:41.236Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-01T07:29:39.927Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-01T07:29:50.517Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-01T07:29:53.798Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T07:30:06.885Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-01T07:51:33.270Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-01T07:51:33.348Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T07:51:44.257Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-01T07:55:08.513Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-01T07:55:08.589Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-01T07:55:13.531Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-01T07:55:13.610Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T07:55:17.749Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-01T07:57:28.633Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-01T07:57:28.717Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T07:57:37.978Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-01T07:57:54.769Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-01T07:58:07.322Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-01T07:58:09.998Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T07:58:15.626Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-01T08:48:10.568Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-01T08:48:34.654Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-01T08:48:38.109Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T08:48:43.397Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:04:33.514Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-06-01T09:07:21.024Z"}
+{"level":"info","message":"sending all selecteds state...","timestamp":"2018-06-01T09:08:27.331Z"}
+{"level":"info","message":"sending all selecteds city...","timestamp":"2018-06-01T09:08:29.022Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-06-01T09:08:50.717Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-01T09:09:06.672Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-01T09:09:25.189Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-01T09:09:28.483Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:09:34.312Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:09:42.007Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:10:28.552Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:17:31.853Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:18:31.996Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:22:42.642Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:22:47.207Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:24:38.942Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-01T09:24:58.080Z"}

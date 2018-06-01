@@ -128,7 +128,7 @@ class CreateInvoice extends React.Component {
     }
     getCompanyDropdownData = () => {
         axios
-            .get("http://localhost:8080/allCompany")
+            .get("http://localhost:8080/allCompany?id="+this.state.id)
             .then((res) => {
                 console.log("response from /allCompany", res);
                 let tempData = [];

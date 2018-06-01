@@ -25,10 +25,10 @@ const transition = {
 };
 
 const container = {
-  paddingRight: "15px",
-  paddingLeft: "15px",
-  marginRight: "auto",
-  marginLeft: "auto"
+  paddingRight: "0x",
+  paddingLeft: "0px",
+  marginRight: "0",
+  marginLeft: "0"
 };
 
 const boxShadow = {
@@ -60,6 +60,7 @@ const successColor = "#4caf50";
 const infoColor = "#00acc1";
 const roseColor = "#e91e63";
 const grayColor = "#999999";
+const iconColor ="#76323f";
 
 const primaryBoxShadow = {
   boxShadow:
@@ -99,22 +100,23 @@ const blueCardHeader = {
   ...infoBoxShadow
 };
 const purpleCardHeader = {
-  background: "linear-gradient(60deg, #ab47bc, #8e24aa)",
+  background: "linear-gradient(60deg, #d7cec7, #d7cec7)",
+  minWidth:"900px",
   ...primaryBoxShadow
 };
 
 const cardActions = {
-  margin: "0 20px 10px",
-  paddingTop: "10px",
+  margin: "0 0px 0px",
+  paddingTop: "0px",
   borderTop: "1px solid #eeeeee",
   height: "auto",
   ...defaultFont
 };
 
 const cardHeader = {
-  margin: "-20px 15px 0",
+  margin: "0px 0px 0",
   borderRadius: "3px",
-  padding: "15px"
+  padding: "2px"
 };
 
 const defaultBoxShadow = {
@@ -141,6 +143,7 @@ export {
   infoColor,
   roseColor,
   grayColor,
+  iconColor,
   primaryBoxShadow,
   infoBoxShadow,
   successBoxShadow,
