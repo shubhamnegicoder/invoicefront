@@ -165,11 +165,76 @@ CustomerModel.oneCustomer = (dataToFind) =>{
     ]);
     //return CustomerModel.findOne(dataToFind.query);
 }
+CustomerModel.searchCustomer = (query) =>{
+    // console.log(dataToFind.query,"sssssssssssssssssssssssssss")
+    return CustomerModel.aggregate([
+        {$match:{$and:[query]}},
+        //  { $match: {$or:[{customerCode:dataToFind.query.customerCode},{countryCode:dataToFind.query.countryCode},{stateCode:dataToFind.query.stateCode},{cityCode:dataToFind.query.cityCode}]}},
+        {
+            $lookup: {
+                from: "country",
+                localField: "countryCode",
+                foreignField: "countryCode",
+                as: "country_docs"
+            }
 
+        },
+        {
+            $unwind: "$country_docs"
+        },
+        {
+            $lookup: {
+                from: "state",
+                localField: "stateCode",
+                foreignField: "stateCode",
+                as: "state_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$state_docs"
+        }, 
+        {
+            $lookup: {
+                from: "city",
+                localField: "cityCode",
+                foreignField: "cityCode",
+                as: "city_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$city_docs"
+        }, 
+        
+        {
+            $project: {
+                customerName:1,
+                customerCode:1,
+                customerGSTNo:1,
+                addressLine1:1,
+                addressLine2:1,
+                cityCode:1,
+                cityName:"$city_docs.cityName",
+                stateCode:1,
+                stateName:"$state_docs.stateName",
+                countryCode:1,
+                countryName:"$country_docs.countryName",
+                postalCode:1,
+                contactNo:1,
+                isActive:1
+
+            }
+        }
+    ]);
+}
 
 CustomerModel.addCustomer = (addToCustomer) =>{
     return addToCustomer.save();
 }
+
 
 CustomerModel.editCustomer = (addToCustomer) =>{
    

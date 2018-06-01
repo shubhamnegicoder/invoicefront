@@ -18,6 +18,9 @@ router.get('/oneCustomer', (req, res) => {
     customerService.getOne(req, res);
 });
 
+router.get('/searchCustomer', (req, res) => {
+    customerService.searchCustomer(req, res);
+});
 
 router.post('/addCustomer', (req, res) => {
     customerService.addCustomer(req, res);

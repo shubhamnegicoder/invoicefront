@@ -291,15 +291,16 @@ class AddCompany extends React.Component {
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
-                    <td><select placeholder="select country"   onChange={this.handleChange1}>
-                    <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option>
+                    <td><input type="text" list="country" placeholder="select country"   onChange={this.handleChange1}/>
+                    <datalist id="country">
+                    {/* <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option> */}
                     {     
                         this.state.dropDownData && this.state.dropDownData.map((item, index) => {
 
                         return <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
                         })
                     }
-                    </select></td>
+                    </datalist></td>
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>State</td>
