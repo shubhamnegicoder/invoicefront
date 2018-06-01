@@ -14,6 +14,7 @@ const InvoiceSchema = mongoose.Schema({
     customerCode: { type: String },
     invoiceDate: { type: Date },
     invoiceNumber: { type: Number },
+    status:{type:String},
     items: [{
         itemCode:{type:String},
         name: { type: String },
@@ -108,7 +109,7 @@ InvoiceModel.getAllList=(data)=>{
                 
                 invoiceDate: 1,
                 invoiceNumber: 1,
-               
+                status:1, 
                 invoiceTotal: 1,
                 createdBy: 1,
                 createdAt: 1,
