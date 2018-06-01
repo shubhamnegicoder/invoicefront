@@ -58,6 +58,7 @@ const switchRoutes = (
 );
 class App extends React.Component {
   state = {
+    name:localStorage.getItem("name"),
     mobileOpen:false, 
     open:false,
     collapse:false,

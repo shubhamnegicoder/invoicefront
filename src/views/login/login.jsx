@@ -51,6 +51,7 @@ class Login extends React.Component {
         if (result.data.success) {
           // console.log(result.data, "mmm")
           localStorage.setItem("id", result.data.data._id)
+          localStorage.setItem("name", result.data.data.name)
           localStorage.setItem("token", result.data.data.password)
           token= result.data.data.password;
           window.location.href="/dashboard?token="+token;
