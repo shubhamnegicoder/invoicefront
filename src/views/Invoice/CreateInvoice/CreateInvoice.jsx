@@ -36,6 +36,7 @@ class CreateInvoice extends React.Component {
             total: "",
             discount: "",
             cgst: "",
+            status:"",
             invoiceRow: [],
             companyDropdownData: [],
             customerDropdownData: [],
@@ -128,7 +129,7 @@ class CreateInvoice extends React.Component {
     }
     getCompanyDropdownData = () => {
         axios
-            .get("http://localhost:8080/allCompany")
+            .get("http://localhost:8080/allCompany?id="+this.state.id)
             .then((res) => {
                 console.log("response from /allCompany", res);
                 let tempData = [];
@@ -393,7 +394,8 @@ class CreateInvoice extends React.Component {
             sgstTotal: parsedData.sgstTotal,
             igstTotal: parsedData.igstTotal,
             taxTotal: parsedData.taxTotal,
-            invoiceTotal: parsedData.invoiceTotal
+            invoiceTotal: parsedData.invoiceTotal,
+            state:this.state.status
         }
         console.log("Data sent", finalData);
         if (this.validation(finalData) == true) {

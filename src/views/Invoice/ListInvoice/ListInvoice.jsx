@@ -4,6 +4,16 @@ import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import  {Grid} from "material-ui";
+import Search from '@material-ui/icons/Search';
+import ViewIcon from '@material-ui/icons/ViewList';
+import CancelIcon from '@material-ui/icons/Cancel';
+import EditIcon from '@material-ui/icons/Edit';
+import Download from '@material-ui/icons/ArrowDownward';
+import Tooltip from '@material-ui/core/Tooltip';
+import swal from 'sweetalert2';
+import axios from 'axios';
+import $ from 'jquery';
+
 
 import { RegularCard, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
@@ -17,23 +27,11 @@ class ListInvoice extends React.Component {
     this.state = {
       List:[],
       id:localStorage.getItem("id"),
+      status:""
       
     }
   }
-    getMuiTheme = () => createMuiTheme({
-        overrides: {
-          MUIDataTable: {
-            root: {
-              backgroundColor: "#F08080",
-            }
-          },
-          MUIDataTableBodyCell: {
-            root: {
-              backgroundColor: "#d5f5e3"
-            }
-          }
-        }
-      })
+
       componentDidMount(){
         this.List();
        }
@@ -43,6 +41,29 @@ class ListInvoice extends React.Component {
        
         window.location.href="/EditInvoice?_id="+id
        }
+       handleView=(id,invoiceNumber)=>{
+       window.location.href = "./viewInvoice?id="+id + "&invoiceNo="+invoiceNumber;
+      }
+       handleClose(id){
+        swal({
+     
+          text: "Are you sure that you want to cancel this invoice?",
+          type:"warning",
+          showCancelButton: true,
+          confirmButtonColor: '#d9534f',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Cancel Invoice' 
+        }).then((result) => {
+          if (result.value) {
+            axios
+            .post("http://localhost:8080/editInvoice",{id:id, status:"Cancelled"})
+            .then((res) => {
+               this.List(); 
+            })
+          }
+        })
+        
+       }
        componentWillMount(){
         console.log(this.state.data);
         let id=localStorage.getItem("id")
@@ -50,6 +71,7 @@ class ListInvoice extends React.Component {
           window.location.href="/login"
         }
       }
+      
        List = () => {
     
         fetch("http://localhost:8080/allList?id="+this.state.id,{
@@ -64,20 +86,41 @@ class ListInvoice extends React.Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log("listabc = ",result.data[0].customerName)
+                console.log("listabc = ",result.data)
                  var mainArray = [];
                  result.data.forEach((item,index)=>{
+
                    console.log(item,"item")
                      var dataArray = [];
                     //  dataArray.push(tax._id)
+                    dataArray.push(item.invoiceNumber)
                      dataArray.push(item.customerName)
                      dataArray.push(item.companyName)
-                     dataArray.push(item.invoiceNumber)
+                     
                      dataArray.push(item.invoiceDate)
                      dataArray.push(item.invoiceTotal)
-                     dataArray.push(item.isActive ? "True" : "False")
-                     dataArray.push(<button onClick={(e)=>{this.handleEdit(item._id)}}>Edit</button>)
-                    // dataArray.push(new Date(tax.createAt).toDateString());
+                     dataArray.push(item.status)
+                     if(item.status==="Invoiced"){
+                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)"class="button" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handleEdit()}} style={{color:"black",opacity: "0.65",
+                       pointerEvents: "none"}}><Download/></a></Tooltip></div>);
+                      
+                     }
+                    else if(item.status==="Cancelled"){
+                     dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black",opacity: "0.65", pointerEvents:"none"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handleEdit()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
+                    }
+                    else if(item.status==="Draft"){
+                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handleEdit()}} style={{color:"black"}}><Download/></a></Tooltip></div>);
+
+                    }
                     mainArray.push(dataArray)
                     
                    
@@ -96,99 +139,33 @@ class ListInvoice extends React.Component {
 
   render(){
     
-    const columns = [
-        {
-          name: "Company",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },      
-        {
-          name: "Customer",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-        {
-          name: "Invoice Number",
-          options: {
-            filter: false,
-            sort:true
-          }
-        },
-        {
-          name: "Date",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-        {
-            name: "Amount",
-            options: {
-              filter: true,
-              sort:true
-            }
-          },
-        {
-          name: "Status",
-          options: {
-            filter: true,
-            sort:true
-          }
-        },
-          {
-            name: "Action"
-        }        
-  ];
-  var tableData= this.state.List;
-  const options = {
-    selectableRows:false,
-    filterType: 'dropdown',
-    responsive: 'stacked',
-    rowsPerPage: 10,
-    page: 1,
-    viewColumns:true,
-    print:false,
-    filter:true,
-    download:false,
-    textLabels: {
-      body: {
-        noMatch: "No Records Found!!",
-        toolTip: "Sort",
+      
+    return (
+      <div>
+  <Grid container>
+    <ItemGrid xs={12} sm={12} md={12}>
+      <RegularCard
+         cardTitle={<div>Invoices
+       <Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+
+      </Button></div>
       }
-    }
-}
-      
-      return(
-        <div>
-          
-        <Grid container>
-       
-        <ItemGrid xs={20} sm={20} md={20}>
-          <RegularCard
-            cardTitle={<h2><b>Invoice</b></h2>}
-            
+
+      content={
+          <Table
+              tableHeaderColor="primary"
+              tableHead={["Invoive Number","Company","Customer","Date","Amount","Status","Action"]}
+              tableData={this.state.List}
           />
-           <MuiThemeProvider theme={this.getMuiTheme()}>
-            <MUIDataTable title={"Invoice list"}  columns={columns} options={options} data={tableData} />
-            </MuiThemeProvider>  
-          
-          </ItemGrid>
-          </Grid>
-         
-    
+      }
+      />
+
+      </ItemGrid>
+      </Grid> 
       </div>
-  
-      
-      );
-    }
+);
 }
-
-
-// We need an intermediary variable for handling the recursive nesting.
+}
 
 
 export default ListInvoice;

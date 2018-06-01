@@ -10,3 +10,9 @@
 {"level":"info","message":"sending all country...","timestamp":"2018-05-30T08:34:17.165Z"}
 {"level":"info","message":"sending all selecteds state...","timestamp":"2018-05-30T08:34:17.454Z"}
 {"level":"info","message":"sending all selecteds city...","timestamp":"2018-05-30T08:34:17.467Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-30T09:36:37.746Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-30T09:36:37.830Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-05-30T09:41:59.593Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-05-30T09:41:59.621Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-30T09:58:20.732Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-05-30T11:08:10.441Z"}
