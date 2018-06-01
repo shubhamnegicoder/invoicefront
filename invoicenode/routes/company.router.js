@@ -42,9 +42,6 @@ router.post('/addCompany',upload.single('file'), (req, res) => {
        {
         console.log('file received');
         companyService.addCompany(req, res);
-        return res.send({
-          success: true
-        })
        }
     })
 

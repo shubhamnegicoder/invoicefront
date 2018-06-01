@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken'
 import nm from 'nodemailer'
 import rand from 'csprng'
 import ObjectId from 'bson-objectid';
+import ObjectID from 'bson-objectid';
 
 const service = {};
 var today = new Date(),
@@ -33,6 +34,7 @@ service.addInvoice = async (req, res) => {
         taxTotal: req.body.taxTotal,
         invoiceTotal: req.body.invoiceTotal,
         createdBy: req.body.id,
+        status:"Invoiced"
     })
     console.log("invoiceToAdd", invoiceToAdd);
     try {
@@ -48,18 +50,15 @@ service.addInvoice = async (req, res) => {
 }
 
 service.countInvoice = async (req, res) => {
-  var countDate = new Date();
-    countDate.setHours(5);
-    countDate.setMinutes(30);
-    countDate.setSeconds(0);
-    countDate.setMilliseconds(0);
+   console.log(req.query,"query")
 
     try {
         let invoiceToCount = {
-            query: { invoiceDate: countDate },
+            query: { invoiceyear:req.query.year,invoicemonth:req.query.month,invoicedate:req.query.currentDate,companycode:req.query.companyCode,userid:ObjectID(req.query.id)},
         };
 
         const countInvoice = await Invoice.getCount(invoiceToCount);
+        console.log(countInvoice,"invoice")
         logger.info('countinvoice...');
         res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": countInvoice });
     }
@@ -72,16 +71,12 @@ service.countInvoice = async (req, res) => {
 }
 
 service.sales = async (req, res) => {
-    console.log("this is sales service"); 
-    var salesDate = new Date();
-    salesDate.setHours(5);
-    salesDate.setMinutes(30);
-    salesDate.setSeconds(0);
-    salesDate.setMilliseconds(0);
+    console.log("this is sales service",req.query); 
    
     try {
         let invoiceSalesDate = {
-            query: { invoiceDate: salesDate },
+            query: { invoiceyear: req.query.year, invoicemonth: req.query.month, invoicedate: req.query.currentDate, companycode: req.query.companyCode, userid: ObjectID(req.query.id) },
+
         };
 
         const invoiceSales = await Invoice.sales(invoiceSalesDate);
@@ -97,18 +92,13 @@ service.sales = async (req, res) => {
 
 
 service.topTenInvoice = async (req, res) => {
-    console.log("topTenInvoice service");
-    var topTenDate = new Date();
-    topTenDate.setHours(5);
-    topTenDate.setMinutes(30);
-    topTenDate.setSeconds(0);
-    topTenDate.setMilliseconds(0);
-    console.log("date after changes is :", topTenDate);
+    console.log(req.query,"query")
     try {
         let topTen = {
-            query: { invoiceDate: topTenDate },
-        };
+            query: { invoiceyear: req.query.year, invoicemonth: req.query.month, invoicedate: req.query.currentDate, companycode: req.query.companyCode, userid: ObjectID(req.query.id) },
 
+        };
+           
         const topTenInvoice = await Invoice.topTenInvoice(topTen);
         console.log("topTenInvoice after model", topTenInvoice);
         res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": topTenInvoice });
@@ -161,12 +151,20 @@ service.getAllList = async (req, res) => {
     }
 }
 service.editInvoice = async (req, res) => {
-   
+    console.log(req.body,"aaaasss")
+   var invoiceToEdit;
     if (!req.body.id) {
         return res.send({ "success": false, "code": 500, "msg": "error" })
     }
+    if(req.body.status){
+        invoiceToEdit={
+           query:{"_id":ObjectId(req.body.id)},
+           data:{"$set":{status:req.body.status}}
+       }
+    }
+    else{
    
-    let InvoiceEdit = {
+      let InvoiceEdit = {
         companyAddressLine1: req.body.companyAddressLine1,
         companyAddressLine2: req.body.companyAddressLine1,
         companyCode: req.body.companyCode,
@@ -184,13 +182,13 @@ service.editInvoice = async (req, res) => {
         taxTotal: req.body.taxTotal,
         invoiceTotal: req.body.invoiceTotal,
         modifiedBy: ObjectId(req.body.userId)
-       
     }
-    let invoiceToEdit = {
+     invoiceToEdit = {
         query: { "_id": ObjectId(req.body.id )},
         data: { "$set": InvoiceEdit }
 
     };
+}
     console.log(invoiceToEdit ,"body")
   
     try {

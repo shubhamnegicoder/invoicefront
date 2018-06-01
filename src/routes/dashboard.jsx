@@ -24,7 +24,7 @@ import {
   Notifications,
   Assignment
 } from "@material-ui/icons";
-
+var name= "Welcome" +" "+ localStorage.getItem("name")
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -37,13 +37,14 @@ const dashboardRoutes = [
     path: "/customer",
     sidebarName: "Customer",
     icon: Person,
+    navbarName:name,
     component: Customer
   },
 
   {
     path: "/company",
     sidebarName: "Company",
-    navbarName: "Company",
+    navbarName: name,
     icon: BubbleChart,
     component: Company
   },
@@ -51,21 +52,21 @@ const dashboardRoutes = [
   {
     path: "/invoice",
     sidebarName: "Invoice",
-    navbarName: "Invoice",
+    navbarName: name,
     icon: Assignment,
     childs: [
       {
         path: "/CreateInvoice",
         sidebarName: "Create Invoice",
         icon: LocationOn,
-        navbarName: "Invoice Creation",
+        navbarName: name,
         component: CreateInvoice
       },
 
       {
         path: "/InvoiceList",
         sidebarName: "Invoice List",
-        navbarName: "List of Invoices",
+        navbarName: name,
         icon: LocationOn,
         component: ListInvoice
       }
@@ -75,20 +76,28 @@ const dashboardRoutes = [
   {
     path: "/Product",
     sidebarName: "Product",
-    navbarName: "Product",
+    navbarName: name,
     icon: BubbleChart,
     childs: [
       {
         path: "/Product/tax",
         sidebarName: "Tax",
+<<<<<<< HEAD
         navbarName: "Tax",
+=======
+        navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         icon: BubbleChart,
         component: Tax
       },
       {
         path: "/Product/product",
         sidebarName: "Product",
+<<<<<<< HEAD
         navbarName: "Product",
+=======
+        navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         icon: BubbleChart,
         component: Product
       },
@@ -97,26 +106,38 @@ const dashboardRoutes = [
   {
     path: "/Location",
     sidebarName: "Location",
-    navbarName: "Location",
+    navbarName: name,
     icon: LocationOn,
     childs: [
       {
         path: "/Location/country",
         sidebarName: "Country",
         icon: LocationOn,
+<<<<<<< HEAD
         navbarName: "Country",
+=======
+        navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         component: Country
       }, {
         path: "/Location/state",
         sidebarName: "State",
+<<<<<<< HEAD
         navbarName: "State",
+=======
+        navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         icon: LocationOn,
         component: State
       },
       {
         path: "/Location/city",
         sidebarName: "City",
+<<<<<<< HEAD
         navbarName: "City",
+=======
+        navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         icon: LocationOn,
         component: City
       }

@@ -2,7 +2,9 @@ import React from "react";
 import { Grid } from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
 import AddIcon from '@material-ui/icons/Add';
-import MUIDataTable from "mui-datatables";
+import Search from '@material-ui/icons/Search';
+import Modal from './modal';
+// import MUIDataTable from "mui-datatables";
 import Button from 'material-ui/Button';
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
@@ -10,6 +12,7 @@ class CustomerList extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            load : false,
             customerCode:"",
             customerName:"",
             customerGSTNo:"",
@@ -59,6 +62,15 @@ class CustomerList extends React.Component{
         window.location.href="/addCustomer";
 
     }
+    handleOpen=()=>{
+        this.setState({load : true});
+        // this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:"",_id:"",isActive:""});
+          
+      }
+      handleClose = () => {
+    
+        this.setState({load: false });
+      };
 
     handleEdit=(e,response)=>{
         e.preventDefault();
@@ -119,8 +131,8 @@ class CustomerList extends React.Component{
               dataArray.push(responseData.contactNo)
            dataArray.push(responseData.isActive?"Yes":"No")
              //var array = "";
-            dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button>);
-            dataArray.push(<Button  onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
+            dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
+            dataArray.push()
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)
       
@@ -139,104 +151,31 @@ class CustomerList extends React.Component{
       
 
     render(){
-        const columns = [
-            {
-              name: "Code",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },      
-            {
-              name: "Name",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },
-            {
-              name: "GST No",
-              options: {
-                filter: false,
-              }
-            },
-            
-              
-            // {
-            //   name: "City",
-            //   options: {
-            //     filter: true,
-            //   }
-            // },
-            // {
-            //   name: "State",
-            //   options: {
-            //     filter: true
-            //   }
-            // },
-            {
-              name: "IsActive",
-                options: {
-                  filter: true
-                }
-              },
-              {
-                name: "Contact No",
-                  options: {
-                    filter: true
-                  }
-                },
-                {
-                name: "Action",
-                     options: {
-                        filter: true
-                      }
-                    },
-                    {
-                    name: "Action",
-                         options: {
-                         filter: true
-                          }
-                        },
-              
-                      
-      ];
-      var tableData= this.state.data;
-
-      const options = {
-        filter: true,
-        selectableRows:false,
-        filterType: 'dropdown',
-        responsive: 'stacked',
-        rowsPerPage: 10,
-        page: 1,
-        viewColumns:true,
-        print:false,
-        filter:true,
-        download:false,
-        textLabels: {
-          body: {
-            noMatch: "No Records Found!!",
-            toolTip: "Sort",
-          }
-        }
-  }
         return (
+            <div>
         <Grid container>
-        <ItemGrid xs={30} sm={30} md={30}>
+          <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-         cardTitle="Customer"
-            cardSubtitle={
-                <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
-                    <AddIcon />
-                </Button>}
+               cardTitle={<div>Customer<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
+              <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+
+            </Button></div>
+            }
+
+            content={
+                <Table
+                    tableHeaderColor="primary"
+                    tableHead={["Code", "Name","GST NO" , "Contact No", "IsActive","Action"]}
+                    tableData={this.state.data}
+                />
+            }
             />
-            <MuiThemeProvider theme={this.getMuiTheme()}>
-              <MUIDataTable title={"Customer list"} data={tableData} columns={columns} options={options} />
-              </MuiThemeProvider>  
-        </ItemGrid>
-        
-        </Grid>
+
+            </ItemGrid>
+            </Grid> 
+         
+            <Modal {...this.state} handleClose={this.handleClose} />
+            </div>
     );
     }
     }

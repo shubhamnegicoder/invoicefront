@@ -56,12 +56,22 @@ const switchRoutes = (
 );
 class App extends React.Component {
   state = {
+<<<<<<< HEAD
     mobileOpen: false,
     open: false,
     collapse: false,
     sidebar: [],
     showSideBar: localStorage.getItem("show")
   };
+=======
+    name:localStorage.getItem("name"),
+    mobileOpen:false, 
+    open:false,
+    collapse:false,
+    sidebar:[],
+    showSideBar:localStorage.getItem("show")
+  }; 
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
 

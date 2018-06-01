@@ -25,8 +25,35 @@ export default class CreateInvoice extends React.Component {
             customerCode: "",
             customerName: "",
             customerState: "",
+<<<<<<< HEAD
             invoiceDate: "",
             invoiceNo: ""
+=======
+            customerAddressLine1: "",
+            customerAddressLine2: "",
+            customerGSTIN: "",
+            productCode: "",
+            taxCode: "",
+            code: "",
+            itemName: "",
+            qty: "",
+            rate: "",
+            total: "",
+            discount: "",
+            cgst: "",
+            status:"",
+            invoiceRow: [],
+            companyDropdownData: [],
+            customerDropdownData: [],
+            itemsDropdownData: [],
+            taxData: [],
+            setAddressOfCompany: false,
+            setAddressOfCustomer: false,
+            check: false,
+            check2: false,
+            check3: false,
+            invoiceNo: 0
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         }
     }
     getData = (param) => {
@@ -97,6 +124,90 @@ export default class CreateInvoice extends React.Component {
                 setAddressOfCustomer: false
             })
         }
+<<<<<<< HEAD
+=======
+        if (param == "items") {
+            let eo = $(e.target).attr('id');
+            let i = eo.slice(6);
+            var tempTaxCode;
+            this.state.itemsDropdownData.map((item, key) => {
+                if (e.target.value == item.productCode) {
+                    tempTaxCode = item.taxCode;
+                    $('.name' + i).val(item.productName);
+                    $('.hsn' + i).val(item.taxCode);
+                    $('.rate' + i).val(item.rate);
+                    this.setState({
+                        taxCode: item.taxCode
+                    })
+                }
+            })
+            this.setState({
+                productCode: e.target.value,
+                check2: true
+            })
+            if (this.state.companyState == this.state.customerState) {
+                this.state.taxData.map((item, key) => {
+                    if (item.taxCode == tempTaxCode) {
+                        $('.cgstrate' + i).val(item.cgst);
+                        $('.sgstrate' + i).val(item.sgst);
+                        $('.igstrate' + i).val(0);
+                    }
+                })
+            }
+            else {
+                this.state.taxData.map((item, key) => {
+                    if (item.taxCode == tempTaxCode) {
+                        $('.igstrate' + i).val(item.igst);
+                        $('.cgstrate' + i).val(0);
+                        $('.sgstrate' + i).val(0);
+                    }
+                })
+            }
+        }
+    }
+    getCompanyDropdownData = () => {
+        axios
+            .get("http://localhost:8080/allCompany?id="+this.state.id)
+            .then((res) => {
+                console.log("response from /allCompany", res);
+                let tempData = [];
+                res.data.data.map((item, key) => {
+                    tempData.push(item);
+                });
+                this.setState({
+                    companyDropdownData: tempData
+                });
+            })
+    }
+    getCustomerDropdownData = () => {
+        axios
+            .get("http://localhost:8080/allCustomer")
+            .then((res) => {
+                console.log("response from /allCustomer", res);
+                let tempData = [];
+                res.data.data.map((item, key) => {
+                    tempData.push(item);
+                });
+                this.setState({
+                    customerDropdownData: tempData
+                });
+            })
+    }
+    getItemDropdownData = () => {
+        axios
+            .get("http://localhost:8080/allProduct?id=" + this.state.id)
+            .then((res) => {
+                console.log("response from /allProduct", res);
+                let tempData = [];
+                res.data.data.map((item, key) => {
+                    tempData.push(item);
+                });
+                this.setState({
+                    itemsDropdownData: tempData,
+                    check: true
+                });
+            })
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
     }
     setInitialDate = () => {
         date = new Date();
@@ -118,6 +229,79 @@ export default class CreateInvoice extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+<<<<<<< HEAD
+=======
+        let item = {};
+        for (var i = 0; i < invoiceRow.length; i++) {
+            item.itemCode=parsedData["itemCode"+i];
+            item.name = parsedData["itemName" + i];
+            item.hsn = parsedData["hsn" + i];
+            item.qty = parsedData["qty" + i];
+            item.rate = parsedData["rate" + i];
+            item.total = parsedData["total" + i];
+            item.discount = parsedData["discount" + i];
+            item.CGSTRate = parsedData["CGSTRate" + i];
+            item.CGSTAmount = parsedData["CGSTAmount" + i];
+            item.SGSTRate = parsedData["SGSTRate" + i];
+            item.SGSTAmount = parsedData["SGSTAmount" + i];
+            item.IGSTRate = parsedData["IGSTRate" + i];
+            item.IGSTAmount = parsedData["IGSTAmount" + i];
+            items.push(item);
+            item = {};
+        }
+        items = items.filter(item => item.name != undefined);
+        var finalData = {
+            id: this.state.id,
+            companyCode: parsedData.companyCode,
+            companyAddressLine1: parsedData.companyAddressLine1,
+            companyAddressLine2: parsedData.companyAddressLine2,
+            companyGSTIN: this.state.companyGSTIN,
+            customerCode: parsedData.customerCode,
+            customerAddressLine1: parsedData.customerAddressLine1,
+            customerAddressLine2: parsedData.customerAddressLine2,
+            customerGSTIN: this.state.customerGSTIN,
+            invoiceDate: parsedData.invoiceDate,
+            invoiceNumber: parsedData.invoiceNumber,
+            items: items,
+            itemTotal: parsedData.itemTotal,
+            discountTotal: parsedData.discountTotal,
+            cgstTotal: parsedData.cgstTotal,
+            sgstTotal: parsedData.sgstTotal,
+            igstTotal: parsedData.igstTotal,
+            taxTotal: parsedData.taxTotal,
+            invoiceTotal: parsedData.invoiceTotal,
+            state:this.state.status
+        }
+        console.log("Data sent", finalData);
+        if (this.validation(finalData) == true) {
+            superagent
+                .post("http://localhost:8080/addInvoice")
+                .send(finalData)
+                .then((res) => {
+                    if (res.body.success) {
+                        swal({
+                            text: "Invoice Saved !",
+                            icon: "success"
+                        }).then(() => {
+                            window.location.href = "./viewInvoice?id=" + this.state.id + "&invoiceNo=" + this.state.invoiceNo;
+                        })
+                    }
+                })
+        }
+    }
+    validation = (data) => {
+        if (data.companyAddressLine1 == "" || data.companyAddressLine2 == "") {
+            alert("Please select Company from dropdown !");
+            return false;
+        }
+        if (data.customerAddressLine1 == "" || data.customerAddressLine2 == "") {
+            alert("Please select Customer from dropdown !");
+            return false;
+        }
+        else {
+            return true;
+        }
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
     }
     componentWillMount() {
         this.getData("company");
