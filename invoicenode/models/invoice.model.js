@@ -51,12 +51,6 @@ InvoiceModel.addInvoice = (invoiceToAdd) => {
 }
 
 InvoiceModel.getCount = (invoiceToCount) => {
-<<<<<<< HEAD
-    // console.log("invoiceToCount", invoiceToCount);
-    return InvoiceModel.find({ invoiceDate: { $eq: invoiceToCount.query.invoiceDate } }).count();
-}
-InvoiceModel.getAllList = (data) => {
-=======
     // var startdate = invoiceToCount.query.invoiceyear + '-' + invoiceToCount.query.invoicemonth+'-'+'01'+"T00:00:00"
     const date = new Date();
     date.setDate("01")
@@ -79,7 +73,6 @@ InvoiceModel.getAllList = (data) => {
     }]}).count()
     }
 InvoiceModel.getAllList=(data)=>{
->>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
     console.log("getalllist")
     return InvoiceModel.aggregate([
         { $match: { createdBy: data.query.createdBy } },
@@ -116,11 +109,7 @@ InvoiceModel.getAllList=(data)=>{
 
                 invoiceDate: 1,
                 invoiceNumber: 1,
-<<<<<<< HEAD
-
-=======
                 status:1, 
->>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
                 invoiceTotal: 1,
                 createdBy: 1,
                 createdAt: 1,
@@ -164,21 +153,6 @@ InvoiceModel.sales = (invoiceSalesDate) => {
 }
 
 InvoiceModel.topTenInvoice = (topTenData) => {
-<<<<<<< HEAD
-    console.log("topTenInvoice model");
-    // var topTenInvoiceDate = eqDate
-    // console.log("eqDate", eqDate)
-    return InvoiceModel.aggregate([
-        {
-            $match: {
-                "invoiceDate": {
-                    $eq: topTenData.query.invoiceDate
-
-                }
-                // .sort({ invoiceTotal: -1 }).limit(2)
-            }
-
-=======
     const date = new Date();
     date.setDate("01")
     date.setMonth(--topTenData.query.invoicemonth)
@@ -199,7 +173,6 @@ InvoiceModel.topTenInvoice = (topTenData) => {
                // .sort({ invoiceTotal: -1 }).limit(2)
             
                  
->>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         }, { $sort: { invoiceTotal: -1 } }, { $limit: 10 },
         {
             $lookup: {
@@ -254,10 +227,6 @@ InvoiceModel.topTenInvoice = (topTenData) => {
             }
         }
     ]);
-<<<<<<< HEAD
-=======
-
->>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
 }
 InvoiceModel.editInvoice = (invoiceToEdit) => {
     console.log(invoiceToEdit, "hiiiii");
@@ -267,14 +236,6 @@ InvoiceModel.getEditList = (invoiceToEdit) => {
     console.log(invoiceToEdit, "hiiiii");
     return InvoiceModel.find(invoiceToEdit.query);
 }
-<<<<<<< HEAD
-//     //  return InvoiceModel.find({ invoiceDate: { $eq: today } }).sort({ invoiceTotal: -1 }).limit(2);
-
-
-
-=======
-
->>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
 
 InvoiceModel.allInvoice = (dataToFind) => {
     console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
