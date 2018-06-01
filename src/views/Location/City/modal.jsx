@@ -19,7 +19,7 @@ import avatar from "assets/img/faces/marc.jpg";
 var maindata = [];
 var dropDownData=[];
 var dd;
-var temp;
+var temp,cardoption;
 export default class App extends React.Component {
 
     constructor(props) {
@@ -160,7 +160,7 @@ export default class App extends React.Component {
     //                 swal({
     //                     title: "City added!",
     //                     icon: "success",
-    //                 });
+    //                 });g
 
     //             }
     //             else{
@@ -247,11 +247,13 @@ export default class App extends React.Component {
         return (
             <div>
                 <Modal styles={{ width: '379px' }} open={this.props.open} onClose={this.props.onClose} center>
+                    
                     <Grid container >
                         <form onSubmit={this.handleSubmit}>
                             <ItemGrid xs={18} sm={20} md={20}>
                                 <RegularCard
-                                    cardTitle="Add State"
+                                    {...this.state._id ? cardoption = "Edit City" : cardoption = "Add City"}
+                                    cardTitle={cardoption}
                                     content={
                                         <div>
                                             <Grid container>

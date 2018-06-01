@@ -56,7 +56,7 @@ const dashboardRoutes = [
     icon: Assignment,
     childs: [
       {
-        path: "/createInvoice",
+        path: "/CreateInvoice",
         sidebarName: "Create Invoice",
         icon: LocationOn,
         navbarName: name,
@@ -82,14 +82,22 @@ const dashboardRoutes = [
       {
         path: "/Product/tax",
         sidebarName: "Tax",
+<<<<<<< HEAD
+        navbarName: "Tax",
+=======
         navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         icon: BubbleChart,
         component: Tax
       },
       {
         path: "/Product/product",
         sidebarName: "Product",
+<<<<<<< HEAD
+        navbarName: "Product",
+=======
         navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         icon: BubbleChart,
         component: Product
       },
@@ -105,19 +113,31 @@ const dashboardRoutes = [
         path: "/Location/country",
         sidebarName: "Country",
         icon: LocationOn,
+<<<<<<< HEAD
+        navbarName: "Country",
+=======
         navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         component: Country
       }, {
         path: "/Location/state",
         sidebarName: "State",
+<<<<<<< HEAD
+        navbarName: "State",
+=======
         navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         icon: LocationOn,
         component: State
       },
       {
         path: "/Location/city",
         sidebarName: "City",
+<<<<<<< HEAD
+        navbarName: "City",
+=======
         navbarName: name,
+>>>>>>> 3567d2c460f984c0dc84a3eeeed1a493e4c8ace4
         icon: LocationOn,
         component: City
       }
