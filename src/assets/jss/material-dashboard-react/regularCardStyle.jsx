@@ -21,7 +21,8 @@ const regularCardStyle = {
   },
   cardHeader: {
     ...cardHeader,
-    ...defaultFont
+    ...defaultFont,
+    
   },
   cardPlainHeader: {
     marginLeft: 0,

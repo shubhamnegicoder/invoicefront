@@ -101,6 +101,7 @@ const blueCardHeader = {
 };
 const purpleCardHeader = {
   background: "linear-gradient(60deg, #d7cec7, #d7cec7)",
+  minWidth:"900px",
   ...primaryBoxShadow
 };
 
