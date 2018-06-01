@@ -15,7 +15,7 @@ const InvoiceSchema = mongoose.Schema({
     invoiceDate: { type: Date },
     invoiceNumber: { type: Number },
     items: [{
-        itemCode:{type:String},
+        itemCode: { type: String },
         name: { type: String },
         qty: { type: Number },
         rate: { type: Number },
@@ -50,13 +50,13 @@ InvoiceModel.addInvoice = (invoiceToAdd) => {
 }
 
 InvoiceModel.getCount = (invoiceToCount) => {
-   // console.log("invoiceToCount", invoiceToCount);
-    return InvoiceModel.find({invoiceDate:{$eq:invoiceToCount.query.invoiceDate}}).count();
+    // console.log("invoiceToCount", invoiceToCount);
+    return InvoiceModel.find({ invoiceDate: { $eq: invoiceToCount.query.invoiceDate } }).count();
 }
-InvoiceModel.getAllList=(data)=>{
+InvoiceModel.getAllList = (data) => {
     console.log("getalllist")
     return InvoiceModel.aggregate([
-        { $match: {createdBy:data.query.createdBy} },
+        { $match: { createdBy: data.query.createdBy } },
         {
             $lookup: {
                 from: "customer",
@@ -83,14 +83,14 @@ InvoiceModel.getAllList=(data)=>{
             $unwind: "$company_docs"
         }, {
             $project: {
-                
+
                 companyName: "$company_docs.companyName",
-                
+
                 customerName: "$customer_docs.customerName",
-                
+
                 invoiceDate: 1,
                 invoiceNumber: 1,
-               
+
                 invoiceTotal: 1,
                 createdBy: 1,
                 createdAt: 1,
@@ -109,11 +109,11 @@ InvoiceModel.sales = (invoiceSalesDate) => {
             $match: { "invoiceDate": { "$eq": invoiceSalesDate.query.invoiceDate } }
         },
         {
-        $group: {
-            _id:"",
-            total: { $sum: '$invoiceTotal' }
-        }
-    }, {
+            $group: {
+                _id: "",
+                total: { $sum: '$invoiceTotal' }
+            }
+        }, {
             $project: {
                 total: 1
             }
@@ -123,18 +123,18 @@ InvoiceModel.sales = (invoiceSalesDate) => {
 
 InvoiceModel.topTenInvoice = (topTenData) => {
     console.log("topTenInvoice model");
-   // var topTenInvoiceDate = eqDate
-   // console.log("eqDate", eqDate)
+    // var topTenInvoiceDate = eqDate
+    // console.log("eqDate", eqDate)
     return InvoiceModel.aggregate([
         {
             $match: {
                 "invoiceDate": {
                     $eq: topTenData.query.invoiceDate
-                  
+
                 }
-               // .sort({ invoiceTotal: -1 }).limit(2)
+                // .sort({ invoiceTotal: -1 }).limit(2)
             }
-                 
+
         }, { $sort: { invoiceTotal: -1 } }, { $limit: 10 },
         {
             $lookup: {
@@ -189,22 +189,19 @@ InvoiceModel.topTenInvoice = (topTenData) => {
             }
         }
     ]);
-<<<<<<< HEAD
 }
-InvoiceModel.editInvoice = (invoiceToEdit) =>{
-    console.log(invoiceToEdit,"hiiiii");
-    return InvoiceModel.update(invoiceToEdit.query,invoiceToEdit.data);
+InvoiceModel.editInvoice = (invoiceToEdit) => {
+    console.log(invoiceToEdit, "hiiiii");
+    return InvoiceModel.update(invoiceToEdit.query, invoiceToEdit.data);
 }
-InvoiceModel.getEditList = (invoiceToEdit) =>{
-    console.log(invoiceToEdit,"hiiiii");
-return InvoiceModel.find(invoiceToEdit.query);
+InvoiceModel.getEditList = (invoiceToEdit) => {
+    console.log(invoiceToEdit, "hiiiii");
+    return InvoiceModel.find(invoiceToEdit.query);
 }
-=======
 //     //  return InvoiceModel.find({ invoiceDate: { $eq: today } }).sort({ invoiceTotal: -1 }).limit(2);
-   
- }
 
->>>>>>> 3218d5bea34c5106aa7c2ad8c4fe974f46bda385
+
+
 
 InvoiceModel.allInvoice = (dataToFind) => {
     console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
@@ -256,7 +253,7 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 cgstTotal: 1,
                 sgstTotal: 1,
                 igstTotal: 1,
-                taxTotal: 1, 
+                taxTotal: 1,
                 invoiceTotal: 1,
                 createdBy: 1,
                 createdAt: 1,

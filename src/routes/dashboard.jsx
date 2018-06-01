@@ -39,7 +39,7 @@ const dashboardRoutes = [
     icon: Person,
     component: Customer
   },
-  
+
   {
     path: "/company",
     sidebarName: "Company",
@@ -55,13 +55,13 @@ const dashboardRoutes = [
     icon: Assignment,
     childs: [
       {
-        path: "/createInvoice",
+        path: "/CreateInvoice",
         sidebarName: "Create Invoice",
         icon: LocationOn,
         navbarName: "Invoice Creation",
         component: CreateInvoice
       },
-      
+
       {
         path: "/InvoiceList",
         sidebarName: "Invoice List",
@@ -71,7 +71,7 @@ const dashboardRoutes = [
       }
     ]
   },
-  
+
   {
     path: "/Product",
     sidebarName: "Product",
@@ -80,15 +80,15 @@ const dashboardRoutes = [
     childs: [
       {
         path: "/Product/tax",
-        sidebarName: "Tax", 
-        navbarName: "Tax",   
+        sidebarName: "Tax",
+        navbarName: "Tax",
         icon: BubbleChart,
         component: Tax
       },
       {
         path: "/Product/product",
-        sidebarName: "Product", 
-        navbarName: "Product",   
+        sidebarName: "Product",
+        navbarName: "Product",
         icon: BubbleChart,
         component: Product
       },
@@ -102,22 +102,22 @@ const dashboardRoutes = [
     childs: [
       {
         path: "/Location/country",
-        sidebarName: "Country", 
+        sidebarName: "Country",
         icon: LocationOn,
         navbarName: "Country",
-        component: Country 
+        component: Country
       }, {
         path: "/Location/state",
-        sidebarName: "State", 
-        navbarName: "State",   
+        sidebarName: "State",
+        navbarName: "State",
         icon: LocationOn,
         component: State
       },
       {
-        path: "/Location/city", 
-        sidebarName: "City",   
+        path: "/Location/city",
+        sidebarName: "City",
         navbarName: "City",
-        icon: LocationOn,  
+        icon: LocationOn,
         component: City
       }
     ]
