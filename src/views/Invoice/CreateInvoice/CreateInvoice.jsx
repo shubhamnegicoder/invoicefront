@@ -9,8 +9,12 @@ import './bootstrap.min.css';
 import axios from 'axios';
 import $ from 'jquery';
 import CreateInvoiceStep2 from './CreateInvoiceStep2';
+import ViewInvoice from './ViewInvoice';
+import swal from 'sweetalert';
+import parse from 'form-parse';
 
-var loadStep2; var date;
+var date;
+var invoiceRow = [], deletedRows = 0, items = [], tempArray = [];
 
 export default class CreateInvoice extends React.Component {
     constructor(props) {
@@ -26,7 +30,13 @@ export default class CreateInvoice extends React.Component {
             customerName: "",
             customerState: "",
             invoiceDate: "",
-            invoiceNo: ""
+            invoiceNo: "",
+            companySelected: false,
+            customerSelected: false,
+            check: false,
+            showCgst: false,
+            showIgst: false,
+            showIgst: false
         }
     }
     getData = (param) => {
@@ -58,6 +68,21 @@ export default class CreateInvoice extends React.Component {
                     });
                 })
         }
+    }
+    setInitialDate = () => {
+        date = new Date();
+        let year = date.getFullYear();
+        year = year.toString();
+        let month = date.getMonth();
+        month = month.toString();
+        month++;
+        month = this.padDigits(month, 2);
+        let today = date.getDate();
+        today = this.padDigits(today, 2);
+        date = year + "-" + month + "-" + today;
+        this.setState({
+            invoiceDate: date
+        })
     }
     setInvoiceNo = () => {
         date = new Date();
@@ -98,26 +123,13 @@ export default class CreateInvoice extends React.Component {
             })
         }
     }
-    setInitialDate = () => {
-        date = new Date();
-        let year = date.getFullYear();
-        year = year.toString();
-        let month = date.getMonth();
-        month = month.toString();
-        month++;
-        month = this.padDigits(month, 2);
-        let today = date.getDate();
-        today = this.padDigits(today, 2);
-        date = year + "-" + month + "-" + today;
-        console.log("date", date);
-        this.setState({
-            invoiceDate: date
-        })
-    }
     handleInvoice = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
+    }
+    createInvoice = (e) => {
+        e.preventDefault();
     }
     componentWillMount() {
         this.getData("company");
@@ -136,7 +148,8 @@ export default class CreateInvoice extends React.Component {
                         companyAddressLine2: item.addressLine2,
                         companyGSTIN: item.companyGSTNo,
                         companyState: item.stateName,
-                        setAddressOfCompany: true
+                        setAddressOfCompany: true,
+                        companySelected: true
                     })
                 }
             }
@@ -150,19 +163,16 @@ export default class CreateInvoice extends React.Component {
                         customerAddressLine2: item.addressLine2,
                         customerGSTIN: item.customerGSTNo,
                         customerState: item.stateName,
-                        setAddressOfCustomer: true
+                        setAddressOfCustomer: true,
+                        customerSelected: true
                     })
                 }
             }
         })
     }
-    loadStep2 = () => {
-        // if () { }
-        return true;
-    }
     render() {
         return (
-            <div>
+            <form onSubmit={(e) => this.createInvoice(e)}>
                 <Wizard>
                     <Steps>
                         <Step id="gandalf">
@@ -170,8 +180,12 @@ export default class CreateInvoice extends React.Component {
                                 render={({ next, previous, step, steps }) => (
                                     <div style={{ float: 'right' }}>
                                         {steps.indexOf(step) < steps.length - 1 && (
-                                            // <button className="btn" onClick={loadStep2 = () => this.loadStep2() ? next : ""}>Next</button>
-                                            <button className="btn" onClick={next}>Next</button>
+                                            <input
+                                                type="submit"
+                                                className="btn"
+                                                onClick={this.state.companySelected && this.state.customerSelected ? next : ""}
+                                                value="Next"
+                                            />
                                         )}
                                     </div>
                                 )}
@@ -207,12 +221,28 @@ export default class CreateInvoice extends React.Component {
                                                 }
                                             </select>
                                         </div>
-                                        {/* Customer Dropdown */}
                                         <div className="col-sm">
                                             <select
                                                 style={{ minWidth: '200px' }}
                                                 onChange={(e, param) => this.handleDropdown(e, "customer")}
                                                 name="customerCode"
+                                                required
+                                            >
+                                                <option value="">Select Customer</option>
+                                                {
+                                                    this.state.customerDropdownData.map((item, index) => {
+                                                        return <option name={item.customerName} value={item.customerCode} key={index} >{item.customerName}</option>
+                                                    })
+                                                }
+                                            </select>
+                                        </div>
+                                        {/* Customer Dropdown */}
+                                        {/* <div className="col-sm">
+                                            <select
+                                                style={{ minWidth: '200px' }}
+                                                onChange={(e, param) => this.handleDropdown(e, "customer")}
+                                                name="customerCode"
+                                                required
                                             >
                                                 <option>Select Customer</option>
                                                 {
@@ -221,7 +251,7 @@ export default class CreateInvoice extends React.Component {
                                                     })
                                                 }
                                             </select>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <br />
                                     {/* Address Labels */}
@@ -266,6 +296,7 @@ export default class CreateInvoice extends React.Component {
                                                 onChange={this.handleInvoice}
                                                 required
                                             />
+                                            <p>(mm-dd-yyyy)</p>
                                         </div>
                                         <div className="col-sm">
                                             <input type="text" style={{ minWidth: '200px' }} name="invoiceNumber" value={this.state.invoiceNo} disabled />
@@ -283,20 +314,15 @@ export default class CreateInvoice extends React.Component {
                                         {steps.indexOf(step) > 0 && (
                                             <button className="btn" onClick={previous} >Back</button>
                                         )}
-                                        <button className="btn btn-info" style={{ marginLeft: '5px' }}>Save as Draft</button>
-                                        {steps.indexOf(step) < steps.length - 1 && (
-                                            <button className="btn btn-success" onClick={next} style={{ marginLeft: '5px' }}>Create Invoice</button>
-                                        )}
+                                        {/* {steps.indexOf(step) < steps.length - 1 && (
+                                            <button className="btn btn-success" onClick={this.createInvoice} style={{ marginLeft: '5px' }}>Create Invoice</button>
+                                        )} */}
                                     </div>
                                 )}
                             />
                             <CreateInvoiceStep2 {...this.state} />
                         </Step>
                         <Step id="ice king">
-                            <div class="container">
-                                <h2 className="text-align-center">Final Invoice</h2>
-                                <hr />
-                            </div>
                             <WithWizard
                                 render={({ next, previous, step, steps }) => (
                                     <div style={{ float: 'right' }}>
@@ -306,11 +332,13 @@ export default class CreateInvoice extends React.Component {
                                     </div>
                                 )}
                             />
+                            <div></div>
+                            {/* <ViewInvoice {...this.state} /> */}
                         </Step>
                     </Steps>
                     {/* <Navigation /> */}
                 </Wizard>
-            </div>
+            </form>
         )
     }
 }
