@@ -261,8 +261,8 @@ render()
                           style={{border: "2px solid black"}}
                           
                         /> */}
-                        <select  style={{border: "2px solid black"}} onChange={this.handleDropDown}>
-                        <option value="Select Tax" style={{border: "2px solid black"}} > Select Tax</option>
+                        <input type="text" list="tax"  style={{border: "2px solid black"}} onChange={this.handleDropDown}/>
+                      <datalist id="tax">
                         {     
                             this.state.dropDownData && this.state.dropDownData.map((item, index) => {
                             
@@ -273,7 +273,7 @@ render()
                         }
                        
 
-                        </select>
+                        </datalist>
                       </ItemGrid>
                     </Grid>
                     <Grid container>

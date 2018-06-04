@@ -521,7 +521,7 @@ class EditInvoice extends React.Component {
                     <div className="row">
                         {/* Company Dropdown */}
                         <div className="col-sm">
-                            <select
+                            <select disabled
                                 style={{ minWidth: '200px' }}
                                 onChange={(e, param) => this.handleDropdown(e, "company")}
                                 name="companyCode"
@@ -529,14 +529,14 @@ class EditInvoice extends React.Component {
                                 <option>Select Company</option>
                                 {
                                     this.state.companyDropdownData.map((item, index) => {
-                                        return <option name={item.companyName} value={item.companyCode} key={index}>{item.companyName}</option>
+                                        return <option selected name={item.companyName} value={item.companyCode} key={index}>{item.companyName}</option>
                                     })
                                 }
                             </select>
                         </div>
                         {/* Customer Dropdown */}
                         <div className="col-sm">
-                            <select
+                            <select disabled
                                 style={{ minWidth: '200px' }}
                                 onChange={(e, param) => this.handleDropdown(e, "customer")}
                                 name="customerCode"
@@ -544,7 +544,7 @@ class EditInvoice extends React.Component {
                                 <option>Select Customer</option>
                                 {
                                     this.state.customerDropdownData.map((item, index) => {
-                                        return <option name={item.customerName} value={item.customerCode} key={index}>{item.customerName}</option>
+                                        return <option selected name={item.customerName} value={item.customerCode} key={index}>{item.customerName}</option>
                                     })
                                 }
                             </select>
@@ -563,12 +563,12 @@ class EditInvoice extends React.Component {
                     {/* Address Fields */}
                     <div className="row">
                         <div className="col-sm">
-                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine1" value={this.state.companyAddressLine1} readOnly /><br />
-                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine2" value={this.state.companyAddressLine2} readOnly />
+                            <input  disabled style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine1" value={this.state.companyAddressLine1} readOnly /><br />
+                            <input  disabled style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="companyAddressLine2" value={this.state.companyAddressLine2} readOnly />
                         </div>
                         <div className="col-sm">
-                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="customerAddressLine1" value={this.state.customerAddressLine1} readOnly /><br />
-                            <input style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="customerAddressLine2" value={this.state.customerAddressLine2} readOnly />
+                            <input  disabled style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="customerAddressLine1" value={this.state.customerAddressLine1} readOnly /><br />
+                            <input  disabled style={{ border: 0, borderBottom: '1px solid silver', minWidth: '200px' }} name="customerAddressLine2" value={this.state.customerAddressLine2} readOnly />
                         </div>
                     </div>
                     <br />
@@ -587,7 +587,7 @@ class EditInvoice extends React.Component {
                             <input type="date" style={{ minWidth: '200px' }} name="invoiceDate" />
                         </div>
                         <div className="col-sm">
-                            <input type="text" style={{ minWidth: '200px' }} name="invoiceNumber" value={this.state.invoiceNo} />
+                            <input  disabled type="text" style={{ minWidth: '200px' }} name="invoiceNumber" value={this.state.invoiceNo} />
                         </div>
                     </div>
                 </div>
