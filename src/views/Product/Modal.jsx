@@ -46,7 +46,7 @@ const styles = theme => ({
 
 });
 
-
+var cardoption;
 class SimpleModal extends React.Component {
   state = {
     open: false,
@@ -219,7 +219,8 @@ render()
           <Grid container>
             <ItemGrid xs={30} sm={30} md={30}>
               <RegularCard
-                cardTitle="Add Product"
+               {...this.state._id ? cardoption = "Edit Product" : cardoption = "Add Product"}
+               cardTitle={cardoption}
                 content={
                   <div>
                      
@@ -260,8 +261,8 @@ render()
                           style={{border: "2px solid black"}}
                           
                         /> */}
-                        <select  style={{border: "2px solid black"}} onChange={this.handleDropDown}>
-                        <option value="Select Tax" style={{border: "2px solid black"}} > Select Tax</option>
+                        <input type="text" list="tax"  style={{border: "2px solid black"}} onChange={this.handleDropDown}/>
+                      <datalist id="tax">
                         {     
                             this.state.dropDownData && this.state.dropDownData.map((item, index) => {
                             
@@ -272,7 +273,7 @@ render()
                         }
                        
 
-                        </select>
+                        </datalist>
                       </ItemGrid>
                     </Grid>
                     <Grid container>
@@ -304,8 +305,8 @@ render()
                 }
                 footer={
                   <div>
-                    <Button color="primary"  onClick={this.onSubmit}   style={{ flooat: "left" }}>Submit</Button>
-                    <Button color="primary" onClick={this.onCancel} style={{ float: "right" }}>Cancel</Button>
+                    <Button color="primary"  onClick={this.onSubmit}   style={{ flooat: "left",backgroundColor:"#76323f", color:"white" }}>Submit</Button>
+                    <Button color="primary" onClick={this.onCancel} style={{ float: "right",backgroundColor:"#76323f", color:"white" }}>Cancel</Button>
                   </div>
                 }
               />

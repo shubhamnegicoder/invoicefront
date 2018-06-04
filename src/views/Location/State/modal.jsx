@@ -161,7 +161,7 @@ export default class App extends React.Component {
             <div>
                 {/* {console.log(this.state.dropDownData,"drop")} */}
                 <Modal styles={{ width: '379px' }} open={this.props.open} onClose={this.props.onClose} center>
-                    <Grid container >
+                    <Grid container style={{maxWidth:"400px"}} >
                         <form onSubmit={this.handleSubmit}>
                             <ItemGrid xs={18} sm={20} md={20}>
                                 <RegularCard
@@ -207,7 +207,7 @@ export default class App extends React.Component {
                                             </Grid>
                                         </div>
                                     }
-                                    footer={<Button color="primary" type="submit" round>
+                                    footer={<Button color="primary" style={{backgroundColor:"#76323f", color:"white"}} type="submit" round>
                                         Submit</Button>}
                                 />
                             </ItemGrid>

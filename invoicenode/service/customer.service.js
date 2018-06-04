@@ -23,6 +23,7 @@ const service = {};
  */
 service.getAll = async (req,res)=>{
 	try{
+		
 		var allCustomer = await CustomerModel.allCustomer();
 		return res.send({success:true, code:200, msg:"Successfully found", data:allCustomer}); 
 	}catch(error){
@@ -49,6 +50,35 @@ service.getOne = async (req,res)=>{
 		return res.send({success:false, code:500, msg:"Error in getting Customer"+error, err:error})
 	}
 }
+
+service.searchCustomer = async (req,res)=>{
+//    console.log(req.query,"+++++++++++++++++++++++++++")
+  
+	try{
+		
+		let	query={ }
+		if(req.query.customerName!==''){
+			query.customerName={ $regex: '.*' + req.query.customerName + '.*' } 
+		}
+		if(req.query.cityCode!==''){
+			query.cityCode=req.query.cityCode
+		}
+		 if(req.query.countryCode!==''){
+			query.countryCode=req.query.countryCode
+		}
+		if(req.query.stateCode!==''){
+			query.stateCode=req.query.stateCode
+		}
+		
+		// console.log(query,"kookokokokokoklllllllllllll")
+		var oneCustomer = await CustomerModel.searchCustomer(query);
+		// console.log(oneCustomer,"lllllllllllll")
+		return res.send({success:true, code:200, msg:"Successfully found", data:oneCustomer}); 
+	}catch(error){
+		return res.send({success:false, code:500, msg:"Error in getting Customer"+error, err:error})
+	}
+}
+
 
 /**
  * @description [with all the calculation before add function of model and after add]

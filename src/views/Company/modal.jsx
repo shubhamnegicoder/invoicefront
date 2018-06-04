@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
 import { Grid, InputLabel } from "material-ui";
 import swal from "sweetalert";
-import Customer from "../Customer/Customer";
+import Company from "../Company/Company";
 import axios from "axios"
 import $ from "jquery"
 import {
@@ -22,7 +22,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            customerName: "",
+            companyName: "",
             countryCode: "",
             stateCode: "",
             cityCode: "",
@@ -88,7 +88,7 @@ export default class App extends React.Component {
 
 
     componentWillMount() {
-        console.log(this.state.data);
+        // console.log(this.state.data);
         let id = localStorage.getItem("id")
         if (id == null) {
             window.location.href = "/login"
@@ -96,34 +96,34 @@ export default class App extends React.Component {
         }
     }
     handleChange1 = (event) => {
-        console.log(event.target.value, "selected country")
+        // console.log(event.target.value, "selected country")
         this.setState({ countryCode: event.target.value })
         temp = event.target.value
         this.data2(temp);
     }
 
     handleChange2 = (event) => {
-        console.log(event.target.value, "selected state")
+        // console.log(event.target.value, "selected state")
         this.setState({ stateCode: event.target.value })
         temp2 = event.target.value
         this.data3(temp2)
     }
 
     handleChange3 = (event) => {
-        console.log(event.target.value, "selected city")
+        // console.log(event.target.value, "selected city")
         this.setState({ cityCode: event.target.value })
     }
     handleCheck(event) {
         this.setState({ [event.target.name]: event.target.checked });
     }
     handleChange = (event) => {
-        console.log(event.target.value, "hhhhh")
-        this.setState({ customerName: event.target.value })
+        // console.log(event.target.value, "hhhhh")
+        this.setState({ companyName: event.target.value })
     }
 
     onCancel = () => {
         // this.props.handleClose();
-        this.setState({ customerName:"",
+        this.setState({ companyName:"",
         countryCode:"",
         stateCode:"",
         cityCode:"",})
@@ -145,13 +145,12 @@ export default class App extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state , "state value")
-        axios.get('http://localhost:8080/searchCustomer?customerName=' + this.state.customerName + '&countryCode=' + this.state.countryCode + '&stateCode=' + this.state.stateCode + '&cityCode=' + this.state.cityCode)
+        // console.log(this.state , "state value")
+        axios.get('http://localhost:8080/searchCompany?companyName=' + this.state.companyName + '&countryCode=' + this.state.countryCode + '&stateCode=' + this.state.stateCode + '&cityCode=' + this.state.cityCode)
             .then((result) => {
                 //access the results here....
                 // console.log("result =,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,llllll ", result)
                 if (result.data.data.length!=0) {
-                    // console.log(result.data.data,"props")
                     this.props.data(result.data.data)
                     swal({
                         text: "Successfully Done",
@@ -193,13 +192,13 @@ export default class App extends React.Component {
                                             <Grid container>
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>
-                                                        <h5>Customer Name:</h5>
-                                                        <input type="text" defaultValue={this.state.customerName} name={this.state.customerName} value={this.state.customerName} placeholder="select customer" onChange={this.handleChange} />
+                                                        <h5>Company:</h5>
+                                                        <input type="text" defaultValue={this.state.companyName} name={this.state.companyName} value={this.state.companyName} placeholder="select company" onChange={this.handleChange} />
                                                     </label>
                                                 </ItemGrid>
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>
-                                                        <h5>Country Name:</h5>
+                                                        <h5>Country:</h5>
                                                         <input class="country" type="text" defaultValue={this.state.countryCode} list="country" selected placeholder="select country" onChange={this.handleChange1} />
                                                         <datalist id="country">
                                                             {
@@ -212,7 +211,7 @@ export default class App extends React.Component {
                                                 </ItemGrid>
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>
-                                                        <h5>state Name:</h5>
+                                                        <h5>state:</h5>
                                                         <input class="state" type="text" list="state"  defaultValue={this.state.stateCode} placeholder="select state" onChange={this.handleChange2} />
                                                         <datalist id="state">
                                                             {/* <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option> */}
@@ -227,7 +226,7 @@ export default class App extends React.Component {
                                                 </ItemGrid>
                                                 <ItemGrid xs={12} sm={12} md={15}>
                                                     <label>
-                                                        <h5>City Name:</h5>
+                                                        <h5>City:</h5>
                                                         <input class="city" type="text" list="city" defaultValue={this.state.cityCode} placeholder="select country" onChange={this.handleChange3} />
                                                         <datalist id="city">
 
@@ -244,7 +243,7 @@ export default class App extends React.Component {
                                             </Grid>
                                         </div>
                                     }
-                                    footer={<div><Button color="primary" type="submit"style={{backgroundColor:"#76323f", color:"white" }} round>
+                                    footer={<div><Button color="primary" type="submit" style={{ float: "right",backgroundColor:"#76323f", color:"white" }} round>
                                         Submit</Button>
                                          <Button color="primary" onClick={this.onCancel}round style={{ float: "right",backgroundColor:"#76323f", color:"white" }}>Reset</Button></div>}
                                 />

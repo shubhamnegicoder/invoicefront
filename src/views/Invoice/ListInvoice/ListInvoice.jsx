@@ -12,34 +12,77 @@ import Download from '@material-ui/icons/ArrowDownward';
 import Tooltip from '@material-ui/core/Tooltip';
 import swal from 'sweetalert2';
 import axios from 'axios';
-import $ from 'jquery';
-
-
+import Modal from './modal'
 import { RegularCard, Table, ItemGrid } from "components";
-// import Form from "./Form.jsx";
 import AddIcon from '@material-ui/icons/Add';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
+import jspdf from "jspdf";
+import rasterizehtml from 'rasterizehtml';
+
 
 class ListInvoice extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      load:false,
       List:[],
       id:localStorage.getItem("id"),
-      status:""
+      status:"",
+      numPages: null,
+      pageNumber: 1,
       
     }
   }
+   pdf=new jspdf(); 
+  onDocumentLoad = ({ numPages }) => {
+    this.setState({ numPages });
+  }
+
+  handleOpen=()=>{
+    this.setState({load : true});
+    // this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:"",_id:"",isActive:""});
+
+  }
+  onClose = () => {
+    this.setState({ load: false });
+};
+onmodal=(data)=>{
+  // var mainArray = [];
+  // data.forEach((responseData)=>{
+  //     var dataArray = [];
+  //     dataArray.push(responseData.companyCode)
+  //     dataArray.push(responseData.companyName)
+  //     dataArray.push(responseData.companyGSTNo)
+  //     dataArray.push(responseData.contactNo)
+  //  dataArray.push(responseData.isActive?"Yes":"No")
+  //    //var array = "";
+  //   dataArray.push(<div>
+  //     <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+  //     <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+
+  //     </div>);
+   
+  //     //dataArray.push(new Date(responseData.createdAt).toDateString());
+  //     mainArray.push(dataArray)
+
+  //   })
+  //   this.setState({
+  //       data:mainArray
+  //   })
+
+ }
 
       componentDidMount(){
         this.List();
        }
-       handleEdit=(id)=>{
-        // alert(id)
-        // this.setState({_id:id})
-       
-        window.location.href="/EditInvoice?_id="+id
+       handlePdf=(id,invoiceNumber)=>
+       { 
+        window.location.href = "./viewInvoice?type=listinvoice"+ "&invoiceNo="+invoiceNumber;
+        }
+        handleEdit=(id,invoiceNumber)=>
+       { 
+        window.location.href="/EditInvoice?_id="+id;
        }
        handleView=(id,invoiceNumber)=>{
        window.location.href = "./viewInvoice?id="+id + "&invoiceNo="+invoiceNumber;
@@ -52,7 +95,8 @@ class ListInvoice extends React.Component {
           showCancelButton: true,
           confirmButtonColor: '#d9534f',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Cancel Invoice' 
+          cancelButtonText:'No',
+          confirmButtonText: 'Yes' 
         }).then((result) => {
           if (result.value) {
             axios
@@ -97,28 +141,27 @@ class ListInvoice extends React.Component {
                      dataArray.push(item.customerName)
                      dataArray.push(item.companyName)
                      
-                     dataArray.push(item.invoiceDate)
+                     dataArray.push(item.invoiceDate.split("T")[0])
                      dataArray.push(item.invoiceTotal)
                      dataArray.push(item.status)
                      if(item.status==="Invoiced"){
                       dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)"class="button" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
-                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handleEdit()}} style={{color:"black",opacity: "0.65",
-                       pointerEvents: "none"}}><Download/></a></Tooltip></div>);
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf(item._id,item.invoiceNumber)}} style={{color:"black"}}><Download/></a></Tooltip></div>);
                       
                      }
                     else if(item.status==="Cancelled"){
                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black",opacity: "0.65", pointerEvents:"none"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
-                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handleEdit()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
                     }
                     else if(item.status==="Draft"){
                       dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
-                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handleEdit()}} style={{color:"black"}}><Download/></a></Tooltip></div>);
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
 
                     }
                     mainArray.push(dataArray)
@@ -138,8 +181,7 @@ class ListInvoice extends React.Component {
       }
 
   render(){
-    
-      
+  const { pageNumber, numPages } = this.state; 
     return (
       <div>
   <Grid container>
@@ -162,6 +204,7 @@ class ListInvoice extends React.Component {
 
       </ItemGrid>
       </Grid> 
+      <Modal open={this.state.load} data={this.onmodal}  onClose={this.onClose} />
       </div>
 );
 }

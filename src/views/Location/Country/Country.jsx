@@ -6,6 +6,10 @@ import Modal from './modal'
 import Pagination from 'react-js-pagination'
 import axios from 'axios';
 import MUIDataTable from "mui-datatables";
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from '@material-ui/icons/ViewList';
+
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 // import  'bootstrap/less/bootstrap.less'
 // import Modal from 'react-responsive-modal';
@@ -50,6 +54,7 @@ class Country extends React.Component {
       })
 
     clickaction = () => {
+        
         this.setState({ countryName: "", countryCode: "", _id: "" })
         this.setState({ load: true, options: "add" })
     }
@@ -75,7 +80,7 @@ class Country extends React.Component {
                     result.data.data && result.data.data.map((item, key) => {
                         console.log(item.isActive,"active")
                         localdata.push(item.countryCode, item.countryName,item.isActive?"True":"False")
-                        localdata.push(<button onClick={(e) => this.handleEdit(e, item)}>Edit</button>)
+                        localdata.push( <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,item)}style={{color:"black"}}><EditIcon/></a></Tooltip>)
                         maindata.push(localdata);
                         localdata = [];
                     })
@@ -100,71 +105,26 @@ class Country extends React.Component {
     };
     
     render() {
-        const columns = [
-            {
-              name: "Code",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },      
-            {
-              name: "Name",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },
-            {
-              name: "IsActive",
-              options: {
-                filter: true
-              }
-            },
-              {
-                name: "Action"
-            }        
-      ];
-      var tableData= this.state.mydata;
-    
-      const options = {
-        filter: true,
-        selectableRows:false,
-        filterType: 'dropdown',
-        responsive: 'stacked',
-        rowsPerPage: 10,
-        page: 1,
-        viewColumns:true,
-        print:false,
-        filter:true,
-        download:false,
-        textLabels: {
-          body: {
-            noMatch: "No Records Found!!",
-            toolTip: "Sort",
-          }
-        }
-  }
-        
         return (
             <Grid container>
                 <ItemGrid xs={12} sm={12} md={12}>
-
-                    <RegularCard
-                        plainCard
-                        cardTitle={<h2><b>Country</b></h2>}
-                        cardSubtitle={
-                            <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.clickaction} >
-                                <AddIcon />
-                            </Button>
-                        }
-                        
-                    />
-                      <MuiThemeProvider theme={this.getMuiTheme()}>
-                      <MUIDataTable title={"Country list"}  columns={columns} options={options} data={tableData}/>
-                      </MuiThemeProvider> 
-
-                </ItemGrid>
+              <RegularCard
+                 cardTitle={<div>Country<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.clickaction} >
+                <AddIcon />
+  
+              </Button></div>
+              }
+  
+              content={
+                  <Table
+                      tableHeaderColor="primary"
+                      tableHead={["Code", "Name", "IsActive","Action"]}
+                      tableData={this.state.mydata}
+                  />
+              }
+              />
+  
+              </ItemGrid>
 
                 <Modal open={this.state.load} data={{ "_id": this.state._id,"isActive":this.state.isActive , "countryName": this.state.countryName, "countryCode": this.state.countryCode, "userId": this.state.userId }} onClose={this.onClose} />
             </Grid>

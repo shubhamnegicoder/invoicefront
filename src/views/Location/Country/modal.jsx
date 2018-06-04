@@ -77,9 +77,7 @@ export default class App extends React.Component {
                 countryName: this.state.countryName,
                 isActive:this.state.isActive
             }
-            
         }
-        
         axios.post(url, data)
             .then((result) => {
                 //access the results here....
@@ -112,7 +110,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <Modal styles={{ width: '379px' }} open={this.props.open} onClose={this.props.onClose} center>
-                    <Grid container >
+                    <Grid container style={{maxWidth:"400px"}} >
                         <form onSubmit={this.handleSubmit}>
                             <ItemGrid xs={18} sm={20} md={20}>
                                 <RegularCard
@@ -141,7 +139,7 @@ export default class App extends React.Component {
                                             </Grid>
                                         </div>
                                     }
-                                    footer={<Button color="primary" type="submit" round>
+                                    footer={<Button color="primary" type="submit" style={{backgroundColor:"#76323f", color:"white"}} round>
                                         Submit</Button>}
                                 />
                             </ItemGrid>

@@ -42,7 +42,7 @@ const card = {
   width: "100%",
   margin: "25px 0",
   boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.14)",
-  borderRadius: "3px",
+  // borderRadius: "3px",
   color: "rgba(0, 0, 0, 0.87)",
   background: "#fff"
 };
@@ -101,7 +101,7 @@ const blueCardHeader = {
 };
 const purpleCardHeader = {
   background: "linear-gradient(60deg, #d7cec7, #d7cec7)",
-  minWidth:"900px",
+  // minWidth:"900px",
   ...primaryBoxShadow
 };
 

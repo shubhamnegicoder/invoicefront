@@ -35,7 +35,27 @@ service.getAll = async (req, res) => {
 }
 
 
-
+service.searchProduct = async (req,res)=>{
+    console.log(req.query,"+++++++++++++++++++++++++++")
+   
+     try{
+         
+         let	query={ }
+         if(req.query.productName!==''){
+             query.productName={ $regex: '.*' + req.query.productName + '.*' } 
+         }
+         if(req.query.taxCode!==''){
+             query.taxCode=req.query.taxCode
+         }
+        
+         
+         console.log(query,"kookokokokokoklllllllllllll")
+         var oneProduct = await Product.searchProduct(query);
+         return res.send({success:true, code:200, msg:"Successfully found", data:oneProduct}); 
+     }catch(error){
+         return res.send({success:false, code:500, msg:"Error in getting Company"+error, err:error})
+     }
+ }
 
 
 

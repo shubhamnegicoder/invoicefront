@@ -53,9 +53,9 @@ const service = {};
 service.getAllCountry = async (req, res) => {
     console.log("req", req.query)
     var location = {};
-    if (!req.query.id) {
-        return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
-    }
+    // if (!req.query.id) {
+    //     return res.send({ "success": false, "code": "500", "msg": "_id is missing" });
+    // }
 
     try {
        
@@ -67,6 +67,7 @@ service.getAllCountry = async (req, res) => {
 
         // console.log(dataToFind);
         const country = await Country.allCountry(queryToFindCountry);
+        console.log(country,"aaaoooooooooooooo")
         logger.info('sending all country...');
         return res.send({ success: true, code: 200, msg: "listed ok", data: country });
     } catch (err) {

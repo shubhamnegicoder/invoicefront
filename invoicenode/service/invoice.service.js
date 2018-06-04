@@ -220,6 +220,54 @@ service.getEditList = async (req, res) => {
     catch (err) {
         res.send({ "success": false, "code": "500", "msg": "failu", "err": err });
     }
+    
 }
+service.getOneList=async (req,res)=>{
+   
+    let dataToedit={
+        query:{"_id":ObjectId(req.query.id)}
+    }
+    console.log(dataToedit,"1111")
+    try{
+      
+
+        const editdata = await Invoice.getOneList(dataToedit);
+        console.log(editdata,"getoneList")
+        res.send({ success: true, code: 200, "msg": "success", data:editdata });
+    }
+    catch(err){
+        res.send({ "success": false, "code": "500", "msg": "failu", "err": err });
+    }
+    
+}
+
+service.searchInvoice = async (req,res)=>{
+       console.log(req.query,"+++++++++++++++++++++++++++")
+      
+        try{
+            
+            let	query={ }
+            if(req.query.companyName!==''){
+                query.companyName={ $regex: '.*' + req.query.companyName + '.*' } 
+            }
+            if(req.query.startDate!=='' || req.query.endDate !=='' ){
+                query.invoiceDate={"$gte": new Date(req.query.startDate), "$lt": new Date(req.query.endDate )}
+            }
+            if(req.query.customerName!==''){
+                query.customerName={ $regex: '.*' + req.query.customerName + '.*' } 
+            }
+            if(req.query.invoiceNo!==''){
+                query.invoiceNumber=req.query.invoiceNo
+            }
+            
+            // console.log(query,"kookokokokokoklllllllllllll")
+            var oneInvoice = await Invoice.searchInvoice(query);
+            // console.log(oneCustomer,"lllllllllllll")
+            return res.send({success:true, code:200, msg:"Successfully found", data:oneInvoice}); 
+        }catch(error){
+            return res.send({success:false, code:500, msg:"Error in getting Customer"+error, err:error})
+        }
+    }
+    
 
 export default service;

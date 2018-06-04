@@ -6,6 +6,10 @@ import Modal from './modal'
 import axios from 'axios';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from '@material-ui/icons/ViewList';
+
 // import Modal from 'react-responsive-modal';
 
 import { RegularCard, Table, ItemGrid } from "components";
@@ -77,7 +81,7 @@ class City extends React.Component {
                 var localdata = []
                 result.data.data && result.data.data.map((item, key) => {
                     localdata.push(item.countryName,item.stateName,item.cityCode,item.cityName,item.isActive?"True":"False")
-                    localdata.push(<button onClick={(e) => this.handleEdit(e, item)}>Edit</button>)
+                    localdata.push(<Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,item)}style={{color:"black"}}><EditIcon/></a></Tooltip>)
                     maindata.push(localdata);
                     localdata = [];
                 })
@@ -102,85 +106,27 @@ class City extends React.Component {
     };
 
     render() {
-        const columns = [
-            {
-              name: "Country",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },      
-            {
-              name: "State",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },
-            {
-                name: "City Code",
-                options: {
-                  filter: true,
-                  sort:true
-                }
-              },
-              {
-                name: "City",
-                options: {
-                  filter: true,
-                  sort:true
-                }
-              },
-            {
-              name: "IsActive",
-              options: {
-                filter: true
-              }
-            },
-              {
-                name: "Action"
-            }        
-      ];
-      var tableData= this.state.mydata;
-    
-      const options = {
-        filter: true,
-        selectableRows:false,
-        filterType: 'dropdown',
-        responsive: 'stacked',
-        rowsPerPage: 10,
-        page: 1,
-        viewColumns:true,
-        print:false,
-        filter:true,
-        download:false,
-        textLabels: {
-          body: {
-            noMatch: "No Records Found!!",
-            toolTip: "Sort",
-          }
-        }
-  }
+      
         return (
             <Grid container>
                 <ItemGrid xs={12} sm={12} md={12}>
-
-                    <RegularCard
-                        plainCard
-                        cardTitle={<h2><b>City</b></h2>}
-                        cardSubtitle={
-                            <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.clickaction} >
-                                <AddIcon />
-                            </Button>
-                        }
-
-                    />
-                    <MuiThemeProvider theme={this.getMuiTheme()}>
-                      <MUIDataTable title={"City list"}  columns={columns} options={options} data={tableData}/>
-                      </MuiThemeProvider> 
-
-
-                </ItemGrid>
+              <RegularCard
+                 cardTitle={<div>City<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.clickaction} >
+                <AddIcon />
+  
+              </Button></div>
+              }
+  
+              content={
+                  <Table
+                      tableHeaderColor="primary"
+                      tableHead={["Country","State","Code", "Name", "IsActive","Action"]}
+                      tableData={this.state.mydata}
+                  />
+              }
+              />
+  
+              </ItemGrid>
                 <Modal open={this.state.load} data={{ "_id": this.state._id, "isActive":this.state.isActive, "cityName": this.state.cityName, "cityCode": this.state.cityCode,"userId": this.state.userId , "stateCode": this.state.stateCode, "countryCode": this.state.countryCode }} onClose={this.onClose} />
 
             </Grid>
