@@ -9,7 +9,7 @@ var dropDownData = [];
 var dd;
 var temp;
 var temp2;
-//var localStorageId = localStorage.getItem('id');
+
 class AddCompany extends React.Component {
     constructor(props) {
         super(props);
@@ -44,6 +44,7 @@ class AddCompany extends React.Component {
         this.setState({ postalCode: this.refs.postalCode.value });
         this.setState({ contactNo: this.refs.contactNo.value }); 
     }
+
     handleChange1 = (event) => {
         console.log(event.target.value, "selected country")
         this.setState({ countryCode: event.target.value })
@@ -61,8 +62,6 @@ class AddCompany extends React.Component {
         this.setState({ cityCode: event.target.value })
     }
 
-
-
     data = () => {
         fetch("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1", {
             method: "GET",
@@ -79,7 +78,6 @@ class AddCompany extends React.Component {
                 var localdata = []
                 result.data.map((item, key) => {
                     maindata.push(item);
-
                 })
                 this.setState({ dropDownData: maindata })
             },
@@ -88,6 +86,7 @@ class AddCompany extends React.Component {
             }
         )
     }
+
     data2 = (temp) => {
         fetch("http://localhost:8080/allSelectedState?countryCode="+temp, {
             method: "GET",
@@ -97,7 +96,8 @@ class AddCompany extends React.Component {
                 'Content-Type': 'application/json'
             })
         })
-        .then(res => res.json()).then(
+        .then(res => res.json())
+        .then(
             (result) => {
                 var maindata = [];
                 var localdata = []
@@ -111,6 +111,7 @@ class AddCompany extends React.Component {
             }
         )
     }
+
     data3 = (temp2) => {
         fetch("http://localhost:8080/allSelectedCity?stateCode=" + temp2, {
             method: "GET",
@@ -138,61 +139,20 @@ class AddCompany extends React.Component {
 
     componentWillMount() {
         this.data();
-        console.log(this.state.data);
         let id=localStorage.getItem("id")
         if(id==null){
           window.location.href="/login"
         }
         this.setState({id:id});
     }
+
     handleClose = (e) => {
         e.preventDefault();
         window.location.href="/company";
     }
    
-
     save = (e) => {
-    e.preventDefault();
-        if (this.state.companyCode == "") {
-            return alert("Company code is required");
-        }
-        if (this.state.companyName == "") {
-            return alert("Company name is required");
-        }
-        if (this.state.companyGSTNo == "") {
-            return alert("Company gst no is required");
-        }
-        if (this.state.addressLine1 == "") {
-            return alert("Address 1 is required");
-        }
-        if (this.state.addressLine2 == "") {
-            return alert("Address 2 is required");
-        }
-        if (this.state.cityCode == "") {
-            return alert("City is required");
-        }
-        if (this.state.stateCode == "") {
-            return alert("State is required");
-        }
-        if (this.state.countryCode == "") {
-            return alert("Country is required");
-        }
-        if (this.state.postalCode == "") {
-            return alert("Postal code is required ");
-        }
-        if (isNaN(this.state.postalCode)) {
-            return alert("Postal code should be a numeric value");
-        }
-        if (this.state.contactNo == "") {
-            return alert("Contact no is required");
-        }
-        if(isNaN(this.state.contactNo)){
-            return alert("Contact no should be numeric value");       
-        }
-        if(this.state.contactNo.length < 10 || this.state.contactNo.length > 10){
-            return alert("Contact no should be of 10 digits");       
-        }
-
+        e.preventDefault();
         var today = new Date(),
             date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         const data = new FormData();
@@ -210,40 +170,35 @@ class AddCompany extends React.Component {
         data.append('postalCode', this.state.postalCode);
         data.append('contactNo', this.state.contactNo);
         data.append('isActive', this.state.isActive);
-        data.append('createAt',date);
-        
-
-        fetch("http://localhost:8080/addCompany",{
-             body:data,
-             method: "POST",
-             cache: 'no-cache',
-             mode: 'cors'   
-         })
-         .then(
-             (result) => 
-             {  
-                if(result.status==200)
-                {
+        data.append('createAt',today);
+         fetch("http://localhost:8080/addCompany",{ 
+            body:data,
+            method: "POST",
+            cache: 'no-cache',
+            mode: 'cors',   
+        }).then(res => res.json())
+        .then(
+            (result) => 
+            {   
+                if(result.success==true){    
                     swal({
                         title: "Company Added Successfully !",
                         icon: "success",
                     });
-                }      
-                else
-                {
-                    swal({
-                        title: "Something Went Wrong !!" ,
-                        icon: "fail",
-                    })
                 }
-             },
-             (error) => 
-             {
-                 console.log("error",error)
-             }
-         )
+                else{   
+                    swal({
+                        title: result.msg,
+                        icon: "fail",
+                    });
+                }
+            },
+            (error) => {       
+                console.log("error",error)
+            }
+        );
     }
-
+    
     handleCheckbox = name => event => {
         this.setState({ [name]: event.target.checked });
       };
@@ -252,10 +207,10 @@ class AddCompany extends React.Component {
         var file =  event.target.files[0];
         var selectedFile= file.name;
         const maxSize = 1048576;
-        const size = file.size;
+        const size = file.size;  
         if(size>maxSize){
             return alert("Image size should be less than 1 Mb!");
-        }
+        }    
         this.setState({logo:selectedFile});
         this.setState({uploadFile:file});
     }
@@ -359,9 +314,9 @@ class AddCompany extends React.Component {
                     </td>
                 </tr>
                 <tr>
-                    <td align="right"><input type="submit" value="Save" onClick={(e)=>{this.save(e)}} style={{ backgroundColor: "purple" }} /></td>
+                    <td align="right"><input type="submit" value="Save" onClick={(e)=>{this.save(e)}} style={{ backgroundColor: "grey",borderStyle:"solid",borderColor:"black"}} /></td>
                     <td></td>
-                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{ backgroundColor: "purple" }} /></td>
+                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{ backgroundColor: "grey",borderStyle:"solid",borderColor:"black" }} /></td>
                 </tr>
             </table></form>
 
