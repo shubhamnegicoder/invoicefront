@@ -236,6 +236,10 @@ InvoiceModel.getEditList = (invoiceToEdit) => {
     console.log(invoiceToEdit, "hiiiii");
     return InvoiceModel.find(invoiceToEdit.query);
 }
+InvoiceModel.getOneList = (invoiceToEdit) =>{
+    console.log(invoiceToEdit,"hiiiii");
+return InvoiceModel.find(invoiceToEdit.query);
+}
 
 InvoiceModel.allInvoice = (dataToFind) => {
     console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
@@ -297,5 +301,62 @@ InvoiceModel.allInvoice = (dataToFind) => {
         }
     ]);
 }
+InvoiceModel.searchInvoice = (query) =>{
+    console.log(query,"sssssssssssssssssssssssssss")
+    return InvoiceModel.aggregate([
+        {$match:{$and:[query]}},
+        {
+            $lookup: {
+                from: "customer",
+                localField: "customerCode",
+                foreignField: "customerCode",
+                as: "customer_docs"
+            }
+        },
+        {
+            $unwind: "$customer_docs"
+        },
+        {
+            $lookup: {
+                from: "company",
+                localField: "companyCode",
+                foreignField: "companyCode",
+                as: "company_docs"
+            }
+        },
+        {
+            $unwind: "$company_docs"
+        },
+        {
+            $project: {
+                logo: "$company_docs.logo",
+                companyAddressLine1: 1,
+                companyAddressLine2: 1,
+                companyCode: 1,
+                companyName: "$company_docs.companyName",
+                customerAddressLine1: 1,
+                customerAddressLine2: 1,
+                customerCode: 1,
+                customerName: "$customer_docs.customerName",
+                discount: 1,
+                invoiceDate: 1,
+                invoiceNumber: 1,
+                items: 1,
+                itemTotal: 1,
+                discountTotal: 1,
+                cgstTotal: 1,
+                sgstTotal: 1,
+                igstTotal: 1,
+                taxTotal: 1,
+                invoiceTotal: 1,
+                createdBy: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                modifiedBy: 1
+            }
+        }
+    ]);
+}
+
 
 export default InvoiceModel; 

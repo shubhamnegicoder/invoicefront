@@ -5,6 +5,7 @@ import Typography from 'material-ui/Typography';
 import Modal from './Modal.jsx';
 import  {Grid} from "material-ui";
 import Search from '@material-ui/icons/Search';
+import Modal1 from './Modal1.jsx';
 
 import { RegularCard,Button, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
@@ -26,6 +27,7 @@ class Product extends React.Component {
     super(props);
     this.state = {
     load : false,
+    load1:false,
     List:[],
     productCode:"",
     productName:"",
@@ -52,6 +54,13 @@ class Product extends React.Component {
       }
     }
   })
+  handleOpen1=()=>{
+    this.setState({load1 : true});
+  }
+  handleClose1 = () => {
+    
+    this.setState({load1: false });
+  };
   handleOpen=()=>{
     this.setState({load : true});
     this.setState({productCode:"",productName:"",taxCode:"",rate:"",sgst:"",_id:"",isActive:""});
@@ -65,6 +74,27 @@ class Product extends React.Component {
     this.setState({load: true ,productCode :product.productCode,productName : product.productName,taxCode : product.taxCode,rate:product.rate,isActive:product.isActive,_id:product._id,userId:product.createdBy});
     
   };
+  onmodal=(data)=>{
+    console.log(data,"respond")
+    var mainArray = [];
+    data.forEach((product)=>{
+        var dataArray = [];
+       //  dataArray.push(tax._id)
+        dataArray.push(product.productCode)
+        dataArray.push(product.productName)
+        dataArray.push(product.taxCode)
+        dataArray.push(product.rate)
+        dataArray.push(product.isActive ? "True" : "False")
+        dataArray.push(<Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,product)}style={{color:"black"}}><EditIcon/></a></Tooltip>)
+       // dataArray.push(new Date(tax.createAt).toDateString());
+       mainArray.push(dataArray)
+
+    })
+    this.setState({
+        List:mainArray
+    })
+  }
+
  
   componentDidMount(){
     this.List();
@@ -117,8 +147,8 @@ class Product extends React.Component {
           <Grid container>
             <ItemGrid xs={12} sm={12} md={12}>
               <RegularCard
-                 cardTitle={<div>Product<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
-                <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+                 cardTitle={<div>Product<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} >
+              <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen1} ><Search/>
               </Button></div>
               }
   
@@ -134,6 +164,7 @@ class Product extends React.Component {
               </ItemGrid>
               </Grid> 
             <Modal {...this.state} handleClose={this.handleClose} List={this.List}/>
+            <Modal1 {...this.state} data={this.onmodal} handleClose={this.handleClose1} />
       
         </div>
     

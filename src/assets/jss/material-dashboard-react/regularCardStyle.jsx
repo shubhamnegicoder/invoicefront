@@ -20,8 +20,8 @@ const regularCardStyle = {
     boxShadow: "none"
   },
   cardHeader: {
-    ...cardHeader,
-    ...defaultFont,
+    // ...cardHeader,
+    // ...defaultFont,
     
   },
   cardPlainHeader: {
@@ -37,13 +37,13 @@ const regularCardStyle = {
     color: "#76323f",
     marginTop: "0",
     marginBottom: "0",
-    ...defaultFont,
+    // ...defaultFont,
     fontSize: "2em"
   },
   cardSubtitle: {
-    ...defaultFont,
+    fontSize: "2em",
     marginBottom: "0",
-    color: "rgba(255, 255, 255, 0.62)",
+    color: "#76323f",
     margin: "0 0 10px"
   },
   cardActions: {

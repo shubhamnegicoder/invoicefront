@@ -52,7 +52,37 @@ ProductModel.getAll = (dataToFind) => {
 
 }
 
+ProductModel.searchProduct = (query) =>{
+    console.log(query,"sssssssssssssssssssssssssss")
+    return ProductModel.aggregate([
+        {$match:{$and:[query]}},
+        //  { $match: {$or:[{customerCode:dataToFind.query.customerCode},{countryCode:dataToFind.query.countryCode},{stateCode:dataToFind.query.stateCode},{cityCode:dataToFind.query.cityCode}]}},
+        {
+            $lookup: {
+                from: "tax",
+                localField: "taxCode",
+                foreignField: "taxCode",
+                as: "tax_docs"
+            }
 
+        },
+        {
+            $unwind: "$tax_docs"
+        },
+        {
+            $project: {
+                productCode:1,
+                productName:1 ,
+                taxName: "$tax_docs.taxName",
+                taxCode:1,
+                rate:1,
+                isActive:1
+
+            }
+        }
+    ]);
+
+}
 
 
 // UserModel.getAggregation = (query) => {

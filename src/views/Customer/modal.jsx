@@ -183,7 +183,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <Modal style={{maxWidth:350}} open={this.props.open} onClose={this.props.onClose} center>
-                    <Grid container >
+                    <Grid container style={{maxWidth:"400px"}} >
                         <form onSubmit={this.handleSubmit}>
                             <ItemGrid xs={18} sm={20} md={20}>
                                 <RegularCard
