@@ -176,6 +176,33 @@ service.editCompany = async(req,res)=>{
 		var hashLogo='';
 		if(result==''){ 
 	   		if(files.file!=undefined){
+service.searchCompany = async (req,res)=>{
+	   console.log(req.query,"+++++++++++++++++++++++++++")
+	  
+		try{
+			
+			let	query={ }
+			if(req.query.companyName!==''){
+				query.companyName={ $regex: '.*' + req.query.companyName + '.*' } 
+			}
+			if(req.query.cityCode!==''){
+				query.cityCode=req.query.cityCode
+			}
+			 if(req.query.countryCode!==''){
+				query.countryCode=req.query.countryCode
+			}
+			if(req.query.stateCode!==''){
+				query.stateCode=req.query.stateCode
+			}
+			
+			console.log(query,"kookokokokokoklllllllllllll")
+			var oneCompany = await CompanyModel.searchCompany(query);
+			return res.send({success:true, code:200, msg:"Successfully found", data:oneCompany}); 
+		}catch(error){
+			return res.send({success:false, code:500, msg:"Error in getting Company"+error, err:error})
+		}
+	}
+	
 
 /////////////////////////////////////delete old logo////////////////////////////////////
 

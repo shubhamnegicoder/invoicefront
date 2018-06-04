@@ -4,11 +4,17 @@ import { RegularCard, Table, ItemGrid } from "components";
 import AddIcon from '@material-ui/icons/Add';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
+import Search from '@material-ui/icons/Search';
+import Modal from './modal';
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from '@material-ui/icons/ViewList';
 
 class CompanyList extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            load:false,
             id:"",
             companyCode:"", 
             companyName:"",
@@ -46,7 +52,6 @@ class CompanyList extends React.Component{
        
     }
    componentWillMount(){
-    console.log(this.state.data);
     let id=localStorage.getItem("id")
     if(id==null){
       window.location.href="/login"
@@ -54,12 +59,43 @@ class CompanyList extends React.Component{
     this.setState({id:id});
    }
     handleClick=(e)=>{
-       // console.log('button cliked');
         e.preventDefault();
         window.location.href="/addCompany";
 
     }
+      handleOpen=()=>{
+        this.setState({load : true});
+        // this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:"",_id:"",isActive:""});
 
+      }
+      onClose = () => {
+        this.setState({ load: false });
+    };
+    onmodal=(data)=>{
+      var mainArray = [];
+      data.forEach((responseData)=>{
+          var dataArray = [];
+          dataArray.push(responseData.companyCode)
+          dataArray.push(responseData.companyName)
+          dataArray.push(responseData.companyGSTNo)
+          dataArray.push(responseData.contactNo)
+       dataArray.push(responseData.isActive?"Yes":"No")
+         //var array = "";
+        dataArray.push(<div>
+          <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+          <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+
+          </div>);
+       
+          //dataArray.push(new Date(responseData.createdAt).toDateString());
+          mainArray.push(dataArray)
+  
+        })
+        this.setState({
+            data:mainArray
+        })
+ 
+     }
     handleEdit=(e,response)=>{
         e.preventDefault();
         this.setState({companyCode:response.companyCode})      
@@ -113,13 +149,20 @@ class CompanyList extends React.Component{
               dataArray.push(responseData.companyGSTNo)
             dataArray.push(responseData.contactNo) 
             dataArray.push(responseData.isActive?"Yes":"No")   
-            dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)}>Edit</Button>)
-            dataArray.push(<Button onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
-              mainArray.push(dataArray)     
+            dataArray.push(<div>
+              <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+              <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+    
+              </div>);
+           
+              //dataArray.push(new Date(responseData.createdAt).toDateString());
+              mainArray.push(dataArray)
+      
             })
             this.setState({
                 data:mainArray
             })
+     
             },
             (error) => {             
               console.log("error",error)
@@ -129,92 +172,31 @@ class CompanyList extends React.Component{
       
 
     render(){
-        const columns = [
-            {
-              name: "Code",
-              options: {
-                filter: true,
-                sort:true
+        return (
+          <div>
+          <Grid container>
+            <ItemGrid xs={12} sm={12} md={12}>
+              <RegularCard
+                 cardTitle={<div>Company<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
+                <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+  
+              </Button></div>
               }
-            },      
-            {
-              name: "Name",
-              options: {
-                filter: true,
-                sort:true
+  
+              content={
+                  <Table
+                      tableHeaderColor="primary"
+                      tableHead={["Code", "Name","GST NO" , "Contact No", "IsActive","Action"]}
+                      tableData={this.state.data}
+                  />
               }
-            },
-            {
-              name: "GST No",
-              options: {
-                filter: false,
-              }
-            },
-              {
-                name: "Contact No",
-                  options: {
-                    filter: true
-                  }
-                },
-                {
-                  name: "IsActive",
-                    options: {
-                      filter: true
-                    }
-                  },
-                {
-                name: "Action",
-                     options: {
-                        filter: true
-                      }
-                    },
-                    {
-                    name: "Action",
-                         options: {
-                         filter: true
-                          }
-                        },
-              
-                      
-      ];
-      var tableData= this.state.data;
-    
-      const options = {
-        selectableRows:false,
-        filterType: 'dropdown',
-        responsive: 'stacked',
-        rowsPerPage: 10,
-        page: 1,
-        viewColumns:true,
-        print:false,
-        filter:true,
-        download:false,
-        textLabels: {
-          body: {
-            noMatch: "No Records Found!!",
-            toolTip: "Sort",
-          }
-        }
-  }
-        return (<div>
-        <Grid container>
-        <ItemGrid xs={30} sm={30} md={30}>
-            <RegularCard
-            cardTitle="Company"
-            cardSubtitle={
-                <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
-                    <AddIcon />
-                </Button>}
-                />
-
-            
-            <MuiThemeProvider theme={this.getMuiTheme()}>
-              <MUIDataTable title={"Company list"} data={tableData} columns={columns} options={options} />
-             
-              </MuiThemeProvider>  
-        </ItemGrid>
-        
-        </Grid></div>
+              />
+  
+              </ItemGrid>
+              </Grid> 
+           
+              <Modal open={this.state.load} data={this.onmodal}  onClose={this.onClose} />
+              </div>
     );
     }
     }

@@ -2,14 +2,21 @@ import React from "react";
 import { Grid } from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
 import AddIcon from '@material-ui/icons/Add';
-import MUIDataTable from "mui-datatables";
+import Search from '@material-ui/icons/Search';
+import Modal from './modal';
+// import MUIDataTable from "mui-datatables";
 import Button from 'material-ui/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from '@material-ui/icons/ViewList';
+
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 class CustomerList extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            load : false,
             customerCode:"",
             customerName:"",
             customerGSTNo:"",
@@ -59,7 +66,41 @@ class CustomerList extends React.Component{
         window.location.href="/addCustomer";
 
     }
+    handleOpen=()=>{
+        this.setState({load : true});
+        // this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:"",_id:"",isActive:""});
 
+      }
+      onClose = () => {
+        this.setState({ load: false });
+    };
+    onmodal=(data)=>{
+     console.log(data,"yha hu")
+     var mainArray = [];
+     data.forEach((responseData)=>{
+         var dataArray = [];
+         dataArray.push(responseData.customerCode)
+         dataArray.push(responseData.customerName)
+         dataArray.push(responseData.customerGSTNo)
+         dataArray.push(responseData.contactNo)
+      dataArray.push(responseData.isActive?"Yes":"No")
+        //var array = "";
+      //  dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
+      dataArray.push(<div>
+        <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+        <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+
+        </div>);
+         //dataArray.push(new Date(responseData.createdAt).toDateString());
+         mainArray.push(dataArray)
+ 
+       })
+      // console.log("main Array is",mainArray);
+       this.setState({
+           data:mainArray
+       })
+
+    }
     handleEdit=(e,response)=>{
         e.preventDefault();
         this.setState({customerCode:response.customerCode})      
@@ -106,21 +147,18 @@ class CustomerList extends React.Component{
           var mainArray = [];
           result.data.forEach((responseData)=>{
               var dataArray = [];
-              
               dataArray.push(responseData.customerCode)
               dataArray.push(responseData.customerName)
               dataArray.push(responseData.customerGSTNo)
-              //dataArray.push(responseData.addressLine1)
-              //dataArray.push(responseData.addressLine2)
-              // dataArray.push(responseData.cityName)
-              // dataArray.push(responseData.stateName)
-              // dataArray.push(responseData.countryName)
-              //dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
            dataArray.push(responseData.isActive?"Yes":"No")
              //var array = "";
-            dataArray.push(<Button onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button>);
-            dataArray.push(<Button  onClick={(e)=>this.handleView(e,responseData)}>View</Button>)
+            // dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
+            dataArray.push(<div>
+              <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+              <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+    
+              </div>);
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)
       
@@ -139,104 +177,31 @@ class CustomerList extends React.Component{
       
 
     render(){
-        const columns = [
-            {
-              name: "Code",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },      
-            {
-              name: "Name",
-              options: {
-                filter: true,
-                sort:true
-              }
-            },
-            {
-              name: "GST No",
-              options: {
-                filter: false,
-              }
-            },
-            
-              
-            // {
-            //   name: "City",
-            //   options: {
-            //     filter: true,
-            //   }
-            // },
-            // {
-            //   name: "State",
-            //   options: {
-            //     filter: true
-            //   }
-            // },
-            {
-              name: "IsActive",
-                options: {
-                  filter: true
-                }
-              },
-              {
-                name: "Contact No",
-                  options: {
-                    filter: true
-                  }
-                },
-                {
-                name: "Action",
-                     options: {
-                        filter: true
-                      }
-                    },
-                    {
-                    name: "Action",
-                         options: {
-                         filter: true
-                          }
-                        },
-              
-                      
-      ];
-      var tableData= this.state.data;
-
-      const options = {
-        filter: true,
-        selectableRows:false,
-        filterType: 'dropdown',
-        responsive: 'stacked',
-        rowsPerPage: 10,
-        page: 1,
-        viewColumns:true,
-        print:false,
-        filter:true,
-        download:false,
-        textLabels: {
-          body: {
-            noMatch: "No Records Found!!",
-            toolTip: "Sort",
-          }
-        }
-  }
         return (
+            <div>
         <Grid container>
-        <ItemGrid xs={30} sm={30} md={30}>
+          <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-         cardTitle="Customer"
-            cardSubtitle={
-                <Button style={{ float: "right" }} variant="fab" color="primary" aria-label="add" onClick={this.handleClick} >
-                    <AddIcon />
-                </Button>}
+               cardTitle={<div>Customer<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
+              <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+
+            </Button></div>
+            }
+
+            content={
+                <Table
+                    tableHeaderColor="primary"
+                    tableHead={["Code", "Name","GST NO" , "Contact No", "IsActive","Action"]}
+                    tableData={this.state.data}
+                />
+            }
             />
-            <MuiThemeProvider theme={this.getMuiTheme()}>
-              <MUIDataTable title={"Customer list"} data={tableData} columns={columns} options={options} />
-              </MuiThemeProvider>  
-        </ItemGrid>
-        
-        </Grid>
+
+            </ItemGrid>
+            </Grid> 
+         
+            <Modal open={this.state.load} data={this.onmodal}  onClose={this.onClose} />
+            </div>
     );
     }
     }

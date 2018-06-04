@@ -25,7 +25,9 @@ router.get('/oneCompany', (req, res) => {
 router.post('/addCompany', (req, res) => {
     companyService.addCompany(req, res); 
 });
-
+router.get('/searchCompany', (req, res) => {
+    companyService.searchCompany(req, res);
+});
 router.post('/editCompany', (req, res) => {
     companyService.editCompany(req, res);
 });

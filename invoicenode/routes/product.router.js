@@ -18,6 +18,9 @@ router.post('/addProduct', (req, res) => {
 router.post('/editProduct', (req, res) => {
     productService.editProduct(req, res);
 });
+router.get('/searchProduct', (req, res) => {
+    productService.searchProduct(req, res);
+});
 
 // router.post('/deleteUser', (req, res) => {
 //     taxService.deleteUser(req, res);

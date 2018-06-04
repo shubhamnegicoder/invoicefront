@@ -7,6 +7,9 @@ import Button from 'material-ui/Button';
 import  {Grid} from "material-ui";
 import AddIcon from '@material-ui/icons/Add';
 import Search from '@material-ui/icons/Search';
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from '@material-ui/icons/ViewList';
 
 import { RegularCard, Table, ItemGrid } from "components";
 // import Form from "./Form.jsx";
@@ -95,7 +98,7 @@ class Tax extends React.Component {
                  dataArray.push(tax.igst)
                  dataArray.push(tax.sgst)
                  dataArray.push(tax.isActive ?"True" : "False")
-                 dataArray.push(<button onClick={(e)=>{this.handleEdit(e,tax)}}>Edit</button>)
+                 dataArray.push(<Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,tax)}style={{color:"black"}}><EditIcon/></a></Tooltip>)
                 // dataArray.push(new Date(tax.createAt).toDateString());
                 mainArray.push(dataArray)
                 
@@ -112,140 +115,7 @@ class Tax extends React.Component {
         }
     )
   }
-      render(){
-        const columns = [
-          {
-            name: "Code",
-            options: {
-              filter: true,
-              sort:true
-            }
-          },      
-          {
-            name: "Name",
-            options: {
-              filter: true,
-              sort:true
-            }
-          },
-          {
-            name: "CGST(%)",
-            options: {
-              filter: false,
-              sort:true
-            }
-          },
-          {
-            name: "SGST(%)",
-            options: {
-              filter: true,
-              sort:true
-            }
-          },
-          {
-            name: "IGST(%)",
-            options: {
-              filter: true
-            },sort:true
-            
-          },
-          {
-            name: "IsActive",
-            options: {
-              filter: true,
-              sort:true
-            }
-          },
-            {
-              name: "Action"
-          }        
-    ];
-  var tableData= this.state.List;
-  
-
-     const options = {
-      filter: false,
-      selectableRows:false,
-      filterType: 'dropdown',
-      responsive: 'stacked',
-      rowsPerPage: 10,
-      page: 1,
-      viewColumns:false,
-      print:false,
-      filter:false,
-      download:false,
-      search:false,
-      // customToolbarSelect: (selectedRows) => <CustomToolbarSelect selectedRows={selectedRows} />,
-      textLabels: {
-        body: {
-          noMatch: "No Records Found!!",
-          toolTip: "Sort",
-        },
-        pagination: {
-          next: "Next Page",
-          previous: "Previous Page",
-          rowsPerPage: "Rows per page:",
-          displayRows: "of",
-        },
-        toolbar: {
-          search: "Search",
-          downloadCsv: "Download CSV",
-          print: "Print",
-          viewColumns: "View Columns",
-          filterTable: "Filter Table",
-        },
-        filter: {
-          all: "All",
-          title: "FILTERS",
-          reset: "RESET",
-        },
-        viewColumns: {
-          title: "Show Columns",
-          titleAria: "Show/Hide Table Columns",
-        },
-        selectedRows: {
-          text: "rows(s) deleted",
-          delete: "Delete",
-          deleteAria: "Delete Selected Rows",
-        },
-      }
-      
-    }
-      // },
-      // styles: {
-      //   table: {          
-      //     head: {
-      //       row: { fontSize:"20px",
-      //       width: "1000px"
-
-      //       },            
-      //       cell: {
-      //         root: {
-      //           fontSize:"20px",
-      //           width: "10000px"
-  
-
-      //         },
-      //         sortLabel: {
-      //         },
-      //       }
-      //     },
-      //     body: {
-      //       row: {
-      //         fontSize:"20px",
-      //         width: "10000px"
-
-      //       },
-      //       cell: {
-      //         root: {
-      //         }
-      //       }
-      //     },
-      //   },
-      // }
-    
-   
-        
+      render(){      
         return(
           <div>
             
@@ -254,15 +124,21 @@ class Tax extends React.Component {
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
                cardTitle={<div>Tax<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} >
-              <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+              <AddIcon /> 
 
             </Button></div>}
+              content={
+                <Table
+                    tableHeaderColor="primary"
+                    tableHead={["Code", "Name","CGST" , "SGST","IGST" ,"IsActive","Action"]}
+                    tableData={this.state.List}
+                />
+            }
 
   
               />
-              <MuiThemeProvider theme={this.getMuiTheme()}>
-              <MUIDataTable data={tableData} columns={columns} options={options} />
-              </MuiThemeProvider>  
+             
+             
             </ItemGrid>
             </Grid> 
          

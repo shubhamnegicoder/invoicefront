@@ -246,22 +246,23 @@ class AddCompany extends React.Component {
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
-                    <td><select placeholder="select country"   onChange={this.handleChange1}>
-                    <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option>
+                    <td><input type="text" list="country" placeholder="select country"   onChange={this.handleChange1}/>
+                    <datalist id="country">
+                    {/* <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option> */}
                     {     
                         this.state.dropDownData && this.state.dropDownData.map((item, index) => {
 
                         return <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
                         })
                     }
-                    </select></td>
+                    </datalist></td>
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>State</td>
                     <td></td>
-                    <td><select placeholder="select State" onChange={this.handleChange2}>
+                    <td><input type="text" list="state" placeholder="select State" onChange={this.handleChange2}/>
 
-                        <option value="Select  " style={{ width: "150px" }}> Select State Name</option>
+                      <datalist id="state">
                         {
                             this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
 
@@ -269,21 +270,21 @@ class AddCompany extends React.Component {
                             })
                         }
 
-                    </select></td>
+                   </datalist></td>
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>City</td>
                     <td></td>
-                    <td><select placeholder="select State" onChange={this.handleChange3}>
+                    <td><input type="text" list="city" placeholder="select State" onChange={this.handleChange3}/>
 
-                        <option value="Select  " style={{ width: "150px" }}> Select city Name</option>
+                     <datalist id="city">
                         {
                             this.state.dropDownData3 && this.state.dropDownData3.map((item, index) => {
                                 return <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
                             })
                         }
 
-                    </select></td>
+                    </datalist></td>
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Postal Code</td>
@@ -314,9 +315,9 @@ class AddCompany extends React.Component {
                     </td>
                 </tr>
                 <tr>
-                    <td align="right"><input type="submit" value="Save" onClick={(e)=>{this.save(e)}} style={{ backgroundColor: "grey",borderStyle:"solid",borderColor:"black"}} /></td>
+                    <td align="right"><input type="submit" value="Save" onClick={(e)=>{this.save(e)}} style={{ backgroundColor: "purple",backgroundColor:"#76323f", color:"white" }} /></td>
                     <td></td>
-                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{ backgroundColor: "grey",borderStyle:"solid",borderColor:"black" }} /></td>
+                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{ backgroundColor: "purple",backgroundColor:"#76323f", color:"white" }} /></td>
                 </tr>
             </table></form>
 

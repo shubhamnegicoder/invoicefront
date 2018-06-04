@@ -14,8 +14,9 @@ const InvoiceSchema = mongoose.Schema({
     customerCode: { type: String },
     invoiceDate: { type: Date },
     invoiceNumber: { type: Number },
+    status:{type:String},
     items: [{
-        itemCode:{type:String},
+        itemCode: { type: String },
         name: { type: String },
         qty: { type: Number },
         rate: { type: Number },
@@ -50,13 +51,31 @@ InvoiceModel.addInvoice = (invoiceToAdd) => {
 }
 
 InvoiceModel.getCount = (invoiceToCount) => {
-   // console.log("invoiceToCount", invoiceToCount);
-    return InvoiceModel.find({invoiceDate:{$eq:invoiceToCount.query.invoiceDate}}).count();
-}
+    // var startdate = invoiceToCount.query.invoiceyear + '-' + invoiceToCount.query.invoicemonth+'-'+'01'+"T00:00:00"
+    const date = new Date();
+    date.setDate("01")
+    date.setMonth(--invoiceToCount.query.invoicemonth)
+    date.setFullYear(invoiceToCount.query.invoiceyear)
+    date.setHours("00");
+    date.setMinutes("00");
+    date.setSeconds("00");
+    date.setMilliseconds("00");
+    const endDate=new Date();
+    endDate.setDate(invoiceToCount.query.invoicedate)
+    endDate.setMonth(invoiceToCount.query.invoicemonth)
+    endDate.setFullYear(invoiceToCount.query.invoiceyear)
+    console.log(endDate,"date",date)
+   console.log("invoiceToCount", invoiceToCount.query.invoicemonth);
+    return InvoiceModel.find({$and:[{"invoiceDate": { $gt:date,$lte:endDate }
+
+      ,createdBy:invoiceToCount.query.userid,companyCode:invoiceToCount.query.companycode
+
+    }]}).count()
+    }
 InvoiceModel.getAllList=(data)=>{
     console.log("getalllist")
     return InvoiceModel.aggregate([
-        { $match: {createdBy:data.query.createdBy} },
+        { $match: { createdBy: data.query.createdBy } },
         {
             $lookup: {
                 from: "customer",
@@ -83,14 +102,14 @@ InvoiceModel.getAllList=(data)=>{
             $unwind: "$company_docs"
         }, {
             $project: {
-                
+
                 companyName: "$company_docs.companyName",
-                
+
                 customerName: "$customer_docs.customerName",
-                
+
                 invoiceDate: 1,
                 invoiceNumber: 1,
-               
+                status:1, 
                 invoiceTotal: 1,
                 createdBy: 1,
                 createdAt: 1,
@@ -103,17 +122,29 @@ InvoiceModel.getAllList=(data)=>{
 }
 
 InvoiceModel.sales = (invoiceSalesDate) => {
-    console.log("invoiceOfSales in sales model", invoiceSalesDate);
+    const date = new Date();
+    date.setDate("01")
+    date.setMonth(--invoiceSalesDate.query.invoicemonth)
+    date.setFullYear(invoiceSalesDate.query.invoiceyear)
+    date.setHours("00");
+    date.setMinutes("00");
+    date.setSeconds("00");
+    date.setMilliseconds("00");
+    const endDate = new Date();
+    endDate.setDate(invoiceSalesDate.query.invoicedate)
+    endDate.setMonth(invoiceSalesDate.query.invoicemonth)
+    endDate.setFullYear(invoiceSalesDate.query.invoiceyear)
+    console.log("invoiceOfSales in sales model",date,endDate);
     return InvoiceModel.aggregate([
         {
-            $match: { "invoiceDate": { "$eq": invoiceSalesDate.query.invoiceDate } }
+            $match: {"invoiceDate":{ $gt: date, $lte: endDate }, createdBy:invoiceSalesDate.query.userid, companyCode:invoiceSalesDate.query.companycode }
         },
         {
-        $group: {
-            _id:"",
-            total: { $sum: '$invoiceTotal' }
-        }
-    }, {
+            $group: {
+                _id: "",
+                total: { $sum: '$invoiceTotal' }
+            }
+        }, {
             $project: {
                 total: 1
             }
@@ -122,18 +153,25 @@ InvoiceModel.sales = (invoiceSalesDate) => {
 }
 
 InvoiceModel.topTenInvoice = (topTenData) => {
-    console.log("topTenInvoice model");
-   // var topTenInvoiceDate = eqDate
-   // console.log("eqDate", eqDate)
+    const date = new Date();
+    date.setDate("01")
+    date.setMonth(--topTenData.query.invoicemonth)
+    date.setFullYear(topTenData.query.invoiceyear)
+    date.setHours("00");
+    date.setMinutes("00");
+    date.setSeconds("00");
+    date.setMilliseconds("00");
+    const endDate = new Date();
+    endDate.setDate(topTenData.query.invoicedate)
+    endDate.setMonth(topTenData.query.invoicemonth)
+    endDate.setFullYear(topTenData.query.invoiceyear)
+    console.log("topTenInvoice model", date, endDate);
     return InvoiceModel.aggregate([
         {
-            $match: {
-                "invoiceDate": {
-                    $eq: topTenData.query.invoiceDate
-                  
-                }
+            $match: { "invoiceDate": { $gt: date, $lte: endDate }, createdBy: topTenData.query.userid, companyCode: topTenData.query.companycode }
+
                // .sort({ invoiceTotal: -1 }).limit(2)
-            }
+            
                  
         }, { $sort: { invoiceTotal: -1 } }, { $limit: 10 },
         {
@@ -189,17 +227,19 @@ InvoiceModel.topTenInvoice = (topTenData) => {
             }
         }
     ]);
-
 }
-InvoiceModel.editInvoice = (invoiceToEdit) =>{
-    console.log(invoiceToEdit,"hiiiii");
-    return InvoiceModel.update(invoiceToEdit.query,invoiceToEdit.data);
+InvoiceModel.editInvoice = (invoiceToEdit) => {
+    console.log(invoiceToEdit, "hiiiii");
+    return InvoiceModel.update(invoiceToEdit.query, invoiceToEdit.data);
 }
-InvoiceModel.getEditList = (invoiceToEdit) =>{
+InvoiceModel.getEditList = (invoiceToEdit) => {
+    console.log(invoiceToEdit, "hiiiii");
+    return InvoiceModel.find(invoiceToEdit.query);
+}
+InvoiceModel.getOneList = (invoiceToEdit) =>{
     console.log(invoiceToEdit,"hiiiii");
 return InvoiceModel.find(invoiceToEdit.query);
 }
-
 
 InvoiceModel.allInvoice = (dataToFind) => {
     console.log(dataToFind.query.invoiceNumber, " = dataToFindinvoice for match")
@@ -251,7 +291,63 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 cgstTotal: 1,
                 sgstTotal: 1,
                 igstTotal: 1,
-                taxTotal: 1, 
+                taxTotal: 1,
+                invoiceTotal: 1,
+                createdBy: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                modifiedBy: 1
+            }
+        }
+    ]);
+}
+InvoiceModel.searchInvoice = (query) =>{
+    console.log(query,"sssssssssssssssssssssssssss")
+    return InvoiceModel.aggregate([
+        {$match:{$and:[query]}},
+        {
+            $lookup: {
+                from: "customer",
+                localField: "customerCode",
+                foreignField: "customerCode",
+                as: "customer_docs"
+            }
+        },
+        {
+            $unwind: "$customer_docs"
+        },
+        {
+            $lookup: {
+                from: "company",
+                localField: "companyCode",
+                foreignField: "companyCode",
+                as: "company_docs"
+            }
+        },
+        {
+            $unwind: "$company_docs"
+        },
+        {
+            $project: {
+                logo: "$company_docs.logo",
+                companyAddressLine1: 1,
+                companyAddressLine2: 1,
+                companyCode: 1,
+                companyName: "$company_docs.companyName",
+                customerAddressLine1: 1,
+                customerAddressLine2: 1,
+                customerCode: 1,
+                customerName: "$customer_docs.customerName",
+                discount: 1,
+                invoiceDate: 1,
+                invoiceNumber: 1,
+                items: 1,
+                itemTotal: 1,
+                discountTotal: 1,
+                cgstTotal: 1,
+                sgstTotal: 1,
+                igstTotal: 1,
+                taxTotal: 1,
                 invoiceTotal: 1,
                 createdBy: 1,
                 createdAt: 1,
@@ -262,4 +358,5 @@ InvoiceModel.allInvoice = (dataToFind) => {
     ]);
 }
 
-export default InvoiceModel 
+
+export default InvoiceModel; 
