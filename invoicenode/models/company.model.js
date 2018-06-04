@@ -13,7 +13,7 @@ var ObjectID = require("mongodb").ObjectID;
  */
 const CompanySchema = mongoose.Schema({ 
     file: { data: Buffer, contentType: String },
-    companyName:{type:String},
+    companyName:{type:String,index: {unique:true,dropDups: true}},
     companyCode:{type:String, index: {unique:true,dropDups: true}},
     companyGSTNo:{type:String},
     logo:{type:String},
@@ -33,7 +33,7 @@ const CompanySchema = mongoose.Schema({
 
 let CompanyModel = mongoose.model('company', CompanySchema);
 
-CompanyModel.allCompany = (queryToFindCompany) =>{
+CompanyModel.allCompany = (queryToFindCompany) =>{ 
     let createdBy = queryToFindCompany.query.createdBy;
     return CompanyModel.aggregate([
         { $match: {createdBy:createdBy} },
@@ -97,13 +97,10 @@ CompanyModel.allCompany = (queryToFindCompany) =>{
             }
         }
     ]);
-
-    // return CompanyModel.find();
 }
  
 CompanyModel.oneCompany = (dataToFind) =>{
     var cid=new ObjectID(dataToFind.query._id);
-    console.log("cid---"+cid);
     return CompanyModel.aggregate([
         { $match: {"_id":cid} },
         {
@@ -162,12 +159,11 @@ CompanyModel.oneCompany = (dataToFind) =>{
                 countryName:"$country_docs.countryName",
                 postalCode:1,
                 contactNo:1,
-                isActive:1
+                isActive:1 
 
             }
         }
     ]);
-    //return CompanyModel.findOne(dataToFind.query);
 }
 CompanyModel.searchCompany = (query) =>{
     console.log(query,"sssssssssssssssssssssssssss")
@@ -235,17 +231,22 @@ CompanyModel.searchCompany = (query) =>{
         }
     ]);
 }
-
-
+   
 CompanyModel.addCompany = (addToCompany) =>{
     return addToCompany.save();
 }
 
 CompanyModel.editCompany = (editToCompany) =>{
-return CompanyModel.update(editToCompany.query,editToCompany.data);
+    return CompanyModel.update(editToCompany.query,editToCompany.data);
 }
+
 CompanyModel.getOneCompany=(oneCompany)=>{
     return CompanyModel.find(oneCompany.query)
 }
+
+CompanyModel.removeLogo=(removeCompany)=>{
+    return CompanyModel.update(removeCompany.query,removeCompany.data);
+}
+
 
 export default CompanyModel;
