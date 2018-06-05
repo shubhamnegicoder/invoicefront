@@ -8,12 +8,12 @@ import axios from 'axios';
 import { RegularCard, Table, ItemGrid } from "components";
 import $ from 'jquery';
 import html2canvas from 'html2canvas';
-import swal from 'sweetalert2';
-import jsPDF from 'jspdf'
+import jsPDF from 'jspdf';
 
-var type,data;
+var type;
+
 class ViewInvoice extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -21,12 +21,12 @@ class ViewInvoice extends React.Component {
       invoiceNo: "",
       data: [],
       logo: "",
-      type:"",
+      type: "",
       companyName: "",
       companyAddress: "",
       companyGSTIN: "",
       customerName: "",
-      List:[],
+      List: [],
       customerAddress: "",
       customerGSTIN: "",
       List: [],
@@ -131,9 +131,9 @@ class ViewInvoice extends React.Component {
       }
     }
   }
-  
-  
-  getData = (invoiceNo,type) => {
+
+
+  getData = (invoiceNo, type) => {
     axios
       .get("http://localhost:8080/allInvoice?id=" + this.state.id + "&invoiceNumber=" + invoiceNo)
       .then((res) => {
@@ -181,18 +181,15 @@ class ViewInvoice extends React.Component {
 
        type=this.getQuery('type')
       this.setState({type:type})
-      
-      // if(type=="listinvoice"){
-         
-           
-      //  this.printDocument()
-
-      // }
   }
   
   
   
-  printDocument=()=> {
+ 
+  
+
+
+  printDocument = () => {
     const input = document.getElementById('container');
     html2canvas(input)
       .then((canvas) => {
@@ -212,20 +209,18 @@ class ViewInvoice extends React.Component {
     
    
     // console.log(type,"kkkkkkkkkkk")
-    this.getData(invoiceNo,type);
-   
-  }
-  componentDidUpdate(){
+    this.getData(invoiceNo, type);
 
-    if( this.state.type == "listinvoice"){
+  }
+  componentDidUpdate() {
+
+    if (this.state.type == "listinvoice") {
 
       this.printDocument()
-     
-      //  window.location.href="/invoiceList"
-    
+
     }
   }
-  
+
   render() {
     const styles = theme => ({
       root: {
@@ -243,9 +238,9 @@ class ViewInvoice extends React.Component {
       },
     });
     return (
-      
+
       <div id="container" class="container-fluid">
-       <canvas id="canvas" width="600" height="200"></canvas>
+        <canvas id="canvas" width="600" height="200"></canvas>
         <div class="row">
           <div class="col-4">
             <div id="logo">

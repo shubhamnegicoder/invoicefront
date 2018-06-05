@@ -373,7 +373,8 @@ export default class CreateInvoiceStep2 extends React.Component {
                 sgstTotal: parsedData.sgstTotal,
                 igstTotal: 0,
                 taxTotal: parsedData.taxTotal,
-                invoiceTotal: parsedData.invoiceTotal
+                invoiceTotal: parsedData.invoiceTotal,
+                status: "Drafted"
             }
         }
         superagent
@@ -525,27 +526,13 @@ export default class CreateInvoiceStep2 extends React.Component {
                 <hr />
                 {/* Invoice Row Headings */}
                 <div className="row" style={{ textAlign: 'center' }}>
-                    <div className="col-2">
-                        Item Code
-                    </div>
-                    <div className="col">
-                        Qty
-                    </div>
-                    <div className="col">
-                        Rate
-                    </div>
-                    <div className="col">
-                        Total
-                    </div>
-                    <div className="col">
-                        Disc.
-                    </div>
-                    <div className="col-3">
-                        Taxes
-                    </div>
-                    <div className="col">
-                        Row Total
-                    </div>
+                    <div className="col-2">Item Code</div>
+                    <div className="col">Qty</div>
+                    <div className="col">Rate</div>
+                    <div className="col">Total</div>
+                    <div className="col">Disc.</div>
+                    <div className="col-3">Taxes</div>
+                    <div className="col">Row Total</div>
                     <div className="col"></div>
                 </div>
                 <hr />
@@ -627,7 +614,8 @@ export default class CreateInvoiceStep2 extends React.Component {
                         <input type="hidden" name="invoiceTotal" className="invoiceTotal" onChange={this.handleInvoice} />
                     </div>
                 </div>
-                <input type="submit" className="btn btn-success" value="Save as Draft" />
+                <input type="submit" className="btn btn-success" value="Save as Draft" status="draft" />
+                {/* <input type="submit" className="btn btn-success" value="Create Invoice" status="invoice" /> */}
                 {/* <button className="btn btn-warning" onMouseOver={(e, param) => this.validate(e, "draft")} onClick={(e, param) => this.submitInvoice(e, "draft")}>Save as Draft</button>
                 <button className="btn btn-success" onMouseOver={(e, param) => this.validate(e, "invoice")} onClick={(e, param) => this.submitInvoice(e, "invoice")}>Create Invoice</button> */}
             </form >

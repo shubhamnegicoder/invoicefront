@@ -12,9 +12,9 @@ import CreateInvoiceStep2 from './CreateInvoiceStep2';
 import ViewInvoice from './ViewInvoice';
 import swal from 'sweetalert';
 import parse from 'form-parse';
+import Autocomplete from "react-autocomplete";
 
-var date;
-var invoiceRow = [], deletedRows = 0, items = [], tempArray = [];
+var date, invoiceRow = [], deletedRows = 0, items = [], tempArray = [];
 
 export default class CreateInvoice extends React.Component {
     constructor(props) {
@@ -138,6 +138,11 @@ export default class CreateInvoice extends React.Component {
         this.setInitialDate();
         this.getData("items");
     }
+    handleInput = (e) => {
+        e.preventDefault();
+
+        this.setState({ companyName: e.target.value })
+    }
     componentDidUpdate() {
         this.state.companyDropdownData.map((item, key) => {
             if (this.state.setAddressOfCompany == false) {
@@ -204,6 +209,16 @@ export default class CreateInvoice extends React.Component {
                                     <div className="row">
                                         {/* Company Dropdown */}
                                         <div className="col-sm">
+                                            {/* <Autocomplete
+                                                getItemValue={(item) => item.label}
+                                                items={items}
+                                                renderItem={(item, isHighlighted) =>
+                                                    <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                                        {item.label}
+                                                    </div>
+                                                }
+                                                value={this.state.companyName} onChange={this.handleInput} onSelect={companyName => this.setState({ companyName })}
+                                            /> */}
                                             <input type="text" list="company"
                                                 style={{ minWidth: '200px' }}
                                                 onChange={(e, param) => this.handleDropdown(e, "company")}
