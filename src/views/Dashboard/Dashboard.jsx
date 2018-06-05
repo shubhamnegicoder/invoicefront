@@ -249,7 +249,7 @@ class Dashboard extends React.Component {
            
             <RegularCard
               plainCard
-              cardTitle="Current Month Top 10 Sales"
+              cardTitle={<h5><b>Current Month Top 10 Sales</b></h5>}
               content={
                 this.state.datafound?( <Table
                   tableHeaderColor="primary"
