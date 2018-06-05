@@ -48,28 +48,51 @@ class ListInvoice extends React.Component {
     this.setState({ load: false });
 };
 onmodal=(data)=>{
-  // var mainArray = [];
-  // data.forEach((responseData)=>{
-  //     var dataArray = [];
-  //     dataArray.push(responseData.companyCode)
-  //     dataArray.push(responseData.companyName)
-  //     dataArray.push(responseData.companyGSTNo)
-  //     dataArray.push(responseData.contactNo)
-  //  dataArray.push(responseData.isActive?"Yes":"No")
-  //    //var array = "";
-  //   dataArray.push(<div>
-  //     <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
-  //     <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+  console.log(data,"yha append krana")
+  // console.log("listabc = ",result.data)
+                 var mainArray = [];
+                 data.forEach((item,index)=>{
 
-  //     </div>);
-   
-  //     //dataArray.push(new Date(responseData.createdAt).toDateString());
-  //     mainArray.push(dataArray)
+                   console.log(item,"item")
+                     var dataArray = [];
+                    //  dataArray.push(tax._id)
+                    dataArray.push(item.invoiceNumber)
+                    dataArray.push(item.companyName)
+                     dataArray.push(item.customerName)
+                   
+                     
+                     dataArray.push(item.invoiceDate.split("T")[0])
+                     dataArray.push(item.invoiceTotal)
+                     dataArray.push(item.status)
+                     if(item.status==="Invoiced"){
+                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)"class="button" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf(item._id,item.invoiceNumber)}} style={{color:"black"}}><Download/></a></Tooltip></div>);
+                      
+                     }
+                    else if(item.status==="Cancelled"){
+                     dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black",opacity: "0.65", pointerEvents:"none"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
+                    }
+                    else if(item.status==="Drafted"){
+                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
 
-  //   })
-  //   this.setState({
-  //       data:mainArray
-  //   })
+                    }
+                    mainArray.push(dataArray)
+                    
+                   
+    
+                 })
+                 this.setState({
+                     List:mainArray
+                 })
+                
 
  }
 
@@ -138,9 +161,10 @@ onmodal=(data)=>{
                      var dataArray = [];
                     //  dataArray.push(tax._id)
                     dataArray.push(item.invoiceNumber)
-                     dataArray.push(item.customerName)
-                     dataArray.push(item.companyName)
+                    dataArray.push(item.companyName)
                      
+                     dataArray.push(item.customerName)
+                    
                      dataArray.push(item.invoiceDate.split("T")[0])
                      dataArray.push(item.invoiceTotal)
                      dataArray.push(item.status)
@@ -157,7 +181,7 @@ onmodal=(data)=>{
                       <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
                     }
-                    else if(item.status==="Draft"){
+                    else if(item.status==="Drafted"){
                       dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>

@@ -271,7 +271,7 @@ service.searchInvoice = async (req, res) => {
 
         let query = {}
 
-        if (req.query.invoiceNumber !== undefined) {
+        if (req.query.invoiceNumber !== undefined && req.query.invoiceNumber !== "") {
             query.invoiceNumber = parseInt(req.query.invoiceNumber);
         }
         if (req.query.companyName !== '') {

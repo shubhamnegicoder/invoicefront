@@ -8,9 +8,12 @@ import axios from 'axios';
 import { RegularCard, Table, ItemGrid } from "components";
 import $ from 'jquery';
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf'
+import jsPDF from 'jspdf';
+
+var type;
+
 class ViewInvoice extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,12 +21,12 @@ class ViewInvoice extends React.Component {
       invoiceNo: "",
       data: [],
       logo: "",
-      type:"",
+      type: "",
       companyName: "",
       companyAddress: "",
       companyGSTIN: "",
       customerName: "",
-      List:[],
+      List: [],
       customerAddress: "",
       customerGSTIN: "",
       List: [],
@@ -128,9 +131,9 @@ class ViewInvoice extends React.Component {
       }
     }
   }
-  
-  
-  getData = (invoiceNo,type) => {
+
+
+  getData = (invoiceNo, type) => {
     axios
       .get("http://localhost:8080/allInvoice?id=" + this.state.id + "&invoiceNumber=" + invoiceNo)
       .then((res) => {
@@ -175,12 +178,14 @@ class ViewInvoice extends React.Component {
         })
         console.log("states", this.state);
       })
-      // if(type=="listinvoice"){
-         
-           
-      //  this.printDocument()
+    type = this.getQuery('type')
+    this.setState({ type: type })
+    // if(type=="listinvoice"){
 
-      // }
+
+    //  this.printDocument()
+
+    // }
   }
   print = () => {
     $('.printButton').hide();
@@ -188,37 +193,36 @@ class ViewInvoice extends React.Component {
     $('.printButton').show();
   }
 
-  
-  printDocument=()=> {
+
+  printDocument = () => {
     const input = document.getElementById('container');
     html2canvas(input)
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p','mm',[297,210]);
+        const pdf = new jsPDF('l', 'mm', [310, 300]);
         pdf.addImage(imgData, 'JPEG', 0, 0);
         // pdf.output('dataurlnewwindow');
         pdf.save("download.pdf");
       })
-    ;
+      ;
   }
-       
+
   componentWillMount() {
     let invoiceNo = this.getQuery('invoiceNo');
-    var type=this.getQuery('type')
-    this.setState({type:type})
+
     // console.log(type,"kkkkkkkkkkk")
-    this.getData(invoiceNo,type);
-   
+    this.getData(invoiceNo, type);
+
   }
-  componentDidMount(){
-    
-    if( this.state.type == "listinvoice"){
+  componentDidUpdate() {
+
+    if (this.state.type == "listinvoice") {
 
       this.printDocument()
-    
+
     }
   }
-  
+
   render() {
     const styles = theme => ({
       root: {
@@ -236,9 +240,9 @@ class ViewInvoice extends React.Component {
       },
     });
     return (
-      
+
       <div id="container" class="container-fluid">
-       <canvas id="canvas" width="600" height="200"></canvas>
+        <canvas id="canvas" width="600" height="200"></canvas>
         <div class="row">
           <div class="col-4">
             <div id="logo">
