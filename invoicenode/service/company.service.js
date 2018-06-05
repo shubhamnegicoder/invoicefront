@@ -13,8 +13,6 @@ import path from 'path';
 import formidable from "formidable";
 import fs from "fs-extra";
 import filesys from "fs";
-import findRemoveSync from 'find-remove';
-
 /**
  * [service is a object ]
  * @type {Object}

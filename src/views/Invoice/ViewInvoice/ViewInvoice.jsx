@@ -178,20 +178,15 @@ class ViewInvoice extends React.Component {
         })
         console.log("states", this.state);
       })
-    type = this.getQuery('type')
-    this.setState({ type: type })
-    // if(type=="listinvoice"){
 
-
-    //  this.printDocument()
-
-    // }
+       type=this.getQuery('type')
+      this.setState({type:type})
   }
-  print = () => {
-    $('.printButton').hide();
-    window.print();
-    $('.printButton').show();
-  }
+  
+  
+  
+ 
+  
 
 
   printDocument = () => {
@@ -199,17 +194,20 @@ class ViewInvoice extends React.Component {
     html2canvas(input)
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('l', 'mm', [310, 300]);
+        const pdf = new jsPDF('p','mm',[340,290]);
         pdf.addImage(imgData, 'JPEG', 0, 0);
         // pdf.output('dataurlnewwindow');
         pdf.save("download.pdf");
+        
       })
-      ;
-  }
-
+    }
+     
+    
+       
   componentWillMount() {
     let invoiceNo = this.getQuery('invoiceNo');
-
+    
+   
     // console.log(type,"kkkkkkkkkkk")
     this.getData(invoiceNo, type);
 
@@ -421,7 +419,7 @@ class ViewInvoice extends React.Component {
         </div>
         <hr />
         <div class="row">
-          <button className="printButton btn btn-primary" onClick={this.printDocument}>Print</button>
+          <button style={{ backgroundColor:"#76323f", color:"white" }} onClick={this.printDocument}>Save as Pdf</button>
         </div>
       </div>
       //--------
