@@ -18,6 +18,7 @@ import AddIcon from '@material-ui/icons/Add';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 import jspdf from "jspdf";
+
 import rasterizehtml from 'rasterizehtml';
 
 
@@ -145,7 +146,7 @@ onmodal=(data)=>{
                      dataArray.push(item.invoiceTotal)
                      dataArray.push(item.status)
                      if(item.status==="Invoiced"){
-                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)"class="button" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf(item._id,item.invoiceNumber)}} style={{color:"black"}}><Download/></a></Tooltip></div>);
@@ -157,7 +158,7 @@ onmodal=(data)=>{
                       <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
                     }
-                    else if(item.status==="Draft"){
+                    else if(item.status==="Drafted"){
                       dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
                       <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>

@@ -1,0 +1,24 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-05T04:33:50.873Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-05T04:33:51.028Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-05T04:35:11.901Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T04:37:04.105Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T04:42:27.503Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T04:44:28.810Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T04:44:32.767Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T04:45:51.585Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-05T04:46:16.932Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T05:19:05.790Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T05:20:50.147Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T05:21:17.545Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T05:28:01.864Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T05:29:38.862Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T05:32:33.419Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T05:46:23.088Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T06:25:11.686Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T06:26:28.057Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T06:38:50.537Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T06:54:26.419Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T06:58:58.024Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T06:59:08.907Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T06:59:20.865Z"}
+{"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-05T07:00:19.516Z"}

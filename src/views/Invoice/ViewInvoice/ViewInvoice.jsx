@@ -8,7 +8,10 @@ import axios from 'axios';
 import { RegularCard, Table, ItemGrid } from "components";
 import $ from 'jquery';
 import html2canvas from 'html2canvas';
+import swal from 'sweetalert2';
 import jsPDF from 'jspdf'
+
+var type,data;
 class ViewInvoice extends React.Component {
   
   constructor(props) {
@@ -175,6 +178,10 @@ class ViewInvoice extends React.Component {
         })
         console.log("states", this.state);
       })
+
+       type=this.getQuery('type')
+      this.setState({type:type})
+      
       // if(type=="listinvoice"){
          
            
@@ -182,39 +189,39 @@ class ViewInvoice extends React.Component {
 
       // }
   }
-  print = () => {
-    $('.printButton').hide();
-    window.print();
-    $('.printButton').show();
-  }
-
+  
+  
   
   printDocument=()=> {
     const input = document.getElementById('container');
     html2canvas(input)
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p','mm',[297,210]);
+        const pdf = new jsPDF('p','mm',[340,290]);
         pdf.addImage(imgData, 'JPEG', 0, 0);
         // pdf.output('dataurlnewwindow');
         pdf.save("download.pdf");
+        
       })
-    ;
-  }
+    }
+     
+    
        
   componentWillMount() {
     let invoiceNo = this.getQuery('invoiceNo');
-    var type=this.getQuery('type')
-    this.setState({type:type})
+    
+   
     // console.log(type,"kkkkkkkkkkk")
     this.getData(invoiceNo,type);
    
   }
-  componentDidMount(){
-    
+  componentDidUpdate(){
+
     if( this.state.type == "listinvoice"){
 
       this.printDocument()
+     
+      //  window.location.href="/invoiceList"
     
     }
   }
@@ -417,7 +424,7 @@ class ViewInvoice extends React.Component {
         </div>
         <hr />
         <div class="row">
-          <button className="printButton btn btn-primary" onClick={this.printDocument}>Print</button>
+          <button style={{ backgroundColor:"#76323f", color:"white" }} onClick={this.printDocument}>Save as Pdf</button>
         </div>
       </div>
       //--------
