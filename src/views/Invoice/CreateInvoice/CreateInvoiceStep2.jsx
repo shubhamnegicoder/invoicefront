@@ -5,7 +5,7 @@ import parse from 'form-parse';
 import swal from 'sweetalert';
 import superagent from 'superagent';
 
-var invoiceRow = [], deletedRows = 0, items = [], tempArray = [];
+var invoiceRow = [], deletedRows = 0, tempArray = [];
 
 export default class CreateInvoiceStep2 extends React.Component {
     constructor(props) {
@@ -61,20 +61,21 @@ export default class CreateInvoiceStep2 extends React.Component {
                     id={"btn_" + this.state.invoiceRow.length}
                 >
                     <div className="col-2">
-                        <select
+                        <input type="text" list="product"
                             id={"select" + invoiceRow.length}
                             name={"itemCode" + invoiceRow.length}
                             className="form-control"
                             onChange={(e, param) => this.handleDropdown(e, "items")}
                         // required={this.state.validate ? required : ""}
-                        >
+                        />
+                        <datalist id="product" >
                             <option>---</option>
                             {
                                 this.state.itemsDropdownData.map((item, index) => {
                                     return <option name={item.productName} value={item.productCode} key={index}>{item.productCode}</option>
                                 })
                             }
-                        </select>
+                        </datalist>
                         <input
                             type="hidden"
                             className={"form-control name" + this.state.invoiceRow.length}
@@ -332,7 +333,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                 igstTotal: parsedData.igstTotal,
                 taxTotal: parsedData.taxTotal,
                 invoiceTotal: parsedData.invoiceTotal,
-                status: "draft"
+                status: "Drafted"
             }
         }
         else {

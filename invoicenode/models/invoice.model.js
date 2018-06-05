@@ -44,43 +44,6 @@ const InvoiceSchema = mongoose.Schema({
     status: { type: String }
 }, { collection: 'invoice' })
 
-// const InvoiceSchema = mongoose.Schema({
-//     companyAddressLine1: { type: String },
-//     companyAddressLine2: { type: String },
-//     companyCode: { type: String },
-//     customerAddressLine1: { type: String },
-//     customerAddressLine2: { type: String },
-//     customerCode: { type: String },
-//     invoiceDate: { type: String },
-//     invoiceNumber: { type: Number },
-//     status: { type: String },
-//     items: [{
-//         itemCode: { type: String },
-//         name: { type: String },
-//         qty: { type: Number },
-//         rate: { type: Number },
-//         total: { type: Number },
-//         discount: { type: Number },
-//         CGSTRate: { type: Number },
-//         CGSTAmount: { type: Number },
-//         SGSTRate: { type: Number },
-//         SGSTAmount: { type: Number },
-//         IGSTRate: { type: Number },
-//         IGSTAmount: { type: Number }
-//     }],
-//     itemTotal: { type: Number },
-//     discountTotal: { type: Number },
-//     cgstTotal: { type: Number },
-//     sgstTotal: { type: Number },
-//     igstTotal: { type: Number },
-//     taxTotal: { type: Number },
-//     invoiceTotal: { type: Number },
-//     createdBy: { type: mongoose.Schema.ObjectId },
-//     createdAt: { type: Date },
-//     updatedAt: { type: Date },
-//     modifiedBy: { type: mongoose.Schema.ObjectId }
-// }, { collection: 'invoice' });
-
 InvoiceSchema.plugin(AutoIncrement.plugin, { model: 'invoice', field: 'invoiceId', startAt: 1, incrementBy: 1 });
 
 let InvoiceModel = mongoose.model('invoice', InvoiceSchema);
@@ -114,6 +77,12 @@ InvoiceModel.getCount = (invoiceToCount) => {
         }]
     }).count()
 }
+
+InvoiceModel.getCount2 = (invoiceToCount) => {
+    return InvoiceModel.find(invoiceToCount.query).count();
+}
+
+
 InvoiceModel.getAllList = (data) => {
     console.log("getalllist")
     return InvoiceModel.aggregate([
@@ -278,9 +247,9 @@ InvoiceModel.getEditList = (invoiceToEdit) => {
     console.log(invoiceToEdit, "hiiiii");
     return InvoiceModel.find(invoiceToEdit.query);
 }
-InvoiceModel.getOneList = (invoiceToEdit) =>{
-    console.log(invoiceToEdit,"hiiiii");
-return InvoiceModel.find(invoiceToEdit.query);
+InvoiceModel.getOneList = (invoiceToEdit) => {
+    console.log(invoiceToEdit, "hiiiii");
+    return InvoiceModel.find(invoiceToEdit.query);
 }
 
 InvoiceModel.allInvoice = (dataToFind) => {
@@ -343,10 +312,10 @@ InvoiceModel.allInvoice = (dataToFind) => {
         }
     ]);
 }
-InvoiceModel.searchInvoice = (query) =>{
-    console.log(query,"sssssssssssssssssssssssssss")
+InvoiceModel.searchInvoice = (query) => {
+    console.log(query, "sssssssssssssssssssssssssss")
     return InvoiceModel.aggregate([
-        {$match:{$and:[query]}},
+        { $match: { $and: [query] } },
         {
             $lookup: {
                 from: "customer",
@@ -394,7 +363,8 @@ InvoiceModel.searchInvoice = (query) =>{
                 createdBy: 1,
                 createdAt: 1,
                 updatedAt: 1,
-                modifiedBy: 1
+                modifiedBy: 1,
+                status:1,
             }
         }
     ]);
