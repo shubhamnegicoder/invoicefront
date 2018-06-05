@@ -355,6 +355,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                 item = {};
             }
             finalData = {
+                id: this.props.id,
                 invoiceDate: this.props.invoiceDate,
                 invoiceNumber: this.props.invoiceNo,
                 companyName: this.props.companyName,

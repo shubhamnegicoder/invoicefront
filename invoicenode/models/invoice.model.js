@@ -84,6 +84,7 @@ InvoiceModel.getCount2 = (invoiceToCount) => {
 
 
 InvoiceModel.getAllList = (data) => {
+    console.log("-----------------");
     console.log("getalllist", data)
     return InvoiceModel.aggregate([
         { $match: { createdBy: data.query.createdBy } },
@@ -125,7 +126,8 @@ InvoiceModel.getAllList = (data) => {
                 createdBy: 1,
                 createdAt: 1,
                 updatedAt: 1,
-                modifiedBy: 1
+                modifiedBy: 1,
+                
             }
         }
     ]);
@@ -234,7 +236,8 @@ InvoiceModel.topTenInvoice = (topTenData) => {
                 createdBy: 1,
                 createdAt: 1,
                 updatedAt: 1,
-                modifiedBy: 1
+                modifiedBy: 1,
+                status:1
             }
         }
     ]);
