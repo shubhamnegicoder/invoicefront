@@ -162,9 +162,10 @@ service.getAllList = async (req, res) => {
 
         };
 
-        console.log(dataTo, "aaaaaa")
+        console.log(dataTo, "aaaaaammmmm")
 
         const invoicedata = await Invoice.getAllList(dataTo);
+        console.log("invoiceData",invoicedata);
         res.send({ success: true, code: 200, "msg": "success", data: invoicedata });
 
 

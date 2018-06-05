@@ -84,7 +84,7 @@ InvoiceModel.getCount2 = (invoiceToCount) => {
 
 
 InvoiceModel.getAllList = (data) => {
-    console.log("getalllist")
+    console.log("getalllist", data)
     return InvoiceModel.aggregate([
         { $match: { createdBy: data.query.createdBy } },
         {
