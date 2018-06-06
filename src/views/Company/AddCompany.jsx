@@ -315,9 +315,9 @@ class AddCompany extends React.Component {
                     </td>
                 </tr>
                 <tr>
-                    <td align="right"><input type="submit" value="Save" onClick={(e)=>{this.save(e)}} style={{ backgroundColor: "purple",backgroundColor:"#76323f", color:"white" }} /></td>
+                    <td align="right"><input type="submit" value="Save" onClick={(e)=>{this.save(e)}} style={{ backgroundColor:"#76323f", color:"white" }} /></td>
                     <td></td>
-                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{ backgroundColor: "purple",backgroundColor:"#76323f", color:"white" }} /></td>
+                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"#76323f", color:"white" }} /></td>
                 </tr>
             </table></form>
 
