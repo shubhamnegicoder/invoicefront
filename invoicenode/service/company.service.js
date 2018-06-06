@@ -14,7 +14,6 @@ import formidable from "formidable";
 import fs from "fs-extra";
 import filesys from "fs";
 
-
 /**
  * [service is a object ]
  * @type {Object}
@@ -374,19 +373,6 @@ service.getOneCompany = async (req,res)=>{
 		return '';
 	}
 }
-
-// service.getByCompanyName= async (companyName)=>{ 
-// 	try{
-// 		let dataToFind={ 
-// 			query:{ companyName:companyName}
-// 		};
-// 		var oneCompany = await CompanyModel.getOneCompany(dataToFind);
-// 		return res.send({success:true, code:200, msg:"Successfully found", data:oneCompany});
-// 	}
-// 	catch(error){
-// 		return res.send({success:false, code:500, msg:"Error in getting Company", err:error})
-// 	}
-// }
 
 service.removeLogo = async(req,res)=>{
 	var form = new formidable.IncomingForm();

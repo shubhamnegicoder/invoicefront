@@ -4,32 +4,33 @@ import ObjectId from 'bson-objectid';
 
 AutoIncrement.initialize(mongoose);
 
-
 const InvoiceSchema = mongoose.Schema({
-    companyAddressLine1: { type: String },
-    companyAddressLine2: { type: String },
-    companyCode: { type: String },
-    customerAddressLine1: { type: String },
-    customerAddressLine2: { type: String },
-    customerCode: { type: String },
     invoiceDate: { type: Date },
     invoiceNumber: { type: Number },
-    status:{type:String},
+    companyName: { type: String },
+    companyCode: { type: String },
+    companyAddressLine1: { type: String },
+    companyAddressLine2: { type: String },
+    customerName: { type: String },
+    customerCode: { type: String },
+    customerAddressLine1: { type: String },
+    customerAddressLine2: { type: String },
     items: [{
         itemCode: { type: String },
-        name: { type: String },
-        qty: { type: Number },
-        rate: { type: Number },
-        total: { type: Number },
-        discount: { type: Number },
-        CGSTRate: { type: Number },
-        CGSTAmount: { type: Number },
-        SGSTRate: { type: Number },
-        SGSTAmount: { type: Number },
-        IGSTRate: { type: Number },
-        IGSTAmount: { type: Number }
+        itemName: { type: String },
+        itemHsn: { type: String },
+        itemQty: { type: Number },
+        itemRate: { type: Number },
+        itemTotal: { type: Number },
+        itemDiscount: { type: Number },
+        cgstRate: { type: Number },
+        cgstAmount: { type: Number },
+        sgstRate: { type: Number },
+        sgstAmount: { type: Number },
+        igstRate: { type: Number },
+        igstAmount: { type: Number }
     }],
-    itemTotal: { type: Number },
+    subTotal: { type: Number },
     discountTotal: { type: Number },
     cgstTotal: { type: Number },
     sgstTotal: { type: Number },
@@ -39,8 +40,9 @@ const InvoiceSchema = mongoose.Schema({
     createdBy: { type: mongoose.Schema.ObjectId },
     createdAt: { type: Date },
     updatedAt: { type: Date },
-    modifiedBy: { type: mongoose.Schema.ObjectId }
-}, { collection: 'invoice' });
+    modifiedBy: { type: mongoose.Schema.ObjectId },
+    status: { type: String }
+}, { collection: 'invoice' })
 
 InvoiceSchema.plugin(AutoIncrement.plugin, { model: 'invoice', field: 'invoiceId', startAt: 1, incrementBy: 1 });
 
@@ -60,20 +62,30 @@ InvoiceModel.getCount = (invoiceToCount) => {
     date.setMinutes("00");
     date.setSeconds("00");
     date.setMilliseconds("00");
-    const endDate=new Date();
+    const endDate = new Date();
     endDate.setDate(invoiceToCount.query.invoicedate)
     endDate.setMonth(invoiceToCount.query.invoicemonth)
     endDate.setFullYear(invoiceToCount.query.invoiceyear)
-    console.log(endDate,"date",date)
-   console.log("invoiceToCount", invoiceToCount.query.invoicemonth);
-    return InvoiceModel.find({$and:[{"invoiceDate": { $gt:date,$lte:endDate }
+    console.log(endDate, "date", date)
+    console.log("invoiceToCount", invoiceToCount.query.invoicemonth);
+    return InvoiceModel.find({
+        $and: [{
+            "invoiceDate": { $gt: date, $lte: endDate }
 
-      ,createdBy:invoiceToCount.query.userid,companyCode:invoiceToCount.query.companycode
+            , createdBy: invoiceToCount.query.userid, companyCode: invoiceToCount.query.companycode
 
-    }]}).count()
-    }
-InvoiceModel.getAllList=(data)=>{
-    console.log("getalllist")
+        }]
+    }).count()
+}
+
+InvoiceModel.getCount2 = (invoiceToCount) => {
+    return InvoiceModel.find(invoiceToCount.query).count();
+}
+
+
+InvoiceModel.getAllList = (data) => {
+    console.log("-----------------");
+    console.log("getalllist", data)
     return InvoiceModel.aggregate([
         { $match: { createdBy: data.query.createdBy } },
         {
@@ -83,7 +95,6 @@ InvoiceModel.getAllList=(data)=>{
                 foreignField: "customerCode",
                 as: "customer_docs"
             }
-
         },
         {
             $unwind: "$customer_docs"
@@ -95,30 +106,26 @@ InvoiceModel.getAllList=(data)=>{
                 foreignField: "companyCode",
                 as: "company_docs"
             }
-
-
         },
         {
             $unwind: "$company_docs"
-        }, {
+        },
+        {
             $project: {
-
                 companyName: "$company_docs.companyName",
-
                 customerName: "$customer_docs.customerName",
-
                 invoiceDate: 1,
                 invoiceNumber: 1,
-                status:1, 
+                status: 1,
                 invoiceTotal: 1,
                 createdBy: 1,
                 createdAt: 1,
                 updatedAt: 1,
-                modifiedBy: 1
+                modifiedBy: 1,
+                
             }
         }
     ]);
-
 }
 
 InvoiceModel.sales = (invoiceSalesDate) => {
@@ -134,10 +141,10 @@ InvoiceModel.sales = (invoiceSalesDate) => {
     endDate.setDate(invoiceSalesDate.query.invoicedate)
     endDate.setMonth(invoiceSalesDate.query.invoicemonth)
     endDate.setFullYear(invoiceSalesDate.query.invoiceyear)
-    console.log("invoiceOfSales in sales model",date,endDate);
+    console.log("invoiceOfSales in sales model", date, endDate);
     return InvoiceModel.aggregate([
         {
-            $match: {"invoiceDate":{ $gt: date, $lte: endDate }, createdBy:invoiceSalesDate.query.userid, companyCode:invoiceSalesDate.query.companycode }
+            $match: { "invoiceDate": { $gt: date, $lte: endDate }, createdBy: invoiceSalesDate.query.userid, companyCode: invoiceSalesDate.query.companycode }
         },
         {
             $group: {
@@ -170,9 +177,9 @@ InvoiceModel.topTenInvoice = (topTenData) => {
         {
             $match: { "invoiceDate": { $gt: date, $lte: endDate }, createdBy: topTenData.query.userid, companyCode: topTenData.query.companycode }
 
-               // .sort({ invoiceTotal: -1 }).limit(2)
-            
-                 
+            // .sort({ invoiceTotal: -1 }).limit(2)
+
+
         }, { $sort: { invoiceTotal: -1 } }, { $limit: 10 },
         {
             $lookup: {
@@ -223,7 +230,8 @@ InvoiceModel.topTenInvoice = (topTenData) => {
                 createdBy: 1,
                 createdAt: 1,
                 updatedAt: 1,
-                modifiedBy: 1
+                modifiedBy: 1,
+                status:1
             }
         }
     ]);
@@ -236,9 +244,9 @@ InvoiceModel.getEditList = (invoiceToEdit) => {
     console.log(invoiceToEdit, "hiiiii");
     return InvoiceModel.find(invoiceToEdit.query);
 }
-InvoiceModel.getOneList = (invoiceToEdit) =>{
-    console.log(invoiceToEdit,"hiiiii");
-return InvoiceModel.find(invoiceToEdit.query);
+InvoiceModel.getOneList = (invoiceToEdit) => {
+    console.log(invoiceToEdit, "hiiiii");
+    return InvoiceModel.find(invoiceToEdit.query);
 }
 
 InvoiceModel.allInvoice = (dataToFind) => {
@@ -286,7 +294,7 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 invoiceDate: 1,
                 invoiceNumber: 1,
                 items: 1,
-                itemTotal: 1,
+                subTotal: 1,
                 discountTotal: 1,
                 cgstTotal: 1,
                 sgstTotal: 1,
@@ -301,10 +309,10 @@ InvoiceModel.allInvoice = (dataToFind) => {
         }
     ]);
 }
-InvoiceModel.searchInvoice = (query) =>{
-    console.log(query,"sssssssssssssssssssssssssss")
+InvoiceModel.searchInvoice = (query) => {
+    console.log(query, "sssssssssssssssssssssssssss")
     return InvoiceModel.aggregate([
-        {$match:{$and:[query]}},
+        { $match: { $and: [query] } },
         {
             $lookup: {
                 from: "customer",
@@ -352,7 +360,8 @@ InvoiceModel.searchInvoice = (query) =>{
                 createdBy: 1,
                 createdAt: 1,
                 updatedAt: 1,
-                modifiedBy: 1
+                modifiedBy: 1,
+                status: 1,
             }
         }
     ]);
