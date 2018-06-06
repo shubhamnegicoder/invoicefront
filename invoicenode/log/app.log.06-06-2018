@@ -1,0 +1,21 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-06T04:17:31.651Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-06T04:17:31.728Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:19:21.864Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:23:21.960Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:23:24.552Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:45:02.447Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:45:11.130Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:46:22.787Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:46:57.450Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:47:10.648Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-06T04:48:09.450Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-06T04:48:14.988Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:48:34.126Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:48:34.786Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:48:35.073Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:48:35.638Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:48:35.799Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:48:35.977Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-06-06T04:53:22.171Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:53:41.588Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T04:54:30.420Z"}
