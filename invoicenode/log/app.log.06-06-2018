@@ -1,2 +1,11 @@
 {"level":"info","message":"server started -  8080","timestamp":"2018-06-06T05:00:08.595Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-06T05:00:08.625Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T05:40:43.676Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T05:43:59.971Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T05:50:09.423Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T05:52:10.472Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-06T05:52:41.506Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-06T05:52:44.656Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T05:53:51.200Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T05:54:30.288Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T05:54:32.278Z"}
