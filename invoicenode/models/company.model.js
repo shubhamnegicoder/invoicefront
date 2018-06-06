@@ -7,6 +7,7 @@
  */
 import mongoose from 'mongoose';
 var ObjectID = require("mongodb").ObjectID;
+//import ObjectID from "bson-objectid";
 /**
  * [CompanySchema is used for Company data validating aginst schema]
  * @type {[type]}
@@ -34,9 +35,10 @@ const CompanySchema = mongoose.Schema({
 let CompanyModel = mongoose.model('company', CompanySchema);
 
 CompanyModel.allCompany = (queryToFindCompany) =>{ 
-    let createdBy = queryToFindCompany.query.createdBy;
+  // let createdBy = queryToFindCompany.query.createdBy;
+    console.log("queryToFindCompany.query.createdBy",queryToFindCompany.query.createdBy);
     return CompanyModel.aggregate([
-        { $match: {createdBy:createdBy} },
+        { $match: {createdBy:queryToFindCompany.query.createdBy} },
         {
             $lookup: {
                 from: "country",
@@ -201,8 +203,6 @@ CompanyModel.searchCompany = (query) =>{
                 foreignField: "cityCode",
                 as: "city_docs"
             }
-
-
         },
         {
             $unwind: "$city_docs"
@@ -241,6 +241,10 @@ CompanyModel.editCompany = (editToCompany) =>{
 }
 
 CompanyModel.getOneCompany=(oneCompany)=>{
+    return CompanyModel.find(oneCompany.query)
+}
+
+CompanyModel.getOneByCompanyName=(oneCompany)=>{
     return CompanyModel.find(oneCompany.query)
 }
 

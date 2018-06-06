@@ -202,8 +202,9 @@ class ViewInvoice extends React.Component {
           pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
         }
-        pdf.save("download.pdf");
+        pdf.save("download.pdf");       
       })
+
   }
   componentWillMount() {
     let invoiceNo = this.getQuery('invoiceNumber');
@@ -411,7 +412,7 @@ class ViewInvoice extends React.Component {
         </div>
         <hr />
         <div class="row">
-          {/* <button className="printButton btn btn-primary" onClick={this.printDocument}>Print</button> */}
+          <button style={{ backgroundColor:"#76323f", color:"white" }} onClick={this.printDocument}>Save as Pdf</button>
         </div>
       </div>
     )

@@ -18,6 +18,7 @@ import AddIcon from '@material-ui/icons/Add';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 import jspdf from "jspdf";
+
 import rasterizehtml from 'rasterizehtml';
 
 class ListInvoice extends React.Component {
@@ -70,12 +71,77 @@ class ListInvoice extends React.Component {
           <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={() => { this.handleClose() }} style={{ color: "black", opacity: "0.65", pointerEvents: "none" }}><CancelIcon /></a></Tooltip><span>&nbsp;</span>
           <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={() => { this.handlePdf() }} style={{ color: "black", opacity: "0.65", pointerEvents: "none" }}><Download /></a></Tooltip></div>);
       }
+
       else if (item.status === "Drafted") {
         dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={() => { this.handleEdit(item._id) }} style={{ color: "black" }}><EditIcon /></a></Tooltip><span>&nbsp;</span>
           <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={() => { this.handleView(item._id, item.invoiceNumber) }} style={{ color: "black" }}><ViewIcon /></a></Tooltip><span>&nbsp;</span>
           <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={() => { this.handleClose(item._id) }} style={{ color: "black" }}><CancelIcon /></a></Tooltip><span>&nbsp;</span>
           <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={() => { this.handlePdf() }} style={{ color: "black", opacity: "0.65", pointerEvents: "none" }}><Download /></a></Tooltip></div>);
 
+      
+       List = () => {
+    
+        fetch("http://localhost:8080/allList?id="+this.state.id,{
+            method: "GET",
+            cache: 'no-cache', 
+            mode: 'cors', 
+            headers:  new Headers({
+            'Content-Type': 'application/json',
+            'authorization':"Key@123"
+            })
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                console.log("listabc = ",result.data)
+                 var mainArray = [];
+                 result.data.forEach((item,index)=>{
+
+                   console.log(item,"item")
+                     var dataArray = [];
+                    //  dataArray.push(tax._id)
+                    dataArray.push(item.invoiceNumber)
+                    dataArray.push(item.companyName)
+                     
+                     dataArray.push(item.customerName)
+                    
+                     dataArray.push(item.invoiceDate.split("T")[0])
+                     dataArray.push(item.invoiceTotal)
+                     dataArray.push(item.status)
+                     if(item.status==="Invoiced"){
+                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)"class="button" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf(item._id,item.invoiceNumber)}} style={{color:"black"}}><Download/></a></Tooltip></div>);
+                      
+                     }
+                    else if(item.status==="Cancelled"){
+                     dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black",opacity: "0.65", pointerEvents:"none"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
+                    }
+                    else if(item.status==="Drafted"){
+                      dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={()=>{this.handleEdit(item._id)}} style={{color:"black"}}><EditIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={()=>{this.handleView(item._id,item.invoiceNumber)}} style={{color:"black"}}><ViewIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" onClick={()=>{this.handleClose(item._id)}} style={{color:"black"}}><CancelIcon/></a></Tooltip><span>&nbsp;</span>
+                      <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={()=>{this.handlePdf()}} style={{color:"black",opacity: "0.65", pointerEvents: "none"}}><Download/></a></Tooltip></div>);
+
+                    }
+                    mainArray.push(dataArray)
+                    
+                   
+    
+                 })
+                 this.setState({
+                     List:mainArray
+                 })
+                
+                },
+                (error) => {
+                  console.log("error",error)
+            }
+        )
       }
       mainArray.push(dataArray)
     })
