@@ -102,3 +102,8 @@
 {"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-06T12:12:06.231Z"}
 {"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-06T12:12:35.839Z"}
 {"level":"error","message":"Error in getting Invoice- CastError: Cast to date failed for value \"Invalid Date\" at path \"invoiceDate\" for model \"invoice\"","timestamp":"2018-06-06T12:12:46.034Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-06T12:33:23.078Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-06T12:33:23.233Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T12:45:49.258Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T12:46:53.736Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T12:47:02.881Z"}

@@ -68,7 +68,6 @@ class Dashboard extends React.Component {
     axios.get("http://localhost:8080/allCompany?id=" + this.state.id)
       .then(
         (result) => {
-
           console.log("result company", result.data.data);
           result.data.data.map((item, key) => {
             this.state.allCompany.push({ "companyCode": item.companyCode, "companyName": item.companyName })
@@ -154,11 +153,7 @@ class Dashboard extends React.Component {
   }
 
 
-  handleInput = (e) => {
-    e.preventDefault();
-
-    this.setState({ companyName: e.target.value })
-  }
+ 
   handleGo = (e) => {
     e.preventDefault();
     var date = new Date();

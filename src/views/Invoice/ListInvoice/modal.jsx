@@ -83,7 +83,7 @@ export default class App extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state , "state value")
-        axios.get('http://localhost:8080/searchInvoice?companyName=' + this.state.companyName + '&customerName=' + this.state.customerName + '&invoiceNo=' + this.state.invoiceNo)
+        axios.get('http://localhost:8080/searchInvoice?companyName=' + this.state.companyName + '&customerName=' + this.state.customerName + '&invoiceNumber=' + this.state.invoiceNo +'&startDate='+this.state.startDate + '&endDate=' +this.state.endDate)
             .then((result) => {
                 console.log("result =,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,llllll ", result)
                 if (result.data.data.length!=0) {
