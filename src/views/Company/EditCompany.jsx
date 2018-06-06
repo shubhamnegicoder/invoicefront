@@ -10,6 +10,7 @@ var dropDownData = [];
 var dd;
 var temp;
 var temp2;
+var companyCode;
 var today = new Date(),
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 class EditCompany extends React.Component{
@@ -35,7 +36,8 @@ class EditCompany extends React.Component{
             dropDownData: [],
             dropDownData2: [],
             dropDownData3: [],
-            oldLogo:""
+            oldLogo:"",
+            oldCompanyName:""
         };
     }
     
@@ -140,6 +142,7 @@ class EditCompany extends React.Component{
         temp = event.target.value
         this.data2(temp)
         $('.state').val("")
+        
         $('.city').val("")
 
     }
@@ -170,6 +173,7 @@ class EditCompany extends React.Component{
     fetchCompanyById=()=>{
         var val=this.props.location.search;
         var response1=val.substring(val.indexOf("=")+1); 
+        //console.log("*************response1**********",response1);
         var url="http://localhost:8080/oneCompany?_id="+response1;
         fetch(url ,{  
             method: "GET",
@@ -182,12 +186,13 @@ class EditCompany extends React.Component{
         .then(res => res.json())
         .then(
             (result) => {  
-                console.log("this is one company by id in edit",result)
+                companyCode = result.data[0].companyCode;
                 this.setState({_id:result.data[0]._id});
                 this.setState({companyCode:result.data[0].companyCode});
                 this.setState({logo:result.data[0].logo});
                 this.setState({oldLogo:result.data[0].logo});
                 this.setState({companyName:result.data[0].companyName});
+                this.setState({oldCompanyName:result.data[0].companyName});
                 this.setState({companyGSTNo:result.data[0].companyGSTNo});
                 this.setState({addressLine1:result.data[0].addressLine1});
                 this.setState({addressLine2:result.data[0].addressLine2});
@@ -208,7 +213,7 @@ class EditCompany extends React.Component{
             }
         )
     }
-            
+      
     handleChange=()=>{
         this.setState({companyCode:this.refs.companyCode.value});
         this.setState({companyName:this.refs.companyName.value});
@@ -305,7 +310,8 @@ class EditCompany extends React.Component{
         data.append('_id', this.state._id);
         data.append('logo', this.state.logo);
         data.append('id',this.state.id);
-        data.append('companyCode', this.state.companyCode);
+        data.append('companyCode', companyCode);
+        data.append('oldCompanyName', this.state.oldCompanyName);
         data.append('companyName', this.state.companyName);
         data.append('companyGSTNo', this.state.companyGSTNo);
         data.append('addressLine1', this.state.addressLine1);
@@ -318,8 +324,7 @@ class EditCompany extends React.Component{
         data.append('isActive', this.state.isActive);
         data.append('updatedAt',this.state.updatedAt);  
         data.append('oldLogo',this.state.oldLogo);        
-         
-    
+   
         swal2({ 
             text: "Do you want to save the changes ?",
             type:"warning",
@@ -405,9 +410,8 @@ class EditCompany extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
-                    <td><input class="country" type="text" Value={this.state.countryName}  ref="countryCode" list="country"placeholder="select country" onChange={this.handleChange1}/>
+                    <td><input class="country" type="text" Value={this.state.countryCode}  ref="countryCode" list="country"placeholder="select country" onChange={this.handleChange1}/>
                     <datalist id="country">
-                    {/* <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option> */}
                     {     
                         this.state.dropDownData && this.state.dropDownData.map((item, index) => {
 
@@ -418,7 +422,7 @@ class EditCompany extends React.Component{
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>State</td><td></td>
-                    <td> <input class="state" type="text" Value={this.state.stateName} list="state"  ref="stateCode" placeholder="select State" onChange={this.handleChange2}/>
+                    <td> <input class="state" type="text" Value={this.state.stateCode} list="state"  ref="stateCode" placeholder="select State" onChange={this.handleChange2}/>
 
                       <datalist id="state">
                         {
@@ -433,7 +437,7 @@ class EditCompany extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>City</td>
                     <td></td>
-                    <td> <input class="city" type="text" Value={this.state.cityName} list="city"  ref="stateCode" placeholder="select State" onChange={this.handleChange3}/>
+                    <td> <input class="city" type="text" Value={this.state.cityCode} list="city"  ref="cityCode" placeholder="select State" onChange={this.handleChange3}/>
 
                       <datalist id="city">
                         {

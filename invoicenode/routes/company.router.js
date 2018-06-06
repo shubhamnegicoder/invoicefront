@@ -29,12 +29,18 @@ router.get('/searchCompany', (req, res) => {
     companyService.searchCompany(req, res);
 });
 router.post('/editCompany', (req, res) => {
+   
     companyService.editCompany(req, res);
 });
 
 router.get('/getOneCompany', (req, res) => {
     companyService.getOneCompany(req, res);
   });
+
+  router.get('/getOneByCompanyName', (req, res) => {
+    companyService.getByCompanyName(req, res);
+  });
+
 
 router.post('/removeLogo', (req, res) => {
     companyService.removeLogo(req, res);
