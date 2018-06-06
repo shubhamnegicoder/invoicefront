@@ -1,6 +1,4 @@
 import React from "react";
-// import ReactToPrint from "react-to-print";
-// import PrintTemplate from 'react-print';
 import { Grid } from "material-ui";
 import './style.css';
 import logo from './logo.png'
@@ -13,7 +11,6 @@ import jsPDF from 'jspdf';
 var type;
 
 class ViewInvoice extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -131,8 +128,6 @@ class ViewInvoice extends React.Component {
       }
     }
   }
-
-
   getData = (invoiceNo, type) => {
     axios
       .get("http://localhost:8080/allInvoice?id=" + this.state.id + "&invoiceNumber=" + invoiceNo)
@@ -141,20 +136,21 @@ class ViewInvoice extends React.Component {
         var mainArray = [];
         res.data.data[0].items.forEach((invoice) => {
           var dataArray = [];
-          dataArray.push(invoice.name)
-          dataArray.push(invoice.hsn)
-          dataArray.push(invoice.qty)
-          dataArray.push(invoice.rate)
-          dataArray.push(invoice.total)
-          dataArray.push(invoice.discount)
-          dataArray.push(invoice.CGSTRate)
-          dataArray.push(invoice.CGSTAmount)
-          dataArray.push(invoice.SGSTRate)
-          dataArray.push(invoice.SGSTAmount)
-          dataArray.push(invoice.IGSTRate)
-          dataArray.push(invoice.IGSTAmount)
+          dataArray.push(invoice.itemName)
+          dataArray.push(invoice.itemHsn)
+          dataArray.push(invoice.itemQty)
+          dataArray.push(invoice.itemRate)
+          dataArray.push(invoice.itemTotal)
+          dataArray.push(invoice.itemDiscount)
+          dataArray.push(invoice.cgstRate)
+          dataArray.push(invoice.cgstAmount)
+          dataArray.push(invoice.sgstRate)
+          dataArray.push(invoice.sgstAmount)
+          dataArray.push(invoice.igstRate)
+          dataArray.push(invoice.igstAmount)
           mainArray.push(dataArray)
         })
+        console.log("mainArray", mainArray);
         let invoiceDate = (res.data.data[0].invoiceDate).toString();
         invoiceDate = invoiceDate.split("T", 1);
         invoiceDate = invoiceDate[0];
@@ -168,7 +164,7 @@ class ViewInvoice extends React.Component {
           customerName: res.data.data[0].customerName,
           customerAddress: res.data.data[0].customerAddressLine1 + " " + res.data.data[0].customerAddressLine2,
           customerGSTIN: res.data.data[0].customerGSTIN,
-          itemTotal: res.data.data[0].itemTotal,
+          subTotal: res.data.data[0].subTotal,
           cgstTotal: res.data.data[0].cgstTotal,
           sgstTotal: res.data.data[0].sgstTotal,
           igstTotal: res.data.data[0].igstTotal,
@@ -180,49 +176,44 @@ class ViewInvoice extends React.Component {
       })
     type = this.getQuery('type')
     this.setState({ type: type })
-    // if(type=="listinvoice"){
-
-
-    //  this.printDocument()
-
-    // }
   }
   print = () => {
     $('.printButton').hide();
     window.print();
     $('.printButton').show();
   }
-
-
   printDocument = () => {
     const input = document.getElementById('container');
     html2canvas(input)
       .then((canvas) => {
+        var imgWidth = 210;
+        var pageHeight = 295;
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var heightLeft = imgHeight;
+        var position = 0;
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('l', 'mm', [310, 300]);
-        pdf.addImage(imgData, 'JPEG', 0, 0);
-        // pdf.output('dataurlnewwindow');
+        const pdf = new jsPDF('p', 'mm');
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
         pdf.save("download.pdf");
       })
-      ;
   }
-
   componentWillMount() {
-    let invoiceNo = this.getQuery('invoiceNo');
-
+    let invoiceNo = this.getQuery('invoiceNumber');
     // console.log(type,"kkkkkkkkkkk")
     this.getData(invoiceNo, type);
-
   }
   componentDidUpdate() {
-
     if (this.state.type == "listinvoice") {
-
       this.printDocument()
-
     }
   }
-
   render() {
     const styles = theme => ({
       root: {
@@ -240,9 +231,7 @@ class ViewInvoice extends React.Component {
       },
     });
     return (
-
-      <div id="container" class="container-fluid">
-        <canvas id="canvas" width="600" height="200"></canvas>
+      <div id="container" class="container-fluid" style={{ padding: '50px' }}>
         <div class="row">
           <div class="col-4">
             <div id="logo">
@@ -373,7 +362,7 @@ class ViewInvoice extends React.Component {
         })}
         <div class="row">
           <div class="col-12"></div>
-          <div class="col" style={{ textAlign: 'right' }}>Total value before Tax&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.itemTotal}</div>
+          <div class="col" style={{ textAlign: 'right' }}>Total value before Tax&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.subTotal}</div>
         </div>
         <hr />
         <div class="row">
@@ -421,186 +410,11 @@ class ViewInvoice extends React.Component {
         </div>
         <hr />
         <div class="row">
-          <button className="printButton btn btn-primary" onClick={this.printDocument}>Print</button>
+          {/* <button className="printButton btn btn-primary" onClick={this.printDocument}>Print</button> */}
         </div>
       </div>
-      //--------
-      // <div class="table-responsive">
-      //   <table class="table">
-      //     <tr>
-      //       <td colspan="2" style={{ border: '1px solid black' }}>
-      //         <div id="logo" style={{ float: 'left' }}>
-      //           <img src={"uploads/" + this.state.logo} />
-      //         </div>
-      //       </td>
-      //       <td colspan="8" style={{ border: '1px solid black' }}>
-      //         <div >
-      //           <center>
-      //             <h4>{this.state.companyName}</h4>
-      //             {"GSTIN: " + this.state.companyGSTIN}
-      //           </center>
-      //         </div>
-      //       </td>
-      //     </tr>
-      //   </table>
-      // </div>
-      // ----------
-      // <div>
-      //   <table style={{ backgroundColor: 'white' }}>
-      //     <tr>
-      //       <td style={{ width: '10%' }}>
-      //         <div id="logo" style={{ float: 'left' }}>
-      //           <img src={"uploads/" + this.state.logo} />
-      //         </div>
-      //       </td>
-      //       <td>
-      //         <div>
-      //           <center>
-      //             <div>
-      //               <h4>{this.state.companyName}</h4>
-      //             </div>
-      //             <div>{this.state.companyAddress}</div>
-      //             <div>{"GSTIN: " + this.state.companyGSTIN}</div>
-      //           </center>
-      //         </div>
-      //       </td>
-      //     </tr>
-      //   </table>
-      //   <header class="clearfix">
-      //     <h1>TAX-INVOICE</h1>
-      //   </header>
-      //   <table>
-      //     <tr>
-      //       <td style={{ textAlign: 'left' }}>
-      //         <div >
-      //           <div>
-      //             <b>Invoice Date</b></div>
-      //           <div>
-      //             {this.state.invoiceDate}
-      //           </div>
-      //         </div>
-      //       </td>
-      //       <td>
-      //         <div>
-      //           <div>
-      //             <b>Invoice Number</b></div>
-      //           <div>
-      //             {this.state.invoiceNo}
-      //           </div>
-      //         </div>
-      //       </td>
-      //     </tr>
-      //   </table>
-      //   <table>
-      //     <tr>
-      //       <td style={{ textAlign: 'left' }}>
-      //         <div >
-      //           <div>
-      //             <b>Billed To</b></div>
-      //           <div>
-      //             {this.state.customerName}
-      //           </div>
-      //           <div>
-      //             {this.state.customerAddress}
-      //           </div>
-      //           <div>{"GSTIN / UIN: " + this.state.customerGSTIN}</div>
-      //         </div>
-      //       </td>
-      //       <td>
-      //         <div>
-      //           <div>
-      //             <b>Shipped To</b></div>
-      //           <div>
-      //             {this.state.customerName}
-      //           </div>
-      //           <div>
-      //             {this.state.customerAddress}
-      //           </div>
-      //           <div>{"GSTIN / UIN: " + this.state.customerGSTIN}</div>
-      //         </div>
-      //       </td>
-      //     </tr>
-      //   </table>
-      //   <main>
-      //     <table style={{ fontSize: '11px' }}>
-      //       <Table
-      //         tableHeaderColor="gray"
-      //         tableHead={["Name", "HSN Code / Accounting Code", "Quantity", "Rate", "Total", "Discount", "CGST Rate", "CGST Amount", "SGST Rate", "SGST Amount", "IGST Rate", "IGST Amount"]}
-      //         tableData={this.state.List}
-      //         className="table"
-      //       />
-      //       <tr>
-      //         <td class="total"><b>TOTAL VALUE BEFORE TAX &nbsp;&nbsp;{"₹ " + this.state.itemTotal}</b></td>
-      //       </tr>
-      //       <tr>
-      //         <td class="total"> <b>CGST &nbsp;&nbsp;{"₹ " + this.state.cgstTotal}</b></td>
-      //       </tr>
-      //       <tr>
-      //         <td class="total"><b>SGST&nbsp;&nbsp;{"₹ " + this.state.sgstTotal}</b></td>
-      //       </tr>
-      //       <tr>
-      //         <td class="total"><b>IGST&nbsp;&nbsp;{"₹ " + this.state.igstTotal}</b></td>
-      //       </tr>
-      //       <tr>
-      //         <td class="total"><b>TOTAL VALUE AFTER TAX&nbsp;&nbsp;{"₹ " + this.state.invoiceTotal}</b></td>
-      //       </tr>
-      //       <tr>
-      //         <td class="total"><b>rounding off&nbsp;&nbsp;{"- " + (parseFloat(this.state.invoiceTotal) - parseInt(this.state.invoiceTotal)).toFixed(2)}</b></td>
-      //       </tr>
-      //       <tr>
-      //         <td class="total"><b>TOTAL DISCOUNT&nbsp;&nbsp;{"₹ " + this.state.discountTotal}</b></td>
-      //       </tr>
-      //       <tr>
-      //         <td class="grand total">
-      //           <div style={{ textAlign: 'left', float: 'left' }}>
-      //             <b>Total Amount in Words :&nbsp;&nbsp;{this.convertNumberToWords(this.state.invoiceTotal)}</b>
-      //           </div>
-
-      //           <div style={{ textAlign: 'left', float: 'right' }}>
-      //             <b>GRAND TOTAL&nbsp;&nbsp;{"₹ " + parseInt(this.state.invoiceTotal)}</b>
-      //           </div>
-      //         </td>
-      //       </tr>
-      //     </table>
-      //     <table>
-      //       <tr>
-      //         <td>Signature</td>
-      //         <td></td>
-      //       </tr>
-      //       <tr>
-      //         <td>Signatory</td>
-      //         <td></td>
-      //       </tr>
-      //       <tr>
-      //         <td>Designation / Status</td>
-      //         <td></td>
-      //       </tr>
-      //       <tr>
-      //         <td>
-      //           <center>
-      //             <button className="printButton btn btn-primary" onClick={this.print}>Print</button>
-      //           </center>
-      //         </td>
-      //       </tr>
-      //     </table>
-      //   </main>
-      // </div>
     )
   }
 }
-
-// class Example extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <ReactToPrint
-//           trigger={() => <a href="#">Print this out!</a>}
-//           content={() => this.componentRef}
-//         />
-//         <ViewInvoice ref={el => (this.componentRef = el)} />
-//       </div>
-//     );
-//   }
-// }
 
 export default ViewInvoice;

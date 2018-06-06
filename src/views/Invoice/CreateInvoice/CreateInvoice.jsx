@@ -9,7 +9,6 @@ import './bootstrap.min.css';
 import axios from 'axios';
 import $ from 'jquery';
 import CreateInvoiceStep2 from './CreateInvoiceStep2';
-import ViewInvoice from './ViewInvoice';
 import swal from 'sweetalert';
 import parse from 'form-parse';
 import Autocomplete from "react-autocomplete";
