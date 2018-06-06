@@ -17,7 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 import jspdf from "jspdf";
-import rasterizehtml from 'rasterizehtml';
+
 
 class ListInvoice extends React.Component {
   constructor(props) {

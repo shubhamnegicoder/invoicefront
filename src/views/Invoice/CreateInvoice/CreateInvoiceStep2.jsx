@@ -320,11 +320,11 @@ export default class CreateInvoiceStep2 extends React.Component {
                 invoiceDate: this.props.invoiceDate,
                 invoiceNumber: this.props.invoiceNo,
                 companyName: this.props.companyName,
-                companyCode: this.props.companyCode,
+                companyCode: this.props.companyCode.split("-")[0],
                 companyAddressLine1: this.props.companyAddressLine1,
                 companyAddressLine2: this.props.companyAddressLine2,
                 customerName: this.props.customerName,
-                customerCode: this.props.customerCode,
+                customerCode: this.props.customerCode.split("-")[0],
                 customerAddressLine1: this.props.customerAddressLine1,
                 customerAddressLine2: this.props.customerAddressLine2,
                 items: items,
@@ -361,11 +361,11 @@ export default class CreateInvoiceStep2 extends React.Component {
                 invoiceDate: this.props.invoiceDate,
                 invoiceNumber: this.props.invoiceNo,
                 companyName: this.props.companyName,
-                companyCode: this.props.companyCode,
+                companyCode: this.props.companyCode.split("-")[0],
                 companyAddressLine1: this.props.companyAddressLine1,
                 companyAddressLine2: this.props.companyAddressLine2,
                 customerName: this.props.customerName,
-                customerCode: this.props.customerCode,
+                customerCode: this.props.customerCode.split("-")[0],
                 customerAddressLine1: this.props.customerAddressLine1,
                 customerAddressLine2: this.props.customerAddressLine2,
                 items: items,
@@ -512,6 +512,7 @@ export default class CreateInvoiceStep2 extends React.Component {
     }
     render() {
         return (
+            
             <form className="container invoiceForm" onSubmit={(e) => this.submitInvoice(e)} noValidate={this.state.validate}>
                 {this.state.addRow ? this.addRow() : ""}
                 <h2 className="text-align-center">Step 2</h2>
