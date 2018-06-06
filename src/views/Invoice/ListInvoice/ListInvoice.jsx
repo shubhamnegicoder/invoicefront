@@ -21,7 +21,6 @@ import jspdf from "jspdf";
 
 import rasterizehtml from 'rasterizehtml';
 
-
 class ListInvoice extends React.Component {
   constructor(props) {
     super(props);
@@ -32,18 +31,15 @@ class ListInvoice extends React.Component {
       status: "",
       numPages: null,
       pageNumber: 1,
-
     }
   }
   pdf = new jspdf();
   onDocumentLoad = ({ numPages }) => {
     this.setState({ numPages });
   }
-
   handleOpen = () => {
     this.setState({ load: true });
     // this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:"",_id:"",isActive:""});
-
   }
   onClose = () => {
     this.setState({ load: false });
@@ -53,15 +49,12 @@ class ListInvoice extends React.Component {
     // console.log("listabc = ",result.data)
     var mainArray = [];
     data.forEach((item, index) => {
-
       console.log(item, "item")
       var dataArray = [];
       //  dataArray.push(tax._id)
       dataArray.push(item.invoiceNumber)
       dataArray.push(item.companyName)
       dataArray.push(item.customerName)
-
-
       dataArray.push(item.invoiceDate.split("T")[0])
       dataArray.push(item.invoiceTotal)
       dataArray.push(item.status)
@@ -151,17 +144,11 @@ class ListInvoice extends React.Component {
         )
       }
       mainArray.push(dataArray)
-
-
-
     })
     this.setState({
       List: mainArray
     })
-
-
   }
-
   componentDidMount() {
     this.List();
   }
@@ -177,7 +164,6 @@ class ListInvoice extends React.Component {
   }
   handleClose(id) {
     swal({
-
       text: "Are you sure that you want to cancel this invoice?",
       type: "warning",
       showCancelButton: true,
@@ -194,7 +180,6 @@ class ListInvoice extends React.Component {
           })
       }
     })
-
   }
   componentWillMount() {
     console.log(this.state.data);
@@ -203,9 +188,7 @@ class ListInvoice extends React.Component {
       window.location.href = "/login"
     }
   }
-
   List = () => {
-
     fetch("http://localhost:8080/allList?id=" + this.state.id, {
       method: "GET",
       cache: 'no-cache',
@@ -221,15 +204,12 @@ class ListInvoice extends React.Component {
           console.log("listabc = ", result.data)
           var mainArray = [];
           result.data.forEach((item, index) => {
-
             console.log(item, "item")
             var dataArray = [];
             //  dataArray.push(tax._id)
             dataArray.push(item.invoiceNumber)
             dataArray.push(item.companyName)
-
             dataArray.push(item.customerName)
-
             dataArray.push(item.invoiceDate.split("T")[0])
             dataArray.push(item.invoiceTotal)
             dataArray.push(item.status)
@@ -254,21 +234,16 @@ class ListInvoice extends React.Component {
 
             }
             mainArray.push(dataArray)
-
-
-
           })
           this.setState({
             List: mainArray
           })
-
         },
         (error) => {
           console.log("error", error)
         }
       )
   }
-
   render() {
     const { pageNumber, numPages } = this.state;
     return (
@@ -278,10 +253,8 @@ class ListInvoice extends React.Component {
             <RegularCard
               cardTitle={<div>Invoices
        <Button style={{ float: "right", backgroundColor: "#76323f", color: "white" }} aria-label="add" variant="fab" onClick={this.handleOpen} ><Search />
-
                 </Button></div>
               }
-
               content={
                 <Table
                   tableHeaderColor="primary"
@@ -290,7 +263,6 @@ class ListInvoice extends React.Component {
                 />
               }
             />
-
           </ItemGrid>
         </Grid>
         <Modal open={this.state.load} data={this.onmodal} onClose={this.onClose} />
@@ -298,6 +270,5 @@ class ListInvoice extends React.Component {
     );
   }
 }
-
 
 export default ListInvoice;
