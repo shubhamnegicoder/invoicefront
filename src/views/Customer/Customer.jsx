@@ -149,10 +149,10 @@ class CustomerList extends React.Component{
         <Grid container>
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-               cardTitle={<div>Customer<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
-              <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+               cardTitle={<div>Customer<Tooltip id="tooltip-icon" title="Add Customer"><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
+              <AddIcon /> </Button></Tooltip><Tooltip id="tooltip-icon" title="Search"><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
 
-            </Button></div>
+            </Button></Tooltip></div>
             }
 
             content={

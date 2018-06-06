@@ -148,14 +148,14 @@ class CompanyList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div> 
         <Grid container>
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-              cardTitle={<div>Company<Button style={{ float: "right", backgroundColor: "#76323f", color: "white" }} aria-label="add" variant="fab" onClick={this.handleClick} >
-                <AddIcon /> </Button><Button style={{ float: "right", backgroundColor: "#76323f", color: "white" }} aria-label="add" variant="fab" onClick={this.handleOpen} ><Search />
+              cardTitle={<div>Company<Tooltip id="tooltip-icon" title="Add Company"><Button style={{ float: "right", backgroundColor: "#76323f", color: "white" }} aria-label="add" variant="fab" onClick={this.handleClick} >
+                <AddIcon /> </Button></Tooltip><Tooltip id="tooltip-icon" title="Search"><Button style={{ float: "right", backgroundColor: "#76323f", color: "white" }} aria-label="add" variant="fab" onClick={this.handleOpen} ><Search /></Button></Tooltip>
 
-                </Button></div>
+                </div>
               }
 
               content={
