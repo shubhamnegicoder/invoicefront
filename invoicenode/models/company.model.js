@@ -13,7 +13,7 @@ var ObjectID = require("mongodb").ObjectID;
  */
 const CompanySchema = mongoose.Schema({ 
     file: { data: Buffer, contentType: String },
-    companyName:{type:String},
+    companyName:{type:String,index: {unique:true,dropDups: true}},
     companyCode:{type:String, index: {unique:true,dropDups: true}},
     companyGSTNo:{type:String},
     logo:{type:String},
@@ -33,7 +33,7 @@ const CompanySchema = mongoose.Schema({
 
 let CompanyModel = mongoose.model('company', CompanySchema);
 
-CompanyModel.allCompany = (queryToFindCompany) =>{
+CompanyModel.allCompany = (queryToFindCompany) =>{ 
     let createdBy = queryToFindCompany.query.createdBy;
     return CompanyModel.aggregate([
         { $match: {createdBy:createdBy} },
@@ -97,15 +97,78 @@ CompanyModel.allCompany = (queryToFindCompany) =>{
             }
         }
     ]);
-
-    // return CompanyModel.find();
 }
  
 CompanyModel.oneCompany = (dataToFind) =>{
     var cid=new ObjectID(dataToFind.query._id);
-    console.log("cid---"+cid);
     return CompanyModel.aggregate([
         { $match: {"_id":cid} },
+        {
+            $lookup: {
+                from: "country",
+                localField: "countryCode",
+                foreignField: "countryCode",
+                as: "country_docs"
+            }
+
+        },
+        {
+            $unwind: "$country_docs"
+        },
+        {
+            $lookup: {
+                from: "state",
+                localField: "stateCode",
+                foreignField: "stateCode",
+                as: "state_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$state_docs"
+        }, 
+        {
+            $lookup: {
+                from: "city",
+                localField: "cityCode",
+                foreignField: "cityCode",
+                as: "city_docs"
+            }
+
+
+        },
+        {
+            $unwind: "$city_docs"
+        }, 
+        
+        {
+            $project: {
+                file:1,
+                logo:1,
+                companyName:1,
+                companyCode:1,
+                companyGSTNo:1, 
+                addressLine1:1,
+                addressLine2:1,
+                cityCode:1,
+                cityName:"$city_docs.cityName",
+                stateCode:1,
+                stateName:"$state_docs.stateName",
+                countryCode:1,
+                countryName:"$country_docs.countryName",
+                postalCode:1,
+                contactNo:1,
+                isActive:1 
+
+            }
+        }
+    ]);
+}
+CompanyModel.searchCompany = (query) =>{
+    console.log(query,"sssssssssssssssssssssssssss")
+    return CompanyModel.aggregate([
+        {$match:{$and:[query]}},
         {
             $lookup: {
                 from: "country",
@@ -167,20 +230,23 @@ CompanyModel.oneCompany = (dataToFind) =>{
             }
         }
     ]);
-    //return CompanyModel.findOne(dataToFind.query);
 }
-
+   
 CompanyModel.addCompany = (addToCompany) =>{
-    console.log("saveeeeeeeeeee"+addToCompany.contactNo);
-    console.log("saveeeeeeeeeee"+addToCompany);
     return addToCompany.save();
 }
 
 CompanyModel.editCompany = (editToCompany) =>{
-return CompanyModel.update(editToCompany.query,editToCompany.data);
+    return CompanyModel.update(editToCompany.query,editToCompany.data);
 }
+
 CompanyModel.getOneCompany=(oneCompany)=>{
     return CompanyModel.find(oneCompany.query)
 }
+
+CompanyModel.removeLogo=(removeCompany)=>{
+    return CompanyModel.update(removeCompany.query,removeCompany.data);
+}
+
 
 export default CompanyModel;

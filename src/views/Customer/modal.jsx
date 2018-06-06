@@ -1,323 +1,260 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Modal from 'material-ui/Modal';
-import sweetalert from 'sweetalert';
-// import Button from 'material-ui/Button';
-//import Grid from 'material-ui/Grid';
-import { InputLabel, Grid } from "material-ui";
-import TextField from 'material-ui/TextField';
-import Checkbox from 'material-ui/Checkbox';
-import axios from "axios";
-// import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-// import DropDownMenu from 'material-ui/DropDownMenu';
-// import MenuItem from 'material-ui/MenuItem';
-
+import ReactDOM from 'react-dom';
+import Modal from 'react-responsive-modal';
+import { Grid, InputLabel } from "material-ui";
+import swal from "sweetalert";
+import Customer from "../Customer/Customer";
+import axios from "axios"
+import $ from "jquery"
 import {
-  ProfileCard,
-  RegularCard,
-  Button,
-  CustomInput,
-  ItemGrid
+    ProfileCard,
+    RegularCard,
+    Button,
+    CustomInput,
+    ItemGrid
 } from "components";
-
+import Checkbox from 'material-ui/Checkbox'
 import avatar from "assets/img/faces/marc.jpg";
+var cardoption;
+var temp, temp2, dd, ddd;
+export default class App extends React.Component {
 
-// function rand() {
-//   return Math.round(Math.random() * 20) - 10;
-// }
-var localStorageId=localStorage.getItem("id")
-console.log(localStorageId,"localid medha")
-function getModalStyle() {
-  const top = 50
-  const left = 50
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const styles = theme => ({
-  paper: {
-    position: 'absolute',
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4, 
-  },
-
-});
-
-
-class SimpleModal extends React.Component {
-  state = {
-    open: false,
-    taxCode: "",
-    taxName: "",
-    cgst: "",
-    igst: "",
-    sgst: "",
-    isActive: false,
-    userId:"",
-    id:localStorage.getItem("id"),
-    _id: ""
-
-
-  };
-  handleChange = (e) => {
-
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  handleCheckbox = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
-  onCancel = () => {
-    this.props.handleClose();
-    this.setState({ taxCode: "", taxName: "", cgst: "", sgst: "", igst: "" ,isActive:"",_id:"",userId:""})
-  };
-
-  componentWillReceiveProps(newprops) {
-    // console.log(newprops, "ko")
-
-    this.setState({
-      taxCode: newprops.taxCode,
-      taxName: newprops.taxName,
-      cgst: newprops.cgst,
-      igst: newprops.igst,
-      sgst: newprops.sgst,
-      _id: newprops._id,
-     userId: newprops.userId,
-      isActive:newprops.isActive
-    })
-
-
-  }
-  
-  onSubmit = (e) => 
-  { e.preventDefault()
-    if(this.state.taxCode==""){
-     return alert("Please enter taxcode!!")
-    }
-    if(this.state.taxName==""){
-      return alert("Please enter taxname!!")
-     }
-     if(this.state.cgst==""){
-      return alert("Please enter cgst!!")
-     }
-     if(this.state.igst==""){
-      return alert("Please enter igst!!")
-     }
-     if(this.state.sgst==""){
-      return alert("Please enter sgst!!")
-     }
-     if(this.state.cgst.length>2 || this.state.sgst.length>2 || this.state.igst.length>2 ){
-       return alert("Number should not be more than 99")
-     }
-    var url = "";
-  var  data ={}
-  console.log(localStorageId,"localId")
-  
-       if (this.state._id != "")
-        { 
-         
-           url = "http://localhost:8080/editTax";
-           data = 
-           {
-              taxCode: this.state.taxCode,
-              taxName: this.state.taxName,
-              cgst: this.state.cgst,
-              igst: this.state.igst,
-              sgst: this.state.sgst,
-              _id:this.state._id,
-              userId: this.state.userId,
-              isActive:this.state.isActive
-            };
-          }
-      else
-       { 
-
-        url = "http://localhost:8080/addTax";
-        data = {
-          id: this.state.id,
-          taxCode: this.state.taxCode,
-          taxName: this.state.taxName,
-          cgst: this.state.cgst,
-          igst: this.state.igst,
-          sgst: this.state.sgst,
-          isActive:this.state.isActive,
+    constructor(props) {
+        super(props);
+        this.state = {
+            customerName: "",
+            countryCode: "",
+            stateCode: "",
+            cityCode: "",
+            dropDownData: "",
+            dropDownData2: "",
+            dropDownData3: "",
+            dropDownData4: ""
         };
-        console.log(data.id,"medhaaaaa id")
-      }
-   
-    axios.post(url, data)
-    .then((result) => {
-      //access the results here....
-      console.log("result data= ", result)
-          if (result.data.success == true) {
-            sweetalert({
-              text: "Tax Added",
-              icon: "success"
+
+    }
+
+    data1 = () => {
+        axios("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1")
+            .then(
+                (result) => {
+                    var maindata = [];
+                    var localdata = []
+                    result.data.data.map((item, key) => {
+                        maindata.push(item);
+
+                    })
+                    this.setState({ dropDownData1: maindata })
+                },
+                (error) => {
+                    console.log("error", error)
+                }
+            )
+    }
+    data2 = (temp) => {
+        axios("http://localhost:8080/allSelectedState?countryCode=" + temp)
+
+            .then(
+                (result) => {
+                    var maindata = [];
+                    var localdata = []
+                    result.data.data && result.data.data.map((item, key) => {
+                        maindata.push(item);
+                    })
+                    this.setState({ dropDownData2: maindata })
+                },
+                (error) => {
+                    console.log("error", error)
+                }
+            )
+    }
+    ddd = this.data1();
+    data3 = (temp2) => {
+        axios("http://localhost:8080/allSelectedCity?stateCode=" + temp2)
+            .then(
+                (result) => {
+                    var maindata = [];
+                    var localdata = []
+                    result.data.data && result.data.data.map((item, key) => {
+                        maindata.push(item);
+                    })
+                    this.setState({ dropDownData3: maindata })
+                },
+                (error) => {
+                    console.log("error", error)
+                }
+            )
+    }
+
+
+    componentWillMount() {
+        console.log(this.state.data);
+        let id = localStorage.getItem("id")
+        if (id == null) {
+            window.location.href = "/login"
+            this.data1()
+        }
+    }
+    handleChange1 = (event) => {
+        console.log(event.target.value, "selected country")
+        this.setState({ countryCode: event.target.value })
+        temp = event.target.value
+        this.data2(temp);
+    }
+
+    handleChange2 = (event) => {
+        console.log(event.target.value, "selected state")
+        this.setState({ stateCode: event.target.value })
+        temp2 = event.target.value
+        this.data3(temp2)
+    }
+
+    handleChange3 = (event) => {
+        console.log(event.target.value, "selected city")
+        this.setState({ cityCode: event.target.value })
+    }
+    handleCheck(event) {
+        this.setState({ [event.target.name]: event.target.checked });
+    }
+    handleChange = (event) => {
+        console.log(event.target.value, "hhhhh")
+        this.setState({ customerName: event.target.value })
+    }
+
+    onCancel = () => {
+        // this.props.handleClose();
+        this.setState({ customerName:"",
+        countryCode:"",
+        stateCode:"",
+        cityCode:"",})
+        $('.country').val("")
+        $('.state').val("")
+        $('.city').val("")
+
+      };
+
+    // componentWillReceiveProps(newprops) {
+    //     this.setState({ countryCode:""})
+    //     this.setState({ stateCode:"" })
+    //     this.setState({ cityCode:"" })
+    //     this.setState({
+    //        customerCode:""
+    //     })
+
+    // }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(this.state , "state value")
+        axios.get('http://localhost:8080/searchCustomer?customerName=' + this.state.customerName + '&countryCode=' + this.state.countryCode + '&stateCode=' + this.state.stateCode + '&cityCode=' + this.state.cityCode)
+            .then((result) => {
+                //access the results here....
+                // console.log("result =,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,llllll ", result)
+                if (result.data.data.length!=0) {
+                    // console.log(result.data.data,"props")
+                    this.props.data(result.data.data)
+                    swal({
+                        text: "Successfully Done",
+                        icon: "success"
+
+                    })
+                    this.props.onClose();
+                }
+                else {
+                    swal({
+                        title: " Sorry !! Data not Found",
+                        icon: "warning",
+                    });
+                }
+                // this.props.List()
 
             })
-            
-            this.props.handleClose();
-
-          }
-          if(result.data.success== false){
-            sweetalert({
-              text:"Error!!,Already Exists!!",
-              icon:"warning"
-            })
-          }
-          this.props.List()
-         
-          
-        })
-  
-
-    
-  }
-  
 
 
 
+    }
 
-render() 
-{
-  const { classes } = this.props;
 
-  return (
-    <div>
 
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={this.props.load}
-        handleClose={this.props.close}
-      >
-        <div style={getModalStyle()} className={classes.paper}>
-          <Grid container>
-            <ItemGrid xs={30} sm={30} md={30}>
-              <RegularCard
-                cardTitle="Add Tax"
-                content={
-                  <div>
-                     
-                    
-                    <Grid container>
-                      <ItemGrid xs={12} sm={12} md={15}>
-                        <label><b>Tax Code*</b> </label><br></br>
-                        <input
-                          name="taxCode"
-                          type="text"
-                          value={this.state.taxCode}
-                          onChange={this.handleChange}
-                          style={{border: "2px solid black"}}
-                         readOnly= {this.state._id ? "readOnly" : ""}
-                          
-                        /><br />
-                      </ItemGrid>
-                      <ItemGrid xs={12} sm={12} md={15}>
-                        <label><b>Tax Name*</b> </label><br></br>
-                        <input
-                          name="taxName"
-                          type="text"
-                          value={this.state.taxName}
-                          onChange={this.handleChange}
-                        
-                          style={{border: "2px solid black"}}
-                        /><br />
-                      </ItemGrid>
+    // }
+
+
+    render() {
+        return (
+            <div>
+                <Modal style={{maxWidth:350}} open={this.props.open} onClose={this.props.onClose} center>
+                    <Grid container style={{maxWidth:"400px"}} >
+                        <form onSubmit={this.handleSubmit}>
+                            <ItemGrid xs={18} sm={20} md={20}>
+                                <RegularCard
+                                    cardTitle="Search Options"
+                                    content={
+                                        <div>
+                                            <Grid container>
+                                                <ItemGrid xs={12} sm={12} md={15}>
+                                                    <label>
+                                                        <h5>Customer Name:</h5>
+                                                        <input type="text" defaultValue={this.state.customerName} name={this.state.customerName} value={this.state.customerName} placeholder="select customer" onChange={this.handleChange} />
+                                                    </label>
+                                                </ItemGrid>
+                                                <ItemGrid xs={12} sm={12} md={15}>
+                                                    <label>
+                                                        <h5>Country Name:</h5>
+                                                        <input class="country" type="text" defaultValue={this.state.countryCode} list="country" selected placeholder="select country" onChange={this.handleChange1} />
+                                                        <datalist id="country">
+                                                            {
+                                                                this.state.dropDownData1 && this.state.dropDownData1.map((item, index) => {
+                                                                    return <option styles={{ width: '350px' }} name={item.countryName} value={item.countryCode} key={index}>{item.countryName}</option>
+                                                                })
+                                                            }
+                                                        </datalist>
+                                                    </label>
+                                                </ItemGrid>
+                                                <ItemGrid xs={12} sm={12} md={15}>
+                                                    <label>
+                                                        <h5>state Name:</h5>
+                                                        <input class="state" type="text" list="state"  defaultValue={this.state.stateCode} placeholder="select state" onChange={this.handleChange2} />
+                                                        <datalist id="state">
+                                                            {/* <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option> */}
+                                                            {
+                                                                this.state.dropDownData2 && this.state.dropDownData2.map((item, index) => {
+
+                                                                    return <option styles={{ width: '350px' }} name={item.stateName} value={item.stateCode} key={index}>{item.stateName}</option>
+                                                                })
+                                                            }
+                                                        </datalist>
+                                                    </label>
+                                                </ItemGrid>
+                                                <ItemGrid xs={12} sm={12} md={15}>
+                                                    <label>
+                                                        <h5>City Name:</h5>
+                                                        <input class="city" type="text" list="city" defaultValue={this.state.cityCode} placeholder="select country" onChange={this.handleChange3} />
+                                                        <datalist id="city">
+
+                                                            {
+                                                                this.state.dropDownData3 && this.state.dropDownData3.map((item, index) => {
+
+                                                                    return <option styles={{ width: '350px' }} name={item.cityName} value={item.cityCode} key={index}>{item.cityName}</option>
+                                                                })
+                                                            }
+                                                        </datalist>
+                                                    </label>
+                                                </ItemGrid>
+
+                                            </Grid>
+                                        </div>
+                                    }
+                                    footer={<div><Button color="primary" type="submit"style={{backgroundColor:"#76323f", color:"white" }} round>
+                                        Submit</Button>
+                                         <Button color="primary" onClick={this.onCancel}round style={{ float: "right",backgroundColor:"#76323f", color:"white" }}>Reset</Button></div>}
+                                />
+                            </ItemGrid>
+                        </form>
                     </Grid>
-                    <Grid container>
-                      <ItemGrid xs={12} sm={12} md={15}>
-                        <label><b>CGST(%)*</b></label><br></br>
-                        <input
-                          name="cgst"
-                          type="number"
-                          value={this.state.cgst}
-                          onChange={this.handleChange}
-                          max="99"
-                          min="0"
-                          style={{border: "2px solid black"}}
-                          
-                        />
-                         <label >Please select a value which is no more than 99</label>
-
-                      </ItemGrid>
-                      <ItemGrid xs={12} sm={12} md={15}>
-                        <label><b>IGST(%)*</b> </label><br></br>
-                        <input
-                          name="igst"
-                          type="number"
-                          value={this.state.igst}
-                          onChange={this.handleChange}
-                          max="99"
-                          min="0"
-                          style={{border: "2px solid black"}}
-                          
-                        />
-                         <label >Please select a value which is no more than 99</label>
-                      </ItemGrid>
-                    </Grid>
-                    <Grid container>
-                      <ItemGrid xs={12} sm={12} md={15}>
-                        <label><b>SGST(%)*</b> </label><br></br>
-                        <input
-                          name="sgst"
-                          type="number"
-                          value={this.state.sgst}
-                          onChange={this.handleChange}
-                          max="99"
-                          min="0"
-                          style={{border: "2px solid black"}}
-                          
-                        />
-                         <label>Please select a value which is no more than 99</label>
-                      </ItemGrid>
-                      <ItemGrid xs={12} sm={12} md={15}>
-                        <label><b>IS ACTIVE</b></label>&nbsp;&nbsp;&nbsp;
-                  <Checkbox
-                          checked={this.state.isActive}
-                          onChange={this.handleCheckbox('isActive')}
-                          value="isActive"
-                          color="primary"
-                        />
-                      </ItemGrid>
-                    </Grid>
-                    <Grid container>
-                    </Grid>
-                    
-                  </div>
-                }
-                footer={
-                  <div>
-                    <Button color="primary"  onClick={this.onSubmit}   style={{ flooat: "left" }}>Submit</Button>
-                    <Button color="primary" onClick={this.onCancel} style={{ float: "right" }}>Cancel</Button>
-                  </div>
-                }
-              />
-
-            </ItemGrid>
-          </Grid>
-          <SimpleModalWrapped />
-        </div>
-      </Modal>
-    </div>
-  )
-
-}
+                </Modal>
+            </div>
+        );
+    }
 }
 
-SimpleModal.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-// We need an intermediary variable for handling the recursive nesting.
-const SimpleModalWrapped = withStyles(styles)(SimpleModal);
-
-export default SimpleModalWrapped;

@@ -6,6 +6,10 @@ import Search from '@material-ui/icons/Search';
 import Modal from './modal';
 // import MUIDataTable from "mui-datatables";
 import Button from 'material-ui/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from '@material-ui/icons/ViewList';
+
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 class CustomerList extends React.Component{
@@ -65,13 +69,38 @@ class CustomerList extends React.Component{
     handleOpen=()=>{
         this.setState({load : true});
         // this.setState({taxCode:"",taxName:"",cgst:"",igst:"",sgst:"",_id:"",isActive:""});
-          
-      }
-      handleClose = () => {
-    
-        this.setState({load: false });
-      };
 
+      }
+      onClose = () => {
+        this.setState({ load: false });
+    };
+    onmodal=(data)=>{
+     console.log(data,"yha hu")
+     var mainArray = [];
+     data.forEach((responseData)=>{
+         var dataArray = [];
+         dataArray.push(responseData.customerCode)
+         dataArray.push(responseData.customerName)
+         dataArray.push(responseData.customerGSTNo)
+         dataArray.push(responseData.contactNo)
+      dataArray.push(responseData.isActive?"Yes":"No")
+        //var array = "";
+      //  dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
+      dataArray.push(<div>
+        <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+        <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+
+        </div>);
+         //dataArray.push(new Date(responseData.createdAt).toDateString());
+         mainArray.push(dataArray)
+ 
+       })
+      // console.log("main Array is",mainArray);
+       this.setState({
+           data:mainArray
+       })
+
+    }
     handleEdit=(e,response)=>{
         e.preventDefault();
         this.setState({customerCode:response.customerCode})      
@@ -118,21 +147,18 @@ class CustomerList extends React.Component{
           var mainArray = [];
           result.data.forEach((responseData)=>{
               var dataArray = [];
-              
               dataArray.push(responseData.customerCode)
               dataArray.push(responseData.customerName)
               dataArray.push(responseData.customerGSTNo)
-              //dataArray.push(responseData.addressLine1)
-              //dataArray.push(responseData.addressLine2)
-              // dataArray.push(responseData.cityName)
-              // dataArray.push(responseData.stateName)
-              // dataArray.push(responseData.countryName)
-              //dataArray.push(responseData.postalCode)
               dataArray.push(responseData.contactNo)
            dataArray.push(responseData.isActive?"Yes":"No")
              //var array = "";
-            dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
-            dataArray.push()
+            // dataArray.push(<div><Button class="btn-btn primary" onClick={(e)=>this.handleEdit(e,responseData)} >Edit</Button> <Button class="btn-btn primary" onClick={(e)=>this.handleView(e,responseData)}>View</Button></div>);
+            dataArray.push(<div>
+              <Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><EditIcon/></a></Tooltip>
+              <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,responseData)}style={{color:"black"}}><ViewIcon/></a></Tooltip>
+    
+              </div>);
               //dataArray.push(new Date(responseData.createdAt).toDateString());
               mainArray.push(dataArray)
       
@@ -174,7 +200,7 @@ class CustomerList extends React.Component{
             </ItemGrid>
             </Grid> 
          
-            <Modal {...this.state} handleClose={this.handleClose} />
+            <Modal open={this.state.load} data={this.onmodal}  onClose={this.onClose} />
             </div>
     );
     }

@@ -56,7 +56,7 @@ const dashboardRoutes = [
     icon: Assignment,
     childs: [
       {
-        path: "/createInvoice",
+        path: "/CreateInvoice",
         sidebarName: "Create Invoice",
         icon: LocationOn,
         navbarName: name,

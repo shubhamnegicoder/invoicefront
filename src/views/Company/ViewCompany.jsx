@@ -95,71 +95,71 @@ class ViewCompany extends React.Component{
 
                     <td>Company Code </td>
                     <td></td>
-                    <td><input type="hidden" value={this.state._id} ref="_id"/><input type="text"  ref="companyCode" value={this.state.companyCode} /></td>
+                    <td><input type="hidden" value={this.state._id} ref="_id"/><input type="text"  ref="companyCode" value={this.state.companyCode} disabled/></td>
                 </tr>
                 <tr>
                     <td>Company Name </td>
                     <td></td>
-                    <td><input type="text"  value={this.state.companyName} ref="companyName"/></td>
+                    <td><input type="text"  value={this.state.companyName} ref="companyName" disabled/></td>
                 </tr>
                 <tr>
                     <td>Company Logo </td>
                     <td></td>
                    {/* { url = "../../../invoicenode/public'/uploads/"+this.state.logo} */}
-                    <td><img src={"uploads/"+this.state.logo} width="75" height="50"/></td>
+                    <td><img src={"uploads/"+this.state.logo} width="75" height="50" alt={this.state.companyName} disabled/></td>
                 </tr>
                 <tr>
                     <td>Company GST No</td>
                     <td></td>
-                    <td><input type="text"  value={this.state.companyGSTNo} ref="companyGSTNo"/></td>
+                    <td><input type="text"  value={this.state.companyGSTNo} ref="companyGSTNo" disabled/></td>
                 </tr>
                 <tr>
                     <td>Address Line 1</td>
                     <td></td>
-                    <td><input type="text"  value={this.state.addressLine1} ref="addressLine1" /></td>
+                    <td><input type="text"  value={this.state.addressLine1} ref="addressLine1"disabled /></td>
                 </tr>
                 <tr>
                     <td>Address Line 2</td>
                     <td></td>
-                    <td><input type="text"  value={this.state.addressLine2} ref="addressLine2"/></td>
+                    <td><input type="text"  value={this.state.addressLine2} ref="addressLine2" disabled/></td>
                 </tr>
                 <tr>
                     <td>City</td> 
                     <td></td>
-                    <td><input type="text" value={this.state.cityName} ref="cityCode"/></td>
+                    <td><input type="text" value={this.state.cityName} ref="cityCode" disabled/></td>
                 </tr>
                 <tr>
                     <td>State</td>
                     <td></td>
-                    <td><input type="text" value={this.state.stateName} ref="stateCode" /></td>
+                    <td><input type="text" value={this.state.stateName} ref="stateCode" disabled/></td>
                 </tr>
                 <tr>
                     <td>Country</td>
                     <td></td>
-                    <td><input type="text" value={this.state.countryName} ref="countryCode" /></td>
+                    <td><input type="text" value={this.state.countryName} ref="countryCode" disabled/></td>
                 </tr>
                 <tr>
                     <td>Postal Code</td>
                     <td></td>
-                    <td><input type="text" value={this.state.postalCode} ref="postalCode"/></td>
+                    <td><input type="text" value={this.state.postalCode} ref="postalCode" disabled/></td>
                 </tr>
                 <tr>
                     <td>Contact No</td>
                     <td></td> 
-                    <td><input type="text" value={this.state.contactNo} ref="contactNo"/></td>
+                    <td><input type="text" value={this.state.contactNo} ref="contactNo" disabled/></td>
                 </tr>
                 <tr>
                     <td>IsActive</td><td>
                     </td><td>
                         
-                        <input type="text" value={this.state.isActive ? "Yes" : "No"} ref="isActive"/>
+                        <input type="text" value={this.state.isActive ? "Yes" : "No"} ref="isActive" disabled/>
                     </td>
                 </tr>
                 <tr>
 
                      
                     <td></td> 
-                    <td align="center"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"purple"}}/></td>
+                    <td align="center"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"#76323f", color:"white"}}/></td>
                     <td></td>
                 </tr>
             </table>        
