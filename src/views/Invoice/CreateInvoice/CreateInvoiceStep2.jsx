@@ -69,7 +69,6 @@ export default class CreateInvoiceStep2 extends React.Component {
                         // required={this.state.validate ? required : ""}
                         />
                         <datalist id="product" >
-                            <option>---</option>
                             {
                                 this.state.itemsDropdownData.map((item, index) => {
                                     return <option name={item.productName} value={item.productCode} key={index}>{item.productCode}</option>
@@ -386,7 +385,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                         text: "Invoice Saved !",
                         icon: "success"
                     }).then(() => {
-                        window.location.href = "./viewInvoice?id=" + this.state.id + "&invoiceNo=" + this.state.invoiceNo;
+                        window.location.href = "./viewInvoice?id=" + this.state.id + "&invoiceNumber=" + this.props.invoiceNo;
                     })
                 }
             })

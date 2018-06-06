@@ -5,7 +5,7 @@ import ObjectId from 'bson-objectid';
 AutoIncrement.initialize(mongoose);
 
 const InvoiceSchema = mongoose.Schema({
-    invoiceDate: { type: String },
+    invoiceDate: { type: Date },
     invoiceNumber: { type: Number },
     companyName: { type: String },
     companyCode: { type: String },
@@ -95,7 +95,6 @@ InvoiceModel.getAllList = (data) => {
                 foreignField: "customerCode",
                 as: "customer_docs"
             }
-
         },
         {
             $unwind: "$customer_docs"
@@ -107,18 +106,14 @@ InvoiceModel.getAllList = (data) => {
                 foreignField: "companyCode",
                 as: "company_docs"
             }
-
-
         },
         {
             $unwind: "$company_docs"
-        }, {
+        },
+        {
             $project: {
-
                 companyName: "$company_docs.companyName",
-
                 customerName: "$customer_docs.customerName",
-
                 invoiceDate: 1,
                 invoiceNumber: 1,
                 status: 1,
@@ -131,7 +126,6 @@ InvoiceModel.getAllList = (data) => {
             }
         }
     ]);
-
 }
 
 InvoiceModel.sales = (invoiceSalesDate) => {
@@ -300,7 +294,7 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 invoiceDate: 1,
                 invoiceNumber: 1,
                 items: 1,
-                itemTotal: 1,
+                subTotal: 1,
                 discountTotal: 1,
                 cgstTotal: 1,
                 sgstTotal: 1,
@@ -367,7 +361,7 @@ InvoiceModel.searchInvoice = (query) => {
                 createdAt: 1,
                 updatedAt: 1,
                 modifiedBy: 1,
-                status:1,
+                status: 1,
             }
         }
     ]);
