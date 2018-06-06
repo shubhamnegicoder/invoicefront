@@ -198,6 +198,7 @@ class ViewInvoice extends React.Component {
         while (heightLeft >= 0) {
           position = heightLeft - imgHeight;
           pdf.addPage();
+          pdf.text("hello world");
           pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
         }
