@@ -8,7 +8,15 @@ import $ from 'jquery';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
+
 var type;
+var base64Img = null;
+var margins = {
+  top: 70,
+  bottom: 40,
+  left: 30,
+  width: 550
+};
 
 class ViewInvoice extends React.Component {
   constructor(props) {
@@ -183,28 +191,30 @@ class ViewInvoice extends React.Component {
     $('.printButton').show();
   }
   printDocument = () => {
+
     const input = document.getElementById('container');
     html2canvas(input)
       .then((canvas) => {
-        var imgWidth = 210;
+        var imgWidth = 190;
         var pageHeight = 295;
         var imgHeight = canvas.height * imgWidth / canvas.width;
         var heightLeft = imgHeight;
         var position = 0;
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm');
-        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-        pdf.save("download.pdf");       
-      })
+        var doc = new jsPDF('p', 'mm', 'a4');
+        var options = {
+          pagesplit: true
+        };
+        doc.addImage(imgData, 'JPEG', 10, 0, imgWidth, pageHeight);
+     
 
+        doc.save(this.state.invoiceNo);
+
+      })
   }
+
+
+
   componentWillMount() {
     let invoiceNo = this.getQuery('invoiceNumber');
     // console.log(type,"kkkkkkkkkkk")
@@ -232,188 +242,188 @@ class ViewInvoice extends React.Component {
       },
     });
     return (
-      <div id="container" class="container-fluid" style={{ padding: '50px' }}>
-        <div class="row">
-          <div class="col-4">
-            <div id="logo">
-              <img src={"uploads/" + this.state.logo} />
-            </div>
-          </div>
-          <div class="col-8">
-            {/* <center> */}
-            <h3>{this.state.companyName}</h3>
-            {this.state.companyAddress}<br />
-            <div>
-              <label style={{ color: 'black' }}>GSTIN : </label>
-              {this.state.companyGSTIN}
-            </div>
-            {/* </center> */}
-          </div>
-        </div>
-        <br />
-        <div class="row">
-          <hr />
-          <div style={{ width: '100%' }}>
-            <h1>TAX-INVOICE</h1>
-          </div>
-          <hr />
-        </div>
-        <br />
-        <div class="row">
-          <div class="col-6">
-            <b>Invoice Date</b>
-            <div>
-              {this.state.invoiceDate}
-            </div>
-          </div>
-          <div class="col-6" style={{ textAlign: 'right' }}>
-            <b>Invoice No.</b>
-            <div>
-              {this.state.invoiceNo}
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col-6">
-            <b>Billed To</b>
-            <div>
-              {this.state.customerName}
-            </div>
-            <div>
-              {this.state.customerAddress}
-            </div>
-            <div>
-              GSTIN : {this.state.customerGSTIN}
-            </div>
-          </div>
-          <div class="col-6" style={{ textAlign: 'right' }}>
-            <b>Shipped To</b>
-            <div>
-              {this.state.customerName}
-            </div>
-            <div>
-              {this.state.customerAddress}
-            </div>
-            <div>
-              GSTIN : {this.state.customerGSTIN}
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col">
-            <label>Item Name</label>
-          </div>
-          <div class="col">
-            <label>HSN Code</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>Qty.</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>Rate</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>Total</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>Discount</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>CGST Rate</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>CGST Amount</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>SGST Rate</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>SGST Amount</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>IGST Rate</label>
-          </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            <label>IGST Amount</label>
-          </div>
-        </div >
-        <hr />
-        {this.state.List.map((item, key) => {
-          return (
-            <div>
-              <div class="row">
-                <div class="col">{item[0]}</div>
-                <div class="col">{item[1]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[2]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[3]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[4]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[5]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[6]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[7]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[8]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[9]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[10]}</div>
-                <div class="col" style={{ textAlign: 'right' }}>{item[11]}</div>
+      <div>
+        <div id="container" class="container-fluid" style={{ padding: '20px', border: '1px solid black' }}>
+          <div class="row">
+            <div class="col-5">
+              <div id="logo" style={{ marginRight: '210px' }}>
+                <img src={"uploads/" + this.state.logo} />
               </div>
-              <hr />
             </div>
-          )
-        })}
-        <div class="row">
-          <div class="col-12"></div>
-          <div class="col" style={{ textAlign: 'right' }}>Total value before Tax&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.subTotal}</div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col-12"></div>
-          <div class="col" style={{ textAlign: 'right' }}>Total discount&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.discountTotal}</div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col-12"></div>
-          <div class="col" style={{ textAlign: 'right' }}>CGST&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.cgstTotal}</div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col-12"></div>
-          <div class="col" style={{ textAlign: 'right' }}>SGST&nbsp;&nbsp;:&nbsp;&nbsp;{parseFloat(this.state.sgstTotal).toFixed(2)}</div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col-12"></div>
-          <div class="col" style={{ textAlign: 'right' }}>IGST&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.igstTotal}</div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col" style={{ textAlign: 'left' }}>
-            Total amount in words&nbsp;&nbsp;:&nbsp;&nbsp;{this.convertNumberToWords(this.state.invoiceTotal)}
+            <div class="col-7">
+              {/* <center> */}
+              <h3>{this.state.companyName}</h3>
+              {this.state.companyAddress}<br />
+              <div>
+                <label style={{ color: 'black' }}>GSTIN : </label>
+                {this.state.companyGSTIN}
+              </div>
+              {/* </center> */}
+            </div>
           </div>
-          <div class="col" style={{ textAlign: 'right' }}>
-            Total Invoice Value&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.invoiceTotal}
+          <br />
+          <div class="row">
+            <hr />
+            <div style={{ width: '100%' }}>
+              <h1>TAX-INVOICE</h1>
+            </div>
+            <hr />
           </div>
+          <br />
+          <div class="row">
+            <div class="col-6">
+              <b>Invoice Date</b>
+              <div>
+                {this.state.invoiceDate}
+              </div>
+            </div>
+            <div class="col-6" style={{ textAlign: 'right' }}>
+              <b>Invoice No.</b>
+              <div>
+                {this.state.invoiceNo}
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-6">
+              <b>Billed To</b>
+              <div>
+                {this.state.customerName}
+              </div>
+              <div>
+                {this.state.customerAddress}
+              </div>
+              <div>
+                GSTIN : {this.state.customerGSTIN}
+              </div>
+            </div>
+            <div class="col-6" style={{ textAlign: 'right' }}>
+              <b>Shipped To</b>
+              <div>
+                {this.state.customerName}
+              </div>
+              <div>
+                {this.state.customerAddress}
+              </div>
+              <div>
+                GSTIN : {this.state.customerGSTIN}
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col"><b>Item Name</b></div>
+            <div class="col"><b>HSN Code</b></div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>Qty.</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>Rate</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>Total</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>Discount</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>CGST Rate</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>CGST Amount</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>SGST Rate</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>SGST Amount</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>IGST Rate</b>
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              <b>IGST Amount</b>
+            </div>
+          </div >
+          <hr />
+          {this.state.List.map((item, key) => {
+            return (
+              <div>
+                <div class="row">
+                  <div class="col">{item[0]}</div>
+                  <div class="col">{item[1]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[2]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[3]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[4]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[5]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[6]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[7]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[8]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[9]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[10]}</div>
+                  <div class="col" style={{ textAlign: 'right' }}>{item[11]}</div>
+                </div>
+                <hr />
+              </div>
+            )
+          })}
+          <div class="row">
+            <div class="col-12"></div>
+            <div class="col" style={{ textAlign: 'right' }}>Total value before Tax&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.subTotal}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-12"></div>
+            <div class="col" style={{ textAlign: 'right' }}>Total discount&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.discountTotal}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-12"></div>
+            <div class="col" style={{ textAlign: 'right' }}>CGST&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.cgstTotal}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-12"></div>
+            <div class="col" style={{ textAlign: 'right' }}>SGST&nbsp;&nbsp;:&nbsp;&nbsp;{parseFloat(this.state.sgstTotal).toFixed(2)}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-12"></div>
+            <div class="col" style={{ textAlign: 'right' }}>IGST&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.igstTotal}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col" style={{ textAlign: 'left' }}>
+              Total amount in words&nbsp;&nbsp;:&nbsp;&nbsp;{this.convertNumberToWords(this.state.invoiceTotal)}
+            </div>
+            <div class="col" style={{ textAlign: 'right' }}>
+              Total Invoice Value&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.invoiceTotal}
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-8" style={{ textAlign: 'right' }}>Signature</div>
+            <div class="col-4">:</div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-8" style={{ textAlign: 'right' }}>Name of the Signatory</div>
+            <div class="col-4" >:</div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-8" style={{ textAlign: 'right' }}>Designation / Status</div>
+            <div class="col-4">:</div>
+          </div>
+          <hr />
+          <div class="row">
+
+          </div>
+
         </div>
-        <hr />
-        <div class="row">
-          <div class="col-8" style={{ textAlign: 'right' }}>Signature</div>
-          <div class="col-4">:</div>
-        </div>
-        <br />
-        <div class="row">
-          <div class="col-8" style={{ textAlign: 'right' }}>Name of the Signatory</div>
-          <div class="col-4" >:</div>
-        </div>
-        <br />
-        <div class="row">
-          <div class="col-8" style={{ textAlign: 'right' }}>Designation / Status</div>
-          <div class="col-4">:</div>
-        </div>
-        <hr />
-        <div class="row">
-          <button style={{ backgroundColor:"#76323f", color:"white" }} onClick={this.printDocument}>Save as Pdf</button>
-        </div>
-      </div>
+        <button className="printButton btn btn-primary" style={{backgroundColor: "#76323f", color: "white"}} onClick={this.printDocument}>Save as PDF</button>
+      </div >
     )
   }
 }
