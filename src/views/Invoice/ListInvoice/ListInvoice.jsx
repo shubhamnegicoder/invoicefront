@@ -1,5 +1,4 @@
 import React from "react";
-// import PropTypes from "prop-types";
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
@@ -18,7 +17,6 @@ import AddIcon from '@material-ui/icons/Add';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 import jspdf from "jspdf";
-import rasterizehtml from 'rasterizehtml';
 
 class ListInvoice extends React.Component {
   constructor(props) {
@@ -185,9 +183,9 @@ class ListInvoice extends React.Component {
         <Grid container>
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-              cardTitle={<div>Invoices
+              cardTitle={<div>Invoices<Tooltip id="tooltip-icon" title="Search">
        <Button style={{ float: "right", backgroundColor: "#76323f", color: "white" }} aria-label="add" variant="fab" onClick={this.handleOpen} ><Search />
-                </Button></div>
+                </Button></Tooltip></div>
               }
               content={
                 <Table
