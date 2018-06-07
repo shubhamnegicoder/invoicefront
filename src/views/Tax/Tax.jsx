@@ -99,11 +99,7 @@ class Tax extends React.Component {
                  dataArray.push(tax.sgst)
                  dataArray.push(tax.isActive ?"True" : "False")
                  dataArray.push(<Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={(e)=>this.handleEdit(e,tax)}style={{color:"black"}}><EditIcon/></a></Tooltip>)
-                // dataArray.push(new Date(tax.createAt).toDateString());
                 mainArray.push(dataArray)
-                
-                
-
              })
              this.setState({
                  List:mainArray
@@ -123,10 +119,10 @@ class Tax extends React.Component {
          
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-               cardTitle={<div>Tax<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} >
+               cardTitle={<div>Tax<Tooltip id="tooltip-icon" title="Add Tax"><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} >
               <AddIcon /> 
 
-            </Button></div>}
+            </Button></Tooltip></div>}
               content={
                 <Table
                     tableHeaderColor="primary"

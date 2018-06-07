@@ -13,7 +13,7 @@ const service = {};
 var today = new Date(),
     date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 service.addInvoice = async (req, res) => {
-    console.log("req.bodyvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv", req.body);
+   ;
     let invoiceToAdd = Invoice({
         invoiceDate: req.body.invoiceDate,
         invoiceNumber: req.body.invoiceNumber,
@@ -36,10 +36,10 @@ service.addInvoice = async (req, res) => {
         createdBy: req.body.id,
         status: req.body.status
     })
-    console.log("invoiceToAdd", invoiceToAdd);
+ ;
     try {
         const savedInvoice = await Invoice.addInvoice(invoiceToAdd);
-        console.log(savedInvoice,"lllllllllllllllllllllllllllllllll")
+       
         logger.info('Adding invoice...');
         res.send({ "success": true, "code": "200", "msg": successMsg.addInvoice, "data": savedInvoice });
     }
@@ -164,7 +164,7 @@ service.getAllList = async (req, res) => {
         console.log(dataTo, "aaaaaammmmm")
 
         const invoicedata = await Invoice.getAllList(dataTo);
-        // console.log("invoiceData",invoicedata);
+        console.log("invoiceData",invoicedata);
         res.send({ success: true, code: 200, "msg": "success", data: invoicedata });
 
 

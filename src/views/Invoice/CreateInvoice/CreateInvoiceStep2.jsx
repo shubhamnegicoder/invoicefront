@@ -19,7 +19,7 @@ export default class CreateInvoiceStep2 extends React.Component {
             showCgst: false,
             showIgst: false,
             showIgst: false,
-            // validate: false
+            validate: false
         }
     }
     getData = (param) => {
@@ -91,12 +91,13 @@ export default class CreateInvoiceStep2 extends React.Component {
                     <div className="col">
                         <input
                             type="text"
-                            className={"form-control qty" + this.state.invoiceRow.length}
+                            id="qty"
+                            className={"form-control qty qty" + this.state.invoiceRow.length}
                             name={"qty" + this.state.invoiceRow.length}
                             onChange={(e) => this.handleInvoice(e)}
-                            // required
                             pattern="^[0-9]*$"
                             title="Number only"
+                            required
                         />
                     </div>
                     <div className={"col rate" + this.state.invoiceRow.length} style={{ textAlign: 'center' }}>0</div>
@@ -274,26 +275,28 @@ export default class CreateInvoiceStep2 extends React.Component {
         })
     }
     validate = (e, param) => {
-        e.preventDefault();
-        if (param === "invoice") {
+        if (param === "draft") {
             this.setState({
                 validate: true
             })
         }
-        if (param === "draft") {
+        if (param === "invoice") {
             this.setState({
                 validate: false
             })
         }
     }
-    submitInvoice = (e, param) => {
-        console.log("param", param);
-        console.log("states", this.state);
+    submitInvoice = (e) => {
         e.preventDefault();
-        let items = [], item = {}, finalData = {};
+        let items = [], item = {}, finalData = {}, status;
         let parsedData = parse(e.target);
-        console.log("parsed data", parsedData);
         items = items.filter(item => item.itemName != undefined);
+        if (this.state.validate === true) {
+            status = "Drafted";
+        }
+        else {
+            status = "Invoiced";
+        }
         if (this.state.showIgst === true) {
             for (var i = 0; i < invoiceRow.length; i++) {
                 item.itemCode = parsedData["itemCode" + i];
@@ -317,11 +320,11 @@ export default class CreateInvoiceStep2 extends React.Component {
                 invoiceDate: this.props.invoiceDate,
                 invoiceNumber: this.props.invoiceNo,
                 companyName: this.props.companyName,
-                companyCode: this.props.companyCode,
+                companyCode: this.props.companyCode.split("-")[0],
                 companyAddressLine1: this.props.companyAddressLine1,
                 companyAddressLine2: this.props.companyAddressLine2,
                 customerName: this.props.customerName,
-                customerCode: this.props.customerCode,
+                customerCode: this.props.customerCode.split("-")[0],
                 customerAddressLine1: this.props.customerAddressLine1,
                 customerAddressLine2: this.props.customerAddressLine2,
                 items: items,
@@ -332,7 +335,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                 igstTotal: parsedData.igstTotal,
                 taxTotal: parsedData.taxTotal,
                 invoiceTotal: parsedData.invoiceTotal,
-                status: "Drafted"
+                status: status
             }
         }
         else {
@@ -358,11 +361,11 @@ export default class CreateInvoiceStep2 extends React.Component {
                 invoiceDate: this.props.invoiceDate,
                 invoiceNumber: this.props.invoiceNo,
                 companyName: this.props.companyName,
-                companyCode: this.props.companyCode,
+                companyCode: this.props.companyCode.split("-")[0],
                 companyAddressLine1: this.props.companyAddressLine1,
                 companyAddressLine2: this.props.companyAddressLine2,
                 customerName: this.props.customerName,
-                customerCode: this.props.customerCode,
+                customerCode: this.props.customerCode.split("-")[0],
                 customerAddressLine1: this.props.customerAddressLine1,
                 customerAddressLine2: this.props.customerAddressLine2,
                 items: items,
@@ -373,22 +376,40 @@ export default class CreateInvoiceStep2 extends React.Component {
                 igstTotal: 0,
                 taxTotal: parsedData.taxTotal,
                 invoiceTotal: parsedData.invoiceTotal,
-                status: "Drafted"
+                status: status
             }
-        }console.log(finalData,"medha data")
-        superagent
-            .post("http://localhost:8080/addInvoice")
-            .send(finalData)
-            .then((res) => {
-                if (res.body.success) {
-                    swal({
-                        text: "Invoice Saved !",
-                        icon: "success"
-                    }).then(() => {
-                        window.location.href ="/ListInvoice"
-                    })
-                }
-            })
+        }
+        console.log("final data", finalData);
+        if (status === "Drafted") {
+            superagent
+                .post("http://localhost:8080/addInvoice")
+                .send(finalData)
+                .then((res) => {
+                    if (res.body.success) {
+                        swal({
+                            text: "Saved as Draft !",
+                            icon: "success"
+                        }).then(() => {
+                            window.location.href = "./InvoiceList";
+                        })
+                    }
+                })
+        }
+        if (status === "Invoiced") {
+            superagent
+                .post("http://localhost:8080/addInvoice")
+                .send(finalData)
+                .then((res) => {
+                    if (res.body.success) {
+                        swal({
+                            text: "Invoice Saved !",
+                            icon: "success"
+                        }).then(() => {
+                            window.location.href = "./viewInvoice?id=" + this.state.id + "&invoiceNumber=" + this.props.invoiceNo;
+                        })
+                    }
+                })
+        }
     }
     componentWillMount() {
         if (this.props.companyState === this.props.customerState) {
@@ -491,7 +512,8 @@ export default class CreateInvoiceStep2 extends React.Component {
     }
     render() {
         return (
-            <form class="container" onSubmit={(e) => this.submitInvoice(e)}>
+            
+            <form className="container invoiceForm" onSubmit={(e) => this.submitInvoice(e)} noValidate={this.state.validate}>
                 {this.state.addRow ? this.addRow() : ""}
                 <h2 className="text-align-center">Step 2</h2>
                 <hr />
@@ -613,10 +635,8 @@ export default class CreateInvoiceStep2 extends React.Component {
                         <input type="hidden" name="invoiceTotal" className="invoiceTotal" onChange={this.handleInvoice} />
                     </div>
                 </div>
-                <input type="submit" className="btn btn-success" value="Save as Draft" status="draft" />
-                {/* <input type="submit" className="btn btn-success" value="Create Invoice" status="invoice" /> */}
-                {/* <button className="btn btn-warning" onMouseOver={(e, param) => this.validate(e, "draft")} onClick={(e, param) => this.submitInvoice(e, "draft")}>Save as Draft</button>
-                <button className="btn btn-success" onMouseOver={(e, param) => this.validate(e, "invoice")} onClick={(e, param) => this.submitInvoice(e, "invoice")}>Create Invoice</button> */}
+                <input type="submit" className="btn btn-warning" value="Save as Draft" onMouseOver={(e, param) => this.validate(e, "draft")} />
+                <input type="submit" className="btn btn-success" value="Create Invoice" onMouseOver={(e, param) => this.validate(e, "invoice")} style={{ marginLeft: '5px' }} />
             </form >
         )
     }

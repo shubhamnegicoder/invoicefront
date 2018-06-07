@@ -26,16 +26,18 @@ const service = {};
  * @return {[object]}
  */
 service.getAll = async (req,res)=>{
+	console.log("**************req.query.id*************",req,"*************************");
 	if (!req.query.id) {
-        return res.send({ "success": false, "code": "500", "msg": " User Id is missing" });
+        return res.send({ "success": false, "code":500, msg: " User Id is missing" });
 	}
 	let queryToFindCompany = {
-		query: {createdBy:ObjectID(req.query.id)} 
-	}
+		query: {createdBy : ObjectID(req.query.id)} 
+	};
 	try{
 		console.log("queryToFindCompany",queryToFindCompany);
 		var allCompany = await CompanyModel.allCompany(queryToFindCompany);
 		console.log(allCompany,"====== allCompany");
+		
 		return res.send({success:true, code:200, msg:"Successfully found", data:allCompany}); 
 	}
 	catch(error){
@@ -94,7 +96,7 @@ service.addCompany = async (req,res)=>{
 		}
 		else{
 			console.log("result of company service in add company in else:::",result);
-			return res.send({success:false, code:500, msg:"Company name already exists"});	
+			return res.send({success:false, code:500, msg:"Company name already exist"});	
 		}
 	});
 }
@@ -170,48 +172,57 @@ service.addFile = async(req,res,hashLogo)=>{
 service.editCompany = async(req,res)=>{
 	var form = new formidable.IncomingForm();	
 	form.parse(req, async (err, fields, files)=> {
-		let result= await service.getOneByCompanyName(fields.companyName);
 		var hashLogo='';
-		if(result==''){ 
-	   		if(files.file!=undefined){
-service.searchCompany = async (req,res)=>{
-	   console.log(req.query,"+++++++++++++++++++++++++++")
-	  
-		try{
-			
-			let	query={ }
-			if(req.query.companyName!==''){
-				query.companyName={ $regex: '.*' + req.query.companyName + '.*' } 
-			}
-			if(req.query.cityCode!==''){
-				query.cityCode=req.query.cityCode
-			}
-			 if(req.query.countryCode!==''){
-				query.countryCode=req.query.countryCode
-			}
-			if(req.query.stateCode!==''){
-				query.stateCode=req.query.stateCode
-			}
-			
-			console.log(query,"kookokokokokoklllllllllllll")
-			var oneCompany = await CompanyModel.searchCompany(query);
-			return res.send({success:true, code:200, msg:"Successfully found", data:oneCompany}); 
-		}catch(error){
-			return res.send({success:false, code:500, msg:"Error in getting Company"+error, err:error})
-		}
-	}
-	
+		if(fields.oldCompanyName!= fields.companyName){
+			console.log("********************edit company if of oldCompanyName******");
+			let	result= await service.getOneByCompanyName(fields.companyName);
+			if(result==''){
+				console.log("*********** edit company result=''***********");
+	   			if(files.file!=undefined){
+					console.log("edit company files.file!=undefined");
+/////////////////////////////////////delete old logo////////////////////////////////////
 
+					filesys.unlink('../public/uploads/'+fields.oldLogo,function(err){
+						if(err) return console.log("logo delete error"+err);
+						console.log('file deleted successfully');
+					}); 
+					console.log("###############################");
+/////////////////////////////////////delete old logo////////////////////////////////////
+					console.log("###############################");
+		 			hashLogo = fields.companyName+"_"+files.file.name;  
+					var oldpath = files.file.path;
+					var newpath =  '../public/uploads/'+fields.companyName+"_"+files.file.name;
+					fs.copy(oldpath, newpath, err => {
+						if (err) return console.log(err)
+					});
+					fs.close();
+					service.editCompany1(fields,res,hashLogo);
+				}
+				else{
+					console.log("**********edit company else part of files.file!=undefined*****");
+					hashLogo=fields.oldLogo;
+					service.editCompany1(fields,res,hashLogo);
+				}
+			}
+			else{
+				return res.send({success:false,code:500,msg:"Company Name already exist"});
+			}
+		}
+		else{
+			console.log("**********else part of fields!=undefined************");
+			
+			if(files.file!=undefined){
+				console.log("edit company in else's else files.file!=undefined");
 /////////////////////////////////////delete old logo////////////////////////////////////
 
 				filesys.unlink('../public/uploads/'+fields.oldLogo,function(err){
 					if(err) return console.log("logo delete error"+err);
 					console.log('file deleted successfully');
 				}); 
-
+				console.log("###############################");
 /////////////////////////////////////delete old logo////////////////////////////////////
-
-		 		hashLogo = fields.companyName+"_"+files.file.name;  
+				console.log("###############################");
+				 hashLogo = fields.companyName+"_"+files.file.name;  
 				var oldpath = files.file.path;
 				var newpath =  '../public/uploads/'+fields.companyName+"_"+files.file.name;
 				fs.copy(oldpath, newpath, err => {
@@ -221,17 +232,17 @@ service.searchCompany = async (req,res)=>{
 				service.editCompany1(fields,res,hashLogo);
 			}
 			else{
+				console.log("**********edit company else's part of files.file!=undefined*****");
 				hashLogo=fields.oldLogo;
 				service.editCompany1(fields,res,hashLogo);
 			}
 		}
-		else{
-			return res.send({success:false, code:500, msg:"Company name already exists"});
-		}
+		
 	});
 }
 
 service.editCompany1 = async (req,res,hashLogo)=>{
+	console.log("###############################");
 	if(req._id==""){
 		return res.send({success:false, code:500, msg:"_id is required"});        
 	}
@@ -276,9 +287,11 @@ service.editCompany1 = async (req,res,hashLogo)=>{
 	}
 	
 	if(req.logo==""){	
+		console.log("###############################");
 		let companyToEdit={			
 			companyCode:req.companyCode,	
 			companyName:req.companyName,
+			logo:"",
 			companyGSTNo:req.companyGSTNo,
 			addressLine1:req.addressLine1,
 			addressLine2:req.addressLine2,
@@ -291,13 +304,17 @@ service.editCompany1 = async (req,res,hashLogo)=>{
 			modifiedBy:req.id,
 			updatedAt:req.updatedAt
 		};
-			let companyEdit = {
-				query:{"_id":req._id},
-				data:{"$set":companyToEdit}
-			};
-			var editCompany = await CompanyModel.editCompany(companyEdit);
-			return res.send({success:true, code:200, msg:"Successfully edited", data:editCompany}); 
-	
+		let companyEdit = {
+			query:{"_id":req._id},
+			data:{"$set":companyToEdit}
+		};
+		try{
+		var editCompany = await CompanyModel.editCompany(companyEdit);
+		console.log("***************req.id***********",req.id);
+		return res.send({success:true, code:200, msg:"Successfully edited", data:editCompany}); 
+		}catch(error){
+			return res.send({success:false, code:500, msg:"error in editing", err:error});
+		}
 	}
 	else{
 		let companyToEdit={			
@@ -316,14 +333,17 @@ service.editCompany1 = async (req,res,hashLogo)=>{
 			modifiedBy:req.id,
 			updatedAt:req.updatedAt
 		};
-			let companyEdit = {
-				query:{"_id":req._id},
-				data:{"$set":companyToEdit}
+		let companyEdit = {
+			query:{"_id":req._id},
+			data:{"$set":companyToEdit}
 		
-			};
-			var editCompany = await CompanyModel.editCompany(companyEdit);
-			return res.send({success:true, code:200, msg:"Successfully edited", data:editCompany}); 		
-	}	
+		};
+		try{
+		var editCompany = await CompanyModel.editCompany(companyEdit);
+		return res.send({success:true, code:200, msg:"Successfully edited", data:editCompany}); 		
+	}	catch(error){
+		return res.send({success:false, code:500, msg:"error in editing", err:error});
+	}}
 }
 service.getOneCompany = async (req,res)=>{ 
 	try{
@@ -345,7 +365,7 @@ service.getOneCompany = async (req,res)=>{
 			query:{ companyName:companyName}
 		};
 		console.log("companyName of getOneByCompanyName is",dataToFind.query.companyName);
-		var oneCompany = await CompanyModel.getOneCompany(dataToFind);
+		var oneCompany = await CompanyModel.getOneByCompanyName(dataToFind);
 		return oneCompany;
 	}
 	catch(error){
@@ -385,5 +405,30 @@ service.removeLogo1 = async (req,res)=>{
 		return res.send({success:false, code:500, msg:"Error in removing logo", err:error})
 	}
 }
+
+service.searchCompany = async (req,res)=>{
+	console.log(req.query,"+++++++++++++++++++++++++++")   
+	 try{		 
+		 let	query={ }
+		 if(req.query.companyName!==''){
+			 query.companyName={ $regex: '.*' + req.query.companyName + '.*' } 
+		 }
+		 if(req.query.cityCode!==''){
+			 query.cityCode=req.query.cityCode
+		 }
+		  if(req.query.countryCode!==''){
+			 query.countryCode=req.query.countryCode
+		 }
+		 if(req.query.stateCode!==''){
+			 query.stateCode=req.query.stateCode
+		 }
+		 
+		 console.log(query,"kookokokokokoklllllllllllll")
+		 var oneCompany = await CompanyModel.searchCompany(query);
+		 return res.send({success:true, code:200, msg:"Successfully found", data:oneCompany}); 
+		}catch(error){
+			return res.send({success:false, code:500, msg:"Error in getting Company"+error, err:error})
+		}
+	}
 
 export default service; 

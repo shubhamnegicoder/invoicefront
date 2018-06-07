@@ -345,7 +345,7 @@ class EditCustomer extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
-                    <td><input class="country" type="text" Value={this.state.countryName}  ref="countryCode" list="country"placeholder="select country" onChange={this.handleChange1}/>
+                    <td><input class="country" type="text" Value={this.state.countryCode}  ref="countryCode" list="country"placeholder="select country" onChange={this.handleChange1}/>
                     <datalist id="country">
                     {/* <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option> */}
                     {     
@@ -358,7 +358,7 @@ class EditCustomer extends React.Component{
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>State</td><td></td>
-                    <td> <input class="state" type="text" Value={this.state.stateName} list="state"  ref="stateCode" placeholder="select State" onChange={this.handleChange2}/>
+                    <td> <input class="state" type="text" Value={this.state.stateCode} list="state"  ref="stateCode" placeholder="select State" onChange={this.handleChange2}/>
 
                       <datalist id="state">
                         {
@@ -373,7 +373,7 @@ class EditCustomer extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>City</td>
                     <td></td>
-                    <td> <input class="city" type="text" Value={this.state.cityName} list="city"  ref="stateCode" placeholder="select State" onChange={this.handleChange3}/>
+                    <td> <input class="city" type="text" Value={this.state.cityCode} list="city"  ref="cityCode" placeholder="select State" onChange={this.handleChange3}/>
 
                       <datalist id="city">
                         {

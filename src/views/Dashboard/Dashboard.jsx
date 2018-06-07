@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
 import MUIDataTable from "mui-datatables";
+<<<<<<< HEAD
 import "bootstrap";
+=======
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 import Autocomplete from "react-autocomplete";
 // react plugin for creating charts
@@ -37,7 +40,9 @@ import {
 } from "variables/charts";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
+var cardoptions = {}, items = []
 
+<<<<<<< HEAD
 var cardoptions = {}, items = []
 class Dashboard extends React.Component {
 
@@ -49,24 +54,22 @@ class Dashboard extends React.Component {
     id: localStorage.getItem("id"),
     allCompany: [],
     companyName: "",
+=======
+class Dashboard extends React.Component {
+
+  state = {
+    value: '',
+    totalinvoice: "0",
+    totalsales: "0",
+    data: [],
+    loading: false,
+    id: localStorage.getItem("id"),
+    allCompany: [],
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
     companyCode: "",
     datafound: false
   };
 
-  getMuiTheme = () => createMuiTheme({
-    overrides: {
-      MUIDataTable: {
-        root: {
-          backgroundColor: "",
-        }
-      },
-      MUIDataTableBodyCell: {
-        root: {
-          backgroundColor: ""
-        }
-      }
-    }
-  })
 
   componentWillMount() {
 
@@ -95,7 +98,11 @@ class Dashboard extends React.Component {
       )
   }
   ticket1 = (year, month, currentdate) => {
+<<<<<<< HEAD
     var companyCode = this.state.companyName.split("-")[0];
+=======
+    var companyCode = this.state.value.split("-")[0];
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
     axios.get("http://localhost:8080/countInvoice?id=" + this.state.id + '&companyCode=' + companyCode + '&year=' + year + '&month=' + month + '&currentDate=' + currentdate)
       .then(
         (result) => {
@@ -110,7 +117,7 @@ class Dashboard extends React.Component {
   }
 
   ticket2 = (year, month, currentdate) => {
-    var companyCode = this.state.companyName.split("-")[0];
+    var companyCode = this.state.value.split("-")[0];
     axios.get("http://localhost:8080/sales?id=" + this.state.id + '&companyCode=' + companyCode + '&year=' + year + '&month=' + month + '&currentDate=' + currentdate)
       .then(
         (result) => {
@@ -125,7 +132,11 @@ class Dashboard extends React.Component {
 
 
   list = (year, month, currentdate) => {
+<<<<<<< HEAD
     var companyCode = this.state.companyName.split("-")[0];
+=======
+    var companyCode = this.state.value.split("-")[0];
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
     fetch("http://localhost:8080/topTenInvoice?id=" + this.state.id + '&companyCode=' + companyCode + '&year=' + year + '&month=' + month + '&currentDate=' + currentdate, {
       method: "GET",
       cache: 'no-cache',
@@ -167,6 +178,7 @@ class Dashboard extends React.Component {
       )
   }
 
+<<<<<<< HEAD
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -175,6 +187,10 @@ class Dashboard extends React.Component {
 
     this.setState({ companyName: e.target.value })
   }
+=======
+
+ 
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
   handleGo = (e) => {
     e.preventDefault();
     var date = new Date();
@@ -189,16 +205,22 @@ class Dashboard extends React.Component {
     //    console.log(result,"res")
     //  })
   }
+<<<<<<< HEAD
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
   render() {
 
     // var tableData = this.state.data;
+=======
+  render() {
+
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
     items = [];
     this.state.allCompany.map((item, key) => {
       items.push({ label: item.companyCode + "-" + item.companyName })
     })
+<<<<<<< HEAD
 
     return (
       <div>
@@ -219,13 +241,66 @@ class Dashboard extends React.Component {
             />
             <button class="btn btn-success" onClick={this.handleGo}>Go</button>
           </div>
+=======
+   
+    function matchStateToTerm(item, value) {
+      return (
+        item.label.toLowerCase().indexOf(value.toLowerCase()) !== -1
+      )
+    }
+    // Teach Autosuggest how to calculate suggestions for any given input value.
+
+    return (
+
+      <div> {console.log(this.state.value, "name")}
+        <form class="form-inline">
+          <div className="container">
+            <div class="row">
+              <div style={{ textAlign: 'right' }}>
+                <span class="input-group-text" htmlFor="company" id="basic-addon1">Company</span>
+              </div>
+              <div>
+                <Autocomplete
+                  value={this.state.value}
+                  inputProps={{ id: 'comapny' }}
+                  items={items}
+                  shouldItemRender={matchStateToTerm}
+                  getItemValue={item => item.label}
+                  onSelect={value => this.setState({ value })}
+                  onChange={e => this.setState({ value: e.target.value })}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+                    >
+                      {item.label}
+                    </div>
+                  )}
+                  renderMenu={(items, value) => (
+                    <div className="menu">
+                      {value === '' ? (
+                        <div className="item">Company Names</div>
+                      ) : this.state.loading ? (
+                        <div className="item">Loading...</div>
+                      ) : items.length === 0 ? (
+                        <div className="item">No matches for {value}</div>
+                      ) : items}
+                    </div>
+                  )}
+                      />
+              </div>
+              <div className="col" style={{ textAlign: 'left' }}>
+                <button class="btn btn-success" onClick={this.handleGo}>Go</button>
+              </div>
+            </div>
+          </div >
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
         </form>
 
         <Grid container>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
               icon={ContentCopy}
-              iconColor="orange"
+              iconColor="blue"
               title="Current Month Total Invoice"
               description={this.state.totalinvoice}
               small=""
@@ -246,9 +321,13 @@ class Dashboard extends React.Component {
           </ItemGrid>
           <ItemGrid xs={30} sm={30} md={30}>
 
+<<<<<<< HEAD
             <RegularCard
+=======
+            <RegularCard headerColor="orange"
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
               plainCard
-              cardTitle="Current Month Top 10 Sales"
+              cardTitle={<h5><b>Current Month Top 10 Sales</b></h5>}
               content={
                 this.state.datafound ? (<Table
                   tableHeaderColor="primary"
@@ -256,9 +335,12 @@ class Dashboard extends React.Component {
                   tableData={this.state.data}
                 />) : <center><h6><b>"No Records Found"</b></h6></center>
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
               }
             />
           </ItemGrid>
