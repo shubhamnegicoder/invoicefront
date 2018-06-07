@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-07T05:58:01.592Z"}
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-07T06:00:02.654Z"}
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-07T06:02:20.074Z"}
@@ -169,3 +170,11 @@
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-07T12:15:46.747Z"}
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-07T12:16:20.626Z"}
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-07T12:18:03.862Z"}
+=======
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-07T12:17:05.769Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-07T12:17:05.886Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-07T12:31:47.800Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-07T12:31:47.823Z"}
+>>>>>>> d0d30515f2ac84d3f76a9646a6bd257767ff52b7
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-07T12:43:51.484Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-07T12:43:51.581Z"}
