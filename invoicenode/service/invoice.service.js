@@ -1,5 +1,4 @@
 import Invoice from '../models/invoice.model';
-
 import logger from '../core/logger/app.logger'
 import successMsg from '../core/message/success.msg'
 import msg from '../core/message/error.msg.js'
@@ -8,14 +7,13 @@ import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import nm from 'nodemailer'
 import rand from 'csprng'
-import ObjectId from 'bson-objectid';
 import ObjectID from 'bson-objectid';
 
 const service = {};
 var today = new Date(),
     date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 service.addInvoice = async (req, res) => {
-    console.log("req.body", req.body);
+    console.log("req.bodyvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv", req.body);
     let invoiceToAdd = Invoice({
         invoiceDate: req.body.invoiceDate,
         invoiceNumber: req.body.invoiceNumber,
@@ -41,6 +39,7 @@ service.addInvoice = async (req, res) => {
     console.log("invoiceToAdd", invoiceToAdd);
     try {
         const savedInvoice = await Invoice.addInvoice(invoiceToAdd);
+        console.log(savedInvoice,"lllllllllllllllllllllllllllllllll")
         logger.info('Adding invoice...');
         res.send({ "success": true, "code": "200", "msg": successMsg.addInvoice, "data": savedInvoice });
     }
@@ -142,7 +141,7 @@ service.getAllInvoice = async (req, res) => {
         var dataToFind = {}
         dataToFind = {
             query: {
-                createdBy: ObjectId(req.query.id),
+                createdBy: ObjectID(req.query.id),
                 invoiceNumber: invoiceNumber
             }
         }
@@ -158,13 +157,14 @@ service.getAllInvoice = async (req, res) => {
 service.getAllList = async (req, res) => {
     try {
         let dataTo = {
-            query: { createdBy: ObjectId(req.query.id) }
+            query: { createdBy: ObjectID(req.query.id) }
 
         };
 
-        console.log(dataTo, "aaaaaa")
+        console.log(dataTo, "aaaaaammmmm")
 
         const invoicedata = await Invoice.getAllList(dataTo);
+        // console.log("invoiceData",invoicedata);
         res.send({ success: true, code: 200, "msg": "success", data: invoicedata });
 
 
@@ -177,17 +177,20 @@ service.getAllList = async (req, res) => {
 }
 service.editInvoice = async (req, res) => {
     console.log(req.body, "aaaasss")
+    console.log(req.body.id,"iddddddd")
+    console.log(req.body.status,"medha status")
     var invoiceToEdit;
     if (!req.body.id) {
-        return res.send({ "success": false, "code": 500, "msg": "error" })
+        return res.send({ "success": false, "code": 500, "msg": "error1121" })
     }
-    if (req.body.status) {
+    if (req.body.status=="Cancelled") {
         invoiceToEdit = {
-            query: { "_id": ObjectId(req.body.id) },
+            query: { "_id": ObjectID(req.body.id) },
             data: { "$set": { status: req.body.status } }
         }
     }
-    else {
+    else if(req.body.status=="Invoiced") {
+        console.log("invoiced",req.body)
 
         let InvoiceEdit = {
             companyAddressLine1: req.body.companyAddressLine1,
@@ -199,17 +202,18 @@ service.editInvoice = async (req, res) => {
             invoiceDate: req.body.invoiceDate,
             invoiceNumber: req.body.invoiceNumber,
             items: req.body.items,
-            itemTotal: req.body.itemTotal,
+            subTotal: req.body.subTotal,
             discountTotal: req.body.discountTotal,
             cgstTotal: req.body.cgstTotal,
             sgstTotal: req.body.sgstTotal,
             igstTotal: req.body.igstTotal,
             taxTotal: req.body.taxTotal,
             invoiceTotal: req.body.invoiceTotal,
-            modifiedBy: ObjectId(req.body.userId)
+            modifiedBy: ObjectID(req.body.id),
+            status:req.body.status
         }
         invoiceToEdit = {
-            query: { "_id": ObjectId(req.body.id) },
+            query: { "_id": ObjectID(req.body._id) },
             data: { "$set": InvoiceEdit }
 
         };
@@ -230,7 +234,7 @@ service.editInvoice = async (req, res) => {
 service.getEditList = async (req, res) => {
 
     let dataToedit = {
-        query: { "_id": ObjectId(req.query.id) }
+        query: { "_id": ObjectID(req.query.id) }
     }
     console.log(dataToedit, "1111")
     try {
@@ -248,7 +252,7 @@ service.getEditList = async (req, res) => {
 service.getOneList = async (req, res) => {
 
     let dataToedit = {
-        query: { "_id": ObjectId(req.query.id) }
+        query: { "_id": ObjectID(req.query.id) }
     }
     console.log(dataToedit, "1111")
     try {

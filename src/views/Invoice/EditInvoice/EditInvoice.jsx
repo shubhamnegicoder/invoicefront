@@ -8,22 +8,25 @@ import './animation.css';
 import './bootstrap.min.css';
 import axios from 'axios';
 import $ from 'jquery';
-import CreateInvoiceStep2 from './CreateInvoiceStep2';
-import ViewInvoice from './ViewInvoice';
 import swal from 'sweetalert';
 import parse from 'form-parse';
 import Autocomplete from "react-autocomplete";
+import EditInvoiceStep2 from './EditInvoiceStep2';
 
 var date, invoiceRow = [], deletedRows = 0, items = [], tempArray = [];
 var query;
 
-export default class CreateInvoice extends React.Component {
+export default class EditInvoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             id: localStorage.getItem("id"),
             companyDropdownData: [],
             customerDropdownData: [],
+            companyAddressLine1:"",
+            companyAddressLine2:"",
+            customerAddressLine1:"",
+            customerAddressLine2:"",
             companyCode: "",
             companyName: "",
             companyState: "",
@@ -43,7 +46,7 @@ export default class CreateInvoice extends React.Component {
     getData = (param) => {
         if (param === "company") {
             axios
-                .get("http://localhost:8080/allCompany?id=" + this.state.id)
+                .get("http://localhost:8080/getOneCompany?companyCode="+this.state.companyCode)
                 .then((res) => {
                     console.log("response from /allCompany", res);
                     let tempData = [];
@@ -57,7 +60,7 @@ export default class CreateInvoice extends React.Component {
         }
         if (param === "customer") {
             axios
-                .get("http://localhost:8080/allCustomer")
+                .get("http://localhost:8080/getOneCustomer?customerCode="+this.state.customerCode)
                 .then((res) => {
                     console.log("response from /allCustomer", res);
                     let tempData = [];
@@ -85,28 +88,7 @@ export default class CreateInvoice extends React.Component {
             invoiceDate: date
         })
     }
-    setInvoiceNo = () => {
-        date = new Date();
-        let year = date.getFullYear();
-        year = year.toString();
-        let month = date.getMonth();
-        month = month.toString();
-        month++;
-        month = this.padDigits(month, 2);
-        let invoiceNoPart1 = year + month;
-        axios
-            .get("http://localhost:8080/countInvoice2?id=" + this.state.id)
-            .then((res) => {
-                console.log("response from /countInvoice2", res);
-                let invoiceNoPart2 = res.data.data + 1;
-                invoiceNoPart2 = this.padDigits(invoiceNoPart2, 4);
-                let invoiceNo = invoiceNoPart1 + invoiceNoPart2;
-                invoiceNo = parseInt(invoiceNo);
-                this.setState({
-                    invoiceNo: invoiceNo
-                })
-            })
-    }
+    
     padDigits = (number, digits) => {
         return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
     }
@@ -133,17 +115,60 @@ export default class CreateInvoice extends React.Component {
         e.preventDefault();
     }
     componentWillMount() {
-        this.getData("company");
-        this.getData("customer");
-        this.setInvoiceNo();
         this.setInitialDate();
         this.getData("items");
+        this.add();
     }
     handleInput = (e) => {
         e.preventDefault();
 
         this.setState({ companyName: e.target.value })
     }
+    add = () => {
+        var query=window.location.search.substring(window.location.search.indexOf("=")+1);
+           this.setState({query:query});
+          axios.get("http://localhost:8080/oneList?id="+query)
+          .then((result) => {
+              console.log(result,"medhaaa")
+              result.data.data.map((item)=>{
+                  this.setState({companyCode:item.companyCode}),
+                  this.setState({companyState:item.companyState}),
+                  this.setState({ companyAddressLine1:item. companyAddressLine1}),
+                  this.setState({companyAddressLine2:item.companyAddressLine2}),
+                  this.setState({customerCode:item.customerCode}),
+                  this.setState({customerState:item.customerState}),
+                  this.setState({customerAddressLine1:item.customerAddressLine1}),
+                  this.setState({ customerAddressLine2:item. customerAddressLine2}),
+                  this.setState({productCode:item.productCode}),
+                  this.setState({taxCode:item.taxCode}),
+                  this.setState({code:item.code}),
+                  this.setState({itemName:item.itemName}),
+                  this.setState({qty:item.qty}),
+                  this.setState({ rate:item.rate}),
+                  this.setState({total:item.total}),
+                  this.setState({ discount:item.discount}),
+                  this.setState({ invoiceDate:item.invoiceDate}),
+                  this.setState({invoiceNo:item.invoiceNumber})
+              })
+              this.getData("company");
+              this.getData("customer");
+            //access the results here....
+            console.log(result.data.data[0].items.CGSTRate,"arsfyw")
+            result.data.data[0].items.forEach((items)=>{
+              console.log(items,"hjhjh")
+                this.setState({CGSTRate:items.CGSTRate}),
+                this.setState({CGSTAmount:items.CGSTAmount}),
+                this.setState({SGSTRate:items.SGSTRate}),
+                this.setState({SGSTAmount:items.SGSSTAmount}),
+                this.setState({IGSTRate:items.IGSTRate}),
+                this.setState({IGSTAmount:items.IGSTAmount})
+  
+            })
+           
+               
+                
+              })
+}
     componentDidUpdate() {
         this.state.companyDropdownData.map((item, key) => {
             if (this.state.setAddressOfCompany == false) {
@@ -178,6 +203,7 @@ export default class CreateInvoice extends React.Component {
     }
     render() {
         return (
+
             <form onSubmit={(e) => this.createInvoice(e)}>
                 <Wizard>
                     <Steps>
@@ -189,7 +215,7 @@ export default class CreateInvoice extends React.Component {
                                             <input
                                                 type="submit"
                                                 className="btn"
-                                                onClick={this.state.companySelected && this.state.customerSelected ? next : ""}
+                                                onClick={next}
                                                 value="Next"
                                             />
                                         )}
@@ -210,44 +236,35 @@ export default class CreateInvoice extends React.Component {
                                     <div className="row">
                                         {/* Company Dropdown */}
                                         <div className="col-sm">
-                                            {/* <Autocomplete
-                                                getItemValue={(item) => item.label}
-                                                items={items}
-                                                renderItem={(item, isHighlighted) =>
-                                                    <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                                                        {item.label}
-                                                    </div>
-                                                }
-                                                value={this.state.companyName} onChange={this.handleInput} onSelect={companyName => this.setState({ companyName })}
-                                            /> */}
-                                            <input type="text" list="company"
+                                        <select disabled
                                                 style={{ minWidth: '200px' }}
                                                 onChange={(e, param) => this.handleDropdown(e, "company")}
                                                 name="companyCode"
-                                                required
-                                            />
-                                            <datalist id="company">
+                                                
+                                            >
+                                                <option  value="">Select Company</option>
                                                 {
                                                     this.state.companyDropdownData.map((item, index) => {
-                                                        return <option name={item.companyName} value={item.companyCode} key={index} >{item.companyName}</option>
+                                                        return <option selected name={item.companyName} value={item.companyCode} key={index} >{item.companyName}</option>
                                                     })
                                                 }
-                                            </datalist>
+                                            </select>
+                                            
+                                    
                                         </div>
                                         <div className="col-sm">
-                                            <input type="text" list="customer"
+                                        <select disabled
                                                 style={{ minWidth: '200px' }}
                                                 onChange={(e, param) => this.handleDropdown(e, "customer")}
                                                 name="customerCode"
-                                                required
-                                            />
-                                            <datalist id="customer">
+                                            >
+                                                <option>Select Customer</option>
                                                 {
                                                     this.state.customerDropdownData.map((item, index) => {
-                                                        return <option name={item.customerName} value={item.customerCode} key={index} >{item.customerName}</option>
+                                                        return <option selected name={item.customerName} value={item.customerCode} key={index}>{item.customerName}</option>
                                                     })
                                                 }
-                                            </datalist>
+                                            </select>
                                         </div>
                                     </div>
                                     <br />
@@ -285,7 +302,7 @@ export default class CreateInvoice extends React.Component {
                                                 style={{ minWidth: '200px' }}
                                                 defaultValue={date}
                                                 onChange={this.handleInvoice}
-                                                required
+                                                
                                             />
                                             <br />
                                             <label>(mm-dd-yyyy)</label>
@@ -309,7 +326,7 @@ export default class CreateInvoice extends React.Component {
                                     </div>
                                 )}
                             />
-                            <CreateInvoiceStep2 {...this.state} />
+                            <EditInvoiceStep2 {...this.state} />
                         </Step>
                         {/* <Step id="ice king">
                             <WithWizard

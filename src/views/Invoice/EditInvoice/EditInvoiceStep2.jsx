@@ -4,10 +4,22 @@ import axios from 'axios';
 import parse from 'form-parse';
 import swal from 'sweetalert';
 import superagent from 'superagent';
+import Button from 'material-ui/Button';
+import {
+    grayColor,
+    roseColor,
+    primaryColor,
+    infoColor,
+    successColor,
+    warningColor,
+    dangerColor,
+
+} from "assets/jss/material-dashboard-react.jsx";
+import { S_IRWXG } from 'constants';
 
 var invoiceRow = [], deletedRows = 0, tempArray = [];
 
-export default class CreateInvoiceStep2 extends React.Component {
+export default class EditInvoiceStep2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,6 +31,13 @@ export default class CreateInvoiceStep2 extends React.Component {
             showCgst: false,
             showIgst: false,
             showIgst: false,
+            companyCode: "",
+            companyName: "",
+            companyState: "",
+            customerCode: "",
+            customerName: "",
+            customerState: "",
+
             // validate: false
         }
     }
@@ -51,6 +70,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                         taxData: tempData
                     });
                 })
+
         }
     }
     addRow = (params) => {
@@ -69,7 +89,6 @@ export default class CreateInvoiceStep2 extends React.Component {
                         // required={this.state.validate ? required : ""}
                         />
                         <datalist id="product" >
-                            <option>---</option>
                             {
                                 this.state.itemsDropdownData.map((item, index) => {
                                     return <option name={item.productName} value={item.productCode} key={index}>{item.productCode}</option>
@@ -217,6 +236,7 @@ export default class CreateInvoiceStep2 extends React.Component {
         })
         deletedRows++;
     }
+
     handleDropdown = (e, param) => {
         if (param == "items") {
             let eo = $(e.target).attr('id');
@@ -274,23 +294,10 @@ export default class CreateInvoiceStep2 extends React.Component {
             [e.target.name]: e.target.value
         })
     }
-    validate = (e, param) => {
+
+    handleUpdate = (e) => {
         e.preventDefault();
-        if (param === "invoice") {
-            this.setState({
-                validate: true
-            })
-        }
-        if (param === "draft") {
-            this.setState({
-                validate: false
-            })
-        }
-    }
-    submitInvoice = (e, param) => {
-        console.log("param", param);
-        console.log("states", this.state);
-        e.preventDefault();
+        console.log("e.target", e.target);
         let items = [], item = {}, finalData = {};
         let parsedData = parse(e.target);
         console.log("parsed data", parsedData);
@@ -376,20 +383,259 @@ export default class CreateInvoiceStep2 extends React.Component {
                 invoiceTotal: parsedData.invoiceTotal,
                 status: "Drafted"
             }
-        }
-        superagent
-            .post("http://localhost:8080/addInvoice")
-            .send(finalData)
+        } console.log("final data", finalData)
+        axios
+            .post("http://localhost:8080/editInvoice",
+                finalData
+
+            )
+
             .then((res) => {
-                if (res.body.success) {
+                console.log(res, "data123")
+                if (res.data.success == true) {
                     swal({
-                        text: "Invoice Saved !",
-                        icon: "success"
-                    }).then(() => {
-                        window.location.href = "./viewInvoice?id=" + this.state.id + "&invoiceNo=" + this.state.invoiceNo;
-                    })
+                        title: "Invoice Updated Successfully !",
+                        icon: "success",
+                    });
                 }
+
+
             })
+
+    }
+    handleCancel = () => {
+        window.location.href = "/ListInvoice"
+    }
+    validate = (e, param) => {
+        e.preventDefault();
+        if (param === "invoice") {
+            this.setState({
+                validate: true
+            })
+        }
+        if (param === "draft") {
+            this.setState({
+                validate: false
+            })
+        }
+    }
+    createInvoice = (e) => {
+        let data = parse(e.target);
+        console.log("data", data);
+        let element = $(document.activeElement).val();
+        if (element === "Save as Draft") {
+            let items = [], item = {}, finalData = {};
+            let parsedData = parse(e.target);
+            console.log("parsed data", parsedData);
+            items = items.filter(item => item.itemName != undefined);
+            if (this.state.showIgst === true) {
+                for (var i = 0; i < invoiceRow.length; i++) {
+                    item.itemCode = parsedData["itemCode" + i];
+                    item.itemName = parsedData["itemName" + i];
+                    item.itemHsn = parsedData["hsn" + i];
+                    item.itemQty = parsedData["qty" + i];
+                    item.itemRate = parsedData["itemRate" + i];
+                    item.itemTotal = parsedData["itemTotal" + i];
+                    item.itemDiscount = parsedData["discount" + i];
+                    item.cgstRate = 0;
+                    item.cgstAmount = 0;
+                    item.sgstRate = 0;
+                    item.sgstAmount = 0;
+                    item.igstRate = parsedData["igstRate" + i];
+                    item.igstAmount = (parsedData["igstAmount" + i]);
+                    items.push(item);
+                    item = {};
+                }
+                finalData = {
+                    id: this.props.id,
+                    invoiceDate: this.props.invoiceDate,
+                    invoiceNumber: this.props.invoiceNo,
+                    companyName: this.props.companyName,
+                    companyCode: this.props.companyCode,
+                    companyAddressLine1: this.props.companyAddressLine1,
+                    companyAddressLine2: this.props.companyAddressLine2,
+                    customerName: this.props.customerName,
+                    customerCode: this.props.customerCode,
+                    customerAddressLine1: this.props.customerAddressLine1,
+                    customerAddressLine2: this.props.customerAddressLine2,
+                    items: items,
+                    subTotal: parsedData.subTotal,
+                    discountTotal: parsedData.discountTotal,
+                    cgstTotal: 0,
+                    sgstTotal: 0,
+                    igstTotal: parsedData.igstTotal,
+                    taxTotal: parsedData.taxTotal,
+                    invoiceTotal: parsedData.invoiceTotal,
+                    status: "Drafted"
+                }
+            }
+            else {
+                for (var i = 0; i < invoiceRow.length; i++) {
+                    item.itemCode = parsedData["itemCode" + i];
+                    item.itemName = parsedData["itemName" + i];
+                    item.itemHsn = parsedData["hsn" + i];
+                    item.itemQty = parsedData["qty" + i];
+                    item.itemRate = parsedData["itemRate" + i];
+                    item.itemTotal = parsedData["itemTotal" + i];
+                    item.itemDiscount = parsedData["discount" + i];
+                    item.cgstRate = parsedData["cgstRate" + i];
+                    item.cgstAmount = (parsedData["cgstAmount" + i]);
+                    item.sgstRate = parsedData["sgstRate" + i];
+                    item.sgstAmount = (parsedData["sgstAmount" + i]);
+                    item.igstRate = 0;
+                    item.igstAmount = 0;
+                    items.push(item);
+                    item = {};
+                }
+                finalData = {
+                    id: this.props.id,
+                    invoiceDate: this.props.invoiceDate,
+                    invoiceNumber: this.props.invoiceNo,
+                    companyName: this.props.companyName,
+                    companyCode: this.props.companyCode,
+                    companyAddressLine1: this.props.companyAddressLine1,
+                    companyAddressLine2: this.props.companyAddressLine2,
+                    customerName: this.props.customerName,
+                    customerCode: this.props.customerCode,
+                    customerAddressLine1: this.props.customerAddressLine1,
+                    customerAddressLine2: this.props.customerAddressLine2,
+                    items: items,
+                    subTotal: parsedData.subTotal,
+                    discountTotal: parsedData.discountTotal,
+                    cgstTotal: parsedData.cgstTotal,
+                    sgstTotal: parsedData.sgstTotal,
+                    igstTotal: 0,
+                    taxTotal: parsedData.taxTotal,
+                    invoiceTotal: parsedData.invoiceTotal,
+                    status: "Drafted"
+                }
+            }
+            superagent
+                .post("http://localhost:8080/addInvoice")
+                .send(finalData)
+                .then((res) => {
+                    if (res.body.success) {
+                        swal({
+                            text: "Invoice Saved !",
+                            icon: "success"
+                        }).then(() => {
+                            window.location.href = "/ListInvoice"
+                        })
+                    }
+                })
+        }
+        if (element === "Update") {
+            e.preventDefault();
+            console.log("e.target", e.target);
+            let items = [], item = {}, finalData = {};
+            let parsedData = parse(e.target);
+            console.log("parsed data", parsedData);
+            items = items.filter(item => item.itemName != undefined);
+            if (this.state.showIgst === true) {
+                for (var i = 0; i < invoiceRow.length; i++) {
+                    item.itemCode = parsedData["itemCode" + i];
+                    item.itemName = parsedData["itemName" + i];
+                    item.itemHsn = parsedData["hsn" + i];
+                    item.itemQty = parsedData["qty" + i];
+                    item.itemRate = parsedData["itemRate" + i];
+                    item.itemTotal = parsedData["itemTotal" + i];
+                    item.itemDiscount = parsedData["discount" + i];
+                    item.cgstRate = 0;
+                    item.cgstAmount = 0;
+                    item.sgstRate = 0;
+                    item.sgstAmount = 0;
+                    item.igstRate = parsedData["igstRate" + i];
+                    item.igstAmount = (parsedData["igstAmount" + i]);
+                    items.push(item);
+                    item = {};
+                }
+                finalData = {
+                    id: this.props.id,
+                    invoiceDate: this.props.invoiceDate,
+                    invoiceNumber: this.props.invoiceNo,
+                    companyName: this.props.companyName,
+                    companyCode: this.props.companyCode,
+                    companyAddressLine1: this.props.companyAddressLine1,
+                    companyAddressLine2: this.props.companyAddressLine2,
+                    customerName: this.props.customerName,
+                    customerCode: this.props.customerCode,
+                    customerAddressLine1: this.props.customerAddressLine1,
+                    customerAddressLine2: this.props.customerAddressLine2,
+                    items: items,
+                    subTotal: parsedData.subTotal,
+                    discountTotal: parsedData.discountTotal,
+                    cgstTotal: 0,
+                    sgstTotal: 0,
+                    igstTotal: parsedData.igstTotal,
+                    taxTotal: parsedData.taxTotal,
+                    invoiceTotal: parsedData.invoiceTotal,
+                    status: "Invoiced"
+                }
+            }
+            else {
+                for (var i = 0; i < invoiceRow.length; i++) {
+                    item.itemCode = parsedData["itemCode" + i];
+                    item.itemName = parsedData["itemName" + i];
+                    item.itemHsn = parsedData["hsn" + i];
+                    item.itemQty = parsedData["qty" + i];
+                    item.itemRate = parsedData["itemRate" + i];
+                    item.itemTotal = parsedData["itemTotal" + i];
+                    item.itemDiscount = parsedData["discount" + i];
+                    item.cgstRate = parsedData["cgstRate" + i];
+                    item.cgstAmount = (parsedData["cgstAmount" + i]);
+                    item.sgstRate = parsedData["sgstRate" + i];
+                    item.sgstAmount = (parsedData["sgstAmount" + i]);
+                    item.igstRate = 0;
+                    item.igstAmount = 0;
+                    items.push(item);
+                    item = {};
+                }
+                finalData = {
+                    id: this.props.id,
+                    _id:this.props.query,
+                    invoiceDate: this.props.invoiceDate,
+                    invoiceNumber: this.props.invoiceNo,
+                    companyName: this.props.companyName,
+                    companyCode: this.props.companyCode,
+                    companyAddressLine1: this.props.companyAddressLine1,
+                    companyAddressLine2: this.props.companyAddressLine2,
+                    customerName: this.props.customerName,
+                    customerCode: this.props.customerCode,
+                    customerAddressLine1: this.props.customerAddressLine1,
+                    customerAddressLine2: this.props.customerAddressLine2,
+                    items: items,
+                    subTotal: parsedData.subTotal,
+                    discountTotal: parsedData.discountTotal,
+                    cgstTotal: parsedData.cgstTotal,
+                    sgstTotal: parsedData.sgstTotal,
+                    igstTotal: 0,
+                    taxTotal: parsedData.taxTotal,
+                    invoiceTotal: parsedData.invoiceTotal,
+                    status: "Invoiced"
+                }
+            } console.log("final data", finalData)
+            axios
+                .post("http://localhost:8080/editInvoice",
+                    finalData
+    
+                )
+    
+                .then((res) => {
+                    console.log(res, "data123")
+                    if (res.data.success == true) {
+                        swal({
+                            title: "Invoice Updated Successfully !",
+                            icon: "success",
+                        }).then(() => {
+                            window.location.href = "/ListInvoice"
+                        })
+                    }
+    
+    
+                })
+    
+        }
+        
     }
     componentWillMount() {
         if (this.props.companyState === this.props.customerState) {
@@ -492,133 +738,134 @@ export default class CreateInvoiceStep2 extends React.Component {
     }
     render() {
         return (
-            <form class="container" onSubmit={(e) => this.submitInvoice(e)}>
-                {this.state.addRow ? this.addRow() : ""}
-                <h2 className="text-align-center">Step 2</h2>
-                <hr />
-                {/* Invoice Date & Invoice Number */}
-                <div className="row">
-                    <div className="col" style={{ textAlign: 'left' }}>
-                        {"Invoice Date: " + this.props.invoiceDate}
+            <div>
+                <form class="container" onSubmit={this.createInvoice}>
+                    {this.state.addRow ? this.addRow() : ""}
+                    <h2 className="text-align-center">Step 2</h2>
+                    <hr />
+                    {/* Invoice Date & Invoice Number */}
+                    <div className="row">
+                        <div className="col" style={{ textAlign: 'left' }}>
+                            {"Invoice Date: " + this.props.invoiceDate}
+                        </div>
+                        <div className="col" style={{ textAlign: 'right' }}>
+                            {"Invoice Number: " + this.props.invoiceNo}
+                        </div>
                     </div>
-                    <div className="col" style={{ textAlign: 'right' }}>
-                        {"Invoice Number: " + this.props.invoiceNo}
+                    <hr />
+                    {/* Company & Customer */}
+                    <div className="row" >
+                        <div className="col" style={{ textAlign: 'left' }}>
+                            {"Company: " + this.props.companyName}
+                        </div>
+                        <div className="col" style={{ textAlign: 'right' }}>
+                            {"Customer: " + this.props.customerName}
+                        </div>
                     </div>
-                </div>
-                <hr />
-                {/* Company & Customer */}
-                <div className="row" >
-                    <div className="col" style={{ textAlign: 'left' }}>
-                        {"Company: " + this.props.companyName}
+                    <div className="row" >
+                        <div className="col" style={{ textAlign: 'left' }}>
+                            {"Address: " + this.props.companyAddressLine1 + " " + this.props.companyAddressLine2}
+                        </div>
+                        <div className="col" style={{ textAlign: 'right' }}>
+                            {"Address: " + this.props.customerAddressLine1 + " " + this.props.customerAddressLine2}
+                        </div>
                     </div>
-                    <div className="col" style={{ textAlign: 'right' }}>
-                        {"Customer: " + this.props.customerName}
+                    <hr />
+                    {/* Invoice Row Headings */}
+                    <div className="row" style={{ textAlign: 'center' }}>
+                        <div className="col-2">Item Code</div>
+                        <div className="col">Qty</div>
+                        <div className="col">Rate</div>
+                        <div className="col">Total</div>
+                        <div className="col">Disc.</div>
+                        <div className="col-3">Taxes</div>
+                        <div className="col">Row Total</div>
+                        <div className="col"></div>
                     </div>
-                </div>
-                <div className="row" >
-                    <div className="col" style={{ textAlign: 'left' }}>
-                        {"Address: " + this.props.companyAddressLine1 + " " + this.props.companyAddressLine2}
+                    <hr />
+                    {/* Invoice Row Fields */}
+                    {
+                        this.state.invoiceRow.map((item, key) => {
+                            return item
+                        })
+                    }
+                    <hr />
+                    {/* Add Row Button */}
+                    <div className="row">
+                        <div className="col-9">
+                            <input
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={this.addRow}
+                                value="+ Add Row"
+                            />
+                        </div>
+                        <div className="col-2">Subtotal</div>
+                        <div className="col-1">
+                            <div className="subTotalDiv">0</div>
+                            <input type="hidden" name="subTotal" className="subTotal" onChange={this.handleInvoice} />
+                        </div>
                     </div>
-                    <div className="col" style={{ textAlign: 'right' }}>
-                        {"Address: " + this.props.customerAddressLine1 + " " + this.props.customerAddressLine2}
-                    </div>
-                </div>
-                <hr />
-                {/* Invoice Row Headings */}
-                <div className="row" style={{ textAlign: 'center' }}>
-                    <div className="col-2">Item Code</div>
-                    <div className="col">Qty</div>
-                    <div className="col">Rate</div>
-                    <div className="col">Total</div>
-                    <div className="col">Disc.</div>
-                    <div className="col-3">Taxes</div>
-                    <div className="col">Row Total</div>
-                    <div className="col"></div>
-                </div>
-                <hr />
-                {/* Invoice Row Fields */}
-                {
-                    this.state.invoiceRow.map((item, key) => {
-                        return item
-                    })
-                }
-                <hr />
-                {/* Add Row Button */}
-                <div className="row">
-                    <div className="col-9">
-                        <input
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={this.addRow}
-                            value="+ Add Row"
-                        />
-                    </div>
-                    <div className="col-2">Subtotal</div>
-                    <div className="col-1">
-                        <div className="subTotalDiv">0</div>
-                        <input type="hidden" name="subTotal" className="subTotal" onChange={this.handleInvoice} />
-                    </div>
-                </div>
-                {/* Totals */}
-                <div className="row">
-                    <div className="col-9"></div>
-                    <div className="col-2">Total Discount</div>
-                    <div className="col-1">
-                        <div className="discountTotalDiv">0</div>
-                        <input type="hidden" name="discountTotal" className="discountTotal" onChange={this.handleInvoice} />
-                    </div>
-                </div>
-                {this.state.showCgst ?
+                    {/* Totals */}
                     <div className="row">
                         <div className="col-9"></div>
-                        <div className="col-2">Total CGST</div>
+                        <div className="col-2">Total Discount</div>
                         <div className="col-1">
-                            <div className="cgstTotalDiv">0</div>
-                            <input type="hidden" name="cgstTotal" className="cgstTotal" onChange={this.handleInvoice} />
+                            <div className="discountTotalDiv">0</div>
+                            <input type="hidden" name="discountTotal" className="discountTotal" onChange={this.handleInvoice} />
                         </div>
-                    </div> : <div></div>
-                }
-                {this.state.showSgst ?
+                    </div>
+                    {this.state.showCgst ?
+                        <div className="row">
+                            <div className="col-9"></div>
+                            <div className="col-2">Total CGST</div>
+                            <div className="col-1">
+                                <div className="cgstTotalDiv">0</div>
+                                <input type="hidden" name="cgstTotal" className="cgstTotal" onChange={this.handleInvoice} />
+                            </div>
+                        </div> : <div></div>
+                    }
+                    {this.state.showSgst ?
+                        <div className="row">
+                            <div className="col-9"></div>
+                            <div className="col-2">Total SGST</div>
+                            <div className="col-1">
+                                <div className="sgstTotalDiv">0</div>
+                                <input type="hidden" name="sgstTotal" className="sgstTotal" onChange={this.handleInvoice} />
+                            </div>
+                        </div> : <div></div>
+                    }
+                    {this.state.showIgst ?
+                        <div className="row">
+                            <div className="col-9"></div>
+                            <div className="col-2">Total IGST</div>
+                            <div className="col-1">
+                                <div className="igstTotalDiv">0</div>
+                                <input type="hidden" name="igstTotal" className="igstTotal" onChange={this.handleInvoice} />
+                            </div>
+                        </div> : <div></div>
+                    }
                     <div className="row">
                         <div className="col-9"></div>
-                        <div className="col-2">Total SGST</div>
+                        <div className="col-2">Total Tax</div>
                         <div className="col-1">
-                            <div className="sgstTotalDiv">0</div>
-                            <input type="hidden" name="sgstTotal" className="sgstTotal" onChange={this.handleInvoice} />
+                            <div className="taxTotalDiv">0</div>
+                            <input type="hidden" name="taxTotal" className="taxTotal" onChange={this.handleInvoice} />
                         </div>
-                    </div> : <div></div>
-                }
-                {this.state.showIgst ?
+                    </div>
                     <div className="row">
                         <div className="col-9"></div>
-                        <div className="col-2">Total IGST</div>
+                        <div className="col-2">Total Invoice Value</div>
                         <div className="col-1">
-                            <div className="igstTotalDiv">0</div>
-                            <input type="hidden" name="igstTotal" className="igstTotal" onChange={this.handleInvoice} />
+                            <div className="invoiceTotalDiv">0</div>
+                            <input type="hidden" name="invoiceTotal" className="invoiceTotal" onChange={this.handleInvoice} />
                         </div>
-                    </div> : <div></div>
-                }
-                <div className="row">
-                    <div className="col-9"></div>
-                    <div className="col-2">Total Tax</div>
-                    <div className="col-1">
-                        <div className="taxTotalDiv">0</div>
-                        <input type="hidden" name="taxTotal" className="taxTotal" onChange={this.handleInvoice} />
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-9"></div>
-                    <div className="col-2">Total Invoice Value</div>
-                    <div className="col-1">
-                        <div className="invoiceTotalDiv">0</div>
-                        <input type="hidden" name="invoiceTotal" className="invoiceTotal" onChange={this.handleInvoice} />
-                    </div>
-                </div>
-                <input type="submit" className="btn btn-success" value="Save as Draft" status="draft" />
-                {/* <input type="submit" className="btn btn-success" value="Create Invoice" status="invoice" /> */}
-                {/* <button className="btn btn-warning" onMouseOver={(e, param) => this.validate(e, "draft")} onClick={(e, param) => this.submitInvoice(e, "draft")}>Save as Draft</button>
-                <button className="btn btn-success" onMouseOver={(e, param) => this.validate(e, "invoice")} onClick={(e, param) => this.submitInvoice(e, "invoice")}>Create Invoice</button> */}
-            </form >
+                    <input type="submit" className="btn btn-success" name="button_1" value="Save as Draft" />
+                    <input type="submit" className="btn btn-success" name="button_2" value="Update" />
+                    <Button style={{ float: "right", backgroundColor: dangerColor, fontSize: "16px" }} onClick={() => this.handleCancel()} >Cancel</Button>
+                </form>
+            </div>
         )
     }
 }
