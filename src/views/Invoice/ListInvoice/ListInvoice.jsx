@@ -18,7 +18,6 @@ import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles';
 import jspdf from "jspdf";
 
-
 class ListInvoice extends React.Component {
   constructor(props) {
     super(props);
@@ -147,7 +146,7 @@ class ListInvoice extends React.Component {
             dataArray.push(item.invoiceTotal)
             dataArray.push(item.status)
             if (item.status === "Invoiced") {
-              dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={() => { this.handleEdit(item._id) }} style={{ color: "black" }}><EditIcon /></a></Tooltip><span>&nbsp;</span>
+              dataArray.push(<div><Tooltip id="tooltip-icon" title="Edit"><a href="javascript:void(0)" onClick={() => { this.handleEdit(item._id) }} style={{ color: "black",opacity: "0.65", pointerEvents: "none" }}><EditIcon /></a></Tooltip><span>&nbsp;</span>
                 <Tooltip id="tooltip-icon" title="View"><a href="javascript:void(0)" onClick={() => { this.handleView(item._id, item.invoiceNumber) }} style={{ color: "black" }}><ViewIcon /></a></Tooltip><span>&nbsp;</span>
                 <Tooltip id="tooltip-icon" title="Cancel"><a href="javascript:void(0)" class="button" onClick={() => { this.handleClose(item._id) }} style={{ color: "black" }}><CancelIcon /></a></Tooltip><span>&nbsp;</span>
                 <Tooltip id="tooltip-icon" title="Download as PDF"><a href="javascript:void(0)" onClick={() => { this.handlePdf(item._id, item.invoiceNumber) }} style={{ color: "black" }}><Download /></a></Tooltip></div>);
@@ -184,9 +183,9 @@ class ListInvoice extends React.Component {
         <Grid container>
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-              cardTitle={<div>Invoices<Tooltip id="tooltip-icon" title="Search">
+              cardTitle={<div>Invoices
        <Button style={{ float: "right", backgroundColor: "#76323f", color: "white" }} aria-label="add" variant="fab" onClick={this.handleOpen} ><Search />
-                </Button></Tooltip></div>
+                </Button></div>
               }
               content={
                 <Table

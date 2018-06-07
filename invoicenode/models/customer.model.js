@@ -65,7 +65,7 @@ CustomerModel.allCustomer = () =>{
             $lookup: {
                 from: "city",
                 localField: "cityCode",
-                foreignField: "cityCode",
+                foreignField: "ceditityCode",
                 as: "city_docs"
             }
 
