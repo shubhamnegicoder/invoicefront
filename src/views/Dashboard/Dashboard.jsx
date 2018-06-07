@@ -2,6 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
 import MUIDataTable from "mui-datatables";
+<<<<<<< HEAD
+import "bootstrap";
+=======
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 import Autocomplete from "react-autocomplete";
 // react plugin for creating charts
@@ -38,6 +42,19 @@ import {
 import dashboardStyle from "assets/jss/material-dashboard-react/dashboardStyle";
 var cardoptions = {}, items = []
 
+<<<<<<< HEAD
+var cardoptions = {}, items = []
+class Dashboard extends React.Component {
+
+  state = {
+    value: 0,
+    totalinvoice: "0",
+    totalsales: "0",
+    data: [],
+    id: localStorage.getItem("id"),
+    allCompany: [],
+    companyName: "",
+=======
 class Dashboard extends React.Component {
 
   state = {
@@ -48,6 +65,7 @@ class Dashboard extends React.Component {
     loading: false,
     id: localStorage.getItem("id"),
     allCompany: [],
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
     companyCode: "",
     datafound: false
   };
@@ -80,7 +98,11 @@ class Dashboard extends React.Component {
       )
   }
   ticket1 = (year, month, currentdate) => {
+<<<<<<< HEAD
+    var companyCode = this.state.companyName.split("-")[0];
+=======
     var companyCode = this.state.value.split("-")[0];
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
     axios.get("http://localhost:8080/countInvoice?id=" + this.state.id + '&companyCode=' + companyCode + '&year=' + year + '&month=' + month + '&currentDate=' + currentdate)
       .then(
         (result) => {
@@ -110,7 +132,11 @@ class Dashboard extends React.Component {
 
 
   list = (year, month, currentdate) => {
+<<<<<<< HEAD
+    var companyCode = this.state.companyName.split("-")[0];
+=======
     var companyCode = this.state.value.split("-")[0];
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
     fetch("http://localhost:8080/topTenInvoice?id=" + this.state.id + '&companyCode=' + companyCode + '&year=' + year + '&month=' + month + '&currentDate=' + currentdate, {
       method: "GET",
       cache: 'no-cache',
@@ -152,8 +178,19 @@ class Dashboard extends React.Component {
       )
   }
 
+<<<<<<< HEAD
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+  handleInput = (e) => {
+    e.preventDefault();
+
+    this.setState({ companyName: e.target.value })
+  }
+=======
 
  
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
   handleGo = (e) => {
     e.preventDefault();
     var date = new Date();
@@ -168,12 +205,43 @@ class Dashboard extends React.Component {
     //    console.log(result,"res")
     //  })
   }
+<<<<<<< HEAD
+  handleChangeIndex = index => {
+    this.setState({ value: index });
+  };
   render() {
 
+    // var tableData = this.state.data;
+=======
+  render() {
+
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
     items = [];
     this.state.allCompany.map((item, key) => {
       items.push({ label: item.companyCode + "-" + item.companyName })
     })
+<<<<<<< HEAD
+
+    return (
+      <div>
+        <form class="form-inline">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Company</span>
+            </div>
+            <Autocomplete
+              getItemValue={(item) => item.label}
+              items={items}
+              renderItem={(item, isHighlighted) =>
+                <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                  {item.label}
+                </div>
+              }
+              value={this.state.companyName} onChange={this.handleInput} onSelect={companyName => this.setState({ companyName })}
+            />
+            <button class="btn btn-success" onClick={this.handleGo}>Go</button>
+          </div>
+=======
    
     function matchStateToTerm(item, value) {
       return (
@@ -225,6 +293,7 @@ class Dashboard extends React.Component {
               </div>
             </div>
           </div >
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
         </form>
 
         <Grid container>
@@ -252,7 +321,11 @@ class Dashboard extends React.Component {
           </ItemGrid>
           <ItemGrid xs={30} sm={30} md={30}>
 
+<<<<<<< HEAD
+            <RegularCard
+=======
             <RegularCard headerColor="orange"
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
               plainCard
               cardTitle={<h5><b>Current Month Top 10 Sales</b></h5>}
               content={
@@ -262,6 +335,12 @@ class Dashboard extends React.Component {
                   tableData={this.state.data}
                 />) : <center><h6><b>"No Records Found"</b></h6></center>
 
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
               }
             />
           </ItemGrid>
