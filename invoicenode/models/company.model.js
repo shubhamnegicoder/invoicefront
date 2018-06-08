@@ -251,6 +251,26 @@ CompanyModel.getOneByCompanyName=(oneCompany)=>{
 CompanyModel.removeLogo=(removeCompany)=>{
     return CompanyModel.update(removeCompany.query,removeCompany.data);
 }
+CompanyModel.userTotalCompany = (TotalCompany) => {
+    return (CompanyModel.aggregate([
+        {
+            $match: { createdBy: TotalCompany.query.createdBy }
+
+        },
+        {
+            $group: {
+                _id: "",
+                totalcompany:{ $addToSet: "$companyCode" },
+                usertotalcompany: { $sum: 1 }
+            },
+        }, {
+            $project: {
+                usertotalcompany: 1
+            }
+        }
+
+    ]))
+}
 
 
 export default CompanyModel;

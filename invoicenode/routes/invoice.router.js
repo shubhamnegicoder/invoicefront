@@ -39,4 +39,15 @@ router.post('/editInvoice', (req, res) => {
 router.get('/oneList', (req, res) => {
     invoiceService.getOneList(req, res);
 });
+router.get('/userCountInvoice', (req, res) => {
+    invoiceService.userCountInvoice(req, res);
+});
+router.get('/userTotalSales', (req, res) => {
+    invoiceService.userInvoiceTotalSales(req, res);
+});
+router.get('/userTopTenInvoice', (req, res) => {
+    invoiceService.userTopTenInvoice(req, res);
+});
+
+
 export default router; 

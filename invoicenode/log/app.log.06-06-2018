@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 {"level":"info","message":"server started -  8080","timestamp":"2018-06-06T07:06:11.992Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-06T07:06:12.062Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-06T07:15:49.296Z"}
@@ -112,7 +111,7 @@
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-06T12:57:14.823Z"}
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-06T12:57:32.345Z"}
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-06T13:18:30.530Z"}
-=======
+
 {"level":"info","message":"server started -  8080","timestamp":"2018-06-06T04:41:23.284Z"}
 {"level":"error","message":"Could not connect to MongoDB","timestamp":"2018-06-06T04:41:23.355Z"}
 {"level":"info","message":"server started -  8080","timestamp":"2018-06-06T04:44:16.395Z"}
@@ -243,6 +242,6 @@
 {"level":"info","message":"sending all invoice...","timestamp":"2018-06-06T13:15:55.124Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-06T13:17:10.573Z"}
 {"level":"info","message":"Adding invoice...","timestamp":"2018-06-06T13:17:56.708Z"}
->>>>>>> 60455f6a360b837293e2b63ae342e64c13d90b39
-=======
->>>>>>> d0d30515f2ac84d3f76a9646a6bd257767ff52b7
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-06T13:25:42.351Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-06T13:25:53.618Z"}
+
