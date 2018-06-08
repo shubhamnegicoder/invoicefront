@@ -66,7 +66,7 @@ InvoiceModel.getCount = (invoiceToCount) => {
     return InvoiceModel.find({
         $and: [{
           
-             createdBy: invoiceToCount.query.userid, companyCode: invoiceToCount.query.companycode
+            createdBy: invoiceToCount.query.userid, companyCode: invoiceToCount.query.companycode, status: "Invoiced"
 
         }]
     }).count()
