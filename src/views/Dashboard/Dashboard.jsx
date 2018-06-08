@@ -378,7 +378,7 @@ class Dashboard extends React.Component {
               <StatsCard
                 icon={ContentCopy}
                 iconColor="blue"
-                title={this.state.value + " " +"Total Invoice"}
+                title={this.state.value + " " +"Total Invoiced"}
                 description={this.state.totalinvoice}
                 small=""
                 statIcon={Warning}
