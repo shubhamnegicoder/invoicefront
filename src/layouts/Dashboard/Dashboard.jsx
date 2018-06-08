@@ -20,6 +20,7 @@ import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import { createBrowserHistory } from "history";
 import EditInvoice from "../../views/Invoice/EditInvoice/EditInvoice";
+import ListInvoice from "../../views/Invoice/ListInvoice/ListInvoice";
 
 const hist = createBrowserHistory();
 var routing = []
@@ -35,6 +36,7 @@ const switchRoutes = (
     <Route path="/editCustomer" component={EditCustomer}></Route>
     <Route path="/viewInvoice" component={ViewInvoice}></Route>
     <Route path="/EditInvoice" component={EditInvoice}></Route>
+    <Route path="/ListInvoice" component={ListInvoice}></Route>
 
     {dashboardRoutes.map((prop, key) => {
       routing = []
