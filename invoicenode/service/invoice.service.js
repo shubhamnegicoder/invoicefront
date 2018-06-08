@@ -7,7 +7,6 @@ import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import nm from 'nodemailer'
 import rand from 'csprng'
-import ObjectId from 'bson-objectid';
 import ObjectID from 'bson-objectid';
 
 const service = {};
@@ -37,9 +36,10 @@ service.addInvoice = async (req, res) => {
         createdBy: req.body.id,
         status: req.body.status
     })
-    
+ ;
     try {
         const savedInvoice = await Invoice.addInvoice(invoiceToAdd);
+       
         logger.info('Adding invoice...');
         res.send({ "success": true, "code": "200", "msg": successMsg.addInvoice, "data": savedInvoice });
     }
@@ -169,7 +169,7 @@ service.getAllInvoice = async (req, res) => {
         var dataToFind = {}
         dataToFind = {
             query: {
-                createdBy: ObjectId(req.query.id),
+                createdBy: ObjectID(req.query.id),
                 invoiceNumber: invoiceNumber
             }
         }
@@ -185,7 +185,7 @@ service.getAllInvoice = async (req, res) => {
 service.getAllList = async (req, res) => {
     try {
         let dataTo = {
-            query: { createdBy: ObjectId(req.query.id) }
+            query: { createdBy: ObjectID(req.query.id) }
 
         };
 
@@ -204,15 +204,16 @@ service.getAllList = async (req, res) => {
 service.editInvoice = async (req, res) => {
     var invoiceToEdit;
     if (!req.body.id) {
-        return res.send({ "success": false, "code": 500, "msg": "error" })
+        return res.send({ "success": false, "code": 500, "msg": "error1121" })
     }
-    if (req.body.status) {
+    if (req.body.status=="Cancelled") {
         invoiceToEdit = {
-            query: { "_id": ObjectId(req.body.id) },
+            query: { "_id": ObjectID(req.body.id) },
             data: { "$set": { status: req.body.status } }
         }
     }
-    else {
+    else if(req.body.status=="Invoiced") {
+        console.log("invoiced",req.body)
 
         let InvoiceEdit = {
             companyAddressLine1: req.body.companyAddressLine1,
@@ -224,17 +225,18 @@ service.editInvoice = async (req, res) => {
             invoiceDate: req.body.invoiceDate,
             invoiceNumber: req.body.invoiceNumber,
             items: req.body.items,
-            itemTotal: req.body.itemTotal,
+            subTotal: req.body.subTotal,
             discountTotal: req.body.discountTotal,
             cgstTotal: req.body.cgstTotal,
             sgstTotal: req.body.sgstTotal,
             igstTotal: req.body.igstTotal,
             taxTotal: req.body.taxTotal,
             invoiceTotal: req.body.invoiceTotal,
-            modifiedBy: ObjectId(req.body.userId)
+            modifiedBy: ObjectID(req.body.id),
+            status:req.body.status
         }
         invoiceToEdit = {
-            query: { "_id": ObjectId(req.body.id) },
+            query: { "_id": ObjectID(req.body._id) },
             data: { "$set": InvoiceEdit }
 
         };
@@ -252,7 +254,7 @@ service.editInvoice = async (req, res) => {
 service.getEditList = async (req, res) => {
 
     let dataToedit = {
-        query: { "_id": ObjectId(req.query.id) }
+        query: { "_id": ObjectID(req.query.id) }
     }
     try {
 
@@ -268,7 +270,7 @@ service.getEditList = async (req, res) => {
 service.getOneList = async (req, res) => {
 
     let dataToedit = {
-        query: { "_id": ObjectId(req.query.id) }
+        query: { "_id": ObjectID(req.query.id) }
     }
     try {
 

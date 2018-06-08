@@ -289,7 +289,7 @@ InvoiceModel.userTopTenInvoice = (topTenData) => {
     ]);
 }
 InvoiceModel.editInvoice = (invoiceToEdit) => {
-    console.log(invoiceToEdit, "hiiiii");
+    console.log(invoiceToEdit, "hiiiiiMedha");
     return InvoiceModel.update(invoiceToEdit.query, invoiceToEdit.data);
 }
 InvoiceModel.getEditList = (invoiceToEdit) => {

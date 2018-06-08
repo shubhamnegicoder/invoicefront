@@ -7,11 +7,15 @@ var dropDownData = [];
 var dd;
 var temp;
 var temp2;
+//var localStorageId = localStorage.getItem("id");
+var today = new Date(),
+date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
 class AddCustomer extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            id:"",
             customerCode:"",
             customerName:"",
             CustomerGSTNo:"",
@@ -23,6 +27,7 @@ class AddCustomer extends React.Component{
             postalCode:"",
             contactNo:"",
             isActive:"",
+            createdBy:"",
             dropDownData: [],
             dropDownData2: [],
             dropDownData3: [],
@@ -117,13 +122,18 @@ class AddCustomer extends React.Component{
         )
     }
 
+    componentDidMount(){
+        
+    }
+
     componentWillMount() {
         this.data();
-            let id=localStorage.getItem("id")
-            if(id==null){
-              window.location.href="/login"
-            }
-
+        let id=localStorage.getItem("id")
+        if(id==null){
+          window.location.href="/login"
+        }
+        this.setState({id:id});
+        this.setState({createAt:today});
     }
 
     handleChange1 = (event) => {
@@ -167,6 +177,7 @@ class AddCustomer extends React.Component{
     }
 
     save=()=>{
+       
         if(this.state.customerCode==""){
             return alert("Customer code is required");       
         }

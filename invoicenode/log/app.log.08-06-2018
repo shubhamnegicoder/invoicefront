@@ -241,3 +241,5 @@
 {"level":"info","message":"sending all userTotalSales...","timestamp":"2018-06-08T09:19:31.128Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-08T09:19:42.840Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-08T09:19:59.788Z"}
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-08T09:25:51.337Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-08T09:25:51.413Z"}

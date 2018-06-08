@@ -14,6 +14,7 @@ class CustomerList extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            id:"",
             load : false,
             customerCode:"",
             customerName:"",
@@ -40,6 +41,7 @@ class CustomerList extends React.Component{
       if(id==null){
         window.location.href="/login"
       }
+      this.setState({ id: id });
     }
 
     handleClick=(e)=>{
@@ -107,12 +109,12 @@ class CustomerList extends React.Component{
     }
 
     list=()=>{
-        fetch("http://localhost:8080/allCustomer",{  
+        fetch("http://localhost:8080/allCustomer?id="+this.state.id,{  
           method: "GET",
           cache: 'no-cache', 
           mode: 'cors',
           headers:  new Headers({
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json' 
         })
       })
       .then(res => res.json())
@@ -149,10 +151,10 @@ class CustomerList extends React.Component{
         <Grid container>
           <ItemGrid xs={12} sm={12} md={12}>
             <RegularCard
-               cardTitle={<div>Customer<Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
-              <AddIcon /> </Button><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
+               cardTitle={<div>Customer<Tooltip id="tooltip-icon" title="Add Customer"><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleClick} >
+              <AddIcon /> </Button></Tooltip><Tooltip id="tooltip-icon" title="Search"><Button style={{float: "right" , backgroundColor:"#76323f",  color:"white"}} aria-label="add" variant="fab"onClick={this.handleOpen} ><Search/>
 
-            </Button></div>
+            </Button></Tooltip></div>
             }
 
             content={
