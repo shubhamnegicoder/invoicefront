@@ -3,7 +3,7 @@
  * @author Purti Singh <purti.singh@limitlessmobil.com>
  * @version 1.0.0
  * @lastModifed 03-May-2018
- * @lastModifedBy Purti
+ * @lastModifedBy Purti 
  */
 
 import mongoose from 'mongoose';
@@ -32,10 +32,10 @@ const CustomerSchema = mongoose.Schema({
 
 let CustomerModel = mongoose.model('customer', CustomerSchema);
  
-CustomerModel.allCustomer = () =>{
+CustomerModel.allCustomer = (allCustomer) =>{ 
     // return CustomerModel.find();
     return CustomerModel.aggregate([
-        { $match: {} },
+        { $match: {createdBy:allCustomer.query.createdBy} },
         {
             $lookup: {
                 from: "country",
@@ -237,8 +237,6 @@ CustomerModel.addCustomer = (addToCustomer) =>{
 
 
 CustomerModel.editCustomer = (addToCustomer) =>{
-   
-    		//console.log("_id",addToCustomer.data);
     return CustomerModel.update(addToCustomer.query,addToCustomer.data);
 }
 CustomerModel.getOneCustomer=(oneCustomer)=>{
