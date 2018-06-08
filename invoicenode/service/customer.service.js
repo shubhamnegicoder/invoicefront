@@ -1,13 +1,14 @@
 /**
  * @file(customer.service.js) All service realted to asset    
  * @author Purti Singh <purti.singh@limitlessmobil.com>
- * @version 1.0.0
+ * @version 1.0.0 
  * @lastModifed 03-May-2018
  * @lastModifedBy Purti
  */
 
 
 import CustomerModel from '../models/customer.model';
+import ObjectID from "bson-objectid";
 
 /**
  * [service is a object ]
@@ -21,10 +22,13 @@ const service = {};
  * @param  {[object]}
  * @return {[object]}
  */
-service.getAll = async (req,res)=>{
+service.getAll = async (req,res)=>{ 
+	if(!req.query.id){
+		return res.send({success:false, code:500, msg:"User Id is required"})
+	}
 	try{
-		
-		var allCustomer = await CustomerModel.allCustomer();
+		let getCustomer={query:{createdBy:ObjectID(req.query.id)}}
+		var allCustomer = await CustomerModel.allCustomer(getCustomer);
 		return res.send({success:true, code:200, msg:"Successfully found", data:allCustomer}); 
 	}catch(error){
 		return res.send({success:false, code:500, msg:"Error in getting Customer", err:error})
@@ -87,6 +91,7 @@ service.searchCustomer = async (req,res)=>{
  * @return {[object]}
  */
 service.addCustomer = async (req,res)=>{
+	console.log("+++++++++++id++++++++++++++++++",req.body.id);
 	if(req.body.customerCode == ""){
 		return res.send({success:false,code:500,msg:"Customer code is required"});
 	}
@@ -117,10 +122,10 @@ service.addCustomer = async (req,res)=>{
 	if(req.body.contactNo == ""){
 		return res.send({success:false,code:500,msg:"Contact no is required"});
 	}
-	if(req.body.status == ""){
+	if(req.body.isActive == ""){
 		return res.send({success:false,code:500,msg:"Status is required"});
 	}
-	if(req.body.createdBy == ""){
+	if(req.body.id == ""){
 		return res.send({success:false,code:500,msg:"Created by is required"});
 	}
 
@@ -135,9 +140,9 @@ service.addCustomer = async (req,res)=>{
         countryCode:req.body.countryCode,
         postalCode:req.body.postalCode,
         contactNo:req.body.contactNo,
-		 isActive: req.body.isActive,
-		createdBy: req.body.createdBy,
-		//createAt:req.body.		
+		isActive: req.body.isActive,
+		createdBy: req.body.id,
+		createAt:req.body.createAt		
     });
 	try{
 		console.log("this is add Customer");
@@ -149,8 +154,7 @@ service.addCustomer = async (req,res)=>{
 }
 
 service.editCustomer = async (req,res)=>{
-	let customerToEdit={
-		
+	let customerToEdit={		
 		customerCode:req.body.customerCode,
 		customerName:req.body.customerName,
 		customerGSTNo:req.body.customerGSTNo,
@@ -161,7 +165,9 @@ service.editCustomer = async (req,res)=>{
 		countryCode:req.body.countryCode,
 		postalCode:req.body.postalCode,
 		contactNo:req.body.contactNo,
-		isActive:req.body.isActive
+		isActive:req.body.isActive,
+		modifiedBy:req.body.id,
+		updatedAt:req.body.updatedAt
 		
 	};
 	try{
@@ -170,9 +176,7 @@ service.editCustomer = async (req,res)=>{
 			data:{"$set":customerToEdit}
 	
 		};
-		//console.log("_id",req.body._id);
 		var editCustomer = await CustomerModel.editCustomer(customerEdit);
-
 		return res.send({success:true, code:200, msg:"Successfully edited", data:editCustomer}); 
 	}catch(error){
 		return res.send({success:false, code:500, msg:"Error in editing Customer", err:error})

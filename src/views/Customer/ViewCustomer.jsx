@@ -53,8 +53,6 @@ class ViewCustomer extends React.Component{
             .then(res => res.json())
             .then(
                 (result) => {
-                    // console.log("result of fetch on",result);
-                    // console.log("result of fetch on",result.data[0].countryName);
                     this.setState({_id:result.data._id});
                     this.setState({customerCode:result.data[0].customerCode});
                     this.setState({customerName:result.data[0].customerName});
@@ -70,7 +68,6 @@ class ViewCustomer extends React.Component{
                     this.setState({stateName:result.data[0].stateName});
                     this.setState({countryName:result.data[0].countryName});
                     this.setState({ isActive: result.data[0].isActive });
-                    //console.log("cityname:",this.state.cityName,"countryname:",this.state.countryName,"stateName:",this.state.stateName);
                  
                 },
                 (error) => {

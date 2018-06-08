@@ -9,6 +9,9 @@ var dropDownData = [];
 var dd;
 var temp;
 var temp2;
+var customerCode;
+var today = new Date(),
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
 class EditCustomer extends React.Component{
     constructor(props){
@@ -16,6 +19,7 @@ class EditCustomer extends React.Component{
 
          this.state={
              _id:"",
+             id:"",
             customerCode:"",
             customerName:"",
             customerGSTNo:"",
@@ -80,7 +84,7 @@ class EditCustomer extends React.Component{
         }).then(res => res.json()).then(
             (result) => {
                 var maindata = [];
-                var localdata = []
+                var localdata = [];
                 console.log(result.data, "kkkloololo")
                 result.data && result.data.map((item, key) => {
                     maindata.push(item);
@@ -127,14 +131,17 @@ class EditCustomer extends React.Component{
     }
 
     componentWillMount() {
-     
         this.data();
         console.log(this.state.data);
         let id=localStorage.getItem("id")
         if(id==null){
-          window.location.href="/login"
+          window.location.href="/login" 
         }
+        this.setState({id:id});
+        this.setState({updatedAt:today});
     }
+
+    
 
     handleChange1 = (event) => {
         //console.log(event.target.value, "selected country")
@@ -164,8 +171,7 @@ class EditCustomer extends React.Component{
     }
 
     componentDidMount(){
-        this.fetchCustomerById();
-       
+        this.fetchCustomerById();  
            }
 
     fetchCustomerById=()=>{
@@ -185,10 +191,10 @@ class EditCustomer extends React.Component{
             })
             .then(res => res.json())
             .then(
-                (result) => {
-                    console.log("result of one customer in edit",result);
-                    this.setState({_id:result.data[0]._id});
+                (result) => { 
+                    customerCode = result.data[0].customerCode;
                     this.setState({customerCode:result.data[0].customerCode});
+                    this.setState({_id:result.data[0]._id});
                     this.setState({customerName:result.data[0].customerName});
                     this.setState({customerGSTNo:result.data[0].customerGSTNo});
                     this.setState({addressLine1:result.data[0].addressLine1});
@@ -204,6 +210,7 @@ class EditCustomer extends React.Component{
                     this.setState({ isActive: result.data[0].isActive });
                     this.data2(this.state.countryCode)
                     this.data3(this.state.stateCode)
+                    
       },
                 (error) => {
                     // alert("error",error)
@@ -233,7 +240,8 @@ class EditCustomer extends React.Component{
 
     }
 
-    update=()=>{
+    update=async()=>{
+        await this.setState({customerCode:customerCode});
         if(this.state.customerCode==""){
             return alert("Customer code is required");
         }
@@ -270,7 +278,8 @@ class EditCustomer extends React.Component{
         console.log(this.state,"edit customer")
         var val=this.props.location.search;
         var response=val.substring(val.indexOf("=")+1); 
-        fetch("http://localhost:8080/editCustomer?_id="+response,{
+       
+        fetch("http://localhost:8080/editCustomer",{
             body:JSON.stringify(this.state),
             method: "POST",
             cache: 'no-cache',
