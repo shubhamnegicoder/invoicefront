@@ -12,6 +12,7 @@ import ObjectID from "bson-objectid";
 import path from 'path';
 import formidable from "formidable";
 import fs from "fs-extra";
+import logger from '../core/logger/app.logger'
 import filesys from "fs";
 
 /**
@@ -27,7 +28,6 @@ const service = {};
  * @return {[object]}
  */
 service.getAll = async (req,res)=>{
-	console.log("**************req.query.id*************",req,"*************************");
 	if (!req.query.id) {
         return res.send({ "success": false, "code":500, msg: " User Id is missing" });
 	}
@@ -35,9 +35,8 @@ service.getAll = async (req,res)=>{
 		query: {createdBy : ObjectID(req.query.id)} 
 	};
 	try{
-		console.log("queryToFindCompany",queryToFindCompany);
 		var allCompany = await CompanyModel.allCompany(queryToFindCompany);
-		console.log(allCompany,"====== allCompany");
+		
 		
 		return res.send({success:true, code:200, msg:"Successfully found", data:allCompany}); 
 	}
@@ -100,6 +99,24 @@ service.addCompany = async (req,res)=>{
 			return res.send({success:false, code:500, msg:"Company name already exist"});	
 		}
 	});
+}
+service.userTotalCompany = async (req, res) => {
+	console.log(req.query.userId, "user")
+
+	try {
+		let TotalCompany = {
+			query: { createdBy: ObjectID(req.query.userId) }
+		}
+		const userTotalCompany = await CompanyModel.userTotalCompany(TotalCompany);
+		console.log(userTotalCompany, "totalcompany")
+		logger.info('sending all userTotalCompany...');
+		res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": userTotalCompany })
+	}
+	catch (err) {
+		logger.error('Error in getting UserTotalCompany- ' + err);
+		res.send({ "success": false, "code": "500", "msg": "not found UserTotalCompany", "err": err });
+
+	}
 }
 
 service.addFile = async(req,res,hashLogo)=>{
