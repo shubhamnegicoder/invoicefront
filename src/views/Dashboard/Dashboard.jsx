@@ -44,12 +44,17 @@ class Dashboard extends React.Component {
     value: '',
     totalinvoice: "0",
     totalsales: "0",
+    userTotalSales:"0",
+    userTotalInvoice:"0",
+    userTotalCompany:"0",
+    userData:[],
     data: [],
     loading: false,
     id: localStorage.getItem("id"),
     allCompany: [],
     companyCode: "",
-    datafound: false
+    datafound: false,
+    userDetails:false,
   };
 
 
@@ -60,8 +65,12 @@ class Dashboard extends React.Component {
     if (id == null) {
       window.location.href = "/login"
     }
-
-  }
+    this.setState({userDetails:true})
+    this.allusertotalinvoicedata(); 
+    this.allusertotalSalesdata();
+    this.allusertotalCompanydata();
+    this.userlist();
+   }
 
 
   allCompany = () => {
@@ -79,9 +88,51 @@ class Dashboard extends React.Component {
         }
       )
   }
+  allusertotalinvoicedata=()=>{
+    
+    axios.get("http://localhost:8080/userCountInvoice?userId="+this.state.id)
+    .then(
+
+    (result)=>{
+      this.setState({userTotalInvoice:result.data.data})
+    },
+    (error)=>{
+
+    }
+    )
+  }
+  allusertotalSalesdata=()=>{
+    axios.get("http://localhost:8080/userTotalSales?userId=" + this.state.id)
+      .then(
+
+        (result) => {
+         
+          this.setState({ userTotalSales: result.data.data[0].usertotalsales})
+        },
+        (error) => {
+
+        }
+      )
+  }
+  allusertotalCompanydata=()=>{
+    axios.get("http://localhost:8080/userTotalCompany?userId=" + this.state.id)
+      .then(
+
+        (result) => {
+          console.log(result.data.data[0],"companmy")
+         
+          this.setState({ userTotalCompany: result.data.data[0].usertotalcompany})
+        },
+        (error) => {
+
+        }
+      )
+  }
+  
+
   ticket1 = (year, month, currentdate) => {
     var companyCode = this.state.value.split("-")[0];
-    axios.get("http://localhost:8080/countInvoice?id=" + this.state.id + '&companyCode=' + companyCode + '&year=' + year + '&month=' + month + '&currentDate=' + currentdate)
+    axios.get("http://localhost:8080/countInvoice?id=" + this.state.id + '&companyCode=' + companyCode )
       .then(
         (result) => {
           console.log("result of count invoice", result.data.data);
@@ -96,7 +147,7 @@ class Dashboard extends React.Component {
 
   ticket2 = (year, month, currentdate) => {
     var companyCode = this.state.value.split("-")[0];
-    axios.get("http://localhost:8080/sales?id=" + this.state.id + '&companyCode=' + companyCode + '&year=' + year + '&month=' + month + '&currentDate=' + currentdate)
+    axios.get("http://localhost:8080/sales?id=" + this.state.id + '&companyCode=' + companyCode )
       .then(
         (result) => {
           this.setState({ totalsales: result.data.data[0].total });
@@ -111,7 +162,7 @@ class Dashboard extends React.Component {
 
   list = (year, month, currentdate) => {
     var companyCode = this.state.value.split("-")[0];
-    fetch("http://localhost:8080/topTenInvoice?id=" + this.state.id + '&companyCode=' + companyCode + '&year=' + year + '&month=' + month + '&currentDate=' + currentdate, {
+    fetch("http://localhost:8080/topTenInvoice?id=" + this.state.id + '&companyCode=' + companyCode, {
       method: "GET",
       cache: 'no-cache',
       mode: 'cors',
@@ -132,12 +183,54 @@ class Dashboard extends React.Component {
               dataArray.push(responseData.invoiceDate.split("T")[0])
               dataArray.push(responseData.customerName)
               dataArray.push(responseData.invoiceTotal)
-              dataArray.push(responseData.isActive ? "Yes" : "No")
+              dataArray.push(responseData.status)
               mainArray.push(dataArray)
             })
 
             this.setState({
               data: mainArray, datafound: true
+            })
+          }
+          else {
+            this.setState({
+              datafound: false
+            })
+          }
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
+  userlist = (year, month, currentdate) => {
+    var companyCode = this.state.value.split("-")[0];
+    fetch("http://localhost:8080/userTopTenInvoice?id=" + this.state.id , {
+      method: "GET",
+      cache: 'no-cache',
+      mode: 'cors',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+        // 'authorization':"Key@123" 
+      })
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result.data, "data")
+          if (result.data.length != 0) {
+            var mainArray = [];
+            result.data.forEach((responseData) => {
+              var dataArray = [];
+              dataArray.push(responseData.invoiceNumber)
+              dataArray.push(responseData.invoiceDate.split("T")[0])
+              dataArray.push(responseData.customerName)
+              dataArray.push(responseData.invoiceTotal)
+              dataArray.push(responseData.status)
+              mainArray.push(dataArray)
+            })
+
+            this.setState({
+              userData: mainArray, datafound: true
             })
           }
           else {
@@ -163,12 +256,14 @@ class Dashboard extends React.Component {
     this.ticket1(year, ++month, currentdate);
     this.ticket2(year, month, currentdate)
     this.list(year, month, currentdate)
+    this.setState({userDetails:false})
     //  axios.get("http://localhost:8080/countInvoice?id="+this.state.id+'& customerName='+this.state.customerName+'& date='+year+'-'+month)
     //  .then((result)=>{
     //    console.log(result,"res")
     //  })
   }
   render() {
+   
 
     items = [];
     this.state.allCompany.map((item, key) => {
@@ -199,7 +294,7 @@ class Dashboard extends React.Component {
                   shouldItemRender={matchStateToTerm}
                   getItemValue={item => item.label}
                   onSelect={value => this.setState({ value })}
-                  onChange={e => this.setState({ value: e.target.value })}
+                  onChange={e => this.setState({ value: e.target.value, userDetails: true})}
                   renderItem={(item, isHighlighted) => (
                     <div
                       className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
@@ -210,7 +305,7 @@ class Dashboard extends React.Component {
                   renderMenu={(items, value) => (
                     <div className="menu">
                       {value === '' ? (
-                        <div className="item">Company Names</div>
+                        <div className="item">Type for Company Names</div>
                       ) : this.state.loading ? (
                         <div className="item">Loading...</div>
                       ) : items.length === 0 ? (
@@ -227,13 +322,16 @@ class Dashboard extends React.Component {
           </div >
         </form>
 
+        
+         
+        {this.state.userDetails ? (
         <Grid container>
-          <ItemGrid xs={12} sm={6} md={3}>
+         <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
               icon={ContentCopy}
               iconColor="blue"
-              title="Current Month Total Invoice"
-              description={this.state.totalinvoice}
+              title="User Total Invoiced"
+              description={this.state.userTotalInvoice}
               small=""
               statIcon={Warning}
               statIconColor=""
@@ -244,9 +342,19 @@ class Dashboard extends React.Component {
             <StatsCard
               icon={Store}
               iconColor="green"
-              title="Current Month Total Sales"
-              description={this.state.totalsales}
+              title="User Total Sales"
+              description={this.state.userTotalSales}
               statIcon={DateRange}
+              statText=""
+            />
+          </ItemGrid>
+          <ItemGrid xs={12} sm={6} md={3}>
+            <StatsCard
+              icon={Accessibility}
+              iconColor="blue"
+              title="User Total Companies"
+              description={this.state.userTotalCompany}
+              statIcon={Update}
               statText=""
             />
           </ItemGrid>
@@ -254,18 +362,59 @@ class Dashboard extends React.Component {
 
             <RegularCard headerColor="orange"
               plainCard
-              cardTitle={<h5><b>Current Month Top 10 Sales</b></h5>}
+              cardTitle={<h5><b> User Recent 10 Sales</b></h5>}
               content={
                 this.state.datafound ? (<Table
                   tableHeaderColor="primary"
                   tableHead={["InvoiceNo", "InvoiceDate", "Customer", "Amount", "Status"]}
-                  tableData={this.state.data}
+                  tableData={this.state.userData}
                 />) : <center><h6><b>"No Records Found"</b></h6></center>
 
               }
             />
-          </ItemGrid>
-        </Grid>
+            </ItemGrid></Grid>) : 
+          (<Grid container>
+             <ItemGrid xs={12} sm={6} md={3}>
+              <StatsCard
+                icon={ContentCopy}
+                iconColor="blue"
+                title={this.state.value + " " +"Total Invoiced"}
+                description={this.state.totalinvoice}
+                small=""
+                statIcon={Warning}
+                statIconColor=""
+
+              />
+            </ItemGrid>
+              <ItemGrid xs={12} sm={6} md={3}>
+                <StatsCard
+                  icon={Store}
+                  iconColor="green"
+                title={this.state.value + " " + "Total Sales"}
+                  description={this.state.totalsales}
+                  statIcon={DateRange}
+                  statText=""
+                />
+              </ItemGrid>
+              
+              <ItemGrid xs={30} sm={30} md={30}>
+
+                <RegularCard headerColor="orange"
+                  plainCard
+                cardTitle={<h5><b>{this.state.value +" "+ "Recent 10 Sales"}</b></h5>}
+                  content={
+                    this.state.datafound ? (<Table
+                      tableHeaderColor="primary"
+                      tableHead={["InvoiceNo", "InvoiceDate", "Customer", "Amount", "Status"]}
+                      tableData={this.state.data}
+                    />) : <center><h6><b>"No Records Found"</b></h6></center>
+
+                  }
+                />
+              </ItemGrid>
+              </Grid>
+              )
+            }
       </div>
     );
   }

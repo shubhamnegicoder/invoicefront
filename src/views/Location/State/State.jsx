@@ -18,6 +18,7 @@ class State extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id:localStorage.getItem("id"),
             load: false,
             mydata: [],
             stateCode: "",
@@ -44,7 +45,7 @@ class State extends React.Component {
       })
 
     clickaction = () => {
-        this.setState({  stateCode: "",
+        this.setState({ id:localStorage.getItem("id"), stateCode: "",
             stateName: "",
             countryCode: "",
             _id: ""})
@@ -70,7 +71,7 @@ class State extends React.Component {
     }
   
     data = () => {
-        axios.get("http://localhost:8080/allState?id=5af170d60c06c02559273df1")
+        axios.get("http://localhost:8080/allState?id="+this.state.id)
             .then(
                 (result) => {
                     console.log(result.data.data," get all state")

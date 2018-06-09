@@ -23,8 +23,9 @@ var temp,cardoption;
 export default class App extends React.Component {
 
     constructor(props) {
+
         super(props);
-        this.state = { countryCode: '', stateCode: '', cityCode: '', cityName: '', dropDownData: [], dropDownData2: [], userId: "",isActive:""};
+        this.state = { id:localStorage.getItem("id"), countryCode: '', stateCode: '', cityCode: '', cityName: '', dropDownData: [], dropDownData2: [], userId: "",isActive:""};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -76,7 +77,7 @@ export default class App extends React.Component {
     
     data = () => {
       
-        fetch("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1", {
+        fetch("http://localhost:8080/allCountry?id="+this.state.id, {
             method: "GET",
             cache: 'no-cache',
             mode: 'cors',

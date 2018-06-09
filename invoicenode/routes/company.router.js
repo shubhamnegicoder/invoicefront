@@ -45,5 +45,8 @@ router.get('/getOneCompany', (req, res) => {
 router.post('/removeLogo', (req, res) => {
     companyService.removeLogo(req, res);
 });
+router.get('/userTotalCompany', (req, res) => {
+    companyService.userTotalCompany(req, res);
+});
  
 export default router;

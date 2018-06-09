@@ -42,7 +42,7 @@ class ListInvoice extends React.Component {
     this.setState({ load: false });
   };
   onmodal = (data) => {
-    console.log(data, "yha append krana")
+
     // console.log("listabc = ",result.data)
     var mainArray = [];
     data.forEach((item, index) => {

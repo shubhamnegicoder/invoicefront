@@ -42,7 +42,7 @@ class EditCompany extends React.Component{
     }
     
     data = () => {
-        fetch("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1", {
+        fetch("http://localhost:8080/allCountry?id="+this.state.id, {
             method: "GET",
             cache: 'no-cache',
             mode: 'cors',

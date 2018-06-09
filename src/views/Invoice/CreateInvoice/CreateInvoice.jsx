@@ -57,7 +57,7 @@ export default class CreateInvoice extends React.Component {
         }
         if (param === "customer") {
             axios
-                .get("http://localhost:8080/allCustomer")
+                .get("http://localhost:8080/allCustomer?id="+this.state.id)
                 .then((res) => {
                     console.log("response from /allCustomer", res);
                     let tempData = [];

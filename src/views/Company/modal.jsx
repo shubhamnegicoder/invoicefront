@@ -22,6 +22,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id:localStorage.getItem("id"),
             companyName: "",
             countryCode: "",
             stateCode: "",
@@ -34,8 +35,8 @@ export default class App extends React.Component {
 
     }
 
-    data1 = () => {
-        axios("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1")
+    data = () => {
+        axios("http://localhost:8080/allCountry?id="+localStorage.getItem("id"))
             .then(
                 (result) => {
                     var maindata = [];
@@ -68,7 +69,7 @@ export default class App extends React.Component {
                 }
             )
     }
-    ddd = this.data1();
+    // ddd = this.data1();
     data3 = (temp2) => {
         axios("http://localhost:8080/allSelectedCity?stateCode=" + temp2)
             .then(
@@ -92,8 +93,10 @@ export default class App extends React.Component {
         let id = localStorage.getItem("id")
         if (id == null) {
             window.location.href = "/login"
-            this.data1()
+            
         }
+        this.setState({id:id})
+        this.data();
     }
     handleChange1 = (event) => {
         // console.log(event.target.value, "selected country")
