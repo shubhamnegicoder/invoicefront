@@ -189,7 +189,7 @@ service.editInvoice = async (req, res) => {
             data: { "$set": { status: req.body.status } }
         }
     }
-    else if(req.body.status=="Invoiced") {
+    else if(req.body.status!=="Cancelled") {
         console.log("invoiced",req.body)
 
         let InvoiceEdit = {
@@ -288,9 +288,6 @@ service.searchInvoice = async (req, res) => {
         if (req.query.customerName !== '') {
             query.customerName = { $regex: '.*' + req.query.customerName + '.*' }
         }
-
-
-        // console.log(query,"kookokokokokoklllllllllllll")
         var oneInvoice = await Invoice.searchInvoice(query);
         // console.log(oneCustomer,"lllllllllllll")
         return res.send({ success: true, code: 200, msg: "Successfully found", data: oneInvoice });

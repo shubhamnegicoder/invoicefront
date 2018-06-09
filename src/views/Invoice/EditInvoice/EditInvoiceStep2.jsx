@@ -37,6 +37,7 @@ export default class EditInvoiceStep2 extends React.Component {
             customerCode: "",
             customerName: "",
             customerState: "",
+            ItemQty:""
 
             // validate: false
         }
@@ -73,7 +74,50 @@ export default class EditInvoiceStep2 extends React.Component {
 
         }
     }
+    add = () => {
+        var i = 0;
+        var query=window.location.search.substring(window.location.search.indexOf("=")+1);
+        this.setState({query:query});
+        axios.get("http://localhost:8080/oneList?id=" + query)
+            .then((result) => {
+                    
+                    result.data.data.map((item) => {
+                        console.log(item,"items")
+                        
+                            this.setState({ cgstTotal: item.cgstTotal }),
+                            this.setState({ discountTotal: item.discountTotal }),
+                            this.setState({ igstTotal: item.igstTotal }),
+                            this.setState({ invoiceTotal: item.invoiceTotal })
+                            result.data.data[0].items.map((items) => {
+                          
+                                    this.setState({ CGSTRate: items.cgstRate }),
+                                    this.setState({ CGSTAmount: items.cgstAmount }),
+                                    this.setState({ SGSTRate: items.sgstRate }),
+                                    this.setState({ SGSTAmount: items.sgstAmount }),
+                                    this.setState({ IGSTRate: items.igstRate }),
+                                    this.setState({ IGSTAmount: items.igstAmount }),
+                                    this.setState({ ItemCode: items.itemCode }),
+                                    this.setState({ ItemDiscount: items.itemDiscount }),
+                                    this.setState({ ItemQty: items.itemQty }),
+                                    this.setState({ ItemRate: items.itemRate }),
+                                    this.setState({ ItemTotal: items.itemTotal }),
+                                    this.addRow();
+        
+                            })
+                            
+                    })
+                    //access the results here....
+                    console.log(result.data.data[0].items.length, "length of an array")
+
+             
+
+                
+
+            })
+    }
     addRow = (params) => {
+        this.setState({invoiceRow:[]})
+        console.log(this.state,"medha states")
         invoiceRow.push(
             <div style={{ marginTop: '5px' }}>
                 <div
@@ -85,6 +129,7 @@ export default class EditInvoiceStep2 extends React.Component {
                             id={"select" + invoiceRow.length}
                             name={"itemCode" + invoiceRow.length}
                             className="form-control"
+                            value={this.state.ItemCode}
                             onChange={(e, param) => this.handleDropdown(e, "items")}
                         // required={this.state.validate ? required : ""}
                         />
@@ -112,21 +157,21 @@ export default class EditInvoiceStep2 extends React.Component {
                         <input
                             type="text"
                             className={"form-control qty" + this.state.invoiceRow.length}
-                            name={"qty" + this.state.invoiceRow.length}
-                            onChange={(e) => this.handleInvoice(e)}
+                            name={"ItemQty"} value={this.state.ItemQty}
+                            onChange={this.handleInvoice}
                             // required
                             pattern="^[0-9]*$"
                             title="Number only"
                         />
                     </div>
-                    <div className={"col rate" + this.state.invoiceRow.length} style={{ textAlign: 'center' }}>0</div>
+                    <div className={"col rate" + this.state.invoiceRow.length} style={{ textAlign: 'center' }}>{this.state.ItemRate}</div>
                     <input
                         type="hidden"
                         className={"form-control itemRate" + this.state.invoiceRow.length}
                         name={"itemRate" + invoiceRow.length}
                         onChange={(e) => this.handleInvoice(e)}
                     />
-                    <div className={"col total" + this.state.invoiceRow.length} style={{ textAlign: 'center' }}>0</div>
+                    <div className={"col total" + this.state.invoiceRow.length} style={{ textAlign: 'center' }}>{this.state.ItemTotal}</div>
                     <input
                         type="hidden"
                         className={"form-control itemTotal" + this.state.invoiceRow.length}
@@ -138,6 +183,7 @@ export default class EditInvoiceStep2 extends React.Component {
                             type="text"
                             className={"form-control discount" + this.state.invoiceRow.length}
                             name={"discount" + this.state.invoiceRow.length}
+                            value={this.state.ItemDiscount}
                             onChange={(e) => this.handleInvoice(e)}
                             defaultValue={0}
                         />
@@ -153,6 +199,7 @@ export default class EditInvoiceStep2 extends React.Component {
                                     className={"form-control cgstRate" + this.state.invoiceRow.length}
                                     style={{ maxWidth: '65px' }}
                                     onChange={this.handleInvoice}
+                                    value={this.state.CGSTRate}
                                 />
                                 &nbsp;Amt. :&nbsp;
                                 <div name={"CGSTAmount" + this.state.invoiceRow.length} className={"cgstamnt" + this.state.invoiceRow.length}>0</div>
@@ -161,6 +208,7 @@ export default class EditInvoiceStep2 extends React.Component {
                                     className={"form-control cgstAmount" + this.state.invoiceRow.length}
                                     name={"cgstAmount" + invoiceRow.length}
                                     onChange={(e) => this.handleInvoice(e)}
+                                    value={this.state.CGSTAmount}
                                 />
                             </div> : <div></div>
                         }
@@ -172,6 +220,7 @@ export default class EditInvoiceStep2 extends React.Component {
                                     name={"sgstRate" + this.state.invoiceRow.length}
                                     className={"form-control sgstRate" + this.state.invoiceRow.length}
                                     style={{ maxWidth: '65px' }}
+                                    value={this.state.SGSTRate}
                                     onChange={this.handleInvoice}
                                 />
                                 &nbsp;Amt. :&nbsp;
@@ -181,6 +230,7 @@ export default class EditInvoiceStep2 extends React.Component {
                                     className={"form-control sgstAmount" + this.state.invoiceRow.length}
                                     name={"sgstAmount" + invoiceRow.length}
                                     onChange={(e) => this.handleInvoice(e)}
+                                    value={this.state.SGSTAmount}
                                 />
                             </div> : <div></div>
                         }
@@ -193,6 +243,7 @@ export default class EditInvoiceStep2 extends React.Component {
                                     name={"igstRate" + this.state.invoiceRow.length}
                                     className={"form-control igstRate" + this.state.invoiceRow.length}
                                     onChange={this.handleInvoice}
+                                    value={this.state.IGSTRate}
                                     style={{ maxWidth: '65px' }}
                                 />
                                 &nbsp;Amt. :&nbsp;
@@ -202,6 +253,7 @@ export default class EditInvoiceStep2 extends React.Component {
                                     className={"form-control igstAmount" + this.state.invoiceRow.length}
                                     name={"igstAmount" + invoiceRow.length}
                                     onChange={(e) => this.handleInvoice(e)}
+                                    value={this.state.IGSTAmount}
                                 />
                             </div> : <div></div>
                         }
@@ -290,119 +342,15 @@ export default class EditInvoiceStep2 extends React.Component {
         }
     }
     handleInvoice = (e) => {
+
+     alert(e.target.name)
         this.setState({
-            [e.target.name]: e.target.value
+            ItemQty: e.target.value
         })
+        this.setState({invoiceRow:this.state.invoiceRow})
     }
 
-    handleUpdate = (e) => {
-        e.preventDefault();
-        console.log("e.target", e.target);
-        let items = [], item = {}, finalData = {};
-        let parsedData = parse(e.target);
-        console.log("parsed data", parsedData);
-        items = items.filter(item => item.itemName != undefined);
-        if (this.state.showIgst === true) {
-            for (var i = 0; i < invoiceRow.length; i++) {
-                item.itemCode = parsedData["itemCode" + i];
-                item.itemName = parsedData["itemName" + i];
-                item.itemHsn = parsedData["hsn" + i];
-                item.itemQty = parsedData["qty" + i];
-                item.itemRate = parsedData["itemRate" + i];
-                item.itemTotal = parsedData["itemTotal" + i];
-                item.itemDiscount = parsedData["discount" + i];
-                item.cgstRate = 0;
-                item.cgstAmount = 0;
-                item.sgstRate = 0;
-                item.sgstAmount = 0;
-                item.igstRate = parsedData["igstRate" + i];
-                item.igstAmount = (parsedData["igstAmount" + i]);
-                items.push(item);
-                item = {};
-            }
-            finalData = {
-                id: this.props.id,
-                invoiceDate: this.props.invoiceDate,
-                invoiceNumber: this.props.invoiceNo,
-                companyName: this.props.companyName,
-                companyCode: this.props.companyCode,
-                companyAddressLine1: this.props.companyAddressLine1,
-                companyAddressLine2: this.props.companyAddressLine2,
-                customerName: this.props.customerName,
-                customerCode: this.props.customerCode,
-                customerAddressLine1: this.props.customerAddressLine1,
-                customerAddressLine2: this.props.customerAddressLine2,
-                items: items,
-                subTotal: parsedData.subTotal,
-                discountTotal: parsedData.discountTotal,
-                cgstTotal: 0,
-                sgstTotal: 0,
-                igstTotal: parsedData.igstTotal,
-                taxTotal: parsedData.taxTotal,
-                invoiceTotal: parsedData.invoiceTotal,
-                status: "Drafted"
-            }
-        }
-        else {
-            for (var i = 0; i < invoiceRow.length; i++) {
-                item.itemCode = parsedData["itemCode" + i];
-                item.itemName = parsedData["itemName" + i];
-                item.itemHsn = parsedData["hsn" + i];
-                item.itemQty = parsedData["qty" + i];
-                item.itemRate = parsedData["itemRate" + i];
-                item.itemTotal = parsedData["itemTotal" + i];
-                item.itemDiscount = parsedData["discount" + i];
-                item.cgstRate = parsedData["cgstRate" + i];
-                item.cgstAmount = (parsedData["cgstAmount" + i]);
-                item.sgstRate = parsedData["sgstRate" + i];
-                item.sgstAmount = (parsedData["sgstAmount" + i]);
-                item.igstRate = 0;
-                item.igstAmount = 0;
-                items.push(item);
-                item = {};
-            }
-            finalData = {
-                id: this.props.id,
-                invoiceDate: this.props.invoiceDate,
-                invoiceNumber: this.props.invoiceNo,
-                companyName: this.props.companyName,
-                companyCode: this.props.companyCode,
-                companyAddressLine1: this.props.companyAddressLine1,
-                companyAddressLine2: this.props.companyAddressLine2,
-                customerName: this.props.customerName,
-                customerCode: this.props.customerCode,
-                customerAddressLine1: this.props.customerAddressLine1,
-                customerAddressLine2: this.props.customerAddressLine2,
-                items: items,
-                subTotal: parsedData.subTotal,
-                discountTotal: parsedData.discountTotal,
-                cgstTotal: parsedData.cgstTotal,
-                sgstTotal: parsedData.sgstTotal,
-                igstTotal: 0,
-                taxTotal: parsedData.taxTotal,
-                invoiceTotal: parsedData.invoiceTotal,
-                status: "Drafted"
-            }
-        } console.log("final data", finalData)
-        axios
-            .post("http://localhost:8080/editInvoice",
-                finalData
 
-            )
-
-            .then((res) => {
-                console.log(res, "data123")
-                if (res.data.success == true) {
-                    swal({
-                        title: "Invoice Updated Successfully !",
-                        icon: "success",
-                    });
-                }
-
-
-            })
-
-    }
     handleCancel = () => {
         window.location.href = "/ListInvoice"
     }
@@ -421,7 +369,6 @@ export default class EditInvoiceStep2 extends React.Component {
     }
     createInvoice = (e) => {
         let data = parse(e.target);
-        console.log("data", data);
         let element = $(document.activeElement).val();
         if (element === "Save as Draft") {
             let items = [], item = {}, finalData = {};
@@ -448,6 +395,7 @@ export default class EditInvoiceStep2 extends React.Component {
                 }
                 finalData = {
                     id: this.props.id,
+                    _id: this.props.query,
                     invoiceDate: this.props.invoiceDate,
                     invoiceNumber: this.props.invoiceNo,
                     companyName: this.props.companyName,
@@ -489,6 +437,7 @@ export default class EditInvoiceStep2 extends React.Component {
                 }
                 finalData = {
                     id: this.props.id,
+                    _id: this.props.query,
                     invoiceDate: this.props.invoiceDate,
                     invoiceNumber: this.props.invoiceNo,
                     companyName: this.props.companyName,
@@ -511,12 +460,13 @@ export default class EditInvoiceStep2 extends React.Component {
                 }
             }
             superagent
-                .post("http://localhost:8080/addInvoice")
+                .post("http://localhost:8080/editInvoice")
                 .send(finalData)
                 .then((res) => {
+                    console.log(res.body, "dadtataa")
                     if (res.body.success) {
                         swal({
-                            text: "Invoice Saved !",
+                            text: "Saved as Draft !",
                             icon: "success"
                         }).then(() => {
                             window.location.href = "/ListInvoice"
@@ -524,12 +474,13 @@ export default class EditInvoiceStep2 extends React.Component {
                     }
                 })
         }
-        if (element === "Update") {
+        if (element === "Create Invoice") {
+            console.log("hey")
             e.preventDefault();
             console.log("e.target", e.target);
             let items = [], item = {}, finalData = {};
             let parsedData = parse(e.target);
-            console.log("parsed data", parsedData);
+            console.log("hey", parsedData);
             items = items.filter(item => item.itemName != undefined);
             if (this.state.showIgst === true) {
                 for (var i = 0; i < invoiceRow.length; i++) {
@@ -551,6 +502,7 @@ export default class EditInvoiceStep2 extends React.Component {
                 }
                 finalData = {
                     id: this.props.id,
+                    _id: this.props.query,
                     invoiceDate: this.props.invoiceDate,
                     invoiceNumber: this.props.invoiceNo,
                     companyName: this.props.companyName,
@@ -592,7 +544,7 @@ export default class EditInvoiceStep2 extends React.Component {
                 }
                 finalData = {
                     id: this.props.id,
-                    _id:this.props.query,
+                    _id: this.props.query,
                     invoiceDate: this.props.invoiceDate,
                     invoiceNumber: this.props.invoiceNo,
                     companyName: this.props.companyName,
@@ -617,25 +569,24 @@ export default class EditInvoiceStep2 extends React.Component {
             axios
                 .post("http://localhost:8080/editInvoice",
                     finalData
-    
                 )
-    
+
                 .then((res) => {
                     console.log(res, "data123")
                     if (res.data.success == true) {
                         swal({
-                            title: "Invoice Updated Successfully !",
+                            title: "Invoice Created Successfully !",
                             icon: "success",
                         }).then(() => {
                             window.location.href = "/ListInvoice"
                         })
                     }
-    
-    
+
+
                 })
-    
+
         }
-        
+
     }
     componentWillMount() {
         if (this.props.companyState === this.props.customerState) {
@@ -655,6 +606,7 @@ export default class EditInvoiceStep2 extends React.Component {
         this.getData("items");
         this.getData("tax");
         invoiceRow = [];
+        this.add();
     }
     componentDidUpdate() {
         for (var i = 0; i < this.state.invoiceRow.length; i++) {
@@ -737,13 +689,16 @@ export default class EditInvoiceStep2 extends React.Component {
         }
     }
     render() {
+        console.log(this.state.invoiceRow,"Row",this.state.ItemQty)
+       
         return (
             <div>
-                <form class="container" onSubmit={this.createInvoice}>
-                    {this.state.addRow ? this.addRow() : ""}
+                <form class="container" onSubmit={this.createInvoice} noValidate={this.state.validate}>
+                  
                     <h2 className="text-align-center">Step 2</h2>
                     <hr />
                     {/* Invoice Date & Invoice Number */}
+                
                     <div className="row">
                         <div className="col" style={{ textAlign: 'left' }}>
                             {"Invoice Date: " + this.props.invoiceDate}
@@ -786,8 +741,10 @@ export default class EditInvoiceStep2 extends React.Component {
                     {/* Invoice Row Fields */}
                     {
                         this.state.invoiceRow.map((item, key) => {
+                            console.log(this.state.invoiceRow,"loopRow")
                             return item
                         })
+                        
                     }
                     <hr />
                     {/* Add Row Button */}
@@ -861,8 +818,8 @@ export default class EditInvoiceStep2 extends React.Component {
                             <input type="hidden" name="invoiceTotal" className="invoiceTotal" onChange={this.handleInvoice} />
                         </div>
                     </div>
-                    <input type="submit" className="btn btn-success" name="button_1" value="Save as Draft" />
-                    <input type="submit" className="btn btn-success" name="button_2" value="Update" />
+                    <input type="submit" className="btn btn-warning" name="button_1" value="Save as Draft" onMouseOver={(e, param) => this.validate(e, "draft")} />&nbsp;&nbsp;&nbsp;
+                    <input type="submit" className="btn btn-success" name="button_2" value="Create Invoice" onMouseOver={(e, param) => this.validate(e, "invoice")} />
                     <Button style={{ float: "right", backgroundColor: dangerColor, fontSize: "16px" }} onClick={() => this.handleCancel()} >Cancel</Button>
                 </form>
             </div>
