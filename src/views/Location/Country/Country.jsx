@@ -23,6 +23,7 @@ class Country extends React.Component {
         this.state = {
             load: false,
             mydata: [],
+            id:localStorage.getItem("id"),
             countryName: "",
             countryCode: "",
             _id: "",
@@ -69,7 +70,7 @@ class Country extends React.Component {
 
 
     data = () => {
-        axios.get("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1")
+        axios.get("http://localhost:8080/allCountry?id="+this.state.id)
             .then(
                 (result) => {
 

@@ -14,7 +14,7 @@ class AddCompany extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            id:"",
+            id:localStorage.getItem("id"),
             companyCode:"",
             companyName:"",
             companyGSTNo:"",
@@ -63,7 +63,7 @@ class AddCompany extends React.Component {
     }
 
     data = () => {
-        fetch("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1", {
+        fetch("http://localhost:8080/allCountry?id="+this.state.id, {
             method: "GET",
             cache: 'no-cache',
             mode: 'cors',
@@ -138,13 +138,16 @@ class AddCompany extends React.Component {
     }
 
     componentWillMount() {
-        this.data();
+        
         let id=localStorage.getItem("id")
         if(id==null){
           window.location.href="/login"
         }
         this.setState({id:id});
+        this.data();
+        
     }
+   
 
     handleClose = (e) => {
         e.preventDefault();

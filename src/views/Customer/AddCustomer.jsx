@@ -1,6 +1,7 @@
 import React from "react";
 import { Button} from "material-ui";
 import swal from "sweetalert";
+import axios from "axios"
 import Checkbox from 'material-ui/Checkbox';
 var maindata = [];
 var dropDownData = [];
@@ -15,7 +16,7 @@ class AddCustomer extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            id:"",
+            id:localStorage.getItem("id"),
             customerCode:"",
             customerName:"",
             CustomerGSTNo:"",
@@ -35,21 +36,13 @@ class AddCustomer extends React.Component{
     }
 
     data = () => {
-
-        fetch("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1", {
-            method: "GET",
-            cache: 'no-cache',
-            mode: 'cors',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'authorization': "Key@123"
-            })
-        }).then(res => res.json()).then(
+        axios.get("http://localhost:8080/allCountry?id="+this.state.id)
+        .then(
             (result) => {
                 var maindata = [];
                 var localdata = []
                 console.log(result.data, "kkk")
-                result.data.map((item, key) => {
+                result.data.data.map((item, key) => {
                     maindata.push(item);
 
                 })
@@ -122,18 +115,17 @@ class AddCustomer extends React.Component{
         )
     }
 
-    componentDidMount(){
-        
-    }
+   
 
     componentWillMount() {
-        this.data();
+        
         let id=localStorage.getItem("id")
         if(id==null){
           window.location.href="/login"
         }
         this.setState({id:id});
         this.setState({createAt:today});
+        this.data();
     }
 
     handleChange1 = (event) => {
