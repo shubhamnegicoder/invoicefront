@@ -61,17 +61,20 @@ export default class CreateInvoiceStep2 extends React.Component {
                     id={"btn_" + this.state.invoiceRow.length}
                 >
                     <div className="col-2">
-                        <input type="text" list="product"
+                        <input
+                            list="product"
                             id={"select" + invoiceRow.length}
-                            name={"itemCode" + invoiceRow.length}
+                            // name={"itemCode" + invoiceRow.length}
                             className="form-control"
                             onChange={(e, param) => this.handleDropdown(e, "items")}
+                            placeholder="type and select !"
+                            required
                         // required={this.state.validate ? required : ""}
                         />
                         <datalist id="product" >
                             {
                                 this.state.itemsDropdownData.map((item, index) => {
-                                    return <option name={item.productName} value={item.productCode} key={index}>{item.productCode}</option>
+                                    return <option name={item.productName} value={item.productCode}>{item.productName}</option>
                                 })
                             }
                         </datalist>
@@ -512,7 +515,7 @@ export default class CreateInvoiceStep2 extends React.Component {
     }
     render() {
         return (
-            
+
             <form className="container invoiceForm" onSubmit={(e) => this.submitInvoice(e)} noValidate={this.state.validate}>
                 {this.state.addRow ? this.addRow() : ""}
                 <h2 className="text-align-center">Step 2</h2>
