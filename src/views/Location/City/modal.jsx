@@ -207,7 +207,7 @@ export default class App extends React.Component {
 
             url = "http://localhost:8080/addCity";
             data = {
-                "id": "5af170d60c06c02559273df1",
+                id: this.state.id,
                 countryCode: this.state.countryCode,
                 stateCode: this.state.stateCode,
                 cityCode: this.state.cityCode,
