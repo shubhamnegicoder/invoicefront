@@ -9,6 +9,19 @@ import Autocomplete from "react-autocomplete";
 
 var date, dropdownitems = [], customerdropdownitems = [];
 
+const menuStyle = {
+    borderRadius: '3px',
+    borderStyle: "solid",
+    borderWidth: "1px",
+    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+    background: 'rgba(255, 255, 255, 0.9)',
+    padding: '2px 0',
+    fontSize: '100%',
+    position: 'absolute',
+    overflow: 'auto',
+    maxHeight: '100%'
+}
+
 export default class CreateInvoice extends React.Component {
     constructor(props) {
         super(props);
@@ -184,7 +197,6 @@ export default class CreateInvoice extends React.Component {
                 item.label.toLowerCase().indexOf(value.toLowerCase()) !== -1
             )
         }
-
         return (
             <form onSubmit={(e) => this.createInvoice(e)}>
                 <Wizard>
@@ -208,7 +220,6 @@ export default class CreateInvoice extends React.Component {
                                 <h2 className="text-align-center">Step 1</h2>
                                 <hr />
                                 <div style={{ textAlign: 'center' }}>
-
                                     <div className="row">
                                         <div className="col-sm">Company</div>
                                         <div className="col-sm">Customer</div>
@@ -220,7 +231,7 @@ export default class CreateInvoice extends React.Component {
                                             <div>
                                                 <Autocomplete
                                                     value={this.state.companyCode}
-                                                    inputProps={{ id: 'company', required: true }}
+                                                    inputProps={{ required: true }}
                                                     items={dropdownitems}
                                                     shouldItemRender={matchStateToTerm}
                                                     getItemValue={item => item.label}
@@ -229,18 +240,19 @@ export default class CreateInvoice extends React.Component {
                                                     renderItem={(item, isHighlighted) => (
                                                         <div
                                                             className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+                                                            style={{ minWidth: '206px' }}
                                                         >
                                                             {item.label}
                                                         </div>
                                                     )}
-                                                    renderMenu={(items, value) => (
-                                                        <div className="menu">
+                                                    renderMenu={(items, value, style) => (
+                                                        <div className="menu" style={{ ...menuStyle }}>
                                                             {value === '' ? (
-                                                                <div className="item">Select Company Names</div>
+                                                                <div className="item" style={{ minWidth: '206px' }}>Type in Company Name</div>
                                                             ) : this.state.loading ? (
                                                                 <div className="item">Loading...</div>
                                                             ) : items.length === 0 ? (
-                                                                <div className="item">No matches for {value}</div>
+                                                                <div className="item" style={{ minWidth: '206px', maxWidth: '206px' }}>No matches for {value}</div>
                                                             ) : items}
                                                         </div>
                                                     )}
@@ -250,7 +262,7 @@ export default class CreateInvoice extends React.Component {
                                         <div className="col-sm">
                                             <Autocomplete
                                                 value={this.state.customerCode}
-                                                inputProps={{ id: 'customer', required: true }}
+                                                inputProps={{ required: true }}
                                                 items={customerdropdownitems}
                                                 shouldItemRender={matchStateToTerm}
                                                 getItemValue={item => item.label}
@@ -259,18 +271,19 @@ export default class CreateInvoice extends React.Component {
                                                 renderItem={(item, isHighlighted) => (
                                                     <div
                                                         className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+                                                        style={{ minWidth: '206px' }}
                                                     >
                                                         {item.label}
                                                     </div>
                                                 )}
-                                                renderMenu={(items, value) => (
-                                                    <div className="menu">
+                                                renderMenu={(items, value, style) => (
+                                                    <div className="menu" style={{ ...menuStyle }}>
                                                         {value === '' ? (
-                                                            <div className="item">Select Customer Names</div>
+                                                            <div className="item" style={{ minWidth: '206px' }}>Type in Customer Name</div>
                                                         ) : this.state.loading ? (
                                                             <div className="item">Loading...</div>
                                                         ) : items.length === 0 ? (
-                                                            <div className="item">No matches for {value}</div>
+                                                            <div className="item" style={{ minWidth: '206px', maxWidth: '206px' }}>No matches for {value}</div>
                                                         ) : items}
                                                     </div>
                                                 )}
