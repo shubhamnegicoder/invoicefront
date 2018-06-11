@@ -503,7 +503,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                 $('.discountTotal').val(discountTotal.toFixed(2));
                 $('.igstTotalDiv').text(igstTotal.toFixed(2) + "\t₹");
                 $('.igstTotal').val(igstTotal.toFixed(2));
-                $('.taxTotalDiv').text(taxTotal.toFixed(2) + "\t₹");
+                $('.taxTotalDiv').text(taxTotal.toFixed(2) + "\t₹itemQty");
                 $('.taxTotal').val(taxTotal.toFixed(2));
                 $('.invoiceTotalDiv').text((itemsTotal - discountTotal + taxTotal).toFixed(2) + "\t₹");
                 $('.invoiceTotal').val((itemsTotal - discountTotal + taxTotal).toFixed(2));
