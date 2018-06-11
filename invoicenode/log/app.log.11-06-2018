@@ -215,4 +215,11 @@
 {"level":"info","message":"sending all userTotalSales...","timestamp":"2018-06-11T07:55:11.231Z"}
 {"level":"info","message":"sending all userTotalCompany...","timestamp":"2018-06-11T07:55:11.238Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-11T07:55:13.869Z"}
-
+{"level":"info","message":"sending all userTotalCompany...","timestamp":"2018-06-11T08:03:27.957Z"}
+{"level":"info","message":"usercountinvoice...","timestamp":"2018-06-11T08:03:27.963Z"}
+{"level":"info","message":"sending all userTotalSales...","timestamp":"2018-06-11T08:03:27.969Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-11T08:05:33.085Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-11T08:45:42.483Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-11T08:46:06.088Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-11T08:47:27.859Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-11T08:48:50.885Z"}
