@@ -52,20 +52,20 @@ InvoiceModel.addInvoice = (invoiceToAdd) => {
     return invoiceToAdd.save();
 }
 
-InvoiceModel.getUserInvoiceCount=(userInoviceCount)=>{
+InvoiceModel.getUserInvoiceCount = (userInoviceCount) => {
     return InvoiceModel.find({
 
-        $and:[{createdBy:userInoviceCount.query.createdBy,status:"Invoiced"}]
+        $and: [{ createdBy: userInoviceCount.query.createdBy, status: "Invoiced" }]
     }).count();
 
 }
 InvoiceModel.getCount = (invoiceToCount) => {
     // var startdate = invoiceToCount.query.invoiceyear + '-' + invoiceToCount.query.invoicemonth+'-'+'01'+"T00:00:00"
-    
-   
+
+
     return InvoiceModel.find({
         $and: [{
-          
+
             createdBy: invoiceToCount.query.userid, companyCode: invoiceToCount.query.companycode, status: "Invoiced"
 
         }]
@@ -116,34 +116,36 @@ InvoiceModel.getAllList = (data) => {
                 createdAt: 1,
                 updatedAt: 1,
                 modifiedBy: 1,
-                
+
             }
         }
     ]);
 }
-InvoiceModel.userTotalSales=(userInvoiceTotalSales)=>{
-    return(InvoiceModel.aggregate([
-        { $match:{createdBy:userInvoiceTotalSales.query.createdBy}
+InvoiceModel.userTotalSales = (userInvoiceTotalSales) => {
+    return (InvoiceModel.aggregate([
+        {
+            $match: { createdBy: userInvoiceTotalSales.query.createdBy }
 
         },
-       { $group:{
-            _id:"",
-            usertotalsales:{$sum:"$invoiceTotal"}
-           }
-       },{
-           $project:{
-              usertotalsales:1 
-           }
-       }
-    
+        {
+            $group: {
+                _id: "",
+                usertotalsales: { $sum: "$invoiceTotal" }
+            }
+        }, {
+            $project: {
+                usertotalsales: 1
+            }
+        }
+
     ]))
 }
 
 InvoiceModel.sales = (invoiceSalesDate) => {
-    
+
     return InvoiceModel.aggregate([
         {
-            $match: {  createdBy: invoiceSalesDate.query.userid, companyCode: invoiceSalesDate.query.companycode }
+            $match: { createdBy: invoiceSalesDate.query.userid, companyCode: invoiceSalesDate.query.companycode }
         },
         {
             $group: {
@@ -159,15 +161,15 @@ InvoiceModel.sales = (invoiceSalesDate) => {
 }
 
 InvoiceModel.topTenInvoice = (topTenData) => {
-    
+
     return InvoiceModel.aggregate([
         {
-            $match: {  createdBy: topTenData.query.userid, companyCode: topTenData.query.companycode }
+            $match: { createdBy: topTenData.query.userid, companyCode: topTenData.query.companycode }
 
             // .sort({ invoiceTotal: -1 }).limit(2)
 
 
-        }, { $sort: {invoiceNumber: -1 } }, { $limit: 10 },
+        }, { $sort: { invoiceNumber: -1 } }, { $limit: 10 },
         {
             $lookup: {
                 from: "customer",
@@ -218,21 +220,21 @@ InvoiceModel.topTenInvoice = (topTenData) => {
                 createdAt: 1,
                 updatedAt: 1,
                 modifiedBy: 1,
-                status:1
+                status: 1
             }
         }
     ]);
 }
 InvoiceModel.userTopTenInvoice = (topTenData) => {
-    
+
     return InvoiceModel.aggregate([
         {
-            $match: {  createdBy: topTenData.query.userid}
+            $match: { createdBy: topTenData.query.userid }
 
             // .sort({ invoiceTotal: -1 }).limit(2)
 
 
-        }, { $sort: {invoiceNumber: -1 } }, { $limit: 10 },
+        }, { $sort: { invoiceNumber: -1 } }, { $limit: 10 },
         {
             $lookup: {
                 from: "customer",
@@ -283,7 +285,7 @@ InvoiceModel.userTopTenInvoice = (topTenData) => {
                 createdAt: 1,
                 updatedAt: 1,
                 modifiedBy: 1,
-                status:1
+                status: 1
             }
         }
     ]);
@@ -356,7 +358,9 @@ InvoiceModel.allInvoice = (dataToFind) => {
                 createdBy: 1,
                 createdAt: 1,
                 updatedAt: 1,
-                modifiedBy: 1
+                modifiedBy: 1,
+                companyGSTNo: "$company_docs.companyGSTNo",
+                customerGSTNo: "$customer_docs.customerGSTNo"
             }
         }
     ]);
