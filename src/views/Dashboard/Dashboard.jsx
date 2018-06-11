@@ -275,21 +275,32 @@ class Dashboard extends React.Component {
         item.label.toLowerCase().indexOf(value.toLowerCase()) !== -1
       )
     }
+  const menuStyle=  {
+      borderRadius: '3px',
+       borderStyle: "solid",
+        borderWidth: "1px",
+        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+        background: 'rgba(255, 255, 255, 0.9)',
+        padding: '2px 0',
+        fontSize: '100%',
+        position: 'absolute',
+        overflow: 'auto',
+        maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
+     }
     // Teach Autosuggest how to calculate suggestions for any given input value.
 
     return (
 
-      <div> {console.log(this.state.value, "name")}
+      <div> 
         <form class="form-inline">
           <div className="container">
             <div class="row">
               <div style={{ textAlign: 'right' }}>
-                <span class="input-group-text" htmlFor="company" id="basic-addon1">Company</span>
+                <span class="input-group-text"  id="basic-addon1">Company</span>
               </div>
               <div>
                 <Autocomplete
                   value={this.state.value}
-                  inputProps={{ id: 'comapny' }}
                   items={items}
                   shouldItemRender={matchStateToTerm}
                   getItemValue={item => item.label}
@@ -297,13 +308,13 @@ class Dashboard extends React.Component {
                   onChange={e => this.setState({ value: e.target.value, userDetails: true})}
                   renderItem={(item, isHighlighted) => (
                     <div
-                      className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-                    >
+                      className={`item ${isHighlighted ? 'item-highlighted' : ''}`} style={{minWidth:"205px"}}
+              >
                       {item.label}
                     </div>
                   )}
-                  renderMenu={(items, value) => (
-                    <div className="menu">
+                  renderMenu={(items, value,style) => (
+                    <div className="menu" style={{...menuStyle}}>
                       {value === '' ? (
                         <div className="item">Type for Company Names</div>
                       ) : this.state.loading ? (
@@ -325,7 +336,7 @@ class Dashboard extends React.Component {
         
          
         {this.state.userDetails ? (
-        <Grid container>
+          <Grid container style={{ marginTop: "50px" }}>
          <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
               icon={ContentCopy}
@@ -373,7 +384,7 @@ class Dashboard extends React.Component {
               }
             />
             </ItemGrid></Grid>) : 
-          (<Grid container>
+          (<Grid container style={{ marginTop: "50px" }}>
              <ItemGrid xs={12} sm={6} md={3}>
               <StatsCard
                 icon={ContentCopy}
