@@ -1,6 +1,5 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import TableList from "views/TableList/TableList.jsx";
-import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
 import City from "../views/Location/City/City";
 import State from "../views/Location/State/State";

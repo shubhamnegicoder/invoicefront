@@ -22,7 +22,15 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { countryCode:'', stateCode: '', stateName: '',dropDownData:[], _id: '', userId: "",isActive:""};
+        this.state = {
+             id:localStorage.getItem("id"),
+             countryCode:'',
+              stateCode: '',
+               stateName: '',
+               dropDownData:[],
+                _id: '',
+                 userId: "",
+                 isActive:""};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,13 +46,15 @@ export default class App extends React.Component {
         let id=localStorage.getItem("id")
         if(id==null){
           window.location.href="/login"
+          
         }
+        this.data();
     }
     handleCheck(event){
         this.setState({ [event.target.name]: event.target.checked });
     }
     componentDidMount(){
-        this.data();
+        
     }
     handleChange1 = (event) => {
         // console.log(event.target.value)
@@ -63,20 +73,15 @@ export default class App extends React.Component {
     }
     
     data = () => {
-        fetch("http://localhost:8080/allCountry?id=5af170d60c06c02559273df1", {
-            method: "GET",
-            cache: 'no-cache',
-            mode: 'cors',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'authorization': "Key@123"
-            })
-        }).then(res => res.json()).then(
+        // console.log(this.state.id,"ooooooooooooooooooo")
+        axios.get("http://localhost:8080/allCountry?id="+this.state.id)
+           
+        .then(
             (result) => {
                 var maindata = [];
                 var localdata = []
                 // console.log(result.data,"kkk")
-                result.data && result.data.map((item, key) => {
+                result.data.data && result.data.data.map((item, key) => {
                     maindata.push(item);
                   
                 })
@@ -91,7 +96,7 @@ export default class App extends React.Component {
         )
     }
  
-    dd = this.data()
+     
 
 
     handleSubmit = (e) => {
@@ -119,7 +124,7 @@ export default class App extends React.Component {
 
             url = "http://localhost:8080/addState";
             data = {
-                "id": "5af170d60c06c02559273df1",
+                id: this.state.id,
                 countryCode: this.state.countryCode,
                 stateCode: this.state.stateCode,
                 stateName: this.state.stateName,

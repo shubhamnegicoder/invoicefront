@@ -48,7 +48,7 @@ export default class EditInvoice extends React.Component {
             axios
                 .get("http://localhost:8080/getOneCompany?companyCode="+this.state.companyCode)
                 .then((res) => {
-                    console.log("response from /allCompany", res);
+                   
                     let tempData = [];
                     res.data.data.map((item, key) => {
                         tempData.push(item);
@@ -62,7 +62,7 @@ export default class EditInvoice extends React.Component {
             axios
                 .get("http://localhost:8080/getOneCustomer?customerCode="+this.state.customerCode)
                 .then((res) => {
-                    console.log("response from /allCustomer", res);
+                   
                     let tempData = [];
                     res.data.data.map((item, key) => {
                         tempData.push(item);
@@ -125,6 +125,7 @@ export default class EditInvoice extends React.Component {
         this.setState({ companyName: e.target.value })
     }
     add = () => {
+        var i=0;
         var query=window.location.search.substring(window.location.search.indexOf("=")+1);
            this.setState({query:query});
           axios.get("http://localhost:8080/oneList?id="+query)
@@ -152,20 +153,7 @@ export default class EditInvoice extends React.Component {
               })
               this.getData("company");
               this.getData("customer");
-            //access the results here....
-            console.log(result.data.data[0].items.CGSTRate,"arsfyw")
-            result.data.data[0].items.forEach((items)=>{
-              console.log(items,"hjhjh")
-                this.setState({CGSTRate:items.CGSTRate}),
-                this.setState({CGSTAmount:items.CGSTAmount}),
-                this.setState({SGSTRate:items.SGSTRate}),
-                this.setState({SGSTAmount:items.SGSSTAmount}),
-                this.setState({IGSTRate:items.IGSTRate}),
-                this.setState({IGSTAmount:items.IGSTAmount})
-  
-            })
-           
-               
+            //access the results here....  
                 
               })
 }

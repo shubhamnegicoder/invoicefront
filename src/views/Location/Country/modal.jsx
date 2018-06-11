@@ -19,7 +19,7 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { countryCode: '', countryName: '', _id: '', userId: "",isActive:false };
+        this.state = { id:localStorage.getItem("id"),countryCode: '', countryName: '', _id: '', userId: "",isActive:false };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,7 +72,7 @@ export default class App extends React.Component {
 
             url = "http://localhost:8080/addCountry";
             data = {
-                "id": "5af170d60c06c02559273df1",
+                id: this.state.id,
                 countryCode: this.state.countryCode,
                 countryName: this.state.countryName,
                 isActive:this.state.isActive
