@@ -1,20 +1,13 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Wizard, Steps, Step } from 'react-albus';
 import { WithWizard } from 'react-albus';
-import { Line } from 'rc-progress';
 import './animation.css';
 import './bootstrap.min.css';
 import axios from 'axios';
-import $ from 'jquery';
 import CreateInvoiceStep2 from './CreateInvoiceStep2';
-import swal from 'sweetalert';
-import parse from 'form-parse';
 import Autocomplete from "react-autocomplete";
 
-var date;
-var invoiceRow = [], deletedRows = 0, items = [], tempArray = [], dropdownitems = [], customerdropdownitems = [];
+var date, dropdownitems = [], customerdropdownitems = [];
 
 export default class CreateInvoice extends React.Component {
     constructor(props) {
@@ -37,7 +30,7 @@ export default class CreateInvoice extends React.Component {
             showCgst: false,
             showIgst: false,
             showIgst: false,
-            loading:false
+            loading: false
         }
     }
     getData = (param) => {
@@ -57,7 +50,7 @@ export default class CreateInvoice extends React.Component {
         }
         if (param === "customer") {
             axios
-                .get("http://localhost:8080/allCustomer?id="+this.state.id)
+                .get("http://localhost:8080/allCustomer?id=" + this.state.id)
                 .then((res) => {
                     console.log("response from /allCustomer", res);
                     let tempData = [];
@@ -221,40 +214,37 @@ export default class CreateInvoice extends React.Component {
                                         <div className="col-sm">Customer</div>
                                         <hr />
                                     </div>
-
                                     <div className="row">
                                         {/* Company Dropdown */}
                                         <div className="col-sm">
-                                            <div class="row">
-                                                <div>
-                                                    <Autocomplete
-                                                        value={this.state.companyCode}
-                                                        inputProps={{ id: 'comapny' }}
-                                                        items={dropdownitems}
-                                                        shouldItemRender={matchStateToTerm}
-                                                        getItemValue={item => item.label}
-                                                        onSelect={value => this.setState({ companyCode: value, setAddressOfCompany: false })}
-                                                        onChange={e => this.setState({ companyCode: e.target.value, setAddressOfCompany: false })}
-                                                        renderItem={(item, isHighlighted) => (
-                                                            <div
-                                                                className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-                                                            >
-                                                                {item.label}
-                                                            </div>
-                                                        )}
-                                                        renderMenu={(items, value) => (
-                                                            <div className="menu">
-                                                                {value === '' ? (
-                                                                    <div className="item">Select Company Names</div>
-                                                                ) : this.state.loading ? (
-                                                                    <div className="item">Loading...</div>
-                                                                ) : items.length === 0 ? (
-                                                                    <div className="item">No matches for {value}</div>
-                                                                ) : items}
-                                                            </div>
-                                                        )}
-                                                    />
-                                                </div>
+                                            <div>
+                                                <Autocomplete
+                                                    value={this.state.companyCode}
+                                                    inputProps={{ id: 'company', required: true }}
+                                                    items={dropdownitems}
+                                                    shouldItemRender={matchStateToTerm}
+                                                    getItemValue={item => item.label}
+                                                    onSelect={value => this.setState({ companyCode: value, setAddressOfCompany: false })}
+                                                    onChange={e => this.setState({ companyCode: e.target.value, setAddressOfCompany: false })}
+                                                    renderItem={(item, isHighlighted) => (
+                                                        <div
+                                                            className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+                                                        >
+                                                            {item.label}
+                                                        </div>
+                                                    )}
+                                                    renderMenu={(items, value) => (
+                                                        <div className="menu">
+                                                            {value === '' ? (
+                                                                <div className="item">Select Company Names</div>
+                                                            ) : this.state.loading ? (
+                                                                <div className="item">Loading...</div>
+                                                            ) : items.length === 0 ? (
+                                                                <div className="item">No matches for {value}</div>
+                                                            ) : items}
+                                                        </div>
+                                                    )}
+                                                />
                                             </div>
                                         </div>
                                         <div className="col-sm">
@@ -363,7 +353,7 @@ export default class CreateInvoice extends React.Component {
                         </Step> */}
                     </Steps>
                 </Wizard>
-            </form>
+            </form >
         )
     }
 }
