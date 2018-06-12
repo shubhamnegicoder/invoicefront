@@ -4,18 +4,17 @@ import { Switch, Route, Redirect, Router } from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { withStyles } from "material-ui";
-import ViewInvoice from "../../views/Invoice/ViewInvoice/ViewInvoice"
+import ViewInvoice from "../../views/Invoice/ViewInvoice/ViewInvoice";
+import ViewBill from "../../views/BillOfSupply/ViewBill/viewBill";
 import { Header, Footer, Sidebar } from "components";
 import dashboardRoutes from "routes/dashboard.jsx";
 import AddCustomer from "../../views/Customer/AddCustomer";
 import EditCustomer from "../../views/Customer/EditCustomer";
 import ViewCustomer from "../../views/Customer/ViewCustomer";
-// import Login from "../../views/login/login"
 import AddCompany from "../../views/Company/AddCompany";
 import EditCompany from "../../views/Company/EditCompany";
 import ViewCompany from "../../views/Company/ViewCompany";
 import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
-import Dashboard from "routes/dashboard";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import { createBrowserHistory } from "history";
@@ -35,6 +34,7 @@ const switchRoutes = (
     <Route path="/viewCustomer" component={ViewCustomer}></Route>
     <Route path="/editCustomer" component={EditCustomer}></Route>
     <Route path="/viewInvoice" component={ViewInvoice}></Route>
+    <Route path="/viewBill" component={ViewBill}></Route>
     <Route path="/EditInvoice" component={EditInvoice}></Route>
     <Route path="/ListInvoice" component={ListInvoice}></Route>
 
