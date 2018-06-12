@@ -27,7 +27,7 @@ export default class CreateInvoiceStep2 extends React.Component {
             axios
                 .get("http://localhost:8080/allProduct?id=" + this.state.id)
                 .then((res) => {
-                    // console.log("response from /allProduct", res);
+                    console.log("response from /allProduct", res);
                     let tempData = [];
                     res.data.data.map((item, key) => {
                         tempData.push(item);
@@ -53,7 +53,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                 })
         }
     }
-    addRow = (params) => {
+    addRow = () => {
         invoiceRow.push(
             <div style={{ marginTop: '5px' }}>
                 <div
@@ -64,7 +64,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                         <input
                             list="product"
                             id={"select" + invoiceRow.length}
-                            // name={"itemCode" + invoiceRow.length}
+                            name={"itemCode" + invoiceRow.length}
                             className="form-control"
                             onChange={(e, param) => this.handleDropdown(e, "items")}
                             placeholder="type and select !"
@@ -74,7 +74,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                         <datalist id="product" >
                             {
                                 this.state.itemsDropdownData.map((item, index) => {
-                                    return <option name={item.productName} value={item.productCode}>{item.productName}</option>
+                                    return <option name={item.productName} value={item.productCode}>{item.productCode + "-" + item.productName}</option>
                                 })
                             }
                         </datalist>
@@ -293,7 +293,6 @@ export default class CreateInvoiceStep2 extends React.Component {
         e.preventDefault();
         let items = [], item = {}, finalData = {}, status;
         let parsedData = parse(e.target);
-        items = items.filter(item => item.itemName != undefined);
         if (this.state.validate === true) {
             status = "Drafted";
         }
@@ -318,6 +317,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                 items.push(item);
                 item = {};
             }
+            items = items.filter(item => item.itemName != undefined);
             finalData = {
                 id: this.props.id,
                 invoiceDate: this.props.invoiceDate,
@@ -359,6 +359,7 @@ export default class CreateInvoiceStep2 extends React.Component {
                 items.push(item);
                 item = {};
             }
+            items = items.filter(item => item.itemName != undefined);
             finalData = {
                 id: this.props.id,
                 invoiceDate: this.props.invoiceDate,
