@@ -221,7 +221,7 @@ export default class CreateBillStep2 extends React.Component {
             items: items,
             subTotal: parsedData.subTotal,
             discountTotal: parsedData.discountTotal,
-            invoiceTotal: parsedData.invoiceTotal,
+            billTotal: parsedData.billTotal,
             status: status
         }
         console.log("final data", finalData);
@@ -247,7 +247,7 @@ export default class CreateBillStep2 extends React.Component {
                 .then((res) => {
                     if (res.body.success) {
                         swal({
-                            text: "Invoice Saved !",
+                            text: "Bill Saved !",
                             icon: "success"
                         }).then(() => {
                             window.location.href = "./viewBill?id=" + this.state.id + "&billNumber=" + this.props.billNumber;
@@ -257,6 +257,7 @@ export default class CreateBillStep2 extends React.Component {
         }
     }
     componentWillMount() {
+        console.log("props", this.props);
         this.getData("items");
         invoiceRow = [];
     }
@@ -284,15 +285,15 @@ export default class CreateBillStep2 extends React.Component {
             $('.subTotal').val(itemsTotal.toFixed(2));
             $('.discountTotalDiv').text(discountTotal.toFixed(2) + "\t₹");
             $('.discountTotal').val(discountTotal.toFixed(2));
-            $('.invoiceTotalDiv').text((itemsTotal - discountTotal).toFixed(2) + "\t₹");
-            $('.invoiceTotal').val((itemsTotal - discountTotal).toFixed(2));
+            $('.billTotalDiv').text((itemsTotal - discountTotal).toFixed(2) + "\t₹");
+            $('.billTotal').val((itemsTotal - discountTotal).toFixed(2));
         }
     }
     render() {
         return (
             <form className="container invoiceForm" onSubmit={(e) => this.submitInvoice(e)} noValidate={this.state.validate}>
                 {this.state.addRow ? this.addRow() : ""}
-                <h2 className="text-align-center">Step 2</h2>
+                <h3 className="text-align-center">Step 2</h3>
                 <hr />
                 {/* Invoice Date & Invoice Number */}
                 <div className="row">
@@ -300,7 +301,7 @@ export default class CreateBillStep2 extends React.Component {
                         {"Bill Date: " + this.props.billDate}
                     </div>
                     <div className="col" style={{ textAlign: 'right' }}>
-                        {"Bill Number: " + this.props.billNo}
+                        {"Bill Number: " + this.props.billNumber}
                     </div>
                 </div>
                 <hr />
@@ -369,8 +370,8 @@ export default class CreateBillStep2 extends React.Component {
                     <div className="col-9"></div>
                     <div className="col-2">Total Bill Value</div>
                     <div className="col-1">
-                        <div className="invoiceTotalDiv">0</div>
-                        <input type="hidden" name="invoiceTotal" className="invoiceTotal" onChange={this.handleInvoice} />
+                        <div className="billTotalDiv">0</div>
+                        <input type="hidden" name="billTotal" className="billTotal" onChange={this.handleInvoice} />
                     </div>
                 </div>
                 <input type="submit" className="btn btn-warning" value="Save as Draft" onMouseOver={(e, param) => this.validate(e, "draft")} />

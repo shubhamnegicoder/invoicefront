@@ -8,8 +8,14 @@ router.get('/countBill', (req, res) => {
 });
 
 router.post('/addBill', (req, res) => {
-    console.log("req.query at /addBill -> ", req.query)
     billService.addBill(req, res);
 });
 
+router.get('/allBill', (req, res) => {
+    console.log("req.query at /allBill -> ", req.query);
+    billService.getAllBill(req, res);
+});
+router.get('/allBillList', (req, res) => {
+    billService.getAllList(req, res);
+})
 export default router;

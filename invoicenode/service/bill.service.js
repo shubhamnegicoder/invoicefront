@@ -15,9 +15,9 @@ service.countBill = async (req, res) => {
                 createdBy: ObjectID(req.query.id)
             },
         };
-        const billInvoice = await Bill.getCount(billToCount);
+        const countBill = await Bill.getCount(billToCount);
         logger.info('counting bill ...');
-        res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": billInvoice });
+        res.send({ "success": true, "code": "200", "msg": "Successfully Found", "data": countBill });
     }
     catch (err) {
         logger.error('Error in getting Bill - ' + err);
@@ -40,7 +40,7 @@ service.addBill = async (req, res) => {
         items: req.body.items,
         subTotal: req.body.subTotal,
         discountTotal: req.body.discountTotal,
-        invoiceTotal: req.body.invoiceTotal,
+        billTotal: req.body.billTotal,
         createdBy: req.body.id,
         status: req.body.status
     });
@@ -53,6 +53,48 @@ service.addBill = async (req, res) => {
     catch (err) {
         logger.error('Error in getting Bill - ' + err);
         res.send({ "success": false, "code": "500", "msg": msg.addBill, "err": err });
+    }
+}
+
+service.getAllBill = async (req, res) => {
+    let billNumber = parseInt(req.query.billNumber);
+    console.log("billNumber", billNumber);
+    try {
+        var dataToFind = {}
+        dataToFind = {
+            query: {
+                billNumber: billNumber
+            }
+        }
+        console.log("dataToFind", dataToFind);
+        const bill = await Bill.allBill(dataToFind);
+        console.log("bill", bill);
+        logger.info('sending all bills ...');
+        return res.send({ success: true, code: 200, msg: "listed ok", data: bill });
+    }
+    catch (err) {
+        logger.error('Error in getting bills ' + err);
+        return res.send({ success: false, code: 500, msg: "listed false", err: err });
+    }
+}
+
+service.getAllList = async (req, res) => {
+    try {
+        let dataTo = {
+            query: { createdBy: ObjectID(req.query.id) }
+
+        };
+
+
+        const billdata = await Bill.getAllList(dataTo);
+        res.send({ success: true, code: 200, "msg": "success", data: billdata });
+
+
+        // console.log(tax,"data");
+    } catch (err) {
+        // logger.error('Error in getting user- ' + err);
+        // console.log(err);
+        res.send({ success: false, code: 500, "msg": "error", err: err });
     }
 }
 
