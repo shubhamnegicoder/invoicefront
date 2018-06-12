@@ -1,0 +1,7 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-09T11:41:46.366Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-09T11:41:46.458Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-06-09T11:42:28.824Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-06-09T11:42:32.688Z"}
+{"level":"info","message":"sending all state...","timestamp":"2018-06-09T11:42:32.788Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-06-09T11:42:49.480Z"}
+{"level":"info","message":"sending all city...","timestamp":"2018-06-09T11:42:49.546Z"}
