@@ -288,3 +288,43 @@
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-12T07:29:11.672Z"}
 {"level":"info","message":"counting bill ...","timestamp":"2018-06-12T07:29:18.019Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-12T07:29:30.106Z"}
+{"level":"info","message":"usercountinvoice...","timestamp":"2018-06-12T07:35:18.242Z"}
+{"level":"info","message":"sending all userTotalSales...","timestamp":"2018-06-12T07:35:18.250Z"}
+{"level":"info","message":"sending all userTotalCompany...","timestamp":"2018-06-12T07:35:18.253Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T07:35:47.629Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T07:38:24.388Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T07:39:47.837Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T07:41:59.907Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T07:42:31.094Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T07:42:47.283Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T07:43:29.935Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:14:17.963Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:15:40.734Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:16:31.663Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:16:46.175Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:16:57.155Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:17:16.605Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:17:31.507Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:17:44.450Z"}
+{"level":"info","message":"usercountinvoice...","timestamp":"2018-06-12T08:18:37.566Z"}
+{"level":"info","message":"sending all userTotalSales...","timestamp":"2018-06-12T08:18:37.571Z"}
+{"level":"info","message":"sending all userTotalCompany...","timestamp":"2018-06-12T08:18:37.578Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:18:51.675Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:19:58.980Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:20:06.913Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:20:36.188Z"}
+{"level":"info","message":"usercountinvoice...","timestamp":"2018-06-12T08:20:39.490Z"}
+{"level":"info","message":"sending all userTotalSales...","timestamp":"2018-06-12T08:20:39.501Z"}
+{"level":"info","message":"sending all userTotalCompany...","timestamp":"2018-06-12T08:20:39.508Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-06-12T08:20:45.401Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T08:20:47.812Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T08:22:48.407Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T08:22:56.061Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:23:00.866Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:23:13.767Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:24:51.665Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:24:58.250Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:25:06.224Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:25:14.387Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:25:29.837Z"}
+{"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:25:57.942Z"}

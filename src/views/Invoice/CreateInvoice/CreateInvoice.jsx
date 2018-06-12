@@ -19,6 +19,8 @@ const menuStyle = {
     fontSize: '100%',
     position: 'absolute',
     overflow: 'auto',
+    minWidth: '240px',
+    maxWidth: '240px',
     maxHeight: '100%'
 }
 
@@ -240,7 +242,6 @@ export default class CreateInvoice extends React.Component {
                                                     renderItem={(item, isHighlighted) => (
                                                         <div
                                                             className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-                                                            style={{ minWidth: '206px' }}
                                                         >
                                                             {item.label}
                                                         </div>
@@ -248,11 +249,11 @@ export default class CreateInvoice extends React.Component {
                                                     renderMenu={(items, value, style) => (
                                                         <div className="menu" style={{ ...menuStyle }}>
                                                             {value === '' ? (
-                                                                <div className="item" style={{ minWidth: '206px' }}>Type in Company Name</div>
+                                                                <div className="item">Type in Company Name</div>
                                                             ) : this.state.loading ? (
                                                                 <div className="item">Loading...</div>
                                                             ) : items.length === 0 ? (
-                                                                <div className="item" style={{ minWidth: '206px', maxWidth: '206px' }}>No matches for {value}</div>
+                                                                <div className="item">No matches for {value}</div>
                                                             ) : items}
                                                         </div>
                                                     )}
@@ -271,7 +272,6 @@ export default class CreateInvoice extends React.Component {
                                                 renderItem={(item, isHighlighted) => (
                                                     <div
                                                         className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-                                                        style={{ minWidth: '206px' }}
                                                     >
                                                         {item.label}
                                                     </div>
@@ -279,11 +279,11 @@ export default class CreateInvoice extends React.Component {
                                                 renderMenu={(items, value, style) => (
                                                     <div className="menu" style={{ ...menuStyle }}>
                                                         {value === '' ? (
-                                                            <div className="item" style={{ minWidth: '206px' }}>Type in Customer Name</div>
+                                                            <div className="item">Type in Customer Name</div>
                                                         ) : this.state.loading ? (
                                                             <div className="item">Loading...</div>
                                                         ) : items.length === 0 ? (
-                                                            <div className="item" style={{ minWidth: '206px', maxWidth: '206px' }}>No matches for {value}</div>
+                                                            <div className="item">No matches for {value}</div>
                                                         ) : items}
                                                     </div>
                                                 )}
