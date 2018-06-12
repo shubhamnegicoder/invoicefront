@@ -518,7 +518,7 @@ export default class CreateInvoiceStep2 extends React.Component {
 
             <form className="container invoiceForm" onSubmit={(e) => this.submitInvoice(e)} noValidate={this.state.validate}>
                 {this.state.addRow ? this.addRow() : ""}
-                <h2 className="text-align-center">Step 2</h2>
+                <h3 className="text-align-center">Step 2</h3>
                 <hr />
                 {/* Invoice Date & Invoice Number */}
                 <div className="row">

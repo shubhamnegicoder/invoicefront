@@ -32,7 +32,7 @@ export default class ViewBill extends React.Component {
             customerGSTIN: "",
             itemTotal: "",
             discountTotal: "",
-            invoiceTotal: "",
+            billTotal: "",
             buttonView: true
         };
     }
@@ -130,7 +130,7 @@ export default class ViewBill extends React.Component {
     }
     getData = (billNumber, type) => {
         axios
-            .get("http://localhost:8080/allBill?id=" + this.state.id + "&billNumber=" + this.state.billNumber)
+            .get("http://localhost:8080/allBill?id=" + this.state.id + "&billNumber=" + billNumber)
             .then((res) => {
                 console.log("response from /allBill", res.data.data[0]);
                 var mainArray = [];
@@ -151,25 +151,22 @@ export default class ViewBill extends React.Component {
                     mainArray.push(dataArray)
                 })
                 console.log("mainArray", mainArray);
-                let invoiceDate = (res.data.data[0].invoiceDate).toString();
-                invoiceDate = invoiceDate.split("T", 1);
-                invoiceDate = invoiceDate[0];
+                let billDate = (res.data.data[0].billDate).toString();
+                billDate = billDate.split("T", 1);
+                billDate = billDate[0];
                 this.setState({
                     logo: res.data.data[0].logo,
                     companyName: res.data.data[0].companyName,
                     companyAddress: res.data.data[0].companyAddressLine1 + " " + res.data.data[0].companyAddressLine2,
                     companyGSTIN: res.data.data[0].companyGSTNo,
                     billNumber: billNumber,
-                    invoiceDate: invoiceDate,
+                    billDate: billDate,
                     customerName: res.data.data[0].customerName,
                     customerAddress: res.data.data[0].customerAddressLine1 + " " + res.data.data[0].customerAddressLine2,
                     customerGSTIN: res.data.data[0].customerGSTNo,
                     subTotal: res.data.data[0].subTotal,
-                    cgstTotal: res.data.data[0].cgstTotal,
-                    sgstTotal: res.data.data[0].sgstTotal,
-                    igstTotal: res.data.data[0].igstTotal,
                     discountTotal: res.data.data[0].discountTotal,
-                    invoiceTotal: res.data.data[0].invoiceTotal,
+                    billTotal: res.data.data[0].billTotal,
                     List: mainArray
                 })
                 console.log("states", this.state);
@@ -198,19 +195,12 @@ export default class ViewBill extends React.Component {
                     pagesplit: true
                 };
                 doc.addImage(imgData, 'JPEG', 10, 0, imgWidth, pageHeight);
-
-
-                doc.save(this.state.invoiceNo);
-
+                doc.save(this.state.billNumber);
             })
     }
-
-
-
     componentWillMount() {
-        let invoiceNo = this.getQuery('invoiceNumber');
-        // console.log(type,"kkkkkkkkkkk")
-        this.getData(invoiceNo, type);
+        let billNumber = this.getQuery('billNumber');
+        this.getData(billNumber, type);
     }
     componentDidUpdate() {
         if (this.state.type == "listinvoice") {
@@ -257,22 +247,23 @@ export default class ViewBill extends React.Component {
                     <div class="row">
                         <hr />
                         <div style={{ width: '100%' }}>
-                            <h1>TAX-INVOICE</h1>
+                            <h2 className="viewInvoice-h2"
+                            >BILL OF SUPPLY</h2>
                         </div>
                         <hr />
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-6">
-                            <b>Invoice Date</b>
+                            <b>Bill Date</b>
                             <div>
-                                {this.state.invoiceDate}
+                                {this.state.billDate}
                             </div>
                         </div>
                         <div class="col-6" style={{ textAlign: 'right' }}>
-                            <b>Invoice No.</b>
+                            <b>Bill No.</b>
                             <div>
-                                {this.state.invoiceNo}
+                                {this.state.billNumber}
                             </div>
                         </div>
                     </div>
@@ -319,24 +310,6 @@ export default class ViewBill extends React.Component {
                         <div class="col" style={{ textAlign: 'right' }}>
                             <b>Discount</b>
                         </div>
-                        <div class="col" style={{ textAlign: 'right' }}>
-                            <b>CGST Rate</b>
-                        </div>
-                        <div class="col" style={{ textAlign: 'right' }}>
-                            <b>CGST Amount</b>
-                        </div>
-                        <div class="col" style={{ textAlign: 'right' }}>
-                            <b>SGST Rate</b>
-                        </div>
-                        <div class="col" style={{ textAlign: 'right' }}>
-                            <b>SGST Amount</b>
-                        </div>
-                        <div class="col" style={{ textAlign: 'right' }}>
-                            <b>IGST Rate</b>
-                        </div>
-                        <div class="col" style={{ textAlign: 'right' }}>
-                            <b>IGST Amount</b>
-                        </div>
                     </div >
                     <hr />
                     {this.state.List.map((item, key) => {
@@ -349,12 +322,6 @@ export default class ViewBill extends React.Component {
                                     <div class="col" style={{ textAlign: 'right' }}>{item[3]}</div>
                                     <div class="col" style={{ textAlign: 'right' }}>{item[4]}</div>
                                     <div class="col" style={{ textAlign: 'right' }}>{item[5]}</div>
-                                    <div class="col" style={{ textAlign: 'right' }}>{item[6]}</div>
-                                    <div class="col" style={{ textAlign: 'right' }}>{item[7]}</div>
-                                    <div class="col" style={{ textAlign: 'right' }}>{item[8]}</div>
-                                    <div class="col" style={{ textAlign: 'right' }}>{item[9]}</div>
-                                    <div class="col" style={{ textAlign: 'right' }}>{item[10]}</div>
-                                    <div class="col" style={{ textAlign: 'right' }}>{item[11]}</div>
                                 </div>
                                 <hr />
                             </div>
@@ -362,7 +329,7 @@ export default class ViewBill extends React.Component {
                     })}
                     <div class="row">
                         <div class="col-12"></div>
-                        <div class="col" style={{ textAlign: 'right' }}>Total value before Tax&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.subTotal}</div>
+                        <div class="col" style={{ textAlign: 'right' }}>Subtotal&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.subTotal}</div>
                     </div>
                     <hr />
                     <div class="row">
@@ -371,26 +338,11 @@ export default class ViewBill extends React.Component {
                     </div>
                     <hr />
                     <div class="row">
-                        <div class="col-12"></div>
-                        <div class="col" style={{ textAlign: 'right' }}>CGST&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.cgstTotal}</div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-12"></div>
-                        <div class="col" style={{ textAlign: 'right' }}>SGST&nbsp;&nbsp;:&nbsp;&nbsp;{parseFloat(this.state.sgstTotal).toFixed(2)}</div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-12"></div>
-                        <div class="col" style={{ textAlign: 'right' }}>IGST&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.igstTotal}</div>
-                    </div>
-                    <hr />
-                    <div class="row">
                         <div class="col" style={{ textAlign: 'left' }}>
-                            Total amount in words&nbsp;&nbsp;:&nbsp;&nbsp;{this.convertNumberToWords(this.state.invoiceTotal)}
+                            Total amount in words&nbsp;&nbsp;:&nbsp;&nbsp;{this.convertNumberToWords(this.state.billTotal)}
                         </div>
                         <div class="col" style={{ textAlign: 'right' }}>
-                            Total Invoice Value&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.invoiceTotal}
+                            Total Bill Value&nbsp;&nbsp;:&nbsp;&nbsp;{this.state.billTotal}
                         </div>
                     </div>
                     <hr />

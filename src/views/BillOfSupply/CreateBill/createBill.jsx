@@ -37,8 +37,8 @@ export default class CreateBill extends React.Component {
             customerState: "",
             billDate: "",
             billNumber: "",
-            companySelected: true,
-            customerSelected: true,
+            companySelected: false,
+            customerSelected: false,
             check: false,
             loading: false
         }
@@ -213,7 +213,7 @@ export default class CreateBill extends React.Component {
                                 )}
                             />
                             <div class="container">
-                                <h2 className="text-align-center">Step 1</h2>
+                                <h3 className="text-align-center">Step 1</h3>
                                 <hr />
                                 <div style={{ textAlign: 'center' }}>
                                     <div className="row">

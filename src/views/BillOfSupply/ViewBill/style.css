@@ -35,11 +35,11 @@ header {
   width: 90px;
 }
 
-h1 {
+.viewInvoice-h2 {
   border-top: 1px solid  #5D6975;
   border-bottom: 1px solid  #5D6975;
   color: #5D6975;
-  font-size: 2.4em;
+  font-size: 2em;
   line-height: 1.4em;
   font-weight: normal;
   text-align: center;

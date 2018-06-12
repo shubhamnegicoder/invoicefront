@@ -9,6 +9,7 @@ import ListInvoice from "../views/Invoice/ListInvoice/ListInvoice.jsx";
 import CreateBill from '../views/BillOfSupply/CreateBill/createBill.jsx';
 import Tax from "../views/Tax/Tax.jsx";
 import Product from "../views/Product/Product.jsx";
+import ListBill from "../views/BillOfSupply/ListBill/ListBill"
 
 import {
   Dashboard,
@@ -74,13 +75,13 @@ const dashboardRoutes = [
         navbarName: name,
         component: CreateBill
       },
-      // {
-      //   path: "/InvoiceList",
-      //   sidebarName: "Invoice List",
-      //   navbarName: name,
-      //   icon: LocationOn,
-      //   component: ListInvoice
-      // }
+      {
+        path: "/BillList",
+        sidebarName: "Bill List",
+        navbarName: name,
+        icon: LocationOn,
+        component: ListBill
+      }
     ]
   },
   {
