@@ -48,7 +48,7 @@ export default class EditInvoiceStep2 extends React.Component {
             axios
                 .get("http://localhost:8080/allProduct?id=" + this.state.id)
                 .then((res) => {
-                    // console.log("response from /allProduct", res);
+                     console.log("response from /allProduct", res);
                     let tempData = [];
                     res.data.data.map((item, key) => {
                         tempData.push(item);
@@ -122,7 +122,8 @@ export default class EditInvoiceStep2 extends React.Component {
             })
     }
     addRow = (params) => {
-        console.log(params, "med param", this.state["cgstAmount" + params])
+       
+        
 
         return (
             <div style={{ marginTop: '5px' }}>
@@ -131,14 +132,14 @@ export default class EditInvoiceStep2 extends React.Component {
                     id={"btn_" + params}
                 >
                     <div className="col-2">
-                        <input type="text" list="product"
+                    <input type="text" list="product"
                             id={"select" + params}
                             name={"itemCode" + params}
                             className={"form-control select" + params}
                             value={this.state["itemCode" + params]}
                             onChange={(e, param) => this.handleDropdown(e, "items")}
                         // required={this.state.validate ? required : ""}
-                        />
+                        />   
                         <datalist id="product" >
                             {
                                 this.state.itemsDropdownData.map((item, index) => {
@@ -953,7 +954,7 @@ export default class EditInvoiceStep2 extends React.Component {
 
     }
     render() {
-        console.log(this.state.validate, " validatae states")
+        console.log("med param", this.state["itemCode" + 1])
         return (
             <div>
                 <form class="container" onSubmit={this.createInvoice} noValidate={this.state.validate}>

@@ -17,6 +17,7 @@ import customer  from './routes/customer.router.js';
 import tax from './routes/tax.router.js';
 import company  from './routes/company.router.js';
 import product from './routes/product.router.js';
+import bill from './routes/bill.router'
 import net from 'net';
 import cors from 'cors';
 
@@ -71,6 +72,7 @@ app.use(customer);
 app.use(tax);
 app.use(company);
 app.use(product);
+app.use(bill);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
