@@ -346,6 +346,7 @@
 {"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:25:14.387Z"}
 {"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:25:29.837Z"}
 {"level":"info","message":"counting bill ...","timestamp":"2018-06-12T08:25:57.942Z"}
+<<<<<<< HEAD
 >>>>>>> 172a4f973371245a78e287ac295409abd9539fe2
 {"level":"info","message":"server started -  8080","timestamp":"2018-06-12T09:46:11.912Z"}
 {"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-12T09:46:11.950Z"}
@@ -362,3 +363,39 @@
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:01:57.266Z"}
 {"level":"info","message":"Adding invoice...","timestamp":"2018-06-12T12:02:25.479Z"}
 {"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:19:51.674Z"}
+=======
+{"level":"info","message":"usercountinvoice...","timestamp":"2018-06-12T08:35:40.412Z"}
+{"level":"info","message":"sending all userTotalCompany...","timestamp":"2018-06-12T08:35:40.417Z"}
+{"level":"info","message":"sending all userTotalSales...","timestamp":"2018-06-12T08:35:40.418Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:07:18.129Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:09:20.472Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:09:59.166Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:10:15.319Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:13:20.627Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:13:57.337Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:15:37.602Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:16:26.061Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-12T12:22:46.705Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-12T12:22:52.722Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-12T12:25:59.808Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-12T12:26:17.674Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:26:23.446Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:27:33.302Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:28:26.358Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:29:07.457Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:30:23.860Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:30:36.731Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:31:15.521Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:32:45.635Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:34:36.673Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:38:22.014Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:40:56.776Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:41:57.250Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:43:13.109Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:43:30.669Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:45:04.690Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:46:22.604Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T12:48:02.708Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-12T12:51:25.279Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-12T12:51:37.128Z"}
+>>>>>>> ba3644466a3bff75855171673e729c6596b85e61
