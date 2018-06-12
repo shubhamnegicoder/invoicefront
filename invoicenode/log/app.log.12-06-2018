@@ -1,0 +1,16 @@
+{"level":"info","message":"server started -  8080","timestamp":"2018-06-12T04:21:25.888Z"}
+{"level":"info","message":"Connected to mongo!!!","timestamp":"2018-06-12T04:21:26.044Z"}
+{"level":"info","message":"usercountinvoice...","timestamp":"2018-06-12T04:24:32.004Z"}
+{"level":"info","message":"sending all userTotalCompany...","timestamp":"2018-06-12T04:24:32.219Z"}
+{"level":"info","message":"sending all userTotalSales...","timestamp":"2018-06-12T04:24:32.225Z"}
+{"level":"info","message":"sending all country...","timestamp":"2018-06-12T09:00:28.623Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T09:00:33.257Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-12T09:01:03.019Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T09:05:30.104Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T09:10:01.457Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T09:10:10.440Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T09:10:56.573Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-12T09:11:14.434Z"}
+{"level":"info","message":"countinvoice...","timestamp":"2018-06-12T09:16:33.481Z"}
+{"level":"info","message":"Adding invoice...","timestamp":"2018-06-12T09:16:50.270Z"}
+{"level":"info","message":"sending all invoice...","timestamp":"2018-06-12T09:40:01.289Z"}
