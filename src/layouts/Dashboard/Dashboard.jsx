@@ -19,6 +19,8 @@ import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import { createBrowserHistory } from "history";
 import EditInvoice from "../../views/Invoice/EditInvoice/EditInvoice";
+import EditBill from "../../views/BillOfSupply/EditBill/EditBill";
+
 import ListInvoice from "../../views/Invoice/ListInvoice/ListInvoice";
 
 const hist = createBrowserHistory();
@@ -36,6 +38,7 @@ const switchRoutes = (
     <Route path="/viewInvoice" component={ViewInvoice}></Route>
     <Route path="/viewBill" component={ViewBill}></Route>
     <Route path="/EditInvoice" component={EditInvoice}></Route>
+    <Route path="/EditBill" component={EditBill}></Route>
     <Route path="/ListInvoice" component={ListInvoice}></Route>
 
     {dashboardRoutes.map((prop, key) => {

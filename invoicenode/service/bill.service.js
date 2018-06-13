@@ -129,4 +129,69 @@ service.searchBill = async (req, res) => {
       }
 }
 
+service.getOneList = async (req, res) => {
+
+    let dataToedit = {
+        query: { "_id": ObjectID(req.query.id) }
+    }
+    try {
+
+
+        const editdata = await Bill.getOneList(dataToedit);
+        res.send({ success: true, code: 200, "msg": "success", data: editdata });
+    }
+    catch (err) {
+        res.send({ "success": false, "code": "500", "msg": "failu", "err": err });
+    }
+
+}
+
+
+service.editBill = async (req, res) => {
+    var billToEdit;
+    if (!req.body.id) {
+        return res.send({ "success": false, "code": 500, "msg": "error1121" })
+    }
+    if (req.body.status=="Cancelled") {
+        billToEdit = {
+            query: { "_id": ObjectID(req.body.id) },
+            data: { "$set": { status: req.body.status } }
+        }
+    }
+    else if(req.body.status!=="Cancelled") {
+        console.log("billed",req.body)
+
+        let billEdit = {
+            companyAddressLine1: req.body.companyAddressLine1,
+            companyAddressLine2: req.body.companyAddressLine1,
+            companyCode: req.body.companyCode,
+            customerAddressLine1: req.body.customerAddressLine1,
+            customerAddressLine2: req.body.customerAddressLine2,
+            customerCode: req.body.customerCode,
+            billDate: req.body.billDate,
+            billNumber: req.body.billNumber,
+            items: req.body.items,
+            subTotal: req.body.subTotal,
+            discountTotal: req.body.discountTotal,
+            billTotal: req.body.billTotal,
+            modifiedBy: ObjectID(req.body.id),
+            status:req.body.status
+        }
+        billToEdit = {
+            query: { "_id": ObjectID(req.body._id) },
+            data: { "$set": billEdit }
+
+        };
+    }
+
+    try {
+        const editBill = await Bill.editBill(billToEdit);
+        res.send({ "success": true, "code": 200, "msg": "success", "data": editBill });
+
+    }
+    catch (err) {
+        res.send({ "success": false, "code": "500", "msg": "failllll", "err": err });
+    }
+}
+
 export default service;

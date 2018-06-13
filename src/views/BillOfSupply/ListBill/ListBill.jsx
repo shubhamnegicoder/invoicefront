@@ -88,6 +88,7 @@ class ListBill extends React.Component {
     window.location.href = "./viewBill?id=" + id + "&billNumber=" + billNumber + "&type=listbill";
   }
   handleEdit = (id, billNumber) => {
+    alert(id);
     window.location.href = "/EditBill?_id=" + id;
   }
   handleView = (id, billNumber) => {

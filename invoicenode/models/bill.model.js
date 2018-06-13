@@ -204,5 +204,15 @@ BillModel.searchBill = (query) => {
     ]);
 }
 
+BillModel.getOneList = (billToEdit) => {
+    console.log(billToEdit, "hiiiii");
+    return BillModel.find(billToEdit.query);
+}
+
+BillModel.editBill = (billToEdit) => {
+    console.log(billToEdit, "hiiiiiMedha");
+    return BillModel.update(billToEdit.query, billToEdit.data);
+}
+
 
 export default BillModel;

@@ -21,4 +21,10 @@ router.get('/allBillList', (req, res) => {
 router.get('/searchBill', (req, res) => {
     billService.searchBill(req, res);
 })
+router.post('/editBill', (req, res) => {
+    billService.editBill(req, res);
+});
+router.get('/oneBillList', (req, res) => {
+    billService.getOneList(req, res);
+});
 export default router;
