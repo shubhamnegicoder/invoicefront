@@ -1,29 +1,24 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import TableList from "views/TableList/TableList.jsx";
-import Icons from "views/Icons/Icons.jsx";
 import City from "../views/Location/City/City";
 import State from "../views/Location/State/State";
 import Country from "../views/Location/Country/Country";
 import Customer from "../views/Customer/Customer.jsx";
 import Company from "../views/Company/Company.jsx";
-import Login from "../views/login/login";
 import CreateInvoice from "../views/Invoice/CreateInvoice/CreateInvoice.jsx";
 import ListInvoice from "../views/Invoice/ListInvoice/ListInvoice.jsx";
+import CreateBill from '../views/BillOfSupply/CreateBill/createBill.jsx';
 import Tax from "../views/Tax/Tax.jsx";
 import Product from "../views/Product/Product.jsx";
-import NotificationsPage from "views/Notifications/Notifications.jsx";
+import ListBill from "../views/BillOfSupply/ListBill/ListBill"
 
 import {
   Dashboard,
   Person,
-  ContentPaste,
-  LibraryBooks,
   BubbleChart,
   LocationOn,
-  Notifications,
   Assignment
 } from "@material-ui/icons";
-var name= "Welcome" +" "+ localStorage.getItem("name")
+var name = "Welcome" + " " + localStorage.getItem("name")
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -31,15 +26,13 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage
   },
-
   {
     path: "/customer",
     sidebarName: "Customer",
     icon: Person,
-    navbarName:name,
+    navbarName: name,
     component: Customer
   },
-
   {
     path: "/company",
     sidebarName: "Company",
@@ -47,7 +40,6 @@ const dashboardRoutes = [
     icon: BubbleChart,
     component: Company
   },
-
   {
     path: "/invoice",
     sidebarName: "Invoice",
@@ -61,7 +53,6 @@ const dashboardRoutes = [
         navbarName: name,
         component: CreateInvoice
       },
-
       {
         path: "/InvoiceList",
         sidebarName: "Invoice List",
@@ -71,7 +62,28 @@ const dashboardRoutes = [
       }
     ]
   },
-
+  {
+    path: "/bill",
+    sidebarName: "Bill of Supply",
+    navbarName: name,
+    icon: Assignment,
+    childs: [
+      {
+        path: "/CreateBill",
+        sidebarName: "Create Bill",
+        icon: LocationOn,
+        navbarName: name,
+        component: CreateBill
+      },
+      {
+        path: "/BillList",
+        sidebarName: "Bill List",
+        navbarName: name,
+        icon: LocationOn,
+        component: ListBill
+      }
+    ]
+  },
   {
     path: "/Product",
     sidebarName: "Product",

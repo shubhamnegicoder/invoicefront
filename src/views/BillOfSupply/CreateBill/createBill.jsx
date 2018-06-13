@@ -4,7 +4,7 @@ import { WithWizard } from 'react-albus';
 import './animation.css';
 import './bootstrap.min.css';
 import axios from 'axios';
-import CreateInvoiceStep2 from './CreateInvoiceStep2';
+import CreateBillStep2 from './createBillStep2';
 import Autocomplete from "react-autocomplete";
 
 var date, dropdownitems = [], customerdropdownitems = [];
@@ -24,7 +24,7 @@ const menuStyle = {
     maxHeight: '100%'
 }
 
-export default class CreateInvoice extends React.Component {
+export default class CreateBill extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -37,14 +37,11 @@ export default class CreateInvoice extends React.Component {
             customerCode: "",
             customerName: "",
             customerState: "",
-            invoiceDate: "",
-            invoiceNo: "",
+            billDate: "",
+            billNumber: "",
             companySelected: false,
             customerSelected: false,
             check: false,
-            showCgst: false,
-            showIgst: false,
-            showIgst: false,
             loading: false
         }
     }
@@ -90,10 +87,10 @@ export default class CreateInvoice extends React.Component {
         today = this.padDigits(today, 2);
         date = year + "-" + month + "-" + today;
         this.setState({
-            invoiceDate: date
+            billDate: date
         })
     }
-    setInvoiceNo = () => {
+    setBillNo = () => {
         date = new Date();
         let year = date.getFullYear();
         year = year.toString();
@@ -101,17 +98,17 @@ export default class CreateInvoice extends React.Component {
         month = month.toString();
         month++;
         month = this.padDigits(month, 2);
-        let invoiceNoPart1 = year + month;
+        let billNoPart1 = year + month;
         axios
-            .get("http://localhost:8080/countInvoice2?id=" + this.state.id)
+            .get("http://localhost:8080/countBill?id=" + this.state.id)
             .then((res) => {
-                console.log("response from /countInvoice2", res);
-                let invoiceNoPart2 = res.data.data + 1;
-                invoiceNoPart2 = this.padDigits(invoiceNoPart2, 4);
-                let invoiceNo = invoiceNoPart1 + invoiceNoPart2;
-                invoiceNo = parseInt(invoiceNo);
+                console.log("response from /countBill", res);
+                let billNoPart2 = res.data.data + 1;
+                billNoPart2 = this.padDigits(billNoPart2, 4);
+                let billNo = billNoPart1 + billNoPart2;
+                billNo = parseInt(billNo);
                 this.setState({
-                    invoiceNo: invoiceNo
+                    billNumber: billNo
                 })
             })
     }
@@ -143,7 +140,7 @@ export default class CreateInvoice extends React.Component {
     componentWillMount() {
         this.getData("company");
         this.getData("customer");
-        this.setInvoiceNo();
+        this.setBillNo();
         this.setInitialDate();
         this.getData("items");
     }
@@ -156,7 +153,6 @@ export default class CreateInvoice extends React.Component {
         this.state.companyDropdownData.map((item, key) => {
             if (this.state.setAddressOfCompany == false) {
                 if (this.state.companyCode.split("-")[0] == item.companyCode) {
-
                     this.setState({
                         companyName: item.companyName,
                         companyAddressLine1: item.addressLine1,
@@ -311,8 +307,8 @@ export default class CreateInvoice extends React.Component {
                                     <br />
                                     {/* Invoice Date and Number Labels */}
                                     <div className="row">
-                                        <div className="col-sm">Invoice Date</div>
-                                        <div className="col-sm">Invoice No.</div>
+                                        <div className="col-sm">Bill Date</div>
+                                        <div className="col-sm">Bill No.</div>
                                         <hr />
                                     </div>
                                     {/* Invoice Date and Number Fields */}
@@ -320,8 +316,8 @@ export default class CreateInvoice extends React.Component {
                                         <div className="col-sm">
                                             <input
                                                 type="date"
-                                                name="invoiceDate"
-                                                className="invoiceDate"
+                                                name="billDate"
+                                                className="billDate"
                                                 style={{ minWidth: '200px' }}
                                                 defaultValue={date}
                                                 onChange={this.handleInvoice}
@@ -331,7 +327,7 @@ export default class CreateInvoice extends React.Component {
                                             <label>(mm-dd-yyyy)</label>
                                         </div>
                                         <div className="col-sm">
-                                            <input type="text" style={{ minWidth: '200px' }} name="invoiceNumber" value={this.state.invoiceNo} disabled />
+                                            <input type="text" style={{ minWidth: '200px' }} name="billNumber" value={this.state.billNumber} disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -349,7 +345,7 @@ export default class CreateInvoice extends React.Component {
                                     </div>
                                 )}
                             />
-                            <CreateInvoiceStep2 {...this.state} />
+                            <CreateBillStep2 {...this.state} />
                         </Step>
                         {/* <Step id="ice king">
                             <WithWizard
