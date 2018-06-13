@@ -56,7 +56,7 @@ export default class CreateBillStep2 extends React.Component {
                         <datalist id="product" >
                             {
                                 this.state.itemsDropdownData.map((item, index) => {
-                                    return <option name={item.productName} value={item.productCode}>{item.productName}</option>
+                                    return <option name={item.productName} value={item.productCode}>{item.productCode + "-" + item.productName}</option>
                                 })
                             }
                         </datalist>
