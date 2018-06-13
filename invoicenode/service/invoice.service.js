@@ -298,9 +298,14 @@ service.searchInvoice = async (req, res) => {
             query.companyName = { $regex: '.*' + req.query.companyName + '.*' }
         }
 
-        if (req.query.startDate !== '' || req.query.endDate !== '') {
-            query.invoiceDate = { "$gte": new Date(req.query.startDate), "$lt": new Date(req.query.endDate) }
+        if (req.query.startDate !== '' && req.query.endDate !== '') {
+            query.invoiceDate = { "$gte": new Date(req.query.startDate), "$lte": new Date(req.query.endDate) }
         }
+        else if(req.query.startDate)
+        {
+            query.invoiceDate =new Date(req.query.startDate);
+        }
+
         if (req.query.customerName !== '') {
             query.customerName = { $regex: '.*' + req.query.customerName + '.*' }
         }

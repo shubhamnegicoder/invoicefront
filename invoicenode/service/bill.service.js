@@ -98,4 +98,35 @@ service.getAllList = async (req, res) => {
     }
 }
 
+service.searchBill = async (req, res) => {
+
+    try {
+
+        let query = {}
+
+        if (req.query.billNumber !== undefined && req.query.billNumber !== "") {
+            query.billNumber = parseInt(req.query.billNumber)}
+        if (req.query.companyName !== '') {
+            query.companyName = { $regex: '.*' + req.query.companyName + '.*' }
+        }
+        if (req.query.customerName !== '') {
+            query.customerName = { $regex: '.*' + req.query.customerName + '.*' }
+        }
+        if (req.query.startDate !== '' && req.query.endDate !== '') {
+            query.billDate = { "$gte": new Date(req.query.startDate), "$lte": new Date(req.query.endDate) }
+        }
+        else if(req.query.startDate!=='')
+        {
+            query.billDate=new Date(req.query.startDate);
+        }
+        var oneBill = await Bill.searchBill(query);
+        console.log(oneBill,"lllllllllllll000llll")
+        return res.send({ success: true, code: 200, msg: "Successfully found", data: oneBill });
+    }
+     catch (error)
+      {
+        return res.send({ success: false, code: 500, msg: "Error in getting Customer" + error, err: error })
+      }
+}
+
 export default service;

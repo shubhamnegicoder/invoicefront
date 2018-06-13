@@ -150,4 +150,59 @@ BillModel.getAllList = (data) => {
     ]);
 }
 
+BillModel.searchBill = (query) => {
+    console.log(query, "sssssssssssssssssssssssssss")
+    return BillModel.aggregate([
+        { $match: { $and: [query] } },
+        {
+            $lookup: {
+                from: "customer",
+                localField: "customerCode",
+                foreignField: "customerCode",
+                as: "customer_docs"
+            }
+        },
+        {
+            $unwind: "$customer_docs"
+        },
+        {
+            $lookup: {
+                from: "company",
+                localField: "companyCode",
+                foreignField: "companyCode",
+                as: "company_docs"
+            }
+        },
+        {
+            $unwind: "$company_docs"
+        },
+        {
+            $project: {
+                logo: "$company_docs.logo",
+                companyAddressLine1: 1,
+                companyAddressLine2: 1,
+                companyCode: 1,
+                companyName: "$company_docs.companyName",
+                customerAddressLine1: 1,
+                customerAddressLine2: 1,
+                customerCode: 1,
+                customerName: "$customer_docs.customerName",
+                discount: 1,
+                billDate: 1,
+                billNumber: 1,
+                items: 1,
+                itemTotal: 1,
+                discountTotal: 1,
+                billTotal: 1,
+                createdBy: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                modifiedBy: 1,
+                status: 1,
+            }
+        }
+    ]);
+}
+
+
 export default BillModel;

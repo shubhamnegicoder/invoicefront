@@ -24,7 +24,7 @@ export default class App extends React.Component {
         this.state = {
             companyName: "",
             customerName: "",
-            invoiceNo: "",
+            billNo: "",
             startDate: "",
             endDate: ""
            
@@ -53,7 +53,7 @@ export default class App extends React.Component {
    
        }
        handleChange2=(event)=> {
-        this.setState({ invoiceNo: event.target.value });
+        this.setState({ billNo: event.target.value });
    
        }
        handleChange3=(event)=> {
@@ -69,7 +69,7 @@ export default class App extends React.Component {
         // this.props.handleClose();
         this.setState({ companyName:"",
         customerName:"",
-        invoiceNo:"",
+        billNo:"",
         startDate:"",
         endDate:""
     })
@@ -83,7 +83,7 @@ export default class App extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state , "state value")
-        axios.get('http://localhost:8080/searchInvoice?companyName=' + this.state.companyName + '&customerName=' + this.state.customerName + '&invoiceNumber=' + this.state.invoiceNo +'&startDate='+this.state.startDate + '&endDate=' +this.state.endDate)
+        axios.get('http://localhost:8080/searchBill?companyName=' + this.state.companyName + '&customerName=' + this.state.customerName + '&billNumber=' + this.state.billNo +'&startDate='+this.state.startDate + '&endDate=' +this.state.endDate)
             .then((result) => {
                 console.log("result =,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,llllll ", result)
                 if (result.data.data.length!=0) {
@@ -140,12 +140,12 @@ export default class App extends React.Component {
                                                 </ItemGrid>
                                                 <ItemGrid xs={8} sm={8} md={8}>
                                                     <label>
-                                                        <h5>Invoice No:</h5>
-                                                        <input class="invoiceNo" type="text"  name={this.state.invoiceNo} value={this.state.invoiceNo} placeholder="InvoiceNo" onChange={this.handleChange2} />
+                                                        <h5>Bill No:</h5>
+                                                        <input class="billNo" type="text"  name={this.state.billNo} value={this.state.billNo} placeholder="BillNo" onChange={this.handleChange2} />
                                                     </label>
                                                 </ItemGrid>
                                                 <ItemGrid >
-                                                    <label><h5>Invoice Date:</h5></label>
+                                                    <label><h5>Bill Date:</h5></label>
                                                <br/>
                                                     <label>
                                                         <h6> Start:</h6>

@@ -18,4 +18,7 @@ router.get('/allBill', (req, res) => {
 router.get('/allBillList', (req, res) => {
     billService.getAllList(req, res);
 })
+router.get('/searchBill', (req, res) => {
+    billService.searchBill(req, res);
+})
 export default router;

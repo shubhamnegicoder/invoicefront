@@ -193,7 +193,7 @@ export default class CreateBillStep2 extends React.Component {
             status = "Drafted";
         }
         else {
-            status = "Invoiced";
+            status = "Billed";
         }
         for (var i = 0; i < invoiceRow.length; i++) {
             item.itemCode = parsedData["itemCode" + i];
@@ -240,7 +240,7 @@ export default class CreateBillStep2 extends React.Component {
                     }
                 })
         }
-        if (status === "Invoiced") {
+        if (status === "Billed"){
             superagent
                 .post("http://localhost:8080/addBill")
                 .send(finalData)
