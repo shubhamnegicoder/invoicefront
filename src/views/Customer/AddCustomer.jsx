@@ -169,40 +169,6 @@ class AddCustomer extends React.Component{
     }
 
     save=()=>{
-       
-        if(this.state.customerCode==""){
-            return alert("Customer code is required");       
-        }
-        if(this.state.customerName==""){
-            return alert("Customer name is required");       
-        }
-        if(this.state.customerGSTNo==""){
-            return alert("Customer gst no is required");       
-        }
-        if(this.state.addressLine1==""){
-            return alert("Address 1 is required");       
-        }
-        if(this.state.addressLine2==""){
-            return alert("Address 2 is required");       
-        }
-        if(this.state.city==""){
-            return alert("City is required");       
-        }
-        if(this.state.state==""){
-            return alert("State is required");       
-        }
-        if(this.state.country==""){
-            return alert("Country is required");       
-        }
-        if(this.state.postalCode==""){
-            return alert("Postal code is required ");       
-        }
-        if(isNaN(this.state.postalCode)){
-            return alert("Postal code should be a numeric value");       
-        }
-        if(this.state.contactNo==""){
-            return alert("Contact no is required");       
-        }
         fetch("http://localhost:8080/addCustomer",{
             body:JSON.stringify(this.state),
             method: "POST",
@@ -217,8 +183,6 @@ class AddCustomer extends React.Component{
         .then(
             (result) => 
             {
-               // console.log("this is save function....",result);
-                // console.log("this is save function....");
                 if(result.success==true)
                 {
                     swal({
@@ -229,7 +193,7 @@ class AddCustomer extends React.Component{
                 else
                 {
                     swal({
-                        title: "Something went wrong !!" ,
+                        title: result.msg ,
                         icon: "fail",
                     })
                 }
@@ -277,7 +241,7 @@ class AddCustomer extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>Country</td>
                     <td></td>
-                    <td><input type="text" list="country"placeholder="select country" onChange={this.handleChange1}/>
+                    <td><input type="text" list="country"placeholder="Select Country" onChange={this.handleChange1}/>
                     <datalist id="country">
                     {/* <option  value="Select Country "style={{width:"150px"}}> Select Country Name</option> */}
                     {     
@@ -290,7 +254,7 @@ class AddCustomer extends React.Component{
                 </tr>
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>State</td><td></td>
-                    <td> <input type="text" list="state" placeholder="select State" onChange={this.handleChange2}/>
+                    <td> <input type="text" list="state" placeholder="Select State" onChange={this.handleChange2}/>
 
                       <datalist id="state">
                         {
@@ -305,7 +269,7 @@ class AddCustomer extends React.Component{
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>City</td>
                     <td></td>
-                    <td><input type="text" list="city" placeholder="select State" onChange={this.handleChange3}/>
+                    <td><input type="text" list="city" placeholder="Select City" onChange={this.handleChange3}/>
 
                      <datalist id="city">
                         {

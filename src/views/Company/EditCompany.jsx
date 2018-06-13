@@ -473,9 +473,9 @@ class EditCompany extends React.Component{
                 </tr>
                 <tr>
 
-                    <td align="right"><input type="submit" value="Update" onClick={this.update} style={{backgroundColor:"#76323f", color:"white"}}/></td>   
+                    <td align="right"><input type="submit"  className="btn btn-success" value="Update" onClick={this.update} style={{backgroundColor:"#76323f", color:"white"}}/></td>   
                   <td></td>
-                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"#76323f", color:"white"}}/></td>
+                    <td align="left"><input type="button"  className="btn btn-warning" onClick={this.handleClose} value="Close" style={{backgroundColor:"#76323f", color:"white"}}/></td>
                 </tr>
             </table>        
         </div>);

@@ -55,7 +55,6 @@ class ViewCompany extends React.Component{
             .then(res => res.json())
             .then(
                 (result) => {
-                   console.log("result============++++",result);
                     this.setState({_id:result.data[0]._id});
                     this.setState({companyCode:result.data[0].companyCode});
                     this.setState({companyName:result.data[0].companyName});

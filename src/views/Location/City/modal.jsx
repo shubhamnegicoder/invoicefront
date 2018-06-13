@@ -232,7 +232,7 @@ export default class App extends React.Component {
                 }
                 else {
                     swal({
-                        title: " Sorry !! this Country Code already exist!",
+                        title: " Sorry !! this city Code already exist!",
                         icon: "warning",
                     });
                 }
