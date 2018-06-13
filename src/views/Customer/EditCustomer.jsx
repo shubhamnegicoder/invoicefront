@@ -177,8 +177,6 @@ class EditCustomer extends React.Component{
     fetchCustomerById=()=>{
         var val=this.props.location.search;
         var response=val.substring(val.indexOf("=")+1);
-        //  console.log("result",response);
-        //this.setState({res:});             
         var url="http://localhost:8080/oneCustomer?_id="+response;
             fetch(url ,{  
                 method: "GET",
@@ -242,40 +240,6 @@ class EditCustomer extends React.Component{
 
     update=async()=>{
         await this.setState({customerCode:customerCode});
-        if(this.state.customerCode==""){
-            return alert("Customer code is required");
-        }
-        if(this.state.customerName==""){
-            return alert("Customer name is required");
-        }
-        if(this.state.customerGSTNo==""){
-            return alert("Customer gst no is required");
-        }
-        if(this.state.addressLine1==""){
-            return alert("Address 1 is required");       
-        }
-        if(this.state.addressLine2==""){
-            return alert("Address 2 is required");       
-        }
-        if(this.state.city==""){
-            return alert("City is required");       
-        }
-        if(this.state.state==""){
-            return alert("State is required");       
-        }
-        if(this.state.country==""){
-            return alert("Country is required");       
-        }
-        if(this.state.postalCode=="" ){
-            return alert("Postal code is required  ");       
-        }
-        if(isNaN(this.state.postalCode)){
-            return alert("Postal code should be a numeric value");       
-        }
-        if(this.state.contactNo==""){
-            return alert("Contact no is required");       
-        }
-        console.log(this.state,"edit customer")
         var val=this.props.location.search;
         var response=val.substring(val.indexOf("=")+1); 
        
@@ -286,14 +250,12 @@ class EditCustomer extends React.Component{
             mode: 'cors',
             headers:  new Headers({
                 'Content-Type': 'application/json'
-                // 'authorization':"Key@123"
             })
         })
         .then(res => res.json())
         .then(
             (result) => 
             {
-                //console.log("result of edit is ::",result)
                 if(result.success==true)
                 {
                     swal({
@@ -304,7 +266,7 @@ class EditCustomer extends React.Component{
                 else
                 {
                     swal({
-                        title: "Something went wrong !!" ,
+                        title: result.msg ,
                         icon: "fail",
                     })
                 }

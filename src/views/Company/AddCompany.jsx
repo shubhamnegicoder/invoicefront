@@ -154,7 +154,7 @@ class AddCompany extends React.Component {
         window.location.href="/company";
     }
    
-    save = (e) => {
+    save = async(e) => {
         e.preventDefault();
         var today = new Date(),
             date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -174,7 +174,7 @@ class AddCompany extends React.Component {
         data.append('contactNo', this.state.contactNo);
         data.append('isActive', this.state.isActive);
         data.append('createAt',today);
-         fetch("http://localhost:8080/addCompany",{ 
+        await fetch("http://localhost:8080/addCompany",{ 
             body:data,
             method: "POST",
             cache: 'no-cache',
@@ -184,13 +184,13 @@ class AddCompany extends React.Component {
             (result) => 
             {   
                 if(result.success==true){    
-                    swal({
+                   return swal({
                         title: "Company Added Successfully !",
                         icon: "success",
                     });
                 }
                 else{   
-                    swal({
+                   return swal({
                         title: result.msg,
                         icon: "fail",
                     });
@@ -278,7 +278,7 @@ class AddCompany extends React.Component {
                 <tr>
                     <td><span style={{ color: "red" }}>*</span>City</td>
                     <td></td>
-                    <td><input type="text" list="city" placeholder="select State" onChange={this.handleChange3}/>
+                    <td><input type="text" list="city" placeholder="select City" onChange={this.handleChange3}/>
 
                      <datalist id="city">
                         {
@@ -318,9 +318,9 @@ class AddCompany extends React.Component {
                     </td>
                 </tr>
                 <tr>
-                    <td align="right"><input type="submit" value="Save" onClick={(e)=>{this.save(e)}} style={{ backgroundColor:"#76323f", color:"white" }} /></td>
+                    <td align="right"><input type="submit" className="btn btn-success" value="Save" onClick={(e)=>{this.save(e)}} style={{ backgroundColor:"#76323f", color:"white" }} /></td>
                     <td></td>
-                    <td align="left"><input type="button" onClick={this.handleClose} value="Close" style={{backgroundColor:"#76323f", color:"white" }} /></td>
+                    <td align="left"><input type="button" className="btn btn-warning" onClick={this.handleClose} value="Close" style={{backgroundColor:"#76323f", color:"white" }} /></td>
                 </tr>
             </table></form>
 

@@ -42,6 +42,9 @@ service.getAll = async (req,res)=>{
  * @return {[object]}
  */
 service.getOne = async (req,res)=>{
+	if(!req.query._id){
+		return res.send({success:false, code:500, msg:"_id is required"})
+	}
 
 	try{
 		let dataToFind={
@@ -56,8 +59,6 @@ service.getOne = async (req,res)=>{
 }
 
 service.searchCustomer = async (req,res)=>{
-//    console.log(req.query,"+++++++++++++++++++++++++++")
-  
 	try{
 		
 		let	query={ }
@@ -74,9 +75,7 @@ service.searchCustomer = async (req,res)=>{
 			query.stateCode=req.query.stateCode
 		}
 		
-		// console.log(query,"kookokokokokoklllllllllllll")
 		var oneCustomer = await CustomerModel.searchCustomer(query);
-		// console.log(oneCustomer,"lllllllllllll")
 		return res.send({success:true, code:200, msg:"Successfully found", data:oneCustomer}); 
 	}catch(error){
 		return res.send({success:false, code:500, msg:"Error in getting Customer"+error, err:error})
@@ -91,7 +90,6 @@ service.searchCustomer = async (req,res)=>{
  * @return {[object]}
  */
 service.addCustomer = async (req,res)=>{
-	console.log("+++++++++++id++++++++++++++++++",req.body.id);
 	if(req.body.customerCode == ""){
 		return res.send({success:false,code:500,msg:"Customer code is required"});
 	}
@@ -102,18 +100,18 @@ service.addCustomer = async (req,res)=>{
 		return res.send({success:false,code:500,msg:"Customer GST no is required"});
 	}
 	if(req.body.addressLine1 == ""){
-		return res.send({success:false,code:500,msg:"Address is required"});
+		return res.send({success:false,code:500,msg:"Address line 1 is required"});
 	}
 	if(req.body.addressLine2 == ""){
-		return res.send({success:false,code:500,msg:"Address is required"});
+		return res.send({success:false,code:500,msg:"Address line 2 is required"});
 	}
-	if(req.body.city == ""){
+	if(req.body.cityCode == ""){
 		return res.send({success:false,code:500,msg:"City is required"});
-	}
-	if(req.body.state == ""){
+	} 
+	if(req.body.stateCode == ""){
 		return res.send({success:false,code:500,msg:"State is required"});
 	}
-	if(req.body.country == ""){
+	if(req.body.countryCode == ""){
 		return res.send({success:false,code:500,msg:"Country is required"});
 	}
 	if(req.body.postalCode == ""){
@@ -122,11 +120,17 @@ service.addCustomer = async (req,res)=>{
 	if(req.body.contactNo == ""){
 		return res.send({success:false,code:500,msg:"Contact no is required"});
 	}
-	if(req.body.isActive == ""){
-		return res.send({success:false,code:500,msg:"Status is required"});
+	if(isNaN(req.body.contactNo)){
+		return res.send({success:false,code:500,msg:"Contact no should be numeric value"});
+	}
+	if (isNaN(req.body.postalCode)) {
+		return res.send({success:false,code:500,msg:"Postal code should be numeric value"});
+	}
+	if(req.body.contactNo.length < 10 || req.body.contactNo.length > 10){
+		return res.send({success:false,code:500,msg:"Contact no should be of 10 digits"});
 	}
 	if(req.body.id == ""){
-		return res.send({success:false,code:500,msg:"Created by is required"});
+		return res.send({success:false,code:500,msg:"User id is required"});
 	}
 
 	let customerToAdd = CustomerModel({
@@ -145,7 +149,6 @@ service.addCustomer = async (req,res)=>{
 		createAt:req.body.createAt		
     });
 	try{
-		console.log("this is add Customer");
 		var addCustomer = await CustomerModel.addCustomer(customerToAdd);
 		return res.send({success:true, code:200, msg:"Successfully added", data:addCustomer}); 
 	}catch(error){
@@ -154,6 +157,41 @@ service.addCustomer = async (req,res)=>{
 }
 
 service.editCustomer = async (req,res)=>{
+	if(req.body.customerCode == ""){
+		return res.send({success:false,code:500,msg:"Customer code is required"});
+	}
+	if(req.body.customerName == ""){
+		return res.send({success:false,code:500,msg:"Customer name is required"});
+	}
+	if(req.body.customerGSTNo == ""){
+		return res.send({success:false,code:500,msg:"Customer GST no is required"});
+	}
+	if(req.body.addressLine1 == ""){
+		return res.send({success:false,code:500,msg:"Address line 1 is required"});
+	}
+	if(req.body.addressLine2 == ""){
+		return res.send({success:false,code:500,msg:"Address line 2 is required"});
+	}
+	
+	if(req.body.postalCode == ""){
+		return res.send({success:false,code:500,msg:"Postal code is required"});
+	}
+	if(req.body.contactNo == ""){ 
+		return res.send({success:false,code:500,msg:"Contact no is required"});
+	}
+	if(isNaN(req.body.contactNo)){
+		return res.send({success:false,code:500,msg:"Contact no should be numeric value"});
+	}
+	if (isNaN(req.body.postalCode)) {
+		return res.send({success:false,code:500,msg:"Postal code should be numeric value"});
+	}
+	if(req.body.contactNo.length < 10 || req.body.contactNo.length > 10){
+		return res.send({success:false,code:500,msg:"Contact no should be of 10 digits"});
+	}
+	if(req.body.id == ""){
+		return res.send({success:false,code:500,msg:"User id is required"});
+	}
+
 	let customerToEdit={		
 		customerCode:req.body.customerCode,
 		customerName:req.body.customerName,
@@ -183,7 +221,9 @@ service.editCustomer = async (req,res)=>{
 	}
 }
 service.getOneCustomer = async (req,res)=>{
-
+	if(!req.query.customerCode){
+		return res.send({success:false,code:500,msg:"Customer code is required"});
+	}
 	try{
 		let dataToFind = {
 			query:{"customerCode":req.query.customerCode}
